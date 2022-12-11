@@ -12,7 +12,7 @@ function App() {
       <nav>
         <ul>
           <li>
-            <Link to="/"></Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/Calendar">Calendar</Link>
