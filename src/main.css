@@ -1,6 +1,15 @@
-body {
+html,body {
     margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #root {
     padding: 5px;
+    display: flex;
 }
