@@ -10,7 +10,7 @@ import {
 
 
 export default function () {
-  const ANGLE = 90
+  const ANGLE = 45
   const onMouseMove = (e:React.MouseEvent):void => {
     const content:HTMLElement = e.target as HTMLElement
     /**
@@ -39,9 +39,9 @@ export default function () {
   return (
     <>
       <Link to='/Calendar' target='_blank'>
-        <div className={menuStyles.panel} >
-          <div className={menuStyles.content} style={CalendarStyle}
-            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
+        <div className={menuStyles.panel}
+          onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
+          <div className={menuStyles.content} style={CalendarStyle}>
             Calendar
           </div>
         </div>

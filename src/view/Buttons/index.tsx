@@ -1,7 +1,13 @@
-export default function () {
+import { IProps } from './type'
+import React from 'react'
+
+const App:React.FC<IProps> = (props) => {
+  console.log(props)
   return (
-    <div>
+    <button>
       Buttons
-    </div>
+    </button>
   )
 }
+
+export default App

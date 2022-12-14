@@ -8,6 +8,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #464343;
+}
+a {
+    text-decoration: none;
 }
 #root {
     padding: 5px;
