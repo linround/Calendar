@@ -70,6 +70,14 @@ export default function () {
           </div>
         </div>
       </Link>
+      <Link to='/Icons' target='_blank'>
+        <div className={menuStyles.panel} >
+          <div className={menuStyles.content} style={LoadingStyle}
+            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
+            Icons
+          </div>
+        </div>
+      </Link>
     </>
 
   )

@@ -3,11 +3,10 @@ import React from 'react'
 
 interface IProps {
   iconName:string
-  wrapperStyle?:string
   svgProp?:React.SVGProps<SVGSVGElement>
 }
-function SvgIcon(props:IProps) {
-  const { iconName, wrapperStyle, svgProp, } = props
+function SvgIcon(props:IProps):React.ReactElement {
+  const { iconName, svgProp, } = props
   const { loading, SvgIcon, } = useDynamicSvgImport(iconName)
   return (
     <>
@@ -15,9 +14,7 @@ function SvgIcon(props:IProps) {
         <div>正在加载svg</div>
       )}
       {SvgIcon && (
-        <div className={wrapperStyle}>
-          <SvgIcon {...svgProp}></SvgIcon>
-        </div>
+        <SvgIcon {...svgProp}></SvgIcon>
       )}
     </>
   )

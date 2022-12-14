@@ -4,6 +4,7 @@ import Calendar from './view/Calendar'
 import Buttons from './view/Buttons'
 import Loading from './view/Loading'
 import Click from './view/Click'
+import Icons from './view/Icons'
 
 
 
@@ -27,6 +28,10 @@ function App() {
     {
       path: '/',
       element: <Home />,
+    },
+    {
+      path: '/Icons',
+      element: <Icons />,
     },
     {
       path: '/Calendar',
