@@ -5,7 +5,7 @@ interface IProp {
 }
 
 export const FancyButton:React.FC<IProp> = React.forwardRef((props) => (
-  <button className="FancyButton">
-    {props.children}
+  <button className='FancyButton'>
+    { props.children }
   </button>
 ))
