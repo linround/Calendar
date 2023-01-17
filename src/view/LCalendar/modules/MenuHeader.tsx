@@ -3,9 +3,9 @@ import moment from '@/src/utils/moment.ts'
 import { SvgIcon } from '@/src/components'
 import styles from './style.module.less'
 import {
-  Button, Dropdown, Space
+  Button, Dropdown, Space, MenuProps
 } from 'antd'
-import { DownOutlined, UserOutlined } from '@ant-design/icons'
+import { DownOutlined } from '@ant-design/icons'
 
 export default function () {
 
@@ -13,10 +13,17 @@ export default function () {
   const format = 'YYYY MM DD'
   const timeStr = moment(time)
     .format(format)
+
   const handleClick = () => {
-    console.log('***handleClick***')
+    console.log(123)
   }
-  const items = [
+  const handleSelect:MenuProps['onClick'] = (e) => {
+    console.log('***handleSelect***', e)
+  }
+
+
+
+  const items:MenuProps['items'] = [
     {
       label: '日',
       key: 'day',
@@ -32,7 +39,7 @@ export default function () {
   ]
   const menuProps = {
     items,
-    onClick: () => { },
+    onClick: handleSelect,
   }
   return (
     <div>
