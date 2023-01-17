@@ -1,0 +1,23 @@
+// 左边框的最小宽度
+@leftWidth: 250px;
+
+.main {
+  &Container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+   }
+  &Left {
+    flex: 0 0 @leftWidth;
+    border: 1px solid black;
+    &Icon{
+      &:hover {
+        background: rebeccapurple;
+      }
+    }
+  }
+  &Right {
+    flex: 1;
+    border: 1px solid black;
+  }
+}

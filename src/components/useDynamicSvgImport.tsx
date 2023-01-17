@@ -5,7 +5,6 @@ export function useDynamicSvgImport(iconName:string) {
   const importedIconRef = useRef<React.FC<React.SVGProps<SVGElement>>>()
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<unknown>()
-  import(`@/src/assets/svg/${iconName}.svg`).then((r) => console.log(r))
   useEffect(() => {
     setLoading(true)
     const importSvgIcon = async ():Promise<void> => {

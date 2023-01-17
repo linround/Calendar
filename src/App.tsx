@@ -5,6 +5,7 @@ import Buttons from './view/Buttons'
 import Loading from './view/Loading'
 import Click from './view/Click'
 import Icons from './view/Icons'
+import LCalendar from './view/LCalendar'
 
 
 
@@ -27,6 +28,10 @@ function App() {
   const element = useRoutes([
     {
       path: '/',
+      element: <LCalendar />,
+    },
+    {
+      path: '/Home',
       element: <Home />,
     },
     {
