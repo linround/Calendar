@@ -1,15 +1,18 @@
 // 左边框的最小宽度
 @leftWidth: 250px;
-
+@import "variables.less";
 .main {
   &Container {
     width: 100vw;
     height: 100vh;
     display: flex;
+    color: @defaultFontColor;
+    font-size: @defaultFontSize;
+    font-weight: @defaultFontWeight;
    }
   &Left {
     flex: 0 0 @leftWidth;
-    border: 1px solid black;
+    border-right: 1px solid @borderColor;
     &Icon{
       &:hover {
         background: rebeccapurple;
@@ -18,6 +21,5 @@
   }
   &Right {
     flex: 1;
-    border: 1px solid black;
   }
 }

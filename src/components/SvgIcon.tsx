@@ -1,6 +1,7 @@
 import { useDynamicSvgImport } from './useDynamicSvgImport'
 import React from 'react'
-const SMALL_SIZE = 22
+export const SMALL_SIZE = 22
+export const MIDDLE_SIZE = 30
 
 interface IProps {
   iconName:string
@@ -19,7 +20,6 @@ function SvgIcon(props:IProps):React.ReactElement {
         <SvgIcon {...svgProp} className={className} style={{
           width: SMALL_SIZE,
           height: 'auto',
-          color: 'red',
         }}></SvgIcon>
       )}
     </>

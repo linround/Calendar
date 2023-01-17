@@ -1,13 +1,64 @@
-@IconHoverBgColor: red;
-
+@import "../variables.less";
 .header {
+  &Container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid @borderColor;
+    white-space: nowrap;
+  }
   &Left {
+    display: flex;
+    align-items: center;
     &Icon {
+      margin-right: 15px;
+      color: @IconColor;
+      &:hover {
+        color: @IconHoverColor;
+        background: @IconHoverBgColor;
+        border-radius: 50%;
+        padding: 2px;
+      }
+      &:active {
+        color: @IconActiveColor;
+      }
+      &Container {
+        margin: 0 15px;
+        line-height: 0;
+      }
       cursor: pointer;
     }
   }
   &Right {
+    display: flex;
+    align-items: center;
+    &Options {
+      margin: 0 20px;
+    }
     &Icon {
+      color: @IconColor;
+      &:hover {
+        color: @IconHoverColor;
+        background: @IconHoverBgColor;
+        border-radius: 50%;
+        padding: 2px;
+      }
+      &:active {
+        color: @IconActiveColor;
+      }
+      &Search {
+        cursor: pointer;
+        color: @IconColor ;
+        &:hover {
+          color: @IconHoverColor;
+          background: @IconHoverBgColor;
+          border-radius: 50%;
+          padding: 2px;
+        }
+        &:active {
+          color: @IconActiveColor;
+        }
+      }
       cursor: pointer;
     }
   }

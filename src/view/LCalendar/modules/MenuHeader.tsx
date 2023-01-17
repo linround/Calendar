@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import {
+  Button,
+  Space,
+  Dropdown,
+  MenuProps
+} from 'antd'
+import { typeOptions } from './options'
+import styles from './style.module.less'
 import moment from '@/src/utils/moment.ts'
 import { SvgIcon } from '@/src/components'
-import styles from './style.module.less'
-import {
-  Button, Dropdown, Space, MenuProps
-} from 'antd'
-import { DownOutlined } from '@ant-design/icons'
+import { MIDDLE_SIZE } from '@/src/components/SvgIcon'
+import { DownOutlined, GithubOutlined } from '@ant-design/icons'
 
 export default function () {
 
@@ -17,37 +22,29 @@ export default function () {
   const handleClick = () => {
     console.log(123)
   }
+
+
+  const [type, setType] = useState('day')
   const handleSelect:MenuProps['onClick'] = (e) => {
-    console.log('***handleSelect***', e)
+    const { key, } = e
+    setType(key)
   }
+  const itemMap = new Map()
+  typeOptions.map((item) => {
+    item && itemMap.set(item.key, item?.label)
+  })
 
-
-
-  const items:MenuProps['items'] = [
-    {
-      label: '日',
-      key: 'day',
-    },
-    {
-      label: '周',
-      key: 'week',
-    },
-    {
-      label: '月',
-      key: 'month',
-    }
-  ]
   const menuProps = {
-    items,
+    items: typeOptions,
     onClick: handleSelect,
   }
   return (
-    <div>
-      <div>
+    <div className={styles.headerContainer}>
+      <div className={styles.headerLeft}>
         <Button onClick={handleClick}>
           今
         </Button>
-        <div>
+        <div className={styles.headerLeftIconContainer}>
           <SvgIcon
             iconName='left-arrow'
             className={styles.headerLeftIcon} />
@@ -58,15 +55,17 @@ export default function () {
         <div>{timeStr}</div>
       </div>
 
-      <div>
-        <Dropdown menu={menuProps} trigger={['click']}>
+      <div className={styles.headerRight}>
+        <SvgIcon iconName='search' className={styles.headerRightIconSearch}></SvgIcon>
+        <Dropdown menu={menuProps} trigger={['click']} className={styles.headerRightOptions}>
           <Button>
             <Space>
-              Button
+              { itemMap.get(type) }
               <DownOutlined />
             </Space>
           </Button>
         </Dropdown>
+        <GithubOutlined style={{ fontSize: MIDDLE_SIZE, }} />
       </div>
     </div>
   )
