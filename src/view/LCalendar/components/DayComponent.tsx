@@ -82,12 +82,24 @@ export default function (props: IDayProps) {
         <div className={dayStyle.dayBodyScrollArea}>
           <div className={dayStyle.dayBodyPane} style={{ height: 48 * 24, }}>
             <div className={dayStyle.dayBodyDayContainer}>
-              <div className={dayStyle.dayBodyIntervals}>
+              <div className={dayStyle.dayBodyIntervalsBody} style={{ width: 60, }}>
                 {
-                  [4, 9, 9, 9, 9, 9].map((interval, index) => (
-                    <div style={{ height: 48, borderTop: '1px solid', }} key={index}>{index}</div>
+                  [4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9].map((interval, index) => (
+                    <div className={dayStyle.dayBodyInterval} style={{ height: 48, }} key={index}>{index}</div>
                   ))
-
+                }
+              </div>
+              <div className={dayStyle.dayBodyDaysBody}>
+                {
+                  [4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9,
+                    4, 9, 9, 9, 9, 9].map((interval, index) => (
+                    <div className={dayStyle.dayBodyDayItem} style={{ height: 48, }} key={index}>{index}</div>
+                  ))
                 }
               </div>
             </div>

@@ -10,10 +10,31 @@
       width: 100%;
     }
     &Pane {
+      overflow: hidden;
+      width: 100%;
     }
     &DayContainer {
+      display: flex;
     }
-    &Intervals {}
+    &DaysBody {
+      flex: 1;
+    }
+    &DayItem {
+      &:first-child {
+        border-top: none !important;
+      }
+      border-top: 1px solid @borderColor;
+    }
+    &IntervalsBody {}
+    &Interval {
+      border-bottom: none;
+      border-right: 1px solid @borderColor;
+      border-top: 1px solid @borderColor;
+      &:first-child {
+        border-top: none !important;
+      }
+    }
+
   }
   &Container {
     flex: 1;
