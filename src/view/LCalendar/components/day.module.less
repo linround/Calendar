@@ -1,16 +1,37 @@
+@import "../variables.less";
+
 .day {
+  &Body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    &ScrollArea {
+      overflow-y: auto;
+      width: 100%;
+    }
+    &Pane {
+    }
+    &DayContainer {
+    }
+    &Intervals {}
+  }
   &Container {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   &Header {
     display: flex;
     &Intervals {
-      border: 1px solid black;
+      border-bottom: 1px solid @borderColor;
+      border-right: 1px solid @borderColor;
     }
     &Day {
       flex: 1;
       text-align: center;
-      border: 1px solid black;
+      border-bottom: 1px solid @borderColor;
+      border-right: 1px solid  @borderColor;
     }
   }
 }

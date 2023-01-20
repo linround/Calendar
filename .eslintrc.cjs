@@ -6,7 +6,7 @@ module.exports = {
   rules:{
     'semi': ['error', 'never'], // 分号禁止
     'quotes': ['error', 'single'], // 使用单引号
-    'no-param-reassign': ['error'], // 不要直接给函数参数赋值.
+    'no-param-reassign': ['error',{'props': false}], // 不要直接给函数参数赋值.可修改参数属性
     'prefer-spread': 'error', // 使用扩展语法来调用可变参数的函数.
     'function-paren-newline': ['error', { 'minItems': 3, }], // 参数超过3个时换行
     'arrow-spacing': ['error', { 'before': true, 'after': true, }], // 箭头函数的前后空格

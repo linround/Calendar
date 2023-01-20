@@ -13,3 +13,5 @@ export interface CalendarTimestamp {
   present: boolean
   future: boolean
 }
+export type VTimestampInput = number | string | Date
+
