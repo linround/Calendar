@@ -15,3 +15,29 @@ export interface CalendarTimestamp {
 }
 export type VTimestampInput = number | string | Date
 
+export interface CalendarDaySlotScope extends CalendarTimestamp {
+  outside:boolean
+  index:number
+  week: CalendarTimestamp[]
+}
+
+export interface CalendarDayBodySlotScope extends CalendarDaySlotScope {
+  timeToY: CalendarTimestamp
+  timeDelta: CalendarTimestamp
+}
+
+export interface CalendarEvent {
+  [prop:string]: any
+}
+export interface CalendarEventParsed {
+  input: CalendarEvent
+  start: CalendarTimestamp
+  startIdentifier: number
+  startTimestampIdentifier: number
+  end: CalendarTimestamp
+  endIdentifier: number
+  endTimestampIdentifier: number
+  allDay: boolean
+  index: number
+  category: string | false
+}

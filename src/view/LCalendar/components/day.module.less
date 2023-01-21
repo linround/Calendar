@@ -13,23 +13,41 @@
       overflow: hidden;
       width: 100%;
     }
+    &Day {
+      flex: 1;
+      &Interval {
+        width: 100%;
+        border-top: 1px solid @borderColor;
+        &:first-child {
+          border-top: none !important;
+        }
+      }
+    }
     &DayContainer {
       display: flex;
     }
-    &DaysBody {
-      flex: 1;
+    &IntervalsBody {
+      border-right: 1px solid @borderColor;
     }
-    &DayItem {
-      &:first-child {
-        border-top: none !important;
-      }
-      border-top: 1px solid @borderColor;
-    }
-    &IntervalsBody {}
     &Interval {
       border-bottom: none;
-      border-right: 1px solid @borderColor;
-      border-top: 1px solid @borderColor;
+      position: relative;
+      &Text {
+        font-size: 16px;
+        text-align: center;
+        position: relative;
+        top: -6px;
+      }
+      &:after {
+        width: 8px;
+        position: absolute;
+        height: 1px;
+        display: block;
+        content: '';
+        right: 0;
+        bottom: -1px;
+        border-top: 1px solid @borderColor;
+      }
       &:first-child {
         border-top: none !important;
       }

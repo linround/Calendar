@@ -5,7 +5,11 @@ export const OFFSET_HOUR = 100
 export const OFFSET_TIME = 10000
 export const PARSE_REGEX = /^(\d{4})-(\d{1,2})(-(\d{1,2}))?(\D+(\d{1,2}))?(:(\d{1,2}))?(:(\d{1,2}))?$/
 
+export const PARSE_TIME = /(\d\d?)(:(\d\d?)|)(:(\d\d?)|)/
+export const MINUTES_IN_DAY = 24 * 60
 export const DAYS_IN_WEEK = 7
+export const MINUTE_MAX = 59
+export const HOUR_MAX = 23
 
 export const DAYS_IN_MONTH: number[] =
   [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -16,6 +20,7 @@ export const DAYS_IN_MONTH_MAX = 31
 export const MONTH_MAX = 12
 export const MONTH_MIN = 1
 export const DAY_MIN = 1
+export const MINUTES_IN_HOUR = 60
 
 export function padNumber(value:number, length: number):string {
   let padded = String(value)
@@ -104,6 +109,31 @@ export function getWeekdaySkips (weekdays: number[]): number[] {
 
   return skips
 }
+
+// is可做进一步的类型检查
+export function isTimedLess(input:VTimestampInput):input is (Date | number) {
+  return  (input instanceof Date) || (typeof input === 'number' && Number.isFinite(input))
+}
+
+export function updateHasTime(
+  timestamp:CalendarTimestamp, hasTime:boolean, now?:CalendarTimestamp
+):CalendarTimestamp {
+  if (timestamp.hasTime !== hasTime) {
+    timestamp.hasTime = hasTime
+    if (!hasTime) {
+      timestamp.hour = HOUR_MAX
+      timestamp.minute = MINUTE_MAX
+      timestamp.time = getTime(timestamp)
+    }
+    if (now) {
+      updateRelative(
+        timestamp, now, timestamp.hasTime
+      )
+    }
+  }
+  return timestamp
+}
+
 export function parseTimesStamp(
   input:VTimestampInput, required = false, now?:CalendarTimestamp
 ):CalendarTimestamp | null {
@@ -213,6 +243,14 @@ export function relativeDays (
 }
 
 
+export function getTimestampLabel(timestamp:CalendarTimestamp):string {
+  if (timestamp.hour === 0 && timestamp.minute === 0) {
+    return ''
+  }
+  return timestamp.time
+
+}
+
 export function nextDay (timestamp: CalendarTimestamp): CalendarTimestamp {
   timestamp.day += 1
   timestamp.weekday = (timestamp.weekday + 1) % DAYS_IN_WEEK
@@ -266,4 +304,62 @@ export function createDayList(
   if (!days.length) throw new Error()
 
   return days
+}
+
+export function parseTime(input:any):number|false {
+  if (typeof  input === 'number') {
+    // 可以是数字 23点
+    return input
+  } else if (typeof input === 'string') {
+    //可以是字符串 hh:mm:ss
+    const parts = PARSE_TIME.exec(input)
+    if (!parts) {
+      return false
+    }
+    return (parseInt(parts[1], 10) * 60) + (parseInt((parts[3]), 10) || 0)
+  } else if (typeof input === 'object') {
+    if (typeof input.hour !== 'number' || typeof input.minute !== 'number') {
+      return false
+    }
+    return (input.hour * 60) + input.minute
+  }
+  return false
+
+}
+
+export function updateMinutes (
+  timestamp: CalendarTimestamp, minutes: number, now?: CalendarTimestamp
+): CalendarTimestamp {
+  timestamp.hasTime = true
+  timestamp.hour = Math.floor(minutes / MINUTES_IN_HOUR)
+  timestamp.minute = minutes % MINUTES_IN_HOUR
+  timestamp.time = getTime(timestamp)
+  if (now) {
+    updateRelative(
+      timestamp, now, true
+    )
+  }
+
+  return timestamp
+}
+export function createIntervalList (
+  timestamp: CalendarTimestamp, first: number,
+  minutes: number, count: number, now?: CalendarTimestamp
+): CalendarTimestamp[] {
+  const intervals: CalendarTimestamp[] = []
+
+  for (let i = 0; i < count; i++) {
+
+    const min = first + (i * minutes)
+    const int = copyTimestamp(timestamp)
+    intervals.push(updateMinutes(
+      int, min, now
+    ))
+  }
+
+  return intervals
+}
+export type VTime = number|string| {
+  hour: number
+  minute: number
 }
