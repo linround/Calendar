@@ -1,5 +1,6 @@
 import dayStyle from './day.module.less'
 import { IDayProps } from './dayPropsType'
+import { CalendarEventOverlapModes } from '../utils/modes'
 import { Button } from 'antd'
 import {
   parseDate,
@@ -9,11 +10,12 @@ import {
   createDayList,
   MINUTES_IN_DAY,
   getTimestampLabel,
-  parseTime, createIntervalList, copyTimestamp, updateMinutes, VTime
+  parseTime, createIntervalList, copyTimestamp, updateMinutes, VTime, getDayIdentifier
 } from '../utils/timesStamp'
+import { parseEvent, isEventOn } from '../utils/events'
 import React, { useMemo, useState } from 'react'
 import {
-  CalendarTimestamp, CalendarDayBodySlotScope, CalendarEventParsed
+  CalendarTimestamp, CalendarDayBodySlotScope, CalendarEventParsed, CalendarDaySlotScope, CalendarEventOverlapMode
 } from '../utils/calendar'
 
 export default function (props: IDayProps) {
@@ -29,17 +31,19 @@ export default function (props: IDayProps) {
     intervalCount = 24,
     intervalHeight = 48,
     events = [],
+    eventStart = 'start',
+    eventEnd = 'end',
+    eventTimed = 'timed',
+    eventOverlapMode = 'stack',
+    eventOverlapThreshold = 60,
   } = props
 
   const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
     now: parseTimesStamp('0000-00-00 00:00', true),
     today: parseTimesStamp('0000-00-00', true),
   })
-  const parsedEvent = (input:CalendarTimestamp,index = 0) {
-    
-  }
-
-
+  // 可选的堆叠模式和列模式
+  const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
   const parsedStart = useMemo(() => parseTimesStamp(start, true), [start]) as CalendarTimestamp
   const parsedEnd = useMemo(() => {
     const start:CalendarTimestamp = parsedStart as CalendarTimestamp
@@ -64,7 +68,15 @@ export default function (props: IDayProps) {
     weekdaySkips,
     maxDays
   ])
-  const parsedEvents:CalendarEventParsed[] = useMemo(() => events.map(parsedEvent), [events])
+  const parsedEvents:CalendarEventParsed[] = useMemo(() => events.map((input, index) => parseEvent(
+    input,
+    index,
+    eventStart,
+    eventEnd,
+    (!!input[eventTimed]),
+    false
+  )), [events, eventStart, eventEnd])
+  const parsedEventOverlapThreshold = useMemo(() => parseInt(eventOverlapThreshold, 10), [eventOverlapThreshold])
   const parsedIntervalHeight: number = useMemo(() => parseInt(intervalHeight as string, 10), [intervalHeight])
   const parsedFirstTime:number|false = useMemo(() => parseTime(firstTime), [firstTime])
   const parsedFirstInterval:number = useMemo(() => parseInt(firstInterval as string, 10), [firstInterval])
@@ -82,7 +94,7 @@ export default function (props: IDayProps) {
     d, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now as CalendarTimestamp
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])
 
-
+  const eventWeekdays = useMemo(() => parsedWeekdays, [parsedWeekdays])
 
   // 点击事件
   const onHeaderClick = (day:CalendarTimestamp) => {
@@ -155,9 +167,20 @@ export default function (props: IDayProps) {
     }
   }
 
+  // 根据传入的日期，在所有的日历事件中过滤出该日的事件
+  const getEventsForDayTimed = (day:CalendarDaySlotScope):CalendarEventParsed[] => {
+    const identifier = getDayIdentifier(day)
+    return parsedEvents.filter((event) => !event.allDay &&
+    isEventOn(event, identifier))
+  }
 
 
 
+  function dayBodySlot() {
+    const mode = eventModeFunction(
+      parsedEvents, eventWeekdays[0], parsedEventOverlapThreshold
+    )
+  }
 
   return (
     <div className={dayStyle.dayContainer}>
@@ -212,6 +235,14 @@ export default function (props: IDayProps) {
                           key={interval.time} />
                       ))
                     }
+                    <div className={dayStyle.dayBodyTimedContainer}>
+                      {getEventsForDayTimed(getSlotScope(day))
+                        .map((event) => (
+                          <div>
+                            {event.startIdentifier}
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 ))
               }

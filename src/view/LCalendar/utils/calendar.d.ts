@@ -15,17 +15,24 @@ export interface CalendarTimestamp {
 }
 export type VTimestampInput = number | string | Date
 
+export type CalendarCategory =
+  | string
+  | {
+  name?: string
+  categoryName?: string
+  [key: string]: any
+}
 export interface CalendarDaySlotScope extends CalendarTimestamp {
   outside:boolean
   index:number
   week: CalendarTimestamp[]
+  category?: CalendarCategory
 }
 
 export interface CalendarDayBodySlotScope extends CalendarDaySlotScope {
   timeToY: CalendarTimestamp
   timeDelta: CalendarTimestamp
 }
-
 export interface CalendarEvent {
   [prop:string]: any
 }
@@ -41,3 +48,12 @@ export interface CalendarEventParsed {
   index: number
   category: string | false
 }
+
+export type CalendarEventOverlapMode = (
+  events: CalendarEventParsed[],
+  firstWeekday: number,
+  overlapThreshold: number) => (
+    day: CalendarDaySlotScope,
+    dayEvents: CalendarEventParsed[],
+    timed: boolean,
+    reset: boolean) => CalendarEventVisual[]

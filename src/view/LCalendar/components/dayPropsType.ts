@@ -1,3 +1,5 @@
+import { CalendarEvent } from '../utils/calendar'
+
 export interface ICalendar {
   type: string
   value: string | number | Date
@@ -8,14 +10,7 @@ export interface  IBase{
   weekdays: number[] | string
 }
 
-export interface IEvent {
-  name?: string
-  color?: string
-  start: number
-  end: number
-  timed?: boolean
-}
-export type IEvents = IEvent[]
+export type IEvents = CalendarEvent[]
 
 export interface IIntervals {
   maxDays: number
@@ -27,8 +22,15 @@ export interface IIntervals {
   intervalHeight: number |string
 }
 
+export interface IEvent {
+  eventStart : string,
+  eventEnd : string,
+  eventTimed : string,
+  eventOverlapMode: string
+  eventOverlapThreshold: number
+}
 
-export interface IDayProps extends ICalendar, IBase, IIntervals{
+export interface IDayProps extends ICalendar, IBase, IIntervals, IEvent{
   events: IEvents
 }
 

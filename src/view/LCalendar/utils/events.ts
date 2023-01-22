@@ -6,7 +6,7 @@ import {
   getDayIdentifier, getTimestampIdentifier
 } from './timesStamp'
 
-export function parsedEvent(
+export function parseEvent(
   input: CalendarEvent,
   index:number,
   startProperty: string,
@@ -22,16 +22,37 @@ export function parsedEvent(
 
   const start:CalendarTimestamp = isTimedLess(startInput) ?
     updateHasTime(startParsed as CalendarTimestamp, timed) :
-    startParsed
+    startParsed as CalendarTimestamp
   const end:CalendarTimestamp = isTimedLess(endInput) ?
     updateHasTime(endParsed as CalendarTimestamp, timed) :
-    endParsed
+    endParsed as CalendarTimestamp
 
   const startIdentifier: number = getDayIdentifier(start)
   const startTimestampIdentifier: number = getTimestampIdentifier(start)
 
   const endIdentifier: number = getDayIdentifier(end)
+  // 2359
   const endOffset: number = start.hasTime ? 0 : 2359
+  const endTimestampIdentifier: number = getTimestampIdentifier(end) + endOffset
 
-  return {} as CalendarEventParsed
+  const allDay = !start.hasTime
+  return {
+    input,
+    start,
+    startIdentifier,
+    startTimestampIdentifier,
+    end,
+    endIdentifier,
+    endTimestampIdentifier,
+    allDay,
+    index,
+    category,
+  }
+
+}
+
+// 判断时间是否在这天有交集
+export function isEventOn(event:CalendarEventParsed, dayIdentifier:number):boolean {
+  // 都是以日为单位
+  return event.startIdentifier <= dayIdentifier && event.endIdentifier >= dayIdentifier
 }
