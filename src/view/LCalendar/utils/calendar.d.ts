@@ -29,9 +29,11 @@ export interface CalendarDaySlotScope extends CalendarTimestamp {
   category?: CalendarCategory
 }
 
+export type CalendarTimeToY = (time:CalendarTimestamp | number | string, clamp?:boolean) => number
+export type CalendarTimeDelta = (time: CalendarTimestamp | number | string) => number| false
 export interface CalendarDayBodySlotScope extends CalendarDaySlotScope {
-  timeToY: CalendarTimestamp
-  timeDelta: CalendarTimestamp
+  timeToY: CalendarTimeToY
+  timeDelta: CalendarTimeDelta
 }
 export interface CalendarEvent {
   [prop:string]: any

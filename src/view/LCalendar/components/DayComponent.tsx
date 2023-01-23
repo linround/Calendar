@@ -12,7 +12,9 @@ import {
   getTimestampLabel,
   parseTime, createIntervalList, copyTimestamp, updateMinutes, VTime, getDayIdentifier
 } from '../utils/timesStamp'
-import { parseEvent, isEventOn } from '../utils/events'
+import {
+  parseEvent, isEventOn, genTimedEvents, IEventsRect
+} from '../utils/events'
 import React, { useMemo, useState } from 'react'
 import {
   CalendarTimestamp, CalendarDayBodySlotScope, CalendarEventParsed, CalendarDaySlotScope, CalendarEventOverlapMode
@@ -20,9 +22,10 @@ import {
 
 export default function (props: IDayProps) {
   const {
+    type = 'day',
     intervalWidth = 60,
     start = parseDate(new Date()).date,
-    end,
+    end = parseDate(new Date()).date,
     maxDays = 7,
     weekdays = [0, 1, 2, 3, 4, 5, 6],
     firstTime,
@@ -44,6 +47,7 @@ export default function (props: IDayProps) {
   })
   // 可选的堆叠模式和列模式
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
+
   const parsedStart = useMemo(() => parseTimesStamp(start, true), [start]) as CalendarTimestamp
   const parsedEnd = useMemo(() => {
     const start:CalendarTimestamp = parsedStart as CalendarTimestamp
@@ -76,7 +80,8 @@ export default function (props: IDayProps) {
     (!!input[eventTimed]),
     false
   )), [events, eventStart, eventEnd])
-  const parsedEventOverlapThreshold = useMemo(() => parseInt(eventOverlapThreshold, 10), [eventOverlapThreshold])
+  const categoryMode = useMemo<boolean>(() => type === 'category', [type])
+  const parsedEventOverlapThreshold = useMemo<number>(() => parseInt(eventOverlapThreshold as string, 10), [eventOverlapThreshold])
   const parsedIntervalHeight: number = useMemo(() => parseInt(intervalHeight as string, 10), [intervalHeight])
   const parsedFirstTime:number|false = useMemo(() => parseTime(firstTime), [firstTime])
   const parsedFirstInterval:number = useMemo(() => parseInt(firstInterval as string, 10), [firstInterval])
@@ -153,6 +158,7 @@ export default function (props: IDayProps) {
     const scope = copyTimestamp(timestamp) as any
     // 该方法可求得该时间点的所在高度的值
     scope.timeToY = timeToY
+    scope.timeDelta = timeDelta
     // 根据分钟数
     scope.minutesToPixels = minutesToPixels
     scope.week = days
@@ -176,12 +182,36 @@ export default function (props: IDayProps) {
 
 
 
-  function dayBodySlot() {
+
+
+
+  function dayBodySlot(day:CalendarDayBodySlotScope) {
     const mode = eventModeFunction(
-      parsedEvents, eventWeekdays[0], parsedEventOverlapThreshold
+      parsedEvents,
+      eventWeekdays[0],
+      parsedEventOverlapThreshold
+    )
+    const events = getEventsForDayTimed(day)
+    const visuals = mode(
+      day, events, true, categoryMode
+    )
+    console.log(visuals, '----visuals')
+    const visualsRect = visuals.map((visual) => genTimedEvents(visual, day))
+      .filter((i) => i !== false) as IEventsRect[]
+    return (
+      <>
+        {
+          visualsRect
+            .map((rect, index) => (
+              <div key={index} className={dayStyle.dayBodyTimedItem} style={{ ...rect.style, } }>
+                <div>{rect.content.title}</div>
+                <div>{rect.content.timeRange}</div>
+              </div>
+            ))
+        }
+      </>
     )
   }
-
   return (
     <div className={dayStyle.dayContainer}>
       <div className={dayStyle.dayHeader} style={{ marginRight: 17, }}>
@@ -207,6 +237,7 @@ export default function (props: IDayProps) {
         <div className={dayStyle.dayBodyScrollArea}>
           <div className={dayStyle.dayBodyPane} style={{ height: 48 * 24, }}>
             <div className={dayStyle.dayBodyDayContainer}>
+              {/*左边时间值*/}
               <div className={dayStyle.dayBodyIntervalsBody} style={{ width: 60, }}>
                 {
                   intervals[0].map((interval) => (
@@ -222,6 +253,7 @@ export default function (props: IDayProps) {
                 }
               </div>
               {
+                // 渲染对应的周、日视图
                 days.map((day, index) => (
                   <div
                     className={dayStyle.dayBodyDay}
@@ -236,12 +268,7 @@ export default function (props: IDayProps) {
                       ))
                     }
                     <div className={dayStyle.dayBodyTimedContainer}>
-                      {getEventsForDayTimed(getSlotScope(day))
-                        .map((event) => (
-                          <div>
-                            {event.startIdentifier}
-                          </div>
-                        ))}
+                      {dayBodySlot(getSlotScope(day))}
                     </div>
                   </div>
                 ))

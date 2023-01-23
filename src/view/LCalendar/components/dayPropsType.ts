@@ -27,7 +27,7 @@ export interface IEvent {
   eventEnd : string,
   eventTimed : string,
   eventOverlapMode: string
-  eventOverlapThreshold: number
+  eventOverlapThreshold: number|string
 }
 
 export interface IDayProps extends ICalendar, IBase, IIntervals, IEvent{

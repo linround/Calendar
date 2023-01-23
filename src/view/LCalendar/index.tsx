@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 
 
-const dateStr = '2023-01-22 01:07:00'
+const dateStr = '2023-01-23 01:07:00'
 const start = new Date(dateStr)
   .valueOf()
 const end = start + (2 * 60 * 60 * 1000)
@@ -36,6 +36,20 @@ export default function () {
       timed: true,
     },
     {
+      name: 'black',
+      color: 'black',
+      start: start,
+      end: otherEnd,
+      timed: true,
+    },
+    {
+      name: 'black',
+      color: 'black',
+      start: start,
+      end: otherEnd,
+      timed: true,
+    },
+    {
       name: 'blue',
       color: 'blue',
       start: start,
@@ -48,7 +62,7 @@ export default function () {
       <div className={styles.mainLeft}></div>
       <div className={styles.mainRight}>
         <MenuHeader />
-        <DayComponent events={events} />
+        <DayComponent events={events} type={'day'} maxDays={1} weekdays={[1]}  />
       </div>
     </div>
   )
