@@ -74,6 +74,7 @@ interface IEventContent {
   timeRange: string
 }
 export interface IEventsRect {
+  event: CalendarEvent
   style: IEventStyle
   content: IEventContent
 }
@@ -107,6 +108,7 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
 
   const inputContent = genTimeVisualContent(event)
   return {
+    event: event.input,
     content: {
       timeRange: inputContent.timeRange,
       title: inputContent.title,

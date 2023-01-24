@@ -2,11 +2,12 @@ import { IEvents } from './components/dayPropsType'
 import styles from './style.module.less'
 import DayComponent from './components/DayComponent'
 import MenuHeader from './modules/MenuHeader'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { CalendarEvent } from './utils/calendar'
 
 
 
-const dateStr = '2023-01-23 01:07:00'
+const dateStr = '2023-01-24 01:07:00'
 const start = new Date(dateStr)
   .valueOf()
 const end = start + (2 * 60 * 60 * 1000)
@@ -36,15 +37,15 @@ export default function () {
       timed: true,
     },
     {
-      name: 'black',
-      color: 'black',
+      name: 'green',
+      color: 'green',
       start: start,
       end: otherEnd,
       timed: true,
     },
     {
-      name: 'black',
-      color: 'black',
+      name: 'red',
+      color: 'red',
       start: start,
       end: otherEnd,
       timed: true,
@@ -57,12 +58,15 @@ export default function () {
       timed: true,
     }
   ])
+  const onMousedownEvent = (e: React.MouseEvent, event: CalendarEvent) => {
+    console.log('====event', event)
+  }
   return (
     <div className={styles.mainContainer}>
       <div className={styles.mainLeft}></div>
       <div className={styles.mainRight}>
         <MenuHeader />
-        <DayComponent events={events} type={'day'} maxDays={1} weekdays={[1]}  />
+        <DayComponent onMousedownEvent={onMousedownEvent} events={events} type={'day'} maxDays={1} weekdays={[2]}  />
       </div>
     </div>
   )

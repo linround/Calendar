@@ -20,7 +20,7 @@ import {
   CalendarTimestamp, CalendarDayBodySlotScope, CalendarEventParsed, CalendarDaySlotScope, CalendarEventOverlapMode
 } from '../utils/calendar'
 
-export default function (props: IDayProps) {
+export default function (props: Partial<IDayProps>) {
   const {
     type = 'day',
     intervalWidth = 60,
@@ -39,6 +39,9 @@ export default function (props: IDayProps) {
     eventTimed = 'timed',
     eventOverlapMode = 'stack',
     eventOverlapThreshold = 60,
+    onMousedownEvent = (e, event) => event,
+    onClickHeaderTime = (e, event) => event,
+
   } = props
 
   const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
@@ -58,6 +61,7 @@ export default function (props: IDayProps) {
     (weekdays || '').split(',')
       .map((x) => parseInt(x, 10))), [weekdays])
   const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
+
   const today = times.today
   const days: CalendarTimestamp[] = useMemo<CalendarTimestamp[]>(() => createDayList(
     parsedStart,
@@ -101,12 +105,6 @@ export default function (props: IDayProps) {
 
   const eventWeekdays = useMemo(() => parsedWeekdays, [parsedWeekdays])
 
-  // 点击事件
-  const onHeaderClick = (day:CalendarTimestamp) => {
-    console.log(
-      days, 'days', day
-    )
-  }
 
 
   const getTimestampAtEvent = (e:React.MouseEvent, day:CalendarTimestamp) => {
@@ -167,6 +165,7 @@ export default function (props: IDayProps) {
   const onMousemoveTime = (nativeEvent:React.MouseEvent, day:CalendarTimestamp) => {
     // 获取到鼠标hover处的时间值
     const time = getTimestampAtEvent(nativeEvent, day)
+    console.log(time)
     return {
       ...getSlotScope(time),
       nativeEvent,
@@ -195,7 +194,6 @@ export default function (props: IDayProps) {
     const visuals = mode(
       day, events, true, categoryMode
     )
-    console.log(visuals, '----visuals')
     const visualsRect = visuals.map((visual) => genTimedEvents(visual, day))
       .filter((i) => i !== false) as IEventsRect[]
     return (
@@ -203,8 +201,16 @@ export default function (props: IDayProps) {
         {
           visualsRect
             .map((rect, index) => (
-              <div key={index} className={dayStyle.dayBodyTimedItem} style={{ ...rect.style, } }>
-                <div>{rect.content.title}</div>
+              <div
+                key={index}
+                className={dayStyle.dayBodyTimedItem}
+                onMouseDown={(e) => onMousedownEvent(e, rect.event)}
+                style={{ ...rect.style, } }>
+                <div>
+                  <strong>
+                    {rect.content.title}
+                  </strong>
+                </div>
                 <div>{rect.content.timeRange}</div>
               </div>
             ))
@@ -225,7 +231,7 @@ export default function (props: IDayProps) {
               <div>
                 <Button
                   type='primary'
-                  onClick={() => onHeaderClick(day)}
+                  onClick={(e) => onClickHeaderTime(e, day)}
                   shape='circle'>
                   {day.day}</Button>
               </div>
