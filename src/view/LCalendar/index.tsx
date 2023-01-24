@@ -10,7 +10,7 @@ import { parseTimesStamp } from './utils/timesStamp'
 
 
 
-const dateStr = '2023-01-24 01:07:00'
+const dateStr = '2023-01-25 01:07:00'
 const start = new Date(dateStr)
   .valueOf()
 const end = start + (2 * 60 * 60 * 1000)
@@ -140,8 +140,7 @@ export default function () {
           onTimeContainerMousemove={onTimeContainerMousemove}
           onTimeContainerMouseup={onTimeContainerMouseup}
           events={events} type={'day'}
-          maxDays={1}
-          weekdays={[2]}  />
+          maxDays={1} />
       </div>
     </div>
   )
