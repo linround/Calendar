@@ -10,42 +10,36 @@ import { parseTimesStamp } from './utils/timesStamp'
 
 
 
-const dateStr = '2023-01-25 01:07:00'
+const dateStr = '2023-01-25 00:45:00'
 const start = new Date(dateStr)
   .valueOf()
 const end = start + (2 * 60 * 60 * 1000)
-const otherEnd = end + (2 * 60 * 60 * 1000)
+const otherEnd = end + (4 * 60 * 60 * 1000)
 
-const week = {
-  start: start + 24 * 60 * 60 * 1000,
-  end: end + 2 * 24 * 60 * 60 * 1000,
-}
-const month = {
-  start: start,
-  end: end + 9 * 24 * 60 * 60 * 1000,
-}
-
+const otherStart = start + (2 * 60 * 60 * 1000) + 15 * 60 * 1000
+const otherEnd2 = otherStart + (6 * 60 * 60 * 1000)
 
 
 export default function () {
   const [events, setEvents] = useState<IEvents>([
-    {
-      name: 'black',
-      color: 'black',
-      start: start,
-      end: otherEnd,
-      timed: true,
-    },
+
     {
       name: 'green',
       color: 'green',
-      start: start,
+      start: otherStart,
       end: otherEnd,
       timed: true,
     },
     {
       name: 'red',
       color: 'red',
+      start: otherStart,
+      end: otherEnd2,
+      timed: true,
+    },
+    {
+      name: 'black',
+      color: 'black',
       start: start,
       end: otherEnd,
       timed: true,
