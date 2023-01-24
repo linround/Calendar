@@ -19,8 +19,8 @@ export interface IIntervals {
   firstTime?: number|string|object
   firstInterval: number|string
   intervalMinutes: string |number
-  intervalCount: number | string
-  intervalHeight: number |string
+  intervalCount: number
+  intervalHeight: number
 }
 
 export interface IEvent {

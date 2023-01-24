@@ -31,12 +31,16 @@ export interface CalendarDaySlotScope extends CalendarTimestamp {
   category?: CalendarCategory
 }
 
+
+
 export type CalendarTimeToY = (time:CalendarTimestamp | number | string, clamp?:boolean) => number
 export type CalendarTimeDelta = (time: CalendarTimestamp | number | string) => number| false
 export interface CalendarDayBodySlotScope extends CalendarDaySlotScope {
   timeToY: CalendarTimeToY
   timeDelta: CalendarTimeDelta
 }
+
+
 export interface CalendarEvent {
   [prop:string]: any
 }
@@ -52,6 +56,9 @@ export interface CalendarEventParsed {
   index: number
   category: string | false
 }
+
+
+
 
 export type CalendarEventOverlapMode = (
   events: CalendarEventParsed[],

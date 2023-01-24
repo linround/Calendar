@@ -86,11 +86,11 @@ export default function (props: Partial<IDayProps>) {
   )), [events, eventStart, eventEnd])
   const categoryMode = useMemo<boolean>(() => type === 'category', [type])
   const parsedEventOverlapThreshold = useMemo<number>(() => parseInt(eventOverlapThreshold as string, 10), [eventOverlapThreshold])
-  const parsedIntervalHeight: number = useMemo(() => parseInt(intervalHeight as string, 10), [intervalHeight])
+  const parsedIntervalHeight: number = useMemo(() => intervalHeight, [intervalHeight])
   const parsedFirstTime:number|false = useMemo(() => parseTime(firstTime), [firstTime])
   const parsedFirstInterval:number = useMemo(() => parseInt(firstInterval as string, 10), [firstInterval])
   const parsedIntervalMinutes:number = useMemo(() => parseInt(intervalMinutes as string, 10), [intervalMinutes])
-  const parsedIntervalCount:number = useMemo(() => parseInt(intervalCount as string, 10), [intervalCount])
+  const parsedIntervalCount:number = useMemo(() => intervalCount, [intervalCount])
   const bodyHeight:number = useMemo(() => parsedIntervalCount * parsedIntervalHeight, [parsedIntervalCount * parsedIntervalHeight])
   const firstMinute:number = useMemo(() => {
     const time = parsedFirstTime
@@ -107,7 +107,7 @@ export default function (props: Partial<IDayProps>) {
 
 
 
-  const getTimestampAtEvent = (e:React.MouseEvent, day:CalendarTimestamp) => {
+  const getTimestampAtEvent = (e:React.MouseEvent, day:CalendarTimestamp):CalendarTimestamp => {
     const timestamp = copyTimestamp(day)
     const bounds = (e.currentTarget as HTMLElement).getBoundingClientRect()
     const baseMinutes = firstMinute
@@ -162,12 +162,11 @@ export default function (props: Partial<IDayProps>) {
     scope.week = days
     return scope
   }
-  const onMousemoveTime = (nativeEvent:React.MouseEvent, day:CalendarTimestamp) => {
+  const onMousemoveTimeContainer = (nativeEvent:React.MouseEvent, day:CalendarTimestamp) => {
     // 获取到鼠标hover处的时间值
-    const time = getTimestampAtEvent(nativeEvent, day)
-    console.log(time)
+    const time:CalendarTimestamp = getTimestampAtEvent(nativeEvent, day)
     return {
-      ...getSlotScope(time),
+      ...(getSlotScope(time) as CalendarDayBodySlotScope),
       nativeEvent,
     }
   }
@@ -241,10 +240,10 @@ export default function (props: Partial<IDayProps>) {
       </div>
       <div className={dayStyle.dayBody}>
         <div className={dayStyle.dayBodyScrollArea}>
-          <div className={dayStyle.dayBodyPane} style={{ height: 48 * 24, }}>
+          <div className={dayStyle.dayBodyPane} style={{ height: intervalHeight * intervalCount, }}>
             <div className={dayStyle.dayBodyDayContainer}>
               {/*左边时间值*/}
-              <div className={dayStyle.dayBodyIntervalsBody} style={{ width: 60, }}>
+              <div className={dayStyle.dayBodyIntervalsBody} style={{ width: intervalWidth, }}>
                 {
                   intervals[0].map((interval) => (
                     <div
@@ -264,12 +263,12 @@ export default function (props: Partial<IDayProps>) {
                   <div
                     className={dayStyle.dayBodyDay}
                     key={index}
-                    onMouseMove={(e) => onMousemoveTime(e, day)}>
+                    onMouseMove={(e) => onMousemoveTimeContainer(e, day)}>
                     {
                       intervals[index].map((interval) => (
                         <div
                           className={dayStyle.dayBodyDayInterval}
-                          style={{ height: 48, }}
+                          style={{ height: intervalHeight, }}
                           key={interval.time} />
                       ))
                     }
