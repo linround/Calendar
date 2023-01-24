@@ -1,3 +1,5 @@
+import React from 'react'
+
 export interface CalendarTimestamp {
   date: string
   time: string
@@ -68,3 +70,13 @@ export type CalendarEventOverlapMode = (
     dayEvents: CalendarEventParsed[],
     timed: boolean,
     reset: boolean) => CalendarEventVisual[]
+
+
+export interface IMouseEvent {
+  nativeEvent: React.MouseEvent
+  event: CalendarEvent
+}
+
+export interface IMouseTime extends CalendarDayBodySlotScope {
+  nativeEvent: React.MouseEvent
+}

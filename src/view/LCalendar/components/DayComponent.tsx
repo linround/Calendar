@@ -3,21 +3,30 @@ import { IDayProps } from './dayPropsType'
 import { CalendarEventOverlapModes } from '../utils/modes'
 import { Button } from 'antd'
 import {
-  parseDate,
-  parseTimesStamp,
-  getTimestampIdentifier,
-  getWeekdaySkips,
+  copyTimestamp,
   createDayList,
-  MINUTES_IN_DAY,
+  createIntervalList,
+  getDayIdentifier,
+  getTimestampIdentifier,
   getTimestampLabel,
-  parseTime, createIntervalList, copyTimestamp, updateMinutes, VTime, getDayIdentifier
+  getWeekdaySkips,
+  MINUTES_IN_DAY,
+  parseDate,
+  parseTime,
+  parseTimesStamp,
+  updateMinutes,
+  VTime
 } from '../utils/timesStamp'
 import {
-  parseEvent, isEventOn, genTimedEvents, IEventsRect
+  genTimedEvents, IEventsRect, isEventOn, parseEvent
 } from '../utils/events'
 import React, { useMemo, useState } from 'react'
 import {
-  CalendarTimestamp, CalendarDayBodySlotScope, CalendarEventParsed, CalendarDaySlotScope, CalendarEventOverlapMode
+  CalendarDayBodySlotScope,
+  CalendarDaySlotScope,
+  CalendarEventOverlapMode,
+  CalendarEventParsed,
+  CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
 
 export default function (props: Partial<IDayProps>) {
@@ -39,9 +48,11 @@ export default function (props: Partial<IDayProps>) {
     eventTimed = 'timed',
     eventOverlapMode = 'stack',
     eventOverlapThreshold = 60,
-    onMousedownEvent = (e, event) => event,
     onClickHeaderTime = (e, event) => event,
-
+    onMousedownEvent = (event:IMouseEvent) => undefined,
+    onTimeContainerMouseup = (time:IMouseTime) => undefined,
+    onTimeContainerMousemove = (time:IMouseTime) => undefined,
+    onTimeContainerMousedown = (time:IMouseTime) => undefined,
   } = props
 
   const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
@@ -162,7 +173,9 @@ export default function (props: Partial<IDayProps>) {
     scope.week = days
     return scope
   }
-  const onMousemoveTimeContainer = (nativeEvent:React.MouseEvent, day:CalendarTimestamp) => {
+
+
+  const onTimeContainer = (nativeEvent:React.MouseEvent, day:CalendarTimestamp):IMouseTime => {
     // 获取到鼠标hover处的时间值
     const time:CalendarTimestamp = getTimestampAtEvent(nativeEvent, day)
     return {
@@ -193,7 +206,8 @@ export default function (props: Partial<IDayProps>) {
     const visuals = mode(
       day, events, true, categoryMode
     )
-    const visualsRect = visuals.map((visual) => genTimedEvents(visual, day))
+    const visualsRect = visuals.map((visual) => genTimedEvents(visual,
+      day))
       .filter((i) => i !== false) as IEventsRect[]
     return (
       <>
@@ -203,7 +217,10 @@ export default function (props: Partial<IDayProps>) {
               <div
                 key={index}
                 className={dayStyle.dayBodyTimedItem}
-                onMouseDown={(e) => onMousedownEvent(e, rect.event)}
+                onMouseDown={(nativeEvent) => onMousedownEvent({
+                  nativeEvent,
+                  event: rect.event,
+                })}
                 style={{ ...rect.style, } }>
                 <div>
                   <strong>
@@ -240,10 +257,14 @@ export default function (props: Partial<IDayProps>) {
       </div>
       <div className={dayStyle.dayBody}>
         <div className={dayStyle.dayBodyScrollArea}>
-          <div className={dayStyle.dayBodyPane} style={{ height: intervalHeight * intervalCount, }}>
+          <div
+            className={dayStyle.dayBodyPane}
+            style={{ height: intervalHeight * intervalCount, }}>
             <div className={dayStyle.dayBodyDayContainer}>
               {/*左边时间值*/}
-              <div className={dayStyle.dayBodyIntervalsBody} style={{ width: intervalWidth, }}>
+              <div
+                className={dayStyle.dayBodyIntervalsBody}
+                style={{ width: intervalWidth, }}>
                 {
                   intervals[0].map((interval) => (
                     <div
@@ -263,7 +284,9 @@ export default function (props: Partial<IDayProps>) {
                   <div
                     className={dayStyle.dayBodyDay}
                     key={index}
-                    onMouseMove={(e) => onMousemoveTimeContainer(e, day)}>
+                    onMouseDown={(e) => onTimeContainerMousedown(onTimeContainer(e, day))}
+                    onMouseMove={(e) => onTimeContainerMousemove(onTimeContainer(e, day))}
+                    onMouseUp={(e) => onTimeContainerMouseup(onTimeContainer(e, day))}>
                     {
                       intervals[index].map((interval) => (
                         <div

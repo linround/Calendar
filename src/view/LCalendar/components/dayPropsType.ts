@@ -1,4 +1,6 @@
-import { CalendarEvent } from '../utils/calendar'
+import {
+  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime
+} from '../utils/calendar'
 import React from 'react'
 
 export interface ICalendar {
@@ -31,9 +33,14 @@ export interface IEvent {
   eventOverlapThreshold: number|string
 }
 
+
+
 export interface IHandleEvent {
-  onClickHeaderTime?: (e:React.MouseEvent, event:CalendarEvent) => any
-  onMousedownEvent?:(e:React.MouseEvent, event:CalendarEvent) => any
+  onClickHeaderTime: (e:React.MouseEvent, event:CalendarTimestamp) => any
+  onMousedownEvent:(event: IMouseEvent) => void
+  onTimeContainerMouseup: (time:IMouseTime) => void
+  onTimeContainerMousemove: (time:IMouseTime) => void
+  onTimeContainerMousedown: (time:IMouseTime) => void
 }
 
 export interface IDayProps extends ICalendar, IBase, IIntervals, IEvent, IHandleEvent{
