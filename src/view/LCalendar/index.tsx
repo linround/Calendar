@@ -100,7 +100,7 @@ export default function () {
 
   const DEFAULT_TYPE = 'week'
   const DEFAULT_MAX_DAYS = 7
-  const DEFAULT_WEEK_DAYS = [0, 1, 2, 3, 4, 5, 6]
+  const DEFAULT_WEEK_DAYS = [1, 2, 3, 4, 5, 6, 0]
   const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
   const [type, setType] = useState<string>(DEFAULT_TYPE)
   const [value, setValue] = useState<string|number|Date>('')
@@ -120,35 +120,6 @@ export default function () {
   const parsedValue = useMemo(() => (validateTimestamp(value) ?
     parseTimesStamp(value, true) :
     (parsedStart || times.today)), [value])
-
-
-  // 由于move会改变value
-  // 所以move会改变 parsedValue
-  // parsedValue 会改变当前页面的显示日期
-  useEffect(() => {
-    const around = parsedValue as CalendarTimestamp
-    let newStart = around.date
-    let newEnd = around.date
-    switch (type) {
-    case 'month':{
-      break
-    }
-    case 'week':{
-      newStart = getStartOfWeek(
-        around, weekDays, around
-      ).date
-      newEnd = getEndOfWeek(
-        around, weekDays, around
-      ).date
-      break
-    }
-    case 'day':{
-      break
-    }
-    }
-    setStart(newStart)
-    setEnd(newEnd)
-  }, [parsedValue])
 
   // 这里的是为了响应type的变化
   // 目前在周视图和日视图中
@@ -172,6 +143,37 @@ export default function () {
     setMaxDays(newMaxDays)
     setWeekDays(newWeekdays)
   }, [type])
+
+  // 由于move会改变value
+  // 所以move会改变 parsedValue
+  // parsedValue 会改变当前页面的显示日期
+  // 这里还会依赖到 maxDays weekDays
+  // 当修改type完成后,根据上面两个值渲染新的页面
+  useEffect(() => {
+    const around = parsedValue as CalendarTimestamp
+    let newStart = around.date
+    let newEnd = around.date
+    switch (type) {
+    case 'month':{
+      break
+    }
+    case 'week':{
+      newStart = getStartOfWeek(
+        around, weekDays, around
+      ).date
+      newEnd = getEndOfWeek(
+        around, weekDays, around
+      ).date
+      break
+    }
+    case 'day':{
+      break
+    }
+    }
+    setStart(newStart)
+    setEnd(newEnd)
+  }, [parsedValue, maxDays, weekDays])
+
 
 
   function move(amount = 1):void {
