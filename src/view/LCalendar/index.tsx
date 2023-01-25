@@ -6,17 +6,20 @@ import React, { useEffect, useState } from 'react'
 import {
   CalendarEvent, IMouseEvent, IMouseTime
 } from './utils/calendar'
-import { parseTimesStamp } from './utils/timesStamp'
+import {
+  getEndOfWeek,
+  getStartOfWeek, parseDate
+} from './utils/timesStamp'
 
 
 
 const dateStr = '2023-01-25 00:45:00'
-const start = new Date(dateStr)
+const eventStart = new Date(dateStr)
   .valueOf()
-const end = start + (2 * 60 * 60 * 1000)
-const otherEnd = end + (4 * 60 * 60 * 1000)
+const eventEnd = eventStart + (2 * 60 * 60 * 1000)
+const otherEnd = eventEnd + (4 * 60 * 60 * 1000)
 
-const otherStart = start + (2 * 60 * 60 * 1000) + 15 * 60 * 1000
+const otherStart = eventStart + (2 * 60 * 60 * 1000) + 15 * 60 * 1000
 const otherEnd2 = otherStart + (6 * 60 * 60 * 1000)
 
 
@@ -40,15 +43,15 @@ export default function () {
     {
       name: 'black',
       color: 'black',
-      start: start,
+      start: eventStart,
       end: otherEnd,
       timed: true,
     },
     {
       name: 'blue',
       color: 'blue',
-      start: start,
-      end: end,
+      start: eventStart,
+      end: eventEnd,
       timed: true,
     }
   ])
@@ -86,6 +89,7 @@ export default function () {
       setDragTime(dragTime)
     }
   }, [dragEvent, mousedownTime])
+
   const onTimeContainerMousemove = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousemoveTime(time)
@@ -117,12 +121,19 @@ export default function () {
         events.splice(
           index, 1, dragEvent
         )
-        console.log(events)
         setEvents([...events])
       }
     }
   }, [mousemoveTime, dragTime])
 
+  const around = parseDate(new Date())
+  const weekDays = [0, 1, 2, 3, 4, 5, 6]
+  const start = getStartOfWeek(
+    around, weekDays, around
+  ).date
+  const end = getEndOfWeek(
+    around, weekDays, around
+  ).date
   return (
     <div className={styles.mainContainer}>
       <div className={styles.mainLeft}></div>
@@ -133,8 +144,10 @@ export default function () {
           onTimeContainerMousedown={onTimeContainerMousedown}
           onTimeContainerMousemove={onTimeContainerMousemove}
           onTimeContainerMouseup={onTimeContainerMouseup}
-          events={events} type={'day'}
-          maxDays={1} />
+          events={events} type={'week'}
+          start={start}
+          end={end}
+          maxDays={7} />
       </div>
     </div>
   )

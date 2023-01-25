@@ -22,6 +22,10 @@ export const MONTH_MIN = 1
 export const DAY_MIN = 1
 export const MINUTES_IN_HOUR = 60
 
+
+
+export type CalendarTimestampOperation = (timestamp:CalendarTimestamp) => CalendarTimestamp
+
 export function padNumber(value:number, length: number):string {
   let padded = String(value)
   while (padded.length < length) {
@@ -362,4 +366,63 @@ export function createIntervalList (
 export type VTime = number|string| {
   hour: number
   minute: number
+}
+
+
+export function prevDay(timestamp:CalendarTimestamp) :CalendarTimestamp {
+  timestamp.day -= 1
+  timestamp.weekday = (timestamp.weekday + 6) % DAYS_IN_WEEK
+  if (timestamp.day < DAY_MIN) {
+    timestamp.month -= 1
+    if (timestamp.month < MONTH_MIN) {
+      timestamp.year -= 1
+      timestamp.month = MONTH_MAX
+    }
+    timestamp.day = daysInMonth(timestamp.year, timestamp.month)
+  }
+  return timestamp
+}
+
+export function findWeekday(
+  timestamp:CalendarTimestamp, weekday:number, mover:CalendarTimestampOperation = nextDay, maxDays = 6
+):CalendarTimestamp {
+  // 在eslint中设置了不允许修改函数的参数，所以设置一个中间值
+  let days = maxDays
+  while (timestamp.weekday !== weekday && days >= 0) {
+    // 在此处使用这个中间值
+    days = days - 1
+    mover(timestamp)
+  }
+  return timestamp
+}
+
+export function getStartOfWeek(
+  timestamp:CalendarTimestamp, weekdays:number[], today?:CalendarTimestamp
+):CalendarTimestamp {
+  const start = copyTimestamp(timestamp)
+  // 找到设置的一周的第一天的日期
+  findWeekday(
+    start, weekdays[0], prevDay
+  )
+  updateFormatted(start)
+  if (today) {
+    updateRelative(
+      start, today, start.hasTime
+    )
+  }
+  return start
+}
+
+export function getEndOfWeek(
+  timestamp:CalendarTimestamp, weekDays:number[], today?:CalendarTimestamp
+):CalendarTimestamp {
+  const end = copyTimestamp(timestamp)
+  findWeekday(end, weekDays[weekDays.length - 1])
+  updateFormatted(end)
+  if (today) {
+    updateRelative(
+      end, today, end.hasTime
+    )
+  }
+  return end
 }
