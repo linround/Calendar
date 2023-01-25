@@ -1,4 +1,6 @@
-import { CalendarTimestamp, VTimestampInput } from '../calendar'
+import {
+  CalendarTimestamp, IMouseTime, VTimestampInput
+} from '../calendar'
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100
@@ -21,6 +23,7 @@ export const MONTH_MAX = 12
 export const MONTH_MIN = 1
 export const DAY_MIN = 1
 export const MINUTES_IN_HOUR = 60
+export const ROUND_TIME = 15
 
 
 
@@ -74,6 +77,13 @@ export function parseDate(date:Date):CalendarTimestamp {
   })
 }
 
+
+export function timestampToDate(timestamp:CalendarTimestamp):Date {
+  const time = `${padNumber(timestamp.hour, 2)}:${padNumber(timestamp.minute, 2)}`
+  const date = timestamp.date
+  return new Date(`${date}T${time}:00+00:00`)
+}
+
 // 将日期转换为数字形式的年月日 2020-01-01 转变为 20200101
 export function getDayIdentifier (timestamp: { year: number, month: number, day: number }): number {
   return (timestamp.year * OFFSET_YEAR) + (timestamp.month * OFFSET_MONTH) + timestamp.day
@@ -88,10 +98,6 @@ export function getWeekday(timestamp:CalendarTimestamp):number {
   const date = `${timestamp.year}-${timestamp.month}-${timestamp.day}`
   return new Date(date)
     .getDay()
-}
-function updateWeekday(timestamp:CalendarTimestamp):CalendarTimestamp {
-  timestamp.weekday = getWeekday(timestamp)
-  return timestamp
 }
 export function getWeekdaySkips (weekdays: number[]): number[] {
   const skips: number[] = [1, 1, 1, 1, 1, 1, 1]
@@ -137,6 +143,23 @@ export function updateHasTime(
   }
   return timestamp
 }
+
+// 转换点击的时间为时间戳
+export const toTime = (tms:IMouseTime):number => new Date(
+  tms.year, tms.month - 1, tms.day, tms.hour, tms.minute
+)
+  .getTime()
+
+// 处理拖拽事件时的时间边界问题
+export const roundTime = (time:number, down = true):number => {
+  const roundTo = ROUND_TIME
+  const roundDownTime = roundTo * 60 * 1000
+  return down ?
+    time - (time % roundDownTime) :
+    time + (roundDownTime - (time % roundDownTime))
+}
+
+
 
 export function parseTimesStamp(
   input:VTimestampInput, required = false, now?:CalendarTimestamp
@@ -216,6 +239,11 @@ export function daysInMonth (year: number, month: number) {
   return isLeapYear(year) ? DAYS_IN_MONTH_LEAP[month] : DAYS_IN_MONTH[month]
 }
 
+
+export function updateWeekday(timestamp:CalendarTimestamp):CalendarTimestamp {
+  timestamp.weekday = getWeekday(timestamp)
+  return timestamp
+}
 export function updateRelative (
   timestamp: CalendarTimestamp, now: CalendarTimestamp, time = false
 ): CalendarTimestamp {
@@ -255,20 +283,6 @@ export function getTimestampLabel(timestamp:CalendarTimestamp):string {
 
 }
 
-export function nextDay (timestamp: CalendarTimestamp): CalendarTimestamp {
-  timestamp.day += 1
-  timestamp.weekday = (timestamp.weekday + 1) % DAYS_IN_WEEK
-  if (timestamp.day > DAYS_IN_MONTH_MIN && timestamp.day > daysInMonth(timestamp.year, timestamp.month)) {
-    timestamp.day = DAY_MIN
-    timestamp.month += 1
-    if (timestamp.month > MONTH_MAX) {
-      timestamp.month = MONTH_MIN
-      timestamp.year += 1
-    }
-  }
-
-  return timestamp
-}
 export function createDayList(
   start:CalendarTimestamp,
   end:CalendarTimestamp,
@@ -369,6 +383,21 @@ export type VTime = number|string| {
 }
 
 
+export function nextDay (timestamp: CalendarTimestamp): CalendarTimestamp {
+  timestamp.day += 1
+  timestamp.weekday = (timestamp.weekday + 1) % DAYS_IN_WEEK
+  if (timestamp.day > DAYS_IN_MONTH_MIN &&
+    timestamp.day > daysInMonth(timestamp.year, timestamp.month)) {
+    timestamp.day = DAY_MIN
+    timestamp.month += 1
+    if (timestamp.month > MONTH_MAX) {
+      timestamp.month = MONTH_MIN
+      timestamp.year += 1
+    }
+  }
+
+  return timestamp
+}
 export function prevDay(timestamp:CalendarTimestamp) :CalendarTimestamp {
   timestamp.day -= 1
   timestamp.weekday = (timestamp.weekday + 6) % DAYS_IN_WEEK
@@ -412,6 +441,13 @@ export function getStartOfWeek(
   }
   return start
 }
+
+export function validateTimestamp(input:any) :input is VTimestampInput {
+  return (typeof input === 'number' && Number.isFinite(input)) ||
+    (typeof input === 'string' && !!PARSE_REGEX.exec(input)) ||
+    (input instanceof Date)
+}
+
 
 export function getEndOfWeek(
   timestamp:CalendarTimestamp, weekDays:number[], today?:CalendarTimestamp

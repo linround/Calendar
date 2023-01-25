@@ -1,5 +1,16 @@
 import React from 'react'
 
+export interface IHeaderEvent {
+  prev: (amount: number) => any
+  next: (amount: number) => any
+  type: string
+  setType:(type: string) => any
+}
+export interface ICalendarHeader extends IHeaderEvent{
+  [prop:string]:any
+}
+
+
 export interface CalendarTimestamp {
   date: string
   time: string

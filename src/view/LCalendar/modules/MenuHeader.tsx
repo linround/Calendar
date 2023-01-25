@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Button,
   Space,
@@ -11,8 +11,16 @@ import moment from '@/src/utils/moment.ts'
 import { SvgIcon } from '@/src/components'
 import { MIDDLE_SIZE } from '@/src/components/SvgIcon'
 import { DownOutlined, GithubOutlined } from '@ant-design/icons'
+import { IHeaderEvent } from '../utils/calendar'
 
-export default function () {
+
+export default function (props:IHeaderEvent) {
+  const {
+    type = 'day',
+    prev = (amount) => amount,
+    next = (amount) => amount,
+    setType = (type) => type,
+  } = props
 
   const time = Date.now()
   const format = 'YYYY MM DD'
@@ -24,7 +32,6 @@ export default function () {
   }
 
 
-  const [type, setType] = useState('day')
   const handleSelect:MenuProps['onClick'] = (e) => {
     const { key, } = e
     setType(key)
@@ -33,6 +40,9 @@ export default function () {
   typeOptions.map((item) => {
     item && itemMap.set(item.key, item?.label)
   })
+
+
+
 
   const menuProps = {
     items: typeOptions,
@@ -45,12 +55,18 @@ export default function () {
           今
         </Button>
         <div className={styles.headerLeftIconContainer}>
-          <SvgIcon
-            iconName='left-arrow'
-            className={styles.headerLeftIcon} />
-          <SvgIcon
-            iconName='right-arrow'
-            className={styles.headerRightIcon} />
+          <span
+            onClick={() => prev(-1)}>
+            <SvgIcon
+              iconName='left-arrow'
+              className={styles.headerLeftIcon} />
+          </span>
+          <span
+            onClick={() => next(1)}>
+            <SvgIcon
+              iconName='right-arrow'
+              className={styles.headerRightIcon} />
+          </span>
         </div>
         <div>{timeStr}</div>
       </div>

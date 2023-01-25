@@ -56,6 +56,49 @@ export function parseEvent(
 
 }
 
+export
+function creatEvents() {
+  const dateStr = '2023-01-25 00:45:00'
+  const eventStart = new Date(dateStr)
+    .valueOf()
+  const eventEnd = eventStart + (2 * 60 * 60 * 1000)
+  const otherEnd = eventEnd + (4 * 60 * 60 * 1000)
+
+  const otherStart = eventStart + (2 * 60 * 60 * 1000) + 15 * 60 * 1000
+  const otherEnd2 = otherStart + (6 * 60 * 60 * 1000)
+  return [
+
+    {
+      name: 'green',
+      color: 'green',
+      start: otherStart,
+      end: otherEnd,
+      timed: true,
+    },
+    {
+      name: 'red',
+      color: 'red',
+      start: otherStart,
+      end: otherEnd2,
+      timed: true,
+    },
+    {
+      name: 'black',
+      color: 'black',
+      start: eventStart,
+      end: otherEnd,
+      timed: true,
+    },
+    {
+      name: 'blue',
+      color: 'blue',
+      start: eventStart,
+      end: eventEnd,
+      timed: true,
+    }
+  ]
+}
+
 // 判断时间是否在这天有交集
 export function isEventOn(event:CalendarEventParsed, dayIdentifier:number):boolean {
   // 都是以日为单位

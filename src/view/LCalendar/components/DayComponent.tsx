@@ -7,11 +7,9 @@ import {
   createDayList,
   createIntervalList,
   getDayIdentifier,
-  getTimestampIdentifier,
   getTimestampLabel,
   getWeekdaySkips,
   MINUTES_IN_DAY,
-  parseDate,
   parseTime,
   parseTimesStamp,
   updateMinutes,
@@ -20,7 +18,7 @@ import {
 import {
   genTimedEvents, IEventsRect, isEventOn, parseEvent
 } from '../utils/events'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import {
   CalendarDayBodySlotScope,
   CalendarDaySlotScope,
@@ -33,8 +31,9 @@ export default function (props: Partial<IDayProps>) {
   const {
     type = 'day',
     intervalWidth = 60,
-    start = parseDate(new Date()).date,
-    end = parseDate(new Date()).date,
+    times = null,
+    parsedStart = parseTimesStamp(new Date()),
+    parsedEnd = parseTimesStamp(new Date()),
     maxDays = 7,
     weekdays = [0, 1, 2, 3, 4, 5, 6],
     firstTime,
@@ -55,28 +54,23 @@ export default function (props: Partial<IDayProps>) {
     onTimeContainerMousedown = (time:IMouseTime) => undefined,
   } = props
 
-  const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
-    now: parseTimesStamp('0000-00-00 00:00', true),
-    today: parseTimesStamp('0000-00-00', true),
-  })
   // 可选的堆叠模式和列模式
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
 
-  const parsedStart = useMemo(() => parseTimesStamp(start, true), [start]) as CalendarTimestamp
-  const parsedEnd = useMemo(() => {
-    const start:CalendarTimestamp = parsedStart as CalendarTimestamp
-    const endVal:CalendarTimestamp = end ? parseTimesStamp(end) || start : start
-    return getTimestampIdentifier(endVal) < getTimestampIdentifier(start) ? start : endVal
-  }, [parsedStart, end])
+
+
+
+
+
   const parsedWeekdays = useMemo<number[]>(() => (Array.isArray(weekdays) ? weekdays :
     (weekdays || '').split(',')
       .map((x) => parseInt(x, 10))), [weekdays])
   const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
 
-  const today = times.today
+  const today = times?.today || null
   const days: CalendarTimestamp[] = useMemo<CalendarTimestamp[]>(() => createDayList(
-    parsedStart,
-    parsedEnd,
+    parsedStart as CalendarTimestamp,
+    parsedEnd as CalendarTimestamp,
     today as CalendarTimestamp,
     weekdaySkips,
     maxDays
@@ -109,7 +103,7 @@ export default function (props: Partial<IDayProps>) {
       time :
       parsedFirstInterval * parsedIntervalMinutes
   }, [parsedFirstTime, parsedIntervalMinutes, parsedFirstInterval])
-  const now = times.now
+  const now = times?.now || null
   const intervals:CalendarTimestamp[][] = useMemo<CalendarTimestamp[][]>(() => days.map((d) => createIntervalList(
     d, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now as CalendarTimestamp
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])

@@ -7,10 +7,15 @@ export interface ICalendar {
   type: string
   value: string | number | Date
 }
+export interface ITimes {
+  now:CalendarTimestamp | null
+  today: CalendarTimestamp | null
+}
 export interface  IBase{
-  start: string
-  end: string
+  parsedStart: CalendarTimestamp
+  parsedEnd: CalendarTimestamp
   weekdays: number[] | string
+  times: ITimes
 }
 
 export type IEvents = CalendarEvent[]
