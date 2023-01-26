@@ -39,6 +39,7 @@ import { creatEvents } from './utils/events'
 import MenuHeader from './modules/MenuHeader'
 import { IEvents } from './components/dayPropsType'
 import DayComponent from './components/DayComponent'
+import { MonthComponent } from './components/MonthComponent'
 
 
 
@@ -288,18 +289,21 @@ export default function () {
           setType={setType}
           prev={(amount) => move(amount)}
           next={(amount) => move(amount)} />
-        <DayComponent
-          onMousedownEvent={onMousedownEvent}
-          onContextMenuEvent={onContextMenuEvent}
-          onTimeContainerMousedown={onTimeContainerMousedown}
-          onTimeContainerMousemove={onTimeContainerMousemove}
-          onTimeContainerMouseup={onTimeContainerMouseup}
-          events={events}
-          type={type}
-          parsedStart={parsedStart}
-          parsedEnd={parsedEnd}
-          times={times}
-          maxDays={maxDays} />
+        {
+          type === 'month' ? <MonthComponent /> :
+            <DayComponent
+              onMousedownEvent={onMousedownEvent}
+              onContextMenuEvent={onContextMenuEvent}
+              onTimeContainerMousedown={onTimeContainerMousedown}
+              onTimeContainerMousemove={onTimeContainerMousemove}
+              onTimeContainerMouseup={onTimeContainerMouseup}
+              events={events}
+              type={type}
+              parsedStart={parsedStart}
+              parsedEnd={parsedEnd}
+              times={times}
+              maxDays={maxDays} />
+        }
       </div>
     </div>
   )
