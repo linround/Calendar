@@ -4,10 +4,15 @@ import React, {
   useEffect
 } from 'react'
 import {
+  DEFAULT_TYPE,
+  DEFAULT_MAX_DAYS,
+  DEFAULT_WEEK_DAYS
+} from './utils/time'
+import {
   IMouseTime,
   IMouseEvent,
   CalendarEvent,
-  CalendarTimestamp
+  CalendarTimestamp, IValue
 } from './utils/calendar'
 import {
   toTime,
@@ -21,10 +26,13 @@ import {
   copyTimestamp,
   updateWeekday,
   getStartOfWeek,
+  updateRelative,
+  timestampToDate,
   parseTimesStamp,
+  updateFormatted,
   DAYS_IN_MONTH_MAX,
   validateTimestamp,
-  getTimestampIdentifier, updateFormatted, updateRelative, timestampToDate
+  getTimestampIdentifier, ROUND_TIME
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import { creatEvents } from './utils/events'
@@ -42,8 +50,8 @@ export default function () {
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<number|null>(null)
   const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
-
-
+  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
+  const [createStart, setCreateStart] = useState<number| null>(null)
   const onMousedownEvent = ({ event, }: IMouseEvent) => {
     setDragEvent(event)
   }
@@ -51,13 +59,6 @@ export default function () {
     const time = toTime(tms)
     setMousedownTime(time)
   }
-  useEffect(() => {
-    if (dragEvent && mousedownTime) {
-      const start = dragEvent.start
-      const dragTime = mousedownTime - start
-      setDragTime(dragTime)
-    }
-  }, [dragEvent, mousedownTime])
 
   const onTimeContainerMousemove = (tms:IMouseTime) => {
     const time = toTime(tms)
@@ -67,9 +68,54 @@ export default function () {
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
+    setCreateEvent(null)
+    setCreateStart(null)
   }
 
 
+
+  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
+    const index = events.findIndex((e) => e === oldEvent)
+    events.splice(
+      index, 1, newEvent
+    )
+    setEvents([...events])
+  }
+
+
+
+
+  // 以下处理是对原有的日历时间进行拖拽
+  // 还是新建的日历事件
+  // 对于新建的日历事件 依赖dragEvent(被拖拽的事件) 和 点击处的时间点(mousedownTime)
+  // 最终设置拖拽的时间段 dragTime
+  useEffect(() => {
+    if (dragEvent && mousedownTime) {
+      const start = dragEvent.start
+      const dragTime = mousedownTime - start
+      setDragTime(dragTime)
+    } else if (mousedownTime) {
+      const createStart = roundTime(mousedownTime)
+      const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
+      const createEvent = {
+        name: `日历事件 ${events.length}`,
+        color: 'green',
+        start: createStart,
+        end: createEnd,
+        timed: true,
+      }
+      setEvents([...events, createEvent])
+      setCreateEvent(createEvent)
+      setCreateStart(createStart)
+    }
+  }, [mousedownTime])
+
+
+
+
+
+  // 以下是点击日历事件，对日历事件进行拖拽的逻辑
+  // 主要依赖拖拽的时间段 dragTime
   useEffect(() => {
     if (dragEvent && mousedownTime) {
       if (dragTime && mousemoveTime) {
@@ -77,7 +123,6 @@ export default function () {
         const end = dragEvent.end
         // 计算事件的时长
         const duration = end - start
-
         // 以下即: (mousemoveTime-mousedownTime) + start
         // 从而得到了一个新的开始时间
         const newStartTime = mousemoveTime - dragTime
@@ -85,26 +130,34 @@ export default function () {
         const newEnd = newStart + duration
         dragEvent.start = newStart
         dragEvent.end = newEnd
+        resetEvents(dragEvent, dragEvent)
 
-        const index = events.findIndex((e) => e === dragEvent)
-        events.splice(
-          index, 1, dragEvent
-        )
-        setEvents([...events])
       }
     }
   }, [mousemoveTime, dragTime])
 
 
+  // 单独的将 createEvent 这个事件的逻辑提取出来
+  // 通过监听move事件的时间点，设置事件时间段
+  useEffect(() => {
+    if (createEvent &&
+      mousemoveTime &&
+      createStart) {
+      const mouseRound = roundTime(mousemoveTime)
+      createEvent.start = Math.min(mouseRound, createStart)
+      createEvent.end = Math.max(mouseRound, createStart)
+      resetEvents(createEvent, createEvent)
+    }
+  }, [createEvent, mousemoveTime, createStart])
 
 
-  const DEFAULT_TYPE = 'week'
-  const DEFAULT_MAX_DAYS = 7
-  const DEFAULT_WEEK_DAYS = [1, 2, 3, 4, 5, 6, 0]
-  const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
+
+
+
   const [type, setType] = useState<string>(DEFAULT_TYPE)
-  const [value, setValue] = useState<string|number|Date>('')
+  const [value, setValue] = useState<IValue>('')
   const [weekDays, setWeekDays] = useState(DEFAULT_WEEK_DAYS)
+  const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
   const [start, setStart] = useState<string>(parseTimesStamp(Date.now())?.date as string)
   const [end, setEnd] = useState<string>(parseTimesStamp(Date.now())?.date as string)
   const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
@@ -146,7 +199,7 @@ export default function () {
 
   // 由于move会改变value
   // 所以move会改变 parsedValue
-  // parsedValue 会改变当前页面的显示日期
+  // value 会改变当前页面的显示日期
   // 这里还会依赖到 maxDays weekDays
   // 当修改type完成后,根据上面两个值渲染新的页面
   useEffect(() => {
@@ -172,7 +225,7 @@ export default function () {
     }
     setStart(newStart)
     setEnd(newEnd)
-  }, [parsedValue, maxDays, weekDays])
+  }, [value, maxDays, weekDays])
 
 
 
@@ -219,14 +272,13 @@ export default function () {
   }
 
 
-
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.mainLeft}></div>
       <div className={styles.mainRight}>
         <MenuHeader
           type={type}
+          setToday={setValue}
           setType={setType}
           prev={(amount) => move(amount)}
           next={(amount) => move(amount)} />

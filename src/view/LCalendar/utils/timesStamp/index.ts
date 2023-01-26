@@ -23,7 +23,7 @@ export const MONTH_MAX = 12
 export const MONTH_MIN = 1
 export const DAY_MIN = 1
 export const MINUTES_IN_HOUR = 60
-export const ROUND_TIME = 15
+export const ROUND_TIME = 10
 
 
 
@@ -152,8 +152,7 @@ export const toTime = (tms:IMouseTime):number => new Date(
 
 // 处理拖拽事件时的时间边界问题
 export const roundTime = (time:number, down = true):number => {
-  const roundTo = ROUND_TIME
-  const roundDownTime = roundTo * 60 * 1000
+  const roundDownTime = ROUND_TIME * 60 * 1000
   return down ?
     time - (time % roundDownTime) :
     time + (roundDownTime - (time % roundDownTime))

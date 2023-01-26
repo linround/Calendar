@@ -56,9 +56,8 @@ export function parseEvent(
 
 }
 
-export
-function creatEvents() {
-  const dateStr = '2023-01-25 00:45:00'
+export function creatEvents() {
+  const dateStr = '2023-01-26 00:45:00'
   const eventStart = new Date(dateStr)
     .valueOf()
   const eventEnd = eventStart + (2 * 60 * 60 * 1000)

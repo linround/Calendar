@@ -1,10 +1,14 @@
 import React from 'react'
 
+
+export type IValue = string|number|Date
+
 export interface IHeaderEvent {
   prev: (amount: number) => any
   next: (amount: number) => any
   type: string
   setType:(type: string) => any
+  setToday:(type: IValue) => any
 }
 export interface ICalendarHeader extends IHeaderEvent{
   [prop:string]:any

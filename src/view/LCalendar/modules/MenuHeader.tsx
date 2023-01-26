@@ -20,6 +20,7 @@ export default function (props:IHeaderEvent) {
     prev = (amount) => amount,
     next = (amount) => amount,
     setType = (type) => type,
+    setToday = (today) => today,
   } = props
 
   const time = Date.now()
@@ -27,15 +28,9 @@ export default function (props:IHeaderEvent) {
   const timeStr = moment(time)
     .format(format)
 
-  const handleClick = () => {
-    console.log(123)
-  }
 
 
-  const handleSelect:MenuProps['onClick'] = (e) => {
-    const { key, } = e
-    setType(key)
-  }
+
   const itemMap = new Map()
   typeOptions.map((item) => {
     item && itemMap.set(item.key, item?.label)
@@ -43,15 +38,18 @@ export default function (props:IHeaderEvent) {
 
 
 
-
+  const onClick:MenuProps['onClick'] = (e) => {
+    const { key, } = e
+    setType(key)
+  }
   const menuProps = {
     items: typeOptions,
-    onClick: handleSelect,
+    onClick: onClick,
   }
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
-        <Button onClick={handleClick}>
+        <Button onClick={() => setToday(Date.now())}>
           今
         </Button>
         <div className={styles.headerLeftIconContainer}>
