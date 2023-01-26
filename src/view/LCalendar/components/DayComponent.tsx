@@ -16,7 +16,7 @@ import {
   VTime
 } from '../utils/timesStamp'
 import {
-  genTimedEvents, IEventsRect, isEventOn, parseEvent
+  genTimedEvents, IEventsRect, isEventOn, parseEvent, stopDefaultEvent
 } from '../utils/events'
 import React, { useMemo } from 'react'
 import {
@@ -47,8 +47,9 @@ export default function (props: Partial<IDayProps>) {
     eventTimed = 'timed',
     eventOverlapMode = 'stack',
     eventOverlapThreshold = 60,
-    onClickHeaderTime = (e, event) => event,
     onMousedownEvent = (event:IMouseEvent) => undefined,
+    onContextMenuEvent = (time:IMouseEvent) => undefined,
+    onTimeHeaderClick = (e, event) => event,
     onTimeContainerMouseup = (time:IMouseTime) => undefined,
     onTimeContainerMousemove = (time:IMouseTime) => undefined,
     onTimeContainerMousedown = (time:IMouseTime) => undefined,
@@ -211,6 +212,13 @@ export default function (props: Partial<IDayProps>) {
               <div
                 key={index}
                 className={dayStyle.dayBodyTimedItem}
+                onContextMenu={(nativeEvent) => {
+                  stopDefaultEvent(nativeEvent.nativeEvent)
+                  onContextMenuEvent({
+                    nativeEvent,
+                    event: rect.event,
+                  })
+                }}
                 onMouseDown={(nativeEvent) => onMousedownEvent({
                   nativeEvent,
                   event: rect.event,
@@ -241,7 +249,7 @@ export default function (props: Partial<IDayProps>) {
               <div>
                 <Button
                   type='primary'
-                  onClick={(e) => onClickHeaderTime(e, day)}
+                  onClick={(e) => onTimeHeaderClick(e, day)}
                   shape='circle'>
                   {day.day}</Button>
               </div>
@@ -289,7 +297,8 @@ export default function (props: Partial<IDayProps>) {
                           key={interval.time} />
                       ))
                     }
-                    <div className={dayStyle.dayBodyTimedContainer}>
+                    <div
+                      className={dayStyle.dayBodyTimedContainer}>
                       {dayBodySlot(getSlotScope(day))}
                     </div>
                   </div>
