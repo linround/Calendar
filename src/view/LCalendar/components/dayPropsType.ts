@@ -41,8 +41,9 @@ export interface IEvent {
 
 
 export interface IHandleEvent {
-  onClickHeaderTime: (e:React.MouseEvent, event:CalendarTimestamp) => any
+  onTimeHeaderClick: (e:React.MouseEvent, event:CalendarTimestamp) => any
   onMousedownEvent:(event: IMouseEvent) => void
+  onContextMenuEvent: (event: IMouseEvent) => void
   onTimeContainerMouseup: (time:IMouseTime) => void
   onTimeContainerMousemove: (time:IMouseTime) => void
   onTimeContainerMousedown: (time:IMouseTime) => void

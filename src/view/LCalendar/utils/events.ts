@@ -8,6 +8,7 @@ import {
 } from './timesStamp'
 import { CalendarEventVisual } from './modes/common'
 
+
 const EVENT_DEFAULT_BG_COLOR = 'white'
 const EVENT_DEFAULT_BG_TITLE = '无标题'
 const EVENT_MIN_HEIGHT = 20
@@ -162,5 +163,14 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
       width: `${width}%`,
       backgroundColor: inputContent.backgroundColor,
     },
+  }
+}
+
+export function stopDefaultEvent(e:MouseEvent) {
+  if (e.stopPropagation) {
+    e.stopPropagation()
+  }
+  if (e.preventDefault) {
+    e.preventDefault()
   }
 }

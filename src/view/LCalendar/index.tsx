@@ -55,9 +55,15 @@ export default function () {
   const onMousedownEvent = ({ event, }: IMouseEvent) => {
     setDragEvent(event)
   }
+  const onContextMenuEvent = ({ event, }:IMouseEvent) => {
+    console.log('onTimeContainerContextMenu', event)
+  }
   const onTimeContainerMousedown = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousedownTime(time)
+    // 在这里设置mousemoveTime
+    // 由于鼠标一直在移动，所以确保点击下去的时候不是之前设置的time值
+    setMousemoveTime(null)
   }
 
   const onTimeContainerMousemove = (tms:IMouseTime) => {
@@ -94,7 +100,7 @@ export default function () {
       const start = dragEvent.start
       const dragTime = mousedownTime - start
       setDragTime(dragTime)
-    } else if (mousedownTime) {
+    } else if (mousedownTime && !dragEvent) {
       const createStart = roundTime(mousedownTime)
       const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
       const createEvent = {
@@ -108,7 +114,7 @@ export default function () {
       setCreateEvent(createEvent)
       setCreateStart(createStart)
     }
-  }, [mousedownTime])
+  }, [mousedownTime, dragEvent])
 
 
 
@@ -284,6 +290,7 @@ export default function () {
           next={(amount) => move(amount)} />
         <DayComponent
           onMousedownEvent={onMousedownEvent}
+          onContextMenuEvent={onContextMenuEvent}
           onTimeContainerMousedown={onTimeContainerMousedown}
           onTimeContainerMousemove={onTimeContainerMousemove}
           onTimeContainerMouseup={onTimeContainerMouseup}
