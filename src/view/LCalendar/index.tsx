@@ -143,8 +143,8 @@ export default function () {
   }, [mousemoveTime, dragTime])
 
 
-  // 单独的将 createEvent 这个事件的逻辑提取出来
   // 通过监听move事件的时间点，设置事件时间段
+  // 单独的将 createEvent 这个事件的逻辑提取出来
   useEffect(() => {
     if (createEvent &&
       mousemoveTime &&
