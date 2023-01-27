@@ -1,10 +1,9 @@
 import React, {
   useMemo,
   useState,
-  useEffect
+  useEffect, useContext
 } from 'react'
 import {
-  DEFAULT_TYPE,
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
 } from './utils/time'
@@ -12,7 +11,7 @@ import {
   IMouseTime,
   IMouseEvent,
   CalendarEvent,
-  CalendarTimestamp, IValue
+  CalendarTimestamp
 } from './utils/calendar'
 import {
   toTime,
@@ -28,7 +27,7 @@ import {
   getStartOfWeek,
   updateRelative,
   timestampToDate,
-  parseTimesStamp,
+  parseTimeStamp,
   updateFormatted,
   DAYS_IN_MONTH_MAX,
   validateTimestamp,
@@ -40,6 +39,10 @@ import MenuHeader from './modules/MenuHeader'
 import { IEvents } from './components/dayPropsType'
 import DayComponent from './components/DayComponent'
 import { MonthComponent } from './components/MonthComponent'
+import {
+  BaseContext, CalendarContext, IntervalsContext
+} from './props/propsContext'
+
 
 
 
@@ -160,25 +163,23 @@ export default function () {
 
 
 
+  const { weekDays, start, end, setEnd, setStart, setWeekDays, } = useContext(BaseContext)
+  const { type, value, setValue, setType, } = useContext(CalendarContext)
+  const { maxDays, setMaxDays, } = useContext(IntervalsContext)
 
-  const [type, setType] = useState<string>(DEFAULT_TYPE)
-  const [value, setValue] = useState<IValue>('')
-  const [weekDays, setWeekDays] = useState(DEFAULT_WEEK_DAYS)
-  const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
-  const [start, setStart] = useState<string>(parseTimesStamp(Date.now())?.date as string)
-  const [end, setEnd] = useState<string>(parseTimesStamp(Date.now())?.date as string)
+
   const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
-    now: parseTimesStamp('0000-00-00 00:00', true),
-    today: parseTimesStamp('0000-00-00', true),
+    now: parseTimeStamp('0000-00-00 00:00', true),
+    today: parseTimeStamp('0000-00-00', true),
   })
-  const parsedStart = useMemo(() => parseTimesStamp(start, true), [start]) as CalendarTimestamp
+  const parsedStart = useMemo(() => parseTimeStamp(start, true), [start]) as CalendarTimestamp
   const parsedEnd = useMemo(() => {
     const start:CalendarTimestamp = parsedStart as CalendarTimestamp
-    const endVal:CalendarTimestamp = end ? parseTimesStamp(end) || start : start
+    const endVal:CalendarTimestamp = end ? parseTimeStamp(end, true) || start : start
     return getTimestampIdentifier(endVal) < getTimestampIdentifier(start) ? start : endVal
   }, [end])
-  const parsedValue = useMemo(() => (validateTimestamp(value) ?
-    parseTimesStamp(value, true) :
+  const parsedValue = useMemo<CalendarTimestamp>(() => (validateTimestamp(value) ?
+    parseTimeStamp(value, true) :
     (parsedStart || times.today)), [value])
 
   // 这里的是为了响应type的变化
@@ -213,6 +214,7 @@ export default function () {
     const around = parsedValue as CalendarTimestamp
     let newStart = around.date
     let newEnd = around.date
+    console.log('value, maxDays, weekDays')
     switch (type) {
     case 'month':{
       break
@@ -290,7 +292,8 @@ export default function () {
           prev={(amount) => move(amount)}
           next={(amount) => move(amount)} />
         {
-          type === 'month' ? <MonthComponent /> :
+          type === 'month' ?
+            <MonthComponent /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
               onContextMenuEvent={onContextMenuEvent}

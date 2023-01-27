@@ -160,7 +160,8 @@ export const roundTime = (time:number, down = true):number => {
 
 
 
-export function parseTimesStamp(
+export function parseTimeStamp (input: VTimestampInput, required: true, now?: CalendarTimestamp): CalendarTimestamp
+export function parseTimeStamp(
   input:VTimestampInput, required = false, now?:CalendarTimestamp
 ):CalendarTimestamp | null {
   let value = input // 这里重新赋值，主要是为了eslint代码检查 不能直接修改函数参数值

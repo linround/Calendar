@@ -1,11 +1,11 @@
 import {
-  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime
+  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime, IValue
 } from '../utils/calendar'
 import React from 'react'
 
 export interface ICalendar {
   type: string
-  value: string | number | Date
+  value: IValue
 }
 export interface ITimes {
   now:CalendarTimestamp | null

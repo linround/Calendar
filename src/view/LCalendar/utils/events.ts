@@ -3,7 +3,7 @@ import {
   CalendarEvent, CalendarEventParsed, CalendarTimestamp
 } from './calendar'
 import {
-  isTimedLess, parseTimesStamp, updateHasTime,
+  isTimedLess, parseTimeStamp, updateHasTime,
   getDayIdentifier, getTimestampIdentifier, MINUTES_IN_DAY
 } from './timesStamp'
 import { CalendarEventVisual } from './modes/common'
@@ -22,8 +22,8 @@ export function parseEvent(
 ): CalendarEventParsed {
   const startInput = input[startProperty]
   const endInput = input[endProperty]
-  const startParsed = parseTimesStamp(startInput, true)
-  const endParsed = endInput ? parseTimesStamp(endInput, true) : startParsed
+  const startParsed = parseTimeStamp(startInput, true)
+  const endParsed = endInput ? parseTimeStamp(endInput, true) : startParsed
 
 
   const start:CalendarTimestamp = isTimedLess(startInput) ?

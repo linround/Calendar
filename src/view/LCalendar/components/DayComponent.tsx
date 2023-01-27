@@ -11,7 +11,7 @@ import {
   getWeekdaySkips,
   MINUTES_IN_DAY,
   parseTime,
-  parseTimesStamp,
+  parseTimeStamp,
   updateMinutes,
   VTime
 } from '../utils/timesStamp'
@@ -32,8 +32,8 @@ export default function (props: Partial<IDayProps>) {
     type = 'day',
     intervalWidth = 60,
     times = null,
-    parsedStart = parseTimesStamp(new Date()),
-    parsedEnd = parseTimesStamp(new Date()),
+    parsedStart = parseTimeStamp(new Date(), true),
+    parsedEnd = parseTimeStamp(new Date(), true),
     maxDays = 7,
     weekdays = [0, 1, 2, 3, 4, 5, 6],
     firstTime,

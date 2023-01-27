@@ -6,6 +6,7 @@ import Loading from './view/Loading'
 import Click from './view/Click'
 import Icons from './view/Icons'
 import LCalendar from './view/LCalendar'
+import { VisualContext } from './view/LCalendar/props/VisualContext'
 
 
 
@@ -28,7 +29,11 @@ function App() {
   const element = useRoutes([
     {
       path: '/',
-      element: <LCalendar />,
+      element: (
+        <VisualContext value={{}}>
+          <LCalendar></LCalendar>
+        </VisualContext>
+      ),
     },
     {
       path: '/Home',
