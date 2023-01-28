@@ -7,3 +7,6 @@
 
 ## 有特别意义的产品
 - [GSTC](https://github.com/neuronetio/gantt-schedule-timeline-calendar)
+- [react-google-charts](https://github.com/linyuan1105/react-google-charts)
+- [gantt2](https://github.com/DHTMLX/gantt)
+- [mojs](https://github.com/linyuan1105/mojs)
