@@ -4,21 +4,18 @@ import { CalendarEventOverlapModes } from '../utils/modes'
 import { Button } from 'antd'
 import {
   copyTimestamp,
-  createDayList,
   createIntervalList,
   getDayIdentifier,
   getTimestampLabel,
-  getWeekdaySkips,
   MINUTES_IN_DAY,
   parseTime,
-  parseTimeStamp,
   updateMinutes,
   VTime
 } from '../utils/timesStamp'
 import {
   genTimedEvents, IEventsRect, isEventOn, parseEvent, stopDefaultEvent
 } from '../utils/events'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import {
   CalendarDayBodySlotScope,
   CalendarDaySlotScope,
@@ -26,21 +23,13 @@ import {
   CalendarEventParsed,
   CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
+import {
+  BaseContext, CalendarContext, IntervalsContext
+} from '../props/propsContext'
 
 export default function (props: Partial<IDayProps>) {
   const {
-    type = 'day',
-    intervalWidth = 60,
-    times = null,
-    parsedStart = parseTimeStamp(new Date(), true),
-    parsedEnd = parseTimeStamp(new Date(), true),
-    maxDays = 7,
-    weekdays = [0, 1, 2, 3, 4, 5, 6],
     firstTime,
-    firstInterval = 0,
-    intervalMinutes = 60,
-    intervalCount = 24,
-    intervalHeight = 48,
     events = [],
     eventStart = 'start',
     eventEnd = 'end',
@@ -54,34 +43,21 @@ export default function (props: Partial<IDayProps>) {
     onTimeContainerMousemove = (time:IMouseTime) => undefined,
     onTimeContainerMousedown = (time:IMouseTime) => undefined,
   } = props
+  const { times,
+    days = [],
+    parsedWeekdays, } = useContext(BaseContext)
+  const { type, } = useContext(CalendarContext)
+  const { firstInterval,
+    intervalHeight,
+    intervalCount,
+    intervalWidth,
+    intervalMinutes, } = useContext(IntervalsContext)
+
+
+
 
   // 可选的堆叠模式和列模式
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
-
-
-
-
-
-
-  const parsedWeekdays = useMemo<number[]>(() => (Array.isArray(weekdays) ? weekdays :
-    (weekdays || '').split(',')
-      .map((x) => parseInt(x, 10))), [weekdays])
-  const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
-
-  const today = times?.today || null
-  const days: CalendarTimestamp[] = useMemo<CalendarTimestamp[]>(() => createDayList(
-    parsedStart as CalendarTimestamp,
-    parsedEnd as CalendarTimestamp,
-    today as CalendarTimestamp,
-    weekdaySkips,
-    maxDays
-  ), [
-    parsedStart,
-    parsedEnd,
-    today,
-    weekdaySkips,
-    maxDays
-  ])
   const parsedEvents:CalendarEventParsed[] = useMemo(() => events.map((input, index) => parseEvent(
     input,
     index,
@@ -94,8 +70,8 @@ export default function (props: Partial<IDayProps>) {
   const parsedEventOverlapThreshold = useMemo<number>(() => parseInt(eventOverlapThreshold as string, 10), [eventOverlapThreshold])
   const parsedIntervalHeight: number = useMemo(() => intervalHeight, [intervalHeight])
   const parsedFirstTime:number|false = useMemo(() => parseTime(firstTime), [firstTime])
-  const parsedFirstInterval:number = useMemo(() => parseInt(firstInterval as string, 10), [firstInterval])
-  const parsedIntervalMinutes:number = useMemo(() => parseInt(intervalMinutes as string, 10), [intervalMinutes])
+  const parsedFirstInterval:number = useMemo(() => (firstInterval), [firstInterval])
+  const parsedIntervalMinutes:number = useMemo<number>(() => (intervalMinutes), [intervalMinutes])
   const parsedIntervalCount:number = useMemo(() => intervalCount, [intervalCount])
   const bodyHeight:number = useMemo(() => parsedIntervalCount * parsedIntervalHeight, [parsedIntervalCount * parsedIntervalHeight])
   const firstMinute:number = useMemo(() => {

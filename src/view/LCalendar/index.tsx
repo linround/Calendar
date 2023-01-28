@@ -1,5 +1,4 @@
 import React, {
-  useMemo,
   useState,
   useEffect, useContext
 } from 'react'
@@ -7,6 +6,7 @@ import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
 } from './utils/time'
+import { ITimes } from './props/type'
 import {
   IMouseTime,
   IMouseEvent,
@@ -27,11 +27,8 @@ import {
   getStartOfWeek,
   updateRelative,
   timestampToDate,
-  parseTimeStamp,
   updateFormatted,
-  DAYS_IN_MONTH_MAX,
-  validateTimestamp,
-  getTimestampIdentifier, ROUND_TIME
+  DAYS_IN_MONTH_MAX, ROUND_TIME
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import { creatEvents } from './utils/events'
@@ -163,24 +160,19 @@ export default function () {
 
 
 
-  const { weekDays, start, end, setEnd, setStart, setWeekDays, } = useContext(BaseContext)
+  const { setEnd,
+    setStart,
+    weekDays,
+    setWeekDays,
+    times,
+    parsedEnd,
+    parsedValue,
+    parsedStart, } = useContext(BaseContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const { maxDays, setMaxDays, } = useContext(IntervalsContext)
 
 
-  const [times] = useState<{now:CalendarTimestamp | null, today:CalendarTimestamp | null}>({
-    now: parseTimeStamp('0000-00-00 00:00', true),
-    today: parseTimeStamp('0000-00-00', true),
-  })
-  const parsedStart = useMemo(() => parseTimeStamp(start, true), [start]) as CalendarTimestamp
-  const parsedEnd = useMemo(() => {
-    const start:CalendarTimestamp = parsedStart as CalendarTimestamp
-    const endVal:CalendarTimestamp = end ? parseTimeStamp(end, true) || start : start
-    return getTimestampIdentifier(endVal) < getTimestampIdentifier(start) ? start : endVal
-  }, [end])
-  const parsedValue = useMemo<CalendarTimestamp>(() => (validateTimestamp(value) ?
-    parseTimeStamp(value, true) :
-    (parsedStart || times.today)), [value])
+
 
   // 这里的是为了响应type的变化
   // 目前在周视图和日视图中
@@ -269,7 +261,7 @@ export default function () {
     updateWeekday(moved)
     // 设置 time 和 date
     updateFormatted(moved)
-    updateRelative(moved, times.now as CalendarTimestamp)
+    updateRelative(moved, (times as ITimes).now)
     if (value instanceof Date) {
       setValue(timestampToDate(moved))
     } else if (typeof value === 'number') {
@@ -293,7 +285,9 @@ export default function () {
           next={(amount) => move(amount)} />
         {
           type === 'month' ?
-            <MonthComponent /> :
+            <MonthComponent
+              parsedValue={parsedValue}
+            /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
               onContextMenuEvent={onContextMenuEvent}

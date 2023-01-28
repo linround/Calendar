@@ -1,5 +1,10 @@
-import { IValue } from '../utils/calendar'
+import { CalendarTimestamp, IValue } from '../utils/calendar'
 import React from 'react'
+
+export interface ITimes {
+  now: CalendarTimestamp
+  today: CalendarTimestamp
+}
 
 export interface IBaseContext {
   start: string
@@ -8,6 +13,13 @@ export interface IBaseContext {
   setEnd: React.Dispatch<React.SetStateAction<string>>
   weekDays: number[]
   setWeekDays: React.Dispatch<React.SetStateAction<number[]>>
+  parsedWeekdays: number[]
+  weekdaySkips:number[]
+  times?: ITimes
+  parsedEnd?: CalendarTimestamp
+  parsedStart?:CalendarTimestamp
+  parsedValue?:CalendarTimestamp
+  days?:CalendarTimestamp[]
 }
 export interface ICalendarContext {
   value: IValue,
@@ -22,4 +34,5 @@ export interface IIntervalsContext {
   intervalWidth: number
   firstInterval: number
   intervalCount: number
+  intervalMinutes: number
 }

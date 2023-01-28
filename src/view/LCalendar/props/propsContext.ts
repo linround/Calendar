@@ -1,5 +1,7 @@
 import { createContext } from 'react'
-import { DEFAULT_MAX_DAYS, DEFAULT_WEEK_DAYS } from '../utils/time'
+import {
+  DEFAULT_MAX_DAYS, DEFAULT_WEEK_DAYS, DEFAULT_WEEK_SKIPS
+} from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
   IBaseContext, ICalendarContext, IIntervalsContext
@@ -11,7 +13,10 @@ export const DEFAULT_INTERVALS = {
   intervalWidth: 60,
   firstInterval: 0,
   intervalCount: 24,
+  intervalMinutes: 60,
 }
+
+
 
 export const BaseContext = createContext<IBaseContext>({
   start: parseDate(new Date()).date,
@@ -20,6 +25,8 @@ export const BaseContext = createContext<IBaseContext>({
   setEnd: () => undefined,
   setStart: () => undefined,
   setWeekDays: () => undefined,
+  parsedWeekdays: DEFAULT_WEEK_DAYS,
+  weekdaySkips: DEFAULT_WEEK_SKIPS,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: '',
