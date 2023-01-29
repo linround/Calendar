@@ -274,6 +274,22 @@ export function relativeDays (
   return timestamp
 }
 
+export function isOutSide(
+  day:CalendarTimestamp, start:CalendarTimestamp, end:CalendarTimestamp
+):boolean {
+  const dayIdentifier = getDayIdentifier(day)
+  return dayIdentifier < getDayIdentifier(start) ||
+    dayIdentifier > getDayIdentifier(end)
+}
+
+
+export function weekdayFormatter(day:CalendarTimestamp) {
+  const intlFormatter = new Intl.DateTimeFormat('zh-cn', {
+    timeZone: 'UTC',
+    weekday: 'short',
+  })
+  return intlFormatter.format(timestampToDate(day))
+}
 
 export function getTimestampLabel(timestamp:CalendarTimestamp):string {
   if (timestamp.hour === 0 && timestamp.minute === 0) {

@@ -228,7 +228,7 @@ export default function () {
     }
     setStart(newStart)
     setEnd(newEnd)
-  }, [parsedValue, weekDays])
+  }, [parsedValue, weekDays, type])
   // 点击下一天，应该提前更新parsedValue
 
 

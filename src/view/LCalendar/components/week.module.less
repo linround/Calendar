@@ -1,0 +1,39 @@
+@import "../variables.less";
+
+.week {
+  &Head {
+    display: flex;
+    &Column {
+      flex: 1;
+      text-align: center;
+      border-right: 1px solid @borderColor;
+      color: white;
+    }
+  }
+  &Item {
+    flex: 1;
+    display: flex;
+    &Cell {
+      flex: 1;
+      border-right: 1px solid @borderColor;
+      border-bottom: 1px solid @borderColor;
+      &Label {
+        text-align: center;
+        margin: 4px 0 0 0;
+      }
+    }
+  }
+}
+.isPast {
+  background: rebeccapurple;
+}
+.isPresent{
+  background: red;
+  color: white;
+}
+.isFuture {
+  background: yellow;
+}
+.isOutside {
+  background: #bb9f9f;
+}
