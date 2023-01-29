@@ -28,7 +28,7 @@ import {
   updateRelative,
   timestampToDate,
   updateFormatted,
-  DAYS_IN_MONTH_MAX, ROUND_TIME
+  DAYS_IN_MONTH_MAX, ROUND_TIME, getStartOfMonth, getEndOfMonth
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import { creatEvents } from './utils/events'
@@ -53,6 +53,7 @@ export default function () {
   const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
+
   const onMousedownEvent = ({ event, }: IMouseEvent) => {
     setDragEvent(event)
   }
@@ -208,6 +209,8 @@ export default function () {
     let newEnd = around.date
     switch (type) {
     case 'month':{
+      newStart = getStartOfMonth(around).date
+      newEnd = getEndOfMonth(around).date
       break
     }
     case 'week':{
@@ -284,9 +287,7 @@ export default function () {
           next={(amount) => move(amount)} />
         {
           type === 'month' ?
-            <MonthComponent
-              parsedValue={parsedValue}
-            /> :
+            <MonthComponent /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
               onContextMenuEvent={onContextMenuEvent}

@@ -1,5 +1,9 @@
 import {
-  BaseContext, CalendarContext, DEFAULT_INTERVALS, IntervalsContext
+  BaseContext,
+  CalendarContext,
+  DEFAULT_INTERVALS, DEFAULT_WEEKS,
+  IntervalsContext,
+  WeeksContext
 } from './propsContext'
 import React, { useMemo, useState } from 'react'
 import {
@@ -52,6 +56,11 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   [parsedStart, parsedEnd, times, weekdaySkips])
 
 
+  const [minWeeks] = useState<number>(DEFAULT_WEEKS.minWeeks)
+
+
+
+
   return (
     <BaseContext.Provider value={{
       start,
@@ -83,7 +92,11 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
           intervalCount,
           intervalMinutes,
         }}>
-          {children}
+          <WeeksContext.Provider value={{
+            minWeeks,
+          }}>
+            {children}
+          </WeeksContext.Provider>
         </IntervalsContext.Provider>
       </CalendarContext.Provider>
     </BaseContext.Provider>

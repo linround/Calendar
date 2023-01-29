@@ -425,6 +425,24 @@ export function findWeekday(
   return timestamp
 }
 
+export function getEndOfMonth(timestamp:CalendarTimestamp):CalendarTimestamp {
+  const end = copyTimestamp(timestamp)
+  end.day = daysInMonth(end.year, end.month)
+  updateWeekday(end)
+  updateFormatted(end)
+  return end
+}
+
+export function getStartOfMonth(timestamp:CalendarTimestamp):CalendarTimestamp {
+  const start = copyTimestamp(timestamp)
+  start.day = DAY_MIN
+  // 得到周几
+  updateWeekday(start)
+  // 格式化时间和日期
+  updateFormatted(start)
+  return start
+}
+
 export function getStartOfWeek(
   timestamp:CalendarTimestamp, weekdays:number[], today?:CalendarTimestamp
 ):CalendarTimestamp {

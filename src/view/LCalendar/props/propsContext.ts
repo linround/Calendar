@@ -4,9 +4,8 @@ import {
 } from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
-  IBaseContext, ICalendarContext, IIntervalsContext
+  IBaseContext, ICalendarContext, IIntervalsContext, IWeeksContext
 } from './type'
-
 
 export const DEFAULT_INTERVALS = {
   intervalHeight: 48,
@@ -16,6 +15,14 @@ export const DEFAULT_INTERVALS = {
   intervalMinutes: 60,
 }
 
+export const DEFAULT_WEEKS = {
+  minWeeks: 1,
+}
+
+
+export const WeeksContext = createContext<IWeeksContext>({
+  minWeeks: DEFAULT_WEEKS.minWeeks,
+})
 
 
 export const BaseContext = createContext<IBaseContext>({

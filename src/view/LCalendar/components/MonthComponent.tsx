@@ -1,21 +1,8 @@
-import { useContext, useEffect } from 'react'
-import { BaseContext, CalendarContext } from '../props/propsContext'
-import { IMonthProps } from './monthPropsType'
+import { WeekComponent } from './WeekComponent'
 
-export function MonthComponent(props: IMonthProps) {
-  const { parsedValue, } = props
-  const { setStart, setEnd, } = useContext(BaseContext)
-  const { type, } = useContext(CalendarContext)
-  useEffect(() => {
-    switch (type) {
-    case 'month':{
-      console.log(type, '======type')
-    }
-    }
-  }, [type])
+export function MonthComponent(/**props: IMonthProps**/) {
+
   return (
-    <>
-      MonthComponent
-    </>
+    <WeekComponent />
   )
 }

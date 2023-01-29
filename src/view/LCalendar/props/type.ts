@@ -6,6 +6,10 @@ export interface ITimes extends Object{
   today: CalendarTimestamp
 }
 
+export interface IWeeksContext {
+  minWeeks: number
+}
+
 export interface IBaseContext {
   start: string
   setStart: React.Dispatch<React.SetStateAction<string>>
