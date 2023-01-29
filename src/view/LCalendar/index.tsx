@@ -195,7 +195,7 @@ export default function () {
     }
     setMaxDays(newMaxDays)
     setWeekDays(newWeekdays)
-  }, [type])
+  }, [type, parsedValue])
 
   // 由于move会改变value
   // 所以move会改变 parsedValue
