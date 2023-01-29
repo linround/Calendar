@@ -41,5 +41,6 @@ export const IntervalsContext = createContext<IIntervalsContext>({
   intervalWidth: DEFAULT_INTERVALS.intervalWidth,
   firstInterval: DEFAULT_INTERVALS.firstInterval,
   intervalCount: DEFAULT_INTERVALS.intervalCount,
+  intervalMinutes: DEFAULT_INTERVALS.intervalMinutes,
 })
 

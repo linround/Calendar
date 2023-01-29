@@ -1,7 +1,7 @@
 import { CalendarTimestamp, IValue } from '../utils/calendar'
 import React from 'react'
 
-export interface ITimes {
+export interface ITimes extends Object{
   now: CalendarTimestamp
   today: CalendarTimestamp
 }

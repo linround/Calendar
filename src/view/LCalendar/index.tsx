@@ -206,7 +206,6 @@ export default function () {
     const around = parsedValue as CalendarTimestamp
     let newStart = around.date
     let newEnd = around.date
-    console.log('value, maxDays, weekDays')
     switch (type) {
     case 'month':{
       break
@@ -227,7 +226,7 @@ export default function () {
     setStart(newStart)
     setEnd(newEnd)
   }, [value, maxDays, weekDays])
-
+  // 点击下一天，应该提前更新parsedValue
 
 
   function move(amount = 1):void {

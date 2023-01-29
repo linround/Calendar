@@ -14,13 +14,14 @@ import { ITimes } from './type'
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   const children = props.children
+  const [now] = useState(Date.now())
   const [weekDays, setWeekDays] = useState<number[]>(DEFAULT_WEEK_DAYS)
   const [start, setStart] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const [end, setEnd] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
-  const [times] = useState<ITimes>({
-    now: parseTimeStamp('0000-00-00 00:00', true),
-    today: parseTimeStamp('0000-00-00', true),
-  })
+  const times = useMemo<ITimes>(() => ({
+    now: parseTimeStamp(now, true),
+    today: parseTimeStamp(now, true),
+  }), [now])
 
 
   const [type, setType] = useState<string>(DEFAULT_TYPE)
