@@ -9,6 +9,8 @@ export const PARSE_REGEX = /^(\d{4})-(\d{1,2})(-(\d{1,2}))?(\D+(\d{1,2}))?(:(\d{
 
 export const PARSE_TIME = /(\d\d?)(:(\d\d?)|)(:(\d\d?)|)/
 export const MINUTES_IN_DAY = 24 * 60
+export const WIDTH_FULL = 100
+export const WIDTH_START = 95
 export const DAYS_IN_WEEK = 7
 export const MINUTE_MAX = 59
 export const HOUR_MAX = 23

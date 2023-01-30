@@ -12,16 +12,19 @@ import {
   getEndOfWeek,
   getStartOfMonth,
   getStartOfWeek, isOutSide,
-  parseTimeStamp, weekdayFormatter
+  parseTimeStamp, weekdayFormatter, WIDTH_FULL, WIDTH_START
 } from '../utils/timesStamp'
 import { CalendarDaySlotScope, CalendarTimestamp } from '../utils/calendar'
 import { IWeekHeadColumn } from './type'
-import { isEventOn, isEventStart } from '../utils/events'
+import {  isEventStart } from '../utils/events'
+import { CalendarEventVisual, IMonthEventStyle } from '../utils/modes/common'
 
 export function WeekComponent() {
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
   const { type, } = useContext(CalendarContext)
-  const { parsedEvents, eventModeFunction, eventOverlapThreshold, } = useContext(EventContext)
+  const { parsedEvents, eventModeFunction,
+    eventMarginBottom,
+    eventHeight, eventOverlapThreshold, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
 
 
@@ -133,24 +136,84 @@ export function WeekComponent() {
     /***
      * 过滤出当日的日历事件
      */
-    const identifier = getDayIdentifier(daySlotScope)
+    const dayIdentifier = getDayIdentifier(daySlotScope)
     const firstWeekday =  parsedWeekdays[0]
     const events = parsedEvents.filter((event) => isEventStart(
-      event, daySlotScope, identifier, firstWeekday
+      event, daySlotScope, dayIdentifier, firstWeekday
     ))
 
-    const visuals = mode(
+    const visuals:CalendarEventVisual[] = mode(
       daySlotScope, events, false, categoryMode
     )
-    if (visuals.length) {
 
-      console.log(visuals)
-    }
+    // 生成该日的占位符
+    const placeholders:(Partial<IMonthEventStyle>)[] = []
+    visuals.forEach((visual) => {
+      while (placeholders.length < visual.column) {
+        placeholders.push({
+          placeholder: true,
+        })
+      }
+      const { event, } = visual
+      const week = daySlotScope.week
+      const start = dayIdentifier === event.startIdentifier
+      let end = dayIdentifier === event.endIdentifier
+      let width = WIDTH_START
+      if (!categoryMode) {
+        for (let i = daySlotScope.index + 1;i < week.length;i++) {
+          const weekdayIdentifier = getDayIdentifier(week[i])
+          if (event.endIdentifier >= weekdayIdentifier) {
+            width += WIDTH_FULL
+            end = end || weekdayIdentifier === event.endIdentifier
+          } else {
+            end = true
+            break
+          }
+        }
+      }
+      const scope = {
+        event,
+        day: daySlotScope,
+        start,
+        end,
+        placeholder: false,
+        timed: false,
+        style: {
+          height: eventHeight,
+          width,
+          marginBottom: eventMarginBottom,
+        },
+      }
+      placeholders.push(scope)
+    })
+    console.log(placeholders)
     return (
       <div key={day.date} className={className}>
         <div className={weekStyle.weekDaysCellLabel}>
           {day.day}
         </div>
+        {
+          placeholders.map((placeholder, index) => (
+            placeholder.placeholder ?
+              (<div
+                key={index}
+                style={{ height: (eventHeight + eventMarginBottom), }} />) :
+              (<div
+                key={index}
+                style={{
+                  width: `${placeholder.style?.width}%`,
+                  height: `${placeholder.style?.height}px`,
+                  marginBottom: `${ placeholder.style?.marginBottom}px`,
+                  background: placeholder.event?.input.color,
+                }}
+              >
+                {
+                  placeholder.event?.input.name
+                }
+              </div>)
+          ))
+        }
+
       </div>
     )
   }

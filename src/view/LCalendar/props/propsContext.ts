@@ -27,6 +27,8 @@ export const DEFAULT_EVENT = {
   eventTimed: 'timed',
   eventOverlapMode: 'stack',
   eventOverlapThreshold: 60,
+  eventHeight: 20,
+  eventMarginBottom: 1,
 }
 
 
@@ -45,6 +47,8 @@ export const EventContext = createContext<IEventContext>({
   eventOverlapMode: DEFAULT_EVENT.eventOverlapMode,
   eventOverlapThreshold: DEFAULT_EVENT.eventOverlapThreshold,
   parsedEvents: [],
+  eventMarginBottom: DEFAULT_EVENT.eventMarginBottom,
+  eventHeight: DEFAULT_EVENT.eventHeight,
   eventModeFunction: () => undefined,
 })
 

@@ -1,4 +1,7 @@
-import { CalendarEventParsed, CalendarTimestamp } from '../calendar'
+import {
+  CalendarDaySlotScope,
+  CalendarEvent, CalendarEventParsed, CalendarTimestamp
+} from '../calendar'
 import { getTimestampIdentifier } from '../timesStamp'
 const MILLIS_IN_DAY = 24 * 60 * 60 * 1000
 
@@ -16,6 +19,22 @@ export interface ColumnGroup {
 }
 
 
+export interface IMonthPlaceholder {
+  placeholder?: boolean
+}
+
+export interface IMonthEventStyle extends IMonthPlaceholder{
+  event: CalendarEvent
+  day: CalendarDaySlotScope
+  start: boolean
+  end: boolean
+  timed: boolean
+  style: {
+    height:number
+    width: number
+    marginBottom: number
+  }
+}
 
 
 export function getVisuals(events:CalendarEventParsed[], minStart = 0):CalendarEventVisual[] {

@@ -20,6 +20,8 @@ export interface IEventContext {
   eventTimed: string
   eventOverlapMode: string
   eventOverlapThreshold: number
+  eventHeight: number
+  eventMarginBottom: number
   parsedEvents: CalendarEventParsed[]
   eventModeFunction: (parsedEvents: CalendarEventParsed[], parsedWeekdays:number, threshold: number)=> any
 }

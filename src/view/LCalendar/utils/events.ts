@@ -75,8 +75,8 @@ export function creatEvents() {
     {
       name: 'green',
       color: 'green',
-      start: otherStart - addDay(18),
-      end: otherEnd - addDay(18),
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(5),
       timed: true,
     },
     {

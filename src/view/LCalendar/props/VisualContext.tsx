@@ -4,7 +4,7 @@ import {
   EventContext,
   DEFAULT_INTERVALS, DEFAULT_WEEKS,
   IntervalsContext,
-  WeeksContext
+  WeeksContext, DEFAULT_EVENT
 } from './propsContext'
 import React, { useMemo, useState } from 'react'
 import {
@@ -66,11 +66,13 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
   const [events, setEvents] = useState<CalendarEvent[]>(creatEvents())
-  const [eventStart] = useState('start')
-  const [eventEnd] = useState('end')
-  const [eventTimed] = useState('timed')
-  const [eventOverlapMode] = useState('stack')
-  const [eventOverlapThreshold] = useState(60)
+  const [eventStart] = useState(DEFAULT_EVENT.eventStart)
+  const [eventEnd] = useState(DEFAULT_EVENT.eventEnd)
+  const [eventTimed] = useState(DEFAULT_EVENT.eventTimed)
+  const [eventOverlapMode] = useState(DEFAULT_EVENT.eventOverlapMode)
+  const [eventOverlapThreshold] = useState(DEFAULT_EVENT.eventOverlapThreshold)
+  const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
+  const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
   const parsedEvents = useMemo<CalendarEventParsed[]>(() => events.map((input, index) => parseEvent(
     input,
     index,
@@ -125,6 +127,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               eventTimed,
               eventOverlapMode,
               eventOverlapThreshold,
+              eventHeight,
+              eventMarginBottom,
               parsedEvents,
               eventModeFunction,
 
