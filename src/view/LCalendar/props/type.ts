@@ -1,4 +1,6 @@
-import { CalendarTimestamp, IValue } from '../utils/calendar'
+import {
+  CalendarEvent, CalendarEventParsed, CalendarTimestamp, IValue
+} from '../utils/calendar'
 import React from 'react'
 
 export interface ITimes extends Object{
@@ -8,6 +10,18 @@ export interface ITimes extends Object{
 
 export interface IWeeksContext {
   minWeeks: number
+}
+
+export interface IEventContext {
+  events: CalendarEvent[]
+  setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
+  eventStart: string
+  eventEnd: string
+  eventTimed: string
+  eventOverlapMode: string
+  eventOverlapThreshold: number
+  parsedEvents: CalendarEventParsed[]
+  eventModeFunction: (parsedEvents: CalendarEventParsed[], parsedWeekdays:number, threshold: number)=> any
 }
 
 export interface IBaseContext {

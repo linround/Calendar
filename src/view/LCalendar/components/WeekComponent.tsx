@@ -3,29 +3,36 @@ import weekStyle from './week.module.less'
 import classnames from 'classnames'
 import {
   BaseContext,
-  CalendarContext,
+  CalendarContext, EventContext,
   WeeksContext
 } from '../props/propsContext'
 import {
-  createDayList,
+  createDayList, getDayIdentifier,
   getEndOfMonth,
   getEndOfWeek,
   getStartOfMonth,
   getStartOfWeek, isOutSide,
   parseTimeStamp, weekdayFormatter
 } from '../utils/timesStamp'
-import { CalendarTimestamp } from '../utils/calendar'
+import { CalendarDaySlotScope, CalendarTimestamp } from '../utils/calendar'
 import { IWeekHeadColumn } from './type'
+import { isEventOn, isEventStart } from '../utils/events'
 
 export function WeekComponent() {
-
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
   const { type, } = useContext(CalendarContext)
+  const { parsedEvents, eventModeFunction, eventOverlapThreshold, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
+
+
+  const categoryMode = useMemo<boolean>(() => type === 'category', [type])
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
   const parsedEnd = useMemo(() => getEndOfMonth(parseTimeStamp(end, true)),
     [end])
+  const mode = useMemo(() => eventModeFunction(
+    parsedEvents, parsedWeekdays[0], eventOverlapThreshold
+  ), [parsedEvents, parsedWeekdays, eventOverlapThreshold])
 
   const todayWeek = useMemo(() => {
     const today = times?.today as CalendarTimestamp
@@ -96,20 +103,55 @@ export function WeekComponent() {
     return (
       <>
         {weeks.map((week, index) => (
-          <div key={index} className={weekStyle.weekItem}>
+          <div key={index} className={weekStyle.weekDays}>
             {
-              week.map((day) => (
-                <div key={day.date} className={weekStyle.weekItemCell}>
-                  <div className={weekStyle.weekItemCellLabel}>
-                    {day.day}
-                  </div>
-                </div>
-              ))
+              week.map(GenDay)
             }
           </div>
 
         ))}
       </>
+    )
+  }
+
+  function GenDay(
+    day:CalendarTimestamp, index:number, week:CalendarTimestamp[]
+  ) {
+    const outside = isOutSide(
+      day, parsedStart, parsedEnd
+    )
+    const className = classnames({
+      [weekStyle.isDayOutSide]: outside,
+      [weekStyle.weekDaysCell]: true,
+    })
+    const daySlotScope: CalendarDaySlotScope = {
+      ...day,
+      index,
+      week,
+      outside,
+    }
+    /***
+     * 过滤出当日的日历事件
+     */
+    const identifier = getDayIdentifier(daySlotScope)
+    const firstWeekday =  parsedWeekdays[0]
+    const events = parsedEvents.filter((event) => isEventStart(
+      event, daySlotScope, identifier, firstWeekday
+    ))
+
+    const visuals = mode(
+      daySlotScope, events, false, categoryMode
+    )
+    if (visuals.length) {
+
+      console.log(visuals)
+    }
+    return (
+      <div key={day.date} className={className}>
+        <div className={weekStyle.weekDaysCellLabel}>
+          {day.day}
+        </div>
+      </div>
     )
   }
   return (

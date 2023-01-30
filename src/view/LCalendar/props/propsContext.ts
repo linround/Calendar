@@ -4,8 +4,9 @@ import {
 } from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
-  IBaseContext, ICalendarContext, IIntervalsContext, IWeeksContext
+  IBaseContext, ICalendarContext, IEventContext, IIntervalsContext, IWeeksContext
 } from './type'
+import { CalendarEvent } from '../utils/calendar'
 
 export const DEFAULT_INTERVALS = {
   intervalHeight: 48,
@@ -19,11 +20,33 @@ export const DEFAULT_WEEKS = {
   minWeeks: 1,
 }
 
+export const DEFAULT_EVENT = {
+  events: [],
+  eventStart: 'start',
+  eventEnd: 'end',
+  eventTimed: 'timed',
+  eventOverlapMode: 'stack',
+  eventOverlapThreshold: 60,
+}
+
 
 export const WeeksContext = createContext<IWeeksContext>({
   minWeeks: DEFAULT_WEEKS.minWeeks,
 })
 
+
+
+export const EventContext = createContext<IEventContext>({
+  events: DEFAULT_EVENT.events,
+  setEvents: () => undefined,
+  eventStart: DEFAULT_EVENT.eventStart,
+  eventEnd: DEFAULT_EVENT.eventEnd,
+  eventTimed: DEFAULT_EVENT.eventTimed,
+  eventOverlapMode: DEFAULT_EVENT.eventOverlapMode,
+  eventOverlapThreshold: DEFAULT_EVENT.eventOverlapThreshold,
+  parsedEvents: [],
+  eventModeFunction: () => undefined,
+})
 
 export const BaseContext = createContext<IBaseContext>({
   start: parseDate(new Date()).date,
@@ -34,6 +57,7 @@ export const BaseContext = createContext<IBaseContext>({
   setWeekDays: () => undefined,
   parsedWeekdays: DEFAULT_WEEK_DAYS,
   weekdaySkips: DEFAULT_WEEK_SKIPS,
+
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: '',

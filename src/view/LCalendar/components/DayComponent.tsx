@@ -13,93 +13,80 @@ import {
   VTime
 } from '../utils/timesStamp'
 import {
-  genTimedEvents, IEventsRect, isEventOn, parseEvent, stopDefaultEvent
+  genTimedEvents, IEventsRect, isEventOn, stopDefaultEvent
 } from '../utils/events'
 import React, { useContext, useMemo } from 'react'
 import {
   CalendarDayBodySlotScope,
   CalendarDaySlotScope,
-  CalendarEventOverlapMode,
   CalendarEventParsed,
   CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
 import {
-  BaseContext, CalendarContext, IntervalsContext
+  BaseContext, CalendarContext, IntervalsContext, EventContext
 } from '../props/propsContext'
+import { CalendarEventVisual } from '../utils/modes/common'
 
 export default function (props: Partial<IDayProps>) {
   const {
     firstTime,
-    events = [],
-    eventStart = 'start',
-    eventEnd = 'end',
-    eventTimed = 'timed',
-    eventOverlapMode = 'stack',
-    eventOverlapThreshold = 60,
-    onMousedownEvent = (event:IMouseEvent) => undefined,
-    onContextMenuEvent = (time:IMouseEvent) => undefined,
+    onMousedownEvent = (event: IMouseEvent) => undefined,
+    onContextMenuEvent = (time: IMouseEvent) => undefined,
     onTimeHeaderClick = (e, event) => event,
-    onTimeContainerMouseup = (time:IMouseTime) => undefined,
-    onTimeContainerMousemove = (time:IMouseTime) => undefined,
-    onTimeContainerMousedown = (time:IMouseTime) => undefined,
+    onTimeContainerMouseup = (time: IMouseTime) => undefined,
+    onTimeContainerMousemove = (time: IMouseTime) => undefined,
+    onTimeContainerMousedown = (time: IMouseTime) => undefined,
   } = props
-  const { times,
+  const {
+    parsedEvents,
+    eventOverlapThreshold, eventModeFunction,
+  } = useContext(EventContext)
+  const {
+    times,
     days = [],
-    parsedWeekdays, } = useContext(BaseContext)
+    parsedWeekdays,
+  } = useContext(BaseContext)
   const { type, } = useContext(CalendarContext)
-  const { firstInterval,
+  const {
+    firstInterval,
     intervalHeight,
     intervalCount,
     intervalWidth,
-    intervalMinutes, } = useContext(IntervalsContext)
+    intervalMinutes,
+  } = useContext(IntervalsContext)
 
 
-
-
-  // 可选的堆叠模式和列模式
-  const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
-  const parsedEvents:CalendarEventParsed[] = useMemo(() => events.map((input, index) => parseEvent(
-    input,
-    index,
-    eventStart,
-    eventEnd,
-    (!!input[eventTimed]),
-    false
-  )), [events, eventStart, eventEnd])
   const categoryMode = useMemo<boolean>(() => type === 'category', [type])
-  const parsedEventOverlapThreshold = useMemo<number>(() => parseInt(eventOverlapThreshold as string, 10), [eventOverlapThreshold])
+  const parsedEventOverlapThreshold = useMemo<number>(() => eventOverlapThreshold, [eventOverlapThreshold])
   const parsedIntervalHeight: number = useMemo(() => intervalHeight, [intervalHeight])
-  const parsedFirstTime:number|false = useMemo(() => parseTime(firstTime), [firstTime])
-  const parsedFirstInterval:number = useMemo(() => (firstInterval), [firstInterval])
-  const parsedIntervalMinutes:number = useMemo<number>(() => (intervalMinutes), [intervalMinutes])
-  const parsedIntervalCount:number = useMemo(() => intervalCount, [intervalCount])
-  const bodyHeight:number = useMemo(() => parsedIntervalCount * parsedIntervalHeight, [parsedIntervalCount * parsedIntervalHeight])
-  const firstMinute:number = useMemo(() => {
+  const parsedFirstTime: number | false = useMemo(() => parseTime(firstTime), [firstTime])
+  const parsedFirstInterval: number = useMemo(() => (firstInterval), [firstInterval])
+  const parsedIntervalMinutes: number = useMemo<number>(() => (intervalMinutes), [intervalMinutes])
+  const parsedIntervalCount: number = useMemo(() => intervalCount, [intervalCount])
+  const bodyHeight: number = useMemo(() => parsedIntervalCount * parsedIntervalHeight, [parsedIntervalCount * parsedIntervalHeight])
+  const firstMinute: number = useMemo(() => {
     const time = parsedFirstTime
     return time !== false && time >= 0 && time < MINUTES_IN_DAY ?
       time :
       parsedFirstInterval * parsedIntervalMinutes
   }, [parsedFirstTime, parsedIntervalMinutes, parsedFirstInterval])
   const now = times?.now || null
-  const intervals:CalendarTimestamp[][] = useMemo<CalendarTimestamp[][]>(() => days.map((d) => createIntervalList(
+  const intervals: CalendarTimestamp[][] = useMemo<CalendarTimestamp[][]>(() => days.map((d) => createIntervalList(
     d, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now as CalendarTimestamp
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])
 
-  const eventWeekdays = useMemo(() => parsedWeekdays, [parsedWeekdays])
 
-
-
-  const getTimestampAtEvent = (e:React.MouseEvent, day:CalendarTimestamp):CalendarTimestamp => {
+  const getTimestampAtEvent = (e: React.MouseEvent, day: CalendarTimestamp): CalendarTimestamp => {
     const timestamp = copyTimestamp(day)
     const bounds = (e.currentTarget as HTMLElement).getBoundingClientRect()
     const baseMinutes = firstMinute
     // 求得事件相对于视口的位置
-    const clientY = e .clientY
+    const clientY = e.clientY
     // 点击事件的位置 减去 容器元素顶部的位置 得到事件发生处与元素顶部的位置
     // 除以每个格子的高度，从而获得移动了多少个格子
-    const addIntervals:number = (clientY - bounds.top) / parsedIntervalHeight
+    const addIntervals: number = (clientY - bounds.top) / parsedIntervalHeight
     // 每个格子代表的分钟数 乘以 移动的格子的数量  得到移动的分钟数
-    const addMinutes:number = Math.floor(addIntervals * parsedIntervalMinutes)
+    const addMinutes: number = Math.floor(addIntervals * parsedIntervalMinutes)
     // 顶部代表的分钟数 加上 移动的分钟数  得到当前事件的分钟数
     const minutes: number = baseMinutes + addMinutes
     return updateMinutes(
@@ -107,17 +94,17 @@ export default function (props: Partial<IDayProps>) {
     )
   }
 
-  const timeDelta = (time:VTime): number|false => {
+  const timeDelta = (time: VTime): number | false => {
     const minutes = parseTime(time)
     if (minutes === false) {
       return false
     }
-    const min:number = firstMinute
-    const gap:number = parsedIntervalCount * parsedIntervalMinutes
+    const min: number = firstMinute
+    const gap: number = parsedIntervalCount * parsedIntervalMinutes
     // 求出该时间点的所在位置
     return (minutes - min) / gap
   }
-  const timeToY = (time:VTime, clamp = true) => {
+  const timeToY = (time: VTime, clamp = true) => {
     // 求出该时间的y轴百分比
     let y = timeDelta(time)
     if (y !== false) {
@@ -133,8 +120,8 @@ export default function (props: Partial<IDayProps>) {
     }
     return y
   }
-  const minutesToPixels = (minutes:number):number => (minutes / parsedIntervalMinutes) * parsedIntervalHeight
-  const getSlotScope = (timestamp:CalendarTimestamp):CalendarDayBodySlotScope => {
+  const minutesToPixels = (minutes: number): number => (minutes / parsedIntervalMinutes) * parsedIntervalHeight
+  const getSlotScope = (timestamp: CalendarTimestamp): CalendarDayBodySlotScope => {
     const scope = copyTimestamp(timestamp) as any
     // 该方法可求得该时间点的所在高度的值
     scope.timeToY = timeToY
@@ -146,9 +133,9 @@ export default function (props: Partial<IDayProps>) {
   }
 
 
-  const onTimeContainer = (nativeEvent:React.MouseEvent, day:CalendarTimestamp):IMouseTime => {
+  const onTimeContainer = (nativeEvent: React.MouseEvent, day: CalendarTimestamp): IMouseTime => {
     // 获取到鼠标hover处的时间值
-    const time:CalendarTimestamp = getTimestampAtEvent(nativeEvent, day)
+    const time: CalendarTimestamp = getTimestampAtEvent(nativeEvent, day)
     return {
       ...(getSlotScope(time) as CalendarDayBodySlotScope),
       nativeEvent,
@@ -156,30 +143,26 @@ export default function (props: Partial<IDayProps>) {
   }
 
   // 根据传入的日期，在所有的日历事件中过滤出该日的事件
-  const getEventsForDayTimed = (day:CalendarDaySlotScope):CalendarEventParsed[] => {
+  const getEventsForDayTimed = (day: CalendarDaySlotScope): CalendarEventParsed[] => {
     const identifier = getDayIdentifier(day)
     return parsedEvents.filter((event) => !event.allDay &&
-    isEventOn(event, identifier))
+      isEventOn(event, identifier))
   }
 
 
-
-
-
-
-  function dayBodySlot(day:CalendarDayBodySlotScope) {
+  function dayBodySlot(day: CalendarDayBodySlotScope) {
     const mode = eventModeFunction(
       parsedEvents,
-      eventWeekdays[0],
+      parsedWeekdays[0],
       parsedEventOverlapThreshold
     )
     const events = getEventsForDayTimed(day)
     const visuals = mode(
       day, events, true, categoryMode
     )
-    const visualsRect = visuals.map((visual) => genTimedEvents(visual,
+    const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
       day))
-      .filter((i) => i !== false) as IEventsRect[]
+      .filter((i: any) => i !== false) as IEventsRect[]
     return (
       <>
         {

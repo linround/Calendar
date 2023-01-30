@@ -1,6 +1,7 @@
 import {
   BaseContext,
   CalendarContext,
+  EventContext,
   DEFAULT_INTERVALS, DEFAULT_WEEKS,
   IntervalsContext,
   WeeksContext
@@ -13,8 +14,13 @@ import {
   createDayList,
   getTimestampIdentifier, getWeekdaySkips, parseTimeStamp, validateTimestamp
 } from '../utils/timesStamp'
-import { CalendarTimestamp, IValue } from '../utils/calendar'
+import {
+  CalendarEvent, CalendarEventOverlapMode, CalendarEventParsed, CalendarTimestamp, IValue
+} from '../utils/calendar'
 import { ITimes } from './type'
+import { IEvents } from '../components/dayPropsType'
+import { creatEvents, parseEvent } from '../utils/events'
+import { CalendarEventOverlapModes } from '../utils/modes'
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   const children = props.children
@@ -59,6 +65,22 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [minWeeks] = useState<number>(DEFAULT_WEEKS.minWeeks)
 
 
+  const [events, setEvents] = useState<CalendarEvent[]>(creatEvents())
+  const [eventStart] = useState('start')
+  const [eventEnd] = useState('end')
+  const [eventTimed] = useState('timed')
+  const [eventOverlapMode] = useState('stack')
+  const [eventOverlapThreshold] = useState(60)
+  const parsedEvents = useMemo<CalendarEventParsed[]>(() => events.map((input, index) => parseEvent(
+    input,
+    index,
+    eventStart,
+    eventEnd,
+    (!!input[eventTimed])
+  )), [events, eventStart, eventEnd])
+  const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
+
+
 
 
   return (
@@ -95,7 +117,20 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
           <WeeksContext.Provider value={{
             minWeeks,
           }}>
-            {children}
+            <EventContext.Provider value={{
+              events,
+              setEvents,
+              eventStart,
+              eventEnd,
+              eventTimed,
+              eventOverlapMode,
+              eventOverlapThreshold,
+              parsedEvents,
+              eventModeFunction,
+
+            }}>
+              {children}
+            </EventContext.Provider>
           </WeeksContext.Provider>
         </IntervalsContext.Provider>
       </CalendarContext.Provider>

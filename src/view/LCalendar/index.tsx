@@ -31,13 +31,11 @@ import {
   DAYS_IN_MONTH_MAX, ROUND_TIME, getStartOfMonth, getEndOfMonth
 } from './utils/timesStamp'
 import styles from './style.module.less'
-import { creatEvents } from './utils/events'
 import MenuHeader from './modules/MenuHeader'
-import { IEvents } from './components/dayPropsType'
 import DayComponent from './components/DayComponent'
 import { MonthComponent } from './components/MonthComponent'
 import {
-  BaseContext, CalendarContext, IntervalsContext
+  BaseContext, CalendarContext, EventContext, IntervalsContext
 } from './props/propsContext'
 
 
@@ -46,7 +44,7 @@ import {
 
 
 export default function () {
-  const [events, setEvents] = useState<IEvents>(creatEvents())
+  const { events, setEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<number|null>(null)
@@ -293,13 +291,7 @@ export default function () {
               onContextMenuEvent={onContextMenuEvent}
               onTimeContainerMousedown={onTimeContainerMousedown}
               onTimeContainerMousemove={onTimeContainerMousemove}
-              onTimeContainerMouseup={onTimeContainerMouseup}
-              events={events}
-              type={type}
-              parsedStart={parsedStart}
-              parsedEnd={parsedEnd}
-              times={times}
-              maxDays={maxDays} />
+              onTimeContainerMouseup={onTimeContainerMouseup} />
         }
       </div>
     </div>

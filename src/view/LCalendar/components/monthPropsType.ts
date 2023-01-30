@@ -1,6 +1,9 @@
-import { CalendarTimestamp } from '../utils/calendar'
+import { CalendarEventParsed } from '../utils/calendar'
 
 
 export interface IMonthProps {
-  parsedValue?: CalendarTimestamp
+  parsedEvents?: CalendarEventParsed[]
+}
+export interface IWeekProps {
+  parsedEvents?: CalendarEventParsed[]
 }
