@@ -1,4 +1,6 @@
-import React, { useContext, useMemo } from 'react'
+import React, {
+  useContext, useEffect, useMemo, useRef
+} from 'react'
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
 import {
@@ -18,6 +20,10 @@ import { CalendarDaySlotScope, CalendarTimestamp } from '../utils/calendar'
 import { IWeekHeadColumn } from './type'
 import {  isEventStart } from '../utils/events'
 import { CalendarEventVisual, IMonthEventStyle } from '../utils/modes/common'
+const MORE_ELEMENT = 'more-element'
+const PLACEHOLDER_ELEMENT = 'placeholder-element'
+const EVENT_ELEMENT = 'event-element'
+
 
 export function WeekComponent() {
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
@@ -186,9 +192,44 @@ export function WeekComponent() {
       }
       placeholders.push(scope)
     })
-    console.log(placeholders)
+    const ref = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+      if (ref.current) {
+        const parent = ref.current
+        const more:HTMLDivElement = parent.querySelector(`.${MORE_ELEMENT}`)
+        if (!more) {
+          return
+        }
+        const events:HTMLDivElement[] = [...(parent.querySelectorAll(`.${EVENT_ELEMENT}`) || [])]
+
+        const parentBounds = parent?.getBoundingClientRect()
+
+        const last = events.length - 1
+        const eventsSorted = events.map((event) => ({
+          event,
+          bottom: event.getBoundingClientRect().bottom,
+        }))
+          .sort((a, b) => a.bottom - b.bottom)
+        let hidden = 0
+        for (let i = 0;i <= last;i++) {
+          const bottom = eventsSorted[i].bottom
+          const hide = i === last ?
+            (bottom > parentBounds.bottom) :
+            ((bottom + eventHeight) > parentBounds.bottom)
+          if (hide) {
+            eventsSorted[i].event.style.display = 'none'
+            hidden += 1
+          }
+        }
+        if (hidden) {
+          more.style.display = ''
+        } else {
+          more.style.display = 'none'
+        }
+      }
+    }, [ref])
     return (
-      <div key={day.date} className={className}>
+      <div key={day.date} className={className} ref={ref} >
         <div className={weekStyle.weekDaysCellLabel}>
           {day.day}
         </div>
@@ -196,11 +237,14 @@ export function WeekComponent() {
           placeholders.map((placeholder, index) => (
             placeholder.placeholder ?
               (<div
+                className={PLACEHOLDER_ELEMENT}
                 key={index}
                 style={{ height: (eventHeight + eventMarginBottom), }} />) :
               (<div
+                className={EVENT_ELEMENT}
                 key={index}
                 style={{
+                  position: 'relative',
                   width: `${placeholder.style?.width}%`,
                   height: `${placeholder.style?.height}px`,
                   marginBottom: `${ placeholder.style?.marginBottom}px`,
@@ -213,10 +257,26 @@ export function WeekComponent() {
               </div>)
           ))
         }
+        {
+          (placeholders.length > 0) ?
+            <div
+              className={MORE_ELEMENT}
+              style={{
+                height: `${eventHeight}px`,
+                display: 'none',
+                marginBottom: `${eventMarginBottom}px`,
+              }}
+            >more</div> :
+            ''
+        }
 
       </div>
     )
   }
+
+
+
+
   return (
     <>
       <div className={weekStyle.weekHead}>
