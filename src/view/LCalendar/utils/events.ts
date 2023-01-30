@@ -76,7 +76,61 @@ export function creatEvents() {
       name: 'green',
       color: 'green',
       start: otherStart + addDay(1),
-      end: otherEnd + addDay(5),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
+      timed: true,
+    }, {
+      name: 'green',
+      color: 'green',
+      start: otherStart + addDay(1),
+      end: otherEnd + addDay(15),
       timed: true,
     },
     {
@@ -165,6 +219,7 @@ export function creatEvents() {
     }
   ]
 }
+
 
 // 判断时间是否在这天有交集
 export function isEventOn(event:CalendarEventParsed, dayIdentifier:number):boolean {
