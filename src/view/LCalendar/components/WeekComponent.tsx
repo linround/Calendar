@@ -1,6 +1,9 @@
 import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
+import { eventSegments } from '../utils/eventSegments'
+import accessors from '../utils/accessors'
+import localizer from '../utils/localizer'
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
 import {
@@ -30,7 +33,7 @@ export function WeekComponent() {
   const { type, } = useContext(CalendarContext)
   const { parsedEvents, eventModeFunction,
     eventMarginBottom,
-    eventHeight, eventOverlapThreshold, } = useContext(EventContext)
+    eventHeight, eventOverlapThreshold, events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
 
 
@@ -109,6 +112,9 @@ export function WeekComponent() {
       const week = days.slice(i, i + weekDays)
       weeks.push(week)
     }
+    const weekSegments = weeks.map((week) => events.map((event) => eventSegments(
+      event, week, accessors, localizer
+    )))
     return (
       <>
         {weeks.map((week, index) => (
