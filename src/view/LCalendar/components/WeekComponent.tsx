@@ -1,9 +1,10 @@
 import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
-import { eventSegments } from '../utils/eventSegments'
-import accessors from '../utils/accessors'
-import localizer from '../utils/localizer'
+
+import { eventSegments } from '../utils/segments/eventSegments'
+import accessors from '../utils/segments/accessors'
+import localizer from '../utils/segments/localizer'
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
 import {
@@ -17,12 +18,13 @@ import {
   getEndOfWeek,
   getStartOfMonth,
   getStartOfWeek, isOutSide,
-  parseTimeStamp, weekdayFormatter, WIDTH_FULL, WIDTH_START
+  parseTimeStamp, timestampToDate, weekdayFormatter, WIDTH_FULL, WIDTH_START
 } from '../utils/timesStamp'
 import { CalendarDaySlotScope, CalendarTimestamp } from '../utils/calendar'
 import { IWeekHeadColumn } from './type'
 import {  isEventStart } from '../utils/events'
 import { CalendarEventVisual, IMonthEventStyle } from '../utils/modes/common'
+import moment from 'moment'
 const MORE_ELEMENT = 'more-element'
 const PLACEHOLDER_ELEMENT = 'placeholder-element'
 const EVENT_ELEMENT = 'event-element'
@@ -107,11 +109,19 @@ export function WeekComponent() {
 
   function GenWeeks() {
     const weekDays = parsedWeekdays.length
-    const weeks:CalendarTimestamp[][] = []
+    const weeks:number[][] = []
     for (let i = 0; i < days.length;i += weekDays) {
       const week = days.slice(i, i + weekDays)
-      weeks.push(week)
+      weeks.push(week.map((day) => moment(timestampToDate(day))
+        .startOf('day')
+        .valueOf()))
     }
+    console.log('\n')
+    console.log('************************')
+    console.log(weeks)
+    console.log(events)
+    // 遍历该月的每一周
+    // 从事件中选择生成该周的日历事件视图
     const weekSegments = weeks.map((week) => events.map((event) => eventSegments(
       event, week, accessors, localizer
     )))
@@ -129,12 +139,10 @@ export function WeekComponent() {
     )
   }
 
-  function GenDay(
-    day:CalendarTimestamp, index:number, week:CalendarTimestamp[]
-  ) {
+  function GenDay(day:number, index:number) {
     return (
-      <div className={weekStyle.weekDaysCell}>
-        {day.date}
+      <div className={weekStyle.weekDaysCell} key={day.valueOf()}>
+        {day}
       </div>
     )
   }
