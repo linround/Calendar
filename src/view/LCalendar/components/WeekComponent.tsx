@@ -2,6 +2,7 @@ import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
 import {
+  eventLevels,
   eventSegments, eventsForWeek, sortEvents
 } from '../utils/segments/eventSegments'
 import { accessors } from '../utils/segments/accessors'
@@ -136,7 +137,18 @@ export function WeekComponent() {
       const segments = weekEvents.map((event) => eventSegments(
         event, weeks[index], accessors, localizer
       ))
-      return segments
+      // 还需要处理maxRows和minRows的来源
+      const maxRows = 3
+      const minRows = 0
+      const { levels, extra, } = eventLevels(segments, Math.max(maxRows - 1, 1))
+      while (levels.length < minRows) {
+        levels.push([])
+      }
+      return {
+        levels,
+        extra,
+        range: weeks[index],
+      }
     })
     // 对每周的事件进行视图处理
     return (

@@ -24,9 +24,15 @@ export function eventsForWeek(
     event, start, end, accessors, localizer
   ))
 }
+export interface ISegments {
+  event:CalendarEvent
+  span: number
+  left:number
+  right:number
+}
 export function eventSegments (
   event: CalendarEvent, range:VTimestampInput[], accessors:IAccessors, localizer:ILocalizer
-) {
+):ISegments {
   const { first, last, } = endOfRange({ dateRange: range, localizer, })
   const slots = localizer.diff(
     first, last, 'day'
@@ -48,6 +54,33 @@ export function eventSegments (
 }
 
 
+export function segsOverlap(seg:ISegments, otherSegs:ISegments[]) {
+  return otherSegs.some((otherSeg) => seg.right >= otherSeg.left && seg.left <= otherSeg.right)
+}
+export function eventLevels(rowSegments:ISegments[], limit = Infinity):{levels:ISegments[][], extra:ISegments[]} {
+  let i
+  let j
+  let seg
+  const levels:ISegments[][] = []
+  const extra:ISegments[] = []
+  for (i = 0;i < rowSegments.length;i++) {
+    seg = rowSegments[i]
+    for (j = 0;j < levels.length;j++) {
+      if (!segsOverlap(seg, levels[j])) {
+        break
+      }
+    }
+    if (j >= limit) {
+      extra.push(seg)
+    } else {
+      (levels[j] || (levels[j] = [])).push(seg)
+    }
+  }
+  for (i = 0;i < levels.length;i++) {
+    levels[i].sort((a, b) => a.left - b.left)
+  }
+  return { levels, extra, }
+}
 
 export function sortEvents(
   eventA:CalendarEvent, eventB:CalendarEvent, accessors:IAccessors, localizer:ILocalizer
