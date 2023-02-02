@@ -1,5 +1,10 @@
 import moment from 'moment'
-import { VTimestampInput } from '../calendar'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {
+  lte, neq, gt, gte
+} from 'date-arithmetic'
+import { CalendarEvent, VTimestampInput } from '../calendar'
 
 function add(
   date:VTimestampInput, adder:number, unit: moment.unitOfTime.DurationConstructor
@@ -68,8 +73,66 @@ function ceil(date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) 
     )
 }
 
+function isSameDate(date1:VTimestampInput, date2:VTimestampInput) {
+  return eq(
+    date1, date2, 'day'
+  )
+}
 
 
+interface IRange{
+  start:VTimestampInput,
+  end:VTimestampInput
+}
+interface IRangeArg {
+  event:IRange
+  range:IRange
+}
+function inEventRange(arg:IRangeArg):boolean {
+  const { event, range, } = arg
+  const { start, end, } = event
+  const { start: rangeStart, end: rangeEnd, } = range
+  const eStart = startOf(start, 'day')
+  const startBeforeEnd = lte(
+    eStart, rangeEnd, 'day'
+  )
+  const sameMin = neq(
+    eStart, end, 'minutes'
+  )
+  const endsAfterStart = sameMin ?
+    gt(
+      end, rangeStart, 'minutes'
+    ) :
+    gte(
+      end, rangeEnd, 'minutes'
+    )
+  return startBeforeEnd && endsAfterStart
+}
+
+
+interface ISortEventsArg{
+  evtA:CalendarEvent,
+  evtB:CalendarEvent
+}
+function sortEvents(arg:ISortEventsArg) {
+  const { evtA, evtB, } = arg
+  const { start: aStart, end: aEnd, allDay: aAllDay, } = evtA
+  const { start: bStart, end: bEnd, allDay: bAllDay, } = evtB
+  const startSort = +startOf(aStart, 'day') - +startOf(bStart, 'day')
+  const durA = diff(
+    aStart, ceil(aEnd, 'day'), 'day'
+  )
+  const durB = diff(
+    bStart, ceil(bEnd, 'day'), 'day'
+  )
+  return (
+    startSort ||
+    Math.max(durB, 1) - Math.max(durA, 1) ||
+    +bAllDay - +aAllDay ||
+    +aStart - + bStart ||
+    +aEnd - +bEnd
+  )
+}
 
 
 export interface ILocalizer{
@@ -79,6 +142,10 @@ export interface ILocalizer{
   startOf: (date:(VTimestampInput | null), unit:moment.unitOfTime.DurationConstructor) => Date
   min: (dateA:VTimestampInput, dateB:VTimestampInput) => Date
   ceil: (date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) => VTimestampInput
+  isSameDate: (date1:VTimestampInput, date2:VTimestampInput)=>boolean
+  segmentOffset: number
+  inEventRange:(arg:IRangeArg) => boolean
+  sortEvents: (arg:ISortEventsArg) => (number)
 }
 const localizer:ILocalizer = {
   add,
@@ -87,5 +154,9 @@ const localizer:ILocalizer = {
   startOf,
   min,
   ceil,
+  isSameDate,
+  segmentOffset: 0,
+  inEventRange,
+  sortEvents,
 }
 export default localizer

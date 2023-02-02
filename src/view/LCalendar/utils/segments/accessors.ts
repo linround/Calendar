@@ -1,6 +1,11 @@
-import { CalendarEvent } from '../calendar'
+import { CalendarEvent, VTimestampInput } from '../calendar'
 function accessor(data:CalendarEvent, field:string) {
   return data[field]
+}
+export interface IAccessors {
+  start:(data:CalendarEvent) => VTimestampInput
+  end:(data:CalendarEvent) => VTimestampInput
+  allDay:(data:CalendarEvent) => (string|number|boolean|null|undefined)
 }
 
 export const accessors = {

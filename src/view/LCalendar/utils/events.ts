@@ -57,167 +57,294 @@ export function parseEvent(
 
 }
 
-function addDay(num) {
-  return num * 24 * 60 * 60 * 1000
-}
 
 export function creatEvents() {
-  const dateStr = '2023-01-01 00:43:00'
-  const eventStart = new Date(dateStr)
-    .valueOf()
-  const eventEnd = eventStart + (2 * 60 * 60 * 1000)
-  const otherEnd = eventEnd + (4 * 60 * 60 * 1000)
+  const now = new Date()
 
-  const otherStart = eventStart + (2 * 60 * 60 * 1000) + 15 * 60 * 1000
-  const otherEnd2 = otherStart + (6 * 60 * 60 * 1000)
+  const year = now.getFullYear()
+  const month = now.getMonth()
   return [
+    {
+      id: 0,
+      title: 'All Day Event very long title',
+      start: new Date(
+        year, month, 0
+      ),
+      end: new Date(
+        year, month, 1
+      ),
+    },
+    {
+      id: 1,
+      title: 'Long Event',
+      start: new Date(
+        year, month, 7
+      ),
+      end: new Date(
+        year, month, 10
+      ),
+    },
 
     {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
-    }, {
-      name: 'green',
-      color: 'green',
-      start: otherStart + addDay(1),
-      end: otherEnd + addDay(15),
-      timed: true,
+      id: 2,
+      title: 'DTS STARTS',
+      start: new Date(
+        year, month, 13, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 20, 0, 0, 0
+      ),
+    },
+
+    {
+      id: 3,
+      title: 'DTS ENDS',
+      start: new Date(
+        year, month, 6, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 13, 0, 0, 0
+      ),
+    },
+
+    {
+      id: 4,
+      title: 'Some Event',
+      start: new Date(
+        year, month, 9, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 10, 0, 0, 0
+      ),
     },
     {
-      name: 'red',
-      color: 'red',
-      start: otherStart,
-      end: otherEnd2 + addDay(1),
-      timed: true,
+      id: 5,
+      title: 'Conference',
+      start: new Date(
+        year, month, 11
+      ),
+      end: new Date(
+        year, month, 13
+      ),
+      desc: 'Big conference for important people',
     },
     {
-      name: 'black',
-      color: 'black',
-      start: eventStart - addDay(13),
-      end: otherEnd - addDay(13),
-      timed: true,
+      id: 6,
+      title: 'Meeting',
+      start: new Date(
+        year, month, 12, 10, 30, 0, 0
+      ),
+      end: new Date(
+        year, month, 12, 12, 30, 0, 0
+      ),
+      desc: 'Pre-meeting meeting, to prepare for the meeting',
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd + addDay(1),
-      timed: true,
+      id: 7,
+      title: 'Lunch',
+      start: new Date(
+        year, month, 12, 12, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 12, 13, 0, 0, 0
+      ),
+      desc: 'Power lunch',
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart + addDay(8),
-      end: eventEnd + addDay(8),
-      timed: false,
+      id: 8,
+      title: 'Meeting',
+      start: new Date(
+        year, month, 12, 14, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 12, 15, 0, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart + addDay(18),
-      end: eventEnd + addDay(18),
-      timed: false,
+      id: 9,
+      title: 'Happy Hour',
+      start: new Date(
+        year, month, 12, 17, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 12, 17, 30, 0, 0
+      ),
+      desc: 'Most important meal of the day',
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd,
-      timed: false,
+      id: 10,
+      title: 'Dinner',
+      start: new Date(
+        year, month, 12, 20, 0, 0, 0
+      ),
+      end: new Date(
+        year, month, 12, 21, 0, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd + addDay(2),
-      timed: false,
+      id: 11,
+      title: 'Planning Meeting with Paige',
+      start: new Date(
+        year, month, 13, 8, 0, 0
+      ),
+      end: new Date(
+        year, month, 13, 10, 30, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd,
-      timed: false,
+      id: 11.1,
+      title: 'Inconvenient Conference Call',
+      start: new Date(
+        year, month, 13, 9, 30, 0
+      ),
+      end: new Date(
+        year, month, 13, 12, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd,
-      timed: false,
+      id: 11.2,
+      title: 'Project Kickoff - Lou\'s Shoes',
+      start: new Date(
+        year, month, 13, 11, 30, 0
+      ),
+      end: new Date(
+        year, month, 13, 14, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd + addDay(3),
-      timed: false,
+      id: 11.3,
+      title: 'Quote Follow-up - Tea by Tina',
+      start: new Date(
+        year, month, 13, 15, 30, 0
+      ),
+      end: new Date(
+        year, month, 13, 16, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd,
-      timed: true,
+      id: 12,
+      title: 'Late Night Event',
+      start: new Date(
+        year, month, 17, 19, 30, 0
+      ),
+      end: new Date(
+        year, month, 18, 2, 0, 0
+      ),
     },
     {
-      name: 'blue',
-      color: 'blue',
-      start: eventStart,
-      end: eventEnd,
-      timed: false,
+      id: 12.5,
+      title: 'Late Same Night Event',
+      start: new Date(
+        year, month, 17, 19, 30, 0
+      ),
+      end: new Date(
+        year, month, 17, 23, 30, 0
+      ),
+    },
+    {
+      id: 13,
+      title: 'Multi-day Event',
+      start: new Date(
+        year, month, 20, 19, 30, 0
+      ),
+      end: new Date(
+        year, month, 22, 2, 0, 0
+      ),
+    },
+    {
+      id: 15,
+      title: 'Point in Time Event',
+      start: now,
+      end: now,
+    },
+    {
+      id: 16,
+      title: 'Video Record',
+      start: new Date(
+        year, month, 14, 15, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 19, 0, 0
+      ),
+    },
+    {
+      id: 17,
+      title: 'Dutch Song Producing',
+      start: new Date(
+        year, month, 14, 16, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 20, 0, 0
+      ),
+    },
+    {
+      id: 18,
+      title: 'Itaewon Halloween Meeting',
+      start: new Date(
+        year, month, 14, 16, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 17, 30, 0
+      ),
+    },
+    {
+      id: 19,
+      title: 'Online Coding Test',
+      start: new Date(
+        year, month, 14, 17, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 20, 30, 0
+      ),
+    },
+    {
+      id: 20,
+      title: 'An overlapped Event',
+      start: new Date(
+        year, month, 14, 17, 0, 0
+      ),
+      end: new Date(
+        year, month, 14, 18, 30, 0
+      ),
+    },
+    {
+      id: 21,
+      title: 'Phone Interview',
+      start: new Date(
+        year, month, 14, 17, 0, 0
+      ),
+      end: new Date(
+        year, month, 14, 18, 30, 0
+      ),
+    },
+    {
+      id: 22,
+      title: 'Cooking Class',
+      start: new Date(
+        year, month, 14, 17, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 19, 0, 0
+      ),
+    },
+    {
+      id: 23,
+      title: 'Go to the gym',
+      start: new Date(
+        year, month, 14, 18, 30, 0
+      ),
+      end: new Date(
+        year, month, 14, 20, 0, 0
+      ),
     }
-  ]
+  ].map((day) => ({
+    ...day,
+    name: day.title,
+    color: 'blue',
+    start: day.start.valueOf(),
+    end: day.end.valueOf(),
+    timed: false,
+  }))
 }
 
 

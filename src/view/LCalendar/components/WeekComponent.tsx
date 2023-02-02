@@ -1,9 +1,10 @@
 import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
-
-import { eventSegments } from '../utils/segments/eventSegments'
-import accessors from '../utils/segments/accessors'
+import {
+  eventSegments, eventsForWeek, sortEvents
+} from '../utils/segments/eventSegments'
+import { accessors } from '../utils/segments/accessors'
 import localizer from '../utils/segments/localizer'
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
@@ -28,6 +29,7 @@ import moment from 'moment'
 const MORE_ELEMENT = 'more-element'
 const PLACEHOLDER_ELEMENT = 'placeholder-element'
 const EVENT_ELEMENT = 'event-element'
+
 
 
 export function WeekComponent() {
@@ -116,15 +118,27 @@ export function WeekComponent() {
         .startOf('day')
         .valueOf()))
     }
-    console.log('\n')
-    console.log('************************')
-    console.log(weeks)
-    console.log(events)
-    // 遍历该月的每一周
-    // 从事件中选择生成该周的日历事件视图
-    const weekSegments = weeks.map((week) => events.map((event) => eventSegments(
-      event, week, accessors, localizer
-    )))
+    // 获取本周的事件
+    const weeksEvents = weeks.map((week) => {
+      const weekEvents = eventsForWeek(
+        [...events],
+        week[0],
+        week[week.length - 1],
+        accessors,
+        localizer
+      )
+      return weekEvents.sort((a, b) => sortEvents(
+        a, b, accessors, localizer
+      ))
+    })
+
+    weeksEvents.map((weekEvents, index) => {
+      const segments = weekEvents.map((event) => eventSegments(
+        event, weeks[index], accessors, localizer
+      ))
+      return segments
+    })
+    // 对每周的事件进行视图处理
     return (
       <>
         {weeks.map((week, index) => (
