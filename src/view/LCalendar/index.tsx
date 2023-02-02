@@ -166,11 +166,9 @@ export default function () {
     weekDays,
     setWeekDays,
     times,
-    parsedEnd,
-    parsedValue,
-    parsedStart, } = useContext(BaseContext)
+    parsedValue, } = useContext(BaseContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
-  const { maxDays, setMaxDays, } = useContext(IntervalsContext)
+  const {  setMaxDays, } = useContext(IntervalsContext)
 
 
 
