@@ -22,6 +22,7 @@ export interface IWeekSegments {
   range:IMonthDay[]
   levels:ISegments[][]
   extra:ISegments[]
+  slots: number | string
 }
 export type IMonthSegments = IWeekSegments[]
 

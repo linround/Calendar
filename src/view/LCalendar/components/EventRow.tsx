@@ -1,5 +1,6 @@
 import { ISegments } from '../utils/segments/eventSegments'
-import React from 'react'
+import React, { Fragment } from 'react'
+import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
 
 interface IEventRow{
@@ -7,15 +8,31 @@ interface IEventRow{
 }
 export function EventRow(props:React.PropsWithChildren<IEventRow>) {
   const { segments, } = props
-  const lastEnd = 1
+  let lastEnd = 1
   return (
     <div className={eventRowStyle.eventRowContainer}>
       {
-        segments.map((seg) => {
+        segments.map((seg, index) => {
           const { event, left, right, span, } = seg
           const gap = left - lastEnd
           const content = event.title
-          return <div>{content}</div>
+          lastEnd = right + 1
+          return (
+            <Fragment key={index}>
+              {
+                !!gap && (
+                  EventRowMixin.renderSpan(7, gap)
+                )
+              }
+              {
+                EventRowMixin.renderEvent(
+                  7, span,  content, event
+                )
+              }
+
+            </Fragment>
+          )
+
         })
       }
     </div>

@@ -98,11 +98,12 @@ export function MonthComponent() {
     ))
   })
   const monthSegments:IMonthSegments = monthEvents.map((weekEvents, index) => {
+
     const segments = weekEvents.map((event) => eventSegments(
       event, month[index].map((w) => w.value), accessors, localizer
     ))
     // 还需要处理maxRows和minRows的来源
-    const maxRows = 5
+    const maxRows = 6
     const minRows = 0
     const { levels, extra, } = eventLevels(segments, Math.max(maxRows - 1, 1))
     while (levels.length < minRows) {
@@ -112,6 +113,7 @@ export function MonthComponent() {
       levels,
       extra,
       range: month[index],
+      slots: month[index].length,
     }
   })
   function WeekHeadColumn(props: React.PropsWithChildren<IWeekHeadColumn>) {

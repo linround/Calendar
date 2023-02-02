@@ -1,0 +1,27 @@
+.eventMixin {
+  &Container {
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid;
+  }
+  &More {
+    padding: 5px;
+    border-radius: 5%;
+    overflow: hidden;
+    background: #bb9f9f;
+    &Content {
+      color: red;
+    }
+  }
+}
+.isEvent {
+  cursor: pointer;
+  z-index: 99;
+}
+.isMore {
+  cursor: pointer;
+  z-index: 99;
+}

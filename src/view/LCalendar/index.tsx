@@ -109,6 +109,8 @@ export default function () {
         start: createStart,
         end: createEnd,
         timed: true,
+        allDay: false,
+        title: `日历事件 ${events.length}`,
       }
       setEvents([...events, createEvent])
       setCreateEvent(createEvent)

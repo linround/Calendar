@@ -47,7 +47,7 @@ function min(dateA:VTimestampInput, dateB:VTimestampInput) {
   return minDt.toDate()
 }
 function defineComparators(
-  a:VTimestampInput, b:VTimestampInput, unit:moment.unitOfTime.DurationConstructor
+  a:VTimestampInput, b:VTimestampInput, unit?:moment.unitOfTime.DurationConstructor
 ) {
   const dtA = unit ? moment(a)
     .startOf(unit) : moment(a)
@@ -56,7 +56,7 @@ function defineComparators(
   return [dtA, dtB, unit]
 }
 function eq(
-  a:VTimestampInput, b:VTimestampInput, unit:moment.unitOfTime.DurationConstructor
+  a:VTimestampInput, b:VTimestampInput, unit?:moment.unitOfTime.DurationConstructor
 ) {
   const [dtA, dtB, datePart] = defineComparators(
     a, b, unit
@@ -66,11 +66,9 @@ function eq(
 
 function ceil(date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) {
   const floor = startOf(date, unit)
-  return eq(
-    floor, date, unit
-  ) ? floor : add(
-      floor, 1, unit
-    )
+  return eq(floor, date) ? floor : add(
+    floor, 1, unit
+  )
 }
 
 function isSameDate(date1:VTimestampInput, date2:VTimestampInput) {

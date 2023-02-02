@@ -38,6 +38,7 @@ export function eventSegments (
     first, last, 'day'
   )
   const start = localizer.max(localizer.startOf(accessors.start(event), 'day'), first)
+
   const end = localizer.min(localizer.ceil(accessors.end(event), 'day'), last)
   const padding = range.findIndex((day) => localizer.isSameDate(day, start))
   let span = localizer.diff(
@@ -81,7 +82,12 @@ export function eventLevels(rowSegments:ISegments[], limit = Infinity):{levels:I
   }
   return { levels, extra, }
 }
-
+export function eventsInSlot(segments:ISegments[], slot:number):number {
+  return segments.filter((seg) => isSegmentInSlot(seg, slot)).length
+}
+export function isSegmentInSlot(seg:ISegments, slot:number):boolean {
+  return seg.left <= slot && seg.right >= slot
+}
 export function sortEvents(
   eventA:CalendarEvent, eventB:CalendarEvent, accessors:IAccessors, localizer:ILocalizer
 ):number {

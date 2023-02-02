@@ -12,13 +12,7 @@ interface IWeekComponent {
 
 export function WeekComponent(props:React.PropsWithChildren<IWeekComponent>) {
   const { weekSegments, weekDays, } = props
-  const { levels, extra, } = weekSegments
-
-  {
-    levels.map((segs, index) => (
-      <EventRow segments={segs} key={index}></EventRow>
-    ))
-  }
+  const { levels, extra, slots, } = weekSegments
   return (
     <div className={monthStyle.monthWeekContainer}>
       <div className={monthStyle.monthModal}>
@@ -39,7 +33,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent>) {
         }
         {
           !!extra.length && (
-            <EventRowEnd segments={extra} />
+            <EventRowEnd segments={extra} slots={slots} />
           )
         }
       </div>
