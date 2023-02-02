@@ -343,7 +343,7 @@ export function creatEvents() {
     color: 'blue',
     start: day.start.valueOf(),
     end: day.end.valueOf(),
-    timed: false,
+    timed: true,
   }))
 }
 

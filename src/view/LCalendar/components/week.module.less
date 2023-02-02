@@ -1,40 +1,26 @@
 @import "../variables.less";
 
 .week {
-  &Head {
+  &Container{
     display: flex;
-    &Column {
-      flex: 1;
-      text-align: center;
-      border-right: 1px solid @borderColor;
-      color: white;
-    }
-  }
-  &Days {
     flex: 1;
-    display: flex;
-    &Cell {
-      flex: 1;
-      border-right: 1px solid @borderColor;
-      border-bottom: 1px solid @borderColor;
-      &Label {
-        text-align: center;
-        margin: 4px 0 0 0;
-      }
-    }
   }
 }
 .isPast {
   background: black;
+  color: white;
 }
 .isPresent{
   background: black;
+  color: white;
 }
 .isFuture {
   background: black;
+  color: white;
 }
 .isOutside {
   background: black;
+  color: white;
 }
 .isDayOutSide {
   background: #302c2c;
