@@ -96,8 +96,6 @@ export default function (props: Partial<IDayProps>) {
     )
   }, [parsedIntervalHeight, parsedIntervalMinutes, firstMinute])
 
-
-
   const timeDelta = (time: VTime): number | false => {
     const minutes = parseTime(time)
     if (minutes === false) {

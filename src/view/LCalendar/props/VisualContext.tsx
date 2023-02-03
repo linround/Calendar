@@ -49,16 +49,24 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const parsedEnd = useMemo(() => {
     const newEnd = end ? parseTimeStamp(end, true) : parsedStart
     return getTimestampIdentifier(newEnd) < getTimestampIdentifier(parsedStart) ? parsedStart : newEnd
-  }, [parsedStart])
+  }, [parsedStart, end])
   const parsedWeekdays = useMemo(() => weekDays, [weekDays])
   const parsedValue = useMemo<CalendarTimestamp>(() => (validateTimestamp(value) ?
     parseTimeStamp(value, true) :
     (parsedStart || times.today)), [value])
   const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
-  const days = useMemo<CalendarTimestamp[]>(() => createDayList(
-    parsedStart, parsedEnd, times.today, weekdaySkips
-  ),
+
+
+  const days = useMemo<CalendarTimestamp[]>(() => {
+    const ds = createDayList(
+      parsedStart, parsedEnd, times.today, weekdaySkips
+    )
+    console.log('days', ds)
+    return ds
+  },
   [parsedStart, parsedEnd, times, weekdaySkips])
+
+
 
 
   const [minWeeks] = useState<number>(DEFAULT_WEEKS.minWeeks)

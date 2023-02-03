@@ -240,6 +240,8 @@ export default function () {
       break
     }
     case 'day':{
+      console.log(newStart)
+      console.log(newEnd)
       break
     }
     }
