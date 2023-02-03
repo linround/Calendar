@@ -1,6 +1,5 @@
 import dayStyle from './day.module.less'
 import { IDayProps } from './dayPropsType'
-import { CalendarEventOverlapModes } from '../utils/modes'
 import { Button } from 'antd'
 import {
   copyTimestamp,
@@ -15,27 +14,30 @@ import {
 import {
   genTimedEvents, IEventsRect, isEventOn, stopDefaultEvent
 } from '../utils/events'
-import React, { useContext, useMemo } from 'react'
+import React, {
+  useCallback, useContext, useMemo
+} from 'react'
 import {
   CalendarDayBodySlotScope,
   CalendarDaySlotScope,
   CalendarEventParsed,
-  CalendarTimestamp, IMouseEvent, IMouseTime
+  CalendarTimestamp, IMouseTime
 } from '../utils/calendar'
 import {
   BaseContext, CalendarContext, IntervalsContext, EventContext
 } from '../props/propsContext'
 import { CalendarEventVisual } from '../utils/modes/common'
+import { mouseDayTime, mouseEvent } from './type'
 
 export default function (props: Partial<IDayProps>) {
   const {
     firstTime,
-    onMousedownEvent = (event: IMouseEvent) => undefined,
-    onContextMenuEvent = (time: IMouseEvent) => undefined,
+    onMousedownEvent = mouseEvent,
+    onContextMenuEvent = mouseEvent,
     onTimeHeaderClick = (e, event) => event,
-    onTimeContainerMouseup = (time: IMouseTime) => undefined,
-    onTimeContainerMousemove = (time: IMouseTime) => undefined,
-    onTimeContainerMousedown = (time: IMouseTime) => undefined,
+    onTimeContainerMouseup = mouseDayTime,
+    onTimeContainerMousemove = mouseDayTime,
+    onTimeContainerMousedown = mouseDayTime,
   } = props
   const {
     parsedEvents,
@@ -76,7 +78,7 @@ export default function (props: Partial<IDayProps>) {
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])
 
 
-  const getTimestampAtEvent = (e: React.MouseEvent, day: CalendarTimestamp): CalendarTimestamp => {
+  const getTimestampAtEvent = useCallback((e: React.MouseEvent, day: CalendarTimestamp): CalendarTimestamp => {
     const timestamp = copyTimestamp(day)
     const bounds = (e.currentTarget as HTMLElement).getBoundingClientRect()
     const baseMinutes = firstMinute
@@ -92,7 +94,9 @@ export default function (props: Partial<IDayProps>) {
     return updateMinutes(
       timestamp, minutes, now as CalendarTimestamp
     )
-  }
+  }, [parsedIntervalHeight, parsedIntervalMinutes, firstMinute])
+
+
 
   const timeDelta = (time: VTime): number | false => {
     const minutes = parseTime(time)
@@ -137,7 +141,7 @@ export default function (props: Partial<IDayProps>) {
     // 获取到鼠标hover处的时间值
     const time: CalendarTimestamp = getTimestampAtEvent(nativeEvent, day)
     return {
-      ...(getSlotScope(time) as CalendarDayBodySlotScope),
+      ...time,
       nativeEvent,
     }
   }

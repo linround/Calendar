@@ -2,7 +2,6 @@ import { CalendarEvent } from '../utils/calendar'
 import eventMixinStyle from './eventMixin.module.less'
 import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
-import localizer from '../utils/segments/localizer'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -43,8 +42,11 @@ export const EventRowMixin = {
   },
   renderMoreContent(segments:ISegments[], slot:number) {
     const count = eventsInSlot(segments, slot)
+    const onClick = () => {
+      console.log(segments, slot)
+    }
     return (
-      <span className={eventMixinStyle.eventMixinMoreContent}>
+      <span className={eventMixinStyle.eventMixinMoreContent} onClick={onClick}>
         + {count} more
       </span>
     )

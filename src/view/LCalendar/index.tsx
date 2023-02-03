@@ -3,6 +3,8 @@ import React, {
   useEffect,
   useContext
 } from 'react'
+import { DayWrapper } from './modules/DayWrapper'
+import { MonthWrapper } from './modules/MonthWrapper'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -302,7 +304,8 @@ export default function () {
           next={(amount) => move(amount)} />
         {
           type === 'month' ?
-            <MonthComponent /> :
+            <MonthComponent
+            /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
               onContextMenuEvent={onContextMenuEvent}

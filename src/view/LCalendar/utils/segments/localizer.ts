@@ -6,7 +6,7 @@ import {
 } from 'date-arithmetic'
 import { CalendarEvent, VTimestampInput } from '../calendar'
 
-function add(
+export function add(
   date:VTimestampInput, adder:number, unit: moment.unitOfTime.DurationConstructor
 ):VTimestampInput {
   return moment(date)
@@ -28,6 +28,16 @@ function max(dateA:VTimestampInput, dateB:VTimestampInput) {
   const dtB = moment(dateB)
   const maxDt = moment.max(dtA, dtB)
   return maxDt.toDate()
+}
+
+export function endOf(date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) {
+  if (unit) {
+    return moment(date)
+      .endOf(unit)
+      .toDate()
+  }
+  return moment(date)
+    .toDate()
 }
 
 function startOf(date:(VTimestampInput | null) = null, unit:moment.unitOfTime.DurationConstructor) {

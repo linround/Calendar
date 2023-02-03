@@ -134,7 +134,6 @@ export function MonthComponent(props:React.PropsWithChildren) {
     )
   }
 
-  console.log(monthSegments)
   return (
     <div className={monthStyle.monthBodyContainer}>
       <div className={monthStyle.monthHeader}>
@@ -148,6 +147,7 @@ export function MonthComponent(props:React.PropsWithChildren) {
       </div>
       {
         month.map((weekDays, index) => <WeekComponent
+          {...props}
           weekDays={weekDays}
           weekSegments={monthSegments[index]}
           key={index} />)

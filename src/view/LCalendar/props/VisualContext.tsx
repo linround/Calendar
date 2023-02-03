@@ -18,7 +18,6 @@ import {
   CalendarEvent, CalendarEventOverlapMode, CalendarEventParsed, CalendarTimestamp, IValue
 } from '../utils/calendar'
 import { ITimes } from './type'
-import { IEvents } from '../components/dayPropsType'
 import { creatEvents, parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
 

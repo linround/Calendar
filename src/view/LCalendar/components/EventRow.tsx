@@ -5,9 +5,10 @@ import eventRowStyle from './eventRow.module.less'
 
 interface IEventRow{
   segments: ISegments[]
+  slots: number
 }
 export function EventRow(props:React.PropsWithChildren<IEventRow>) {
-  const { segments, } = props
+  const { segments, slots, } = props
   let lastEnd = 1
   return (
     <div className={eventRowStyle.eventRowContainer}>
@@ -21,7 +22,7 @@ export function EventRow(props:React.PropsWithChildren<IEventRow>) {
             <Fragment key={index}>
               {
                 !!gap && (
-                  EventRowMixin.renderSpan(7, gap)
+                  EventRowMixin.renderSpan(slots, gap)
                 )
               }
               {

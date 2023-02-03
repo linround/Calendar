@@ -92,6 +92,6 @@ export interface IMouseEvent {
   event: CalendarEvent
 }
 
-export interface IMouseTime extends CalendarDayBodySlotScope {
+export interface IMouseTime extends CalendarTimestamp {
   nativeEvent: React.MouseEvent
 }

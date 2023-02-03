@@ -1,6 +1,7 @@
 import {
   CalendarTimestamp, IMouseTime, VTimestampInput
 } from '../calendar'
+import React from 'react'
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100
@@ -162,9 +163,6 @@ export const roundTime = (time:number, down = true):number => {
 
 
 
-export function trsTime(time:VTimestampInput) {
-
-}
 
 export function parseTimeStamp (input: VTimestampInput, required: true, now?: CalendarTimestamp): CalendarTimestamp
 export function parseTimeStamp(
