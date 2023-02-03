@@ -1,5 +1,5 @@
 import {
-  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime, IValue
+  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime, IValue, VTimestampInput
 } from '../utils/calendar'
 import React from 'react'
 
@@ -38,8 +38,14 @@ export interface IEvent {
   eventOverlapThreshold: number|string
 }
 
-
-
+export interface IMonthMouseTime extends CalendarTimestamp{
+  nativeEvent: React.MouseEvent
+}
+export interface IMonthHandleEvent {
+  onMonthTimeContainerMousedown: (time:IMonthMouseTime) => void
+  onMonthTimeContainerMouseup: () => void
+  onMonthTimeContainerMousemove: (time:IMonthMouseTime) => void
+}
 export interface IHandleEvent {
   onTimeHeaderClick: (e:React.MouseEvent, event:CalendarTimestamp) => any
   onMousedownEvent:(event: IMouseEvent) => void
@@ -49,7 +55,7 @@ export interface IHandleEvent {
   onTimeContainerMousedown: (time:IMouseTime) => void
 }
 
-export interface IDayProps extends ICalendar, IBase, IIntervals, IEvent, IHandleEvent{
+export interface IDayProps extends IIntervals, IHandleEvent{
   events: IEvents
 }
 

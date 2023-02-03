@@ -1,6 +1,7 @@
 import React, {
   useState,
-  useEffect, useContext
+  useEffect,
+  useContext
 } from 'react'
 import {
   DEFAULT_MAX_DAYS,
@@ -58,6 +59,9 @@ export default function () {
   const onContextMenuEvent = ({ event, }:IMouseEvent) => {
     console.log('onTimeContainerContextMenu', event)
   }
+
+
+
   const onTimeContainerMousedown = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousedownTime(time)
@@ -66,10 +70,18 @@ export default function () {
     setMousemoveTime(null)
   }
 
+
+
   const onTimeContainerMousemove = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousemoveTime(time)
   }
+
+
+
+
+
+
   const onTimeContainerMouseup = (time:IMouseTime) => {
     setDragEvent(null)
     setMousedownTime(null)
@@ -77,6 +89,10 @@ export default function () {
     setCreateEvent(null)
     setCreateStart(null)
   }
+
+
+
+
 
 
 
@@ -138,6 +154,7 @@ export default function () {
         const newEnd = newStart + duration
         dragEvent.start = newStart
         dragEvent.end = newEnd
+
         resetEvents(dragEvent, dragEvent)
 
       }

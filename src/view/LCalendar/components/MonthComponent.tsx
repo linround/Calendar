@@ -25,8 +25,7 @@ import {
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
 
-export function MonthComponent() {
-
+export function MonthComponent(props:React.PropsWithChildren) {
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
   const {  events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
@@ -134,6 +133,8 @@ export function MonthComponent() {
       </div>
     )
   }
+
+  console.log(monthSegments)
   return (
     <div className={monthStyle.monthBodyContainer}>
       <div className={monthStyle.monthHeader}>

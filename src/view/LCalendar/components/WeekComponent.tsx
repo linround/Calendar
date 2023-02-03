@@ -5,20 +5,24 @@ import monthStyle from './month.module.less'
 import { EventRow } from './EventRow'
 import { EventRowEnd } from './EventRowEnd'
 
-interface IWeekComponent {
+interface IWeekComponent  {
   weekSegments: IWeekSegments
   weekDays:IMonthWeek
 }
 
-export function WeekComponent(props:React.PropsWithChildren<IWeekComponent>) {
+
+export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
   const { weekSegments, weekDays, } = props
   const { levels, extra, slots, } = weekSegments
   return (
-    <div className={monthStyle.monthWeekContainer}>
+    <div
+      className={monthStyle.monthWeekContainer}>
       <div className={monthStyle.monthModal}>
         {
           weekDays.map((d, index) => (
-            <div className={monthStyle.monthModalItem} key={index}></div>
+            <div
+              className={monthStyle.monthModalItem}
+              key={index}></div>
           ))
         }
       </div>
