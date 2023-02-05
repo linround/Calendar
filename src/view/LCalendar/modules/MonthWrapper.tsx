@@ -64,7 +64,7 @@ export function MonthWrapper() {
 
   // 开始点击时的处理
   useEffect(() => {
-    if  (mousedownTime) {
+    if  (mousedownTime && !isMore) {
       if (dragEvent) {
         const start = dragEvent.start
         const dragTime = (mousedownTime as number) - start
