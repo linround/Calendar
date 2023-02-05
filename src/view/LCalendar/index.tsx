@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useContext
 } from 'react'
-import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
 import {
   DEFAULT_MAX_DAYS,
@@ -36,7 +35,6 @@ import {
 import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
 import DayComponent from './components/DayComponent'
-import { MonthComponent } from './components/MonthComponent'
 import {
   BaseContext, CalendarContext, EventContext, IntervalsContext
 } from './props/propsContext'
@@ -82,8 +80,6 @@ export default function () {
 
 
 
-
-
   const onTimeContainerMouseup = (time:IMouseTime) => {
     setDragEvent(null)
     setMousedownTime(null)
@@ -97,7 +93,6 @@ export default function () {
 
 
 
-
   const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
     const index = events.findIndex((e) => e === oldEvent)
     events.splice(
@@ -105,7 +100,6 @@ export default function () {
     )
     setEvents([...events])
   }
-
 
 
 
@@ -306,7 +300,7 @@ export default function () {
           next={(amount) => move(amount)} />
         {
           type === 'month' ?
-            <MonthComponent
+            <MonthWrapper
             /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
