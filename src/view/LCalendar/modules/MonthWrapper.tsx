@@ -12,7 +12,6 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, setEvents, } = useContext(EventContext)
-  const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
@@ -20,6 +19,8 @@ export function MonthWrapper() {
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
+
+
   const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
     const index = events.findIndex((e) => e === oldEvent)
     events.splice(
@@ -30,10 +31,6 @@ export function MonthWrapper() {
 
 
 
-  const onShowMore = (arg:ISlots) => {
-    setIsMore(true)
-    console.log(arg)
-  }
 
   const onTimeContainerMousedown = (tms:IMonthMouseTime) => {
     const { value: time, } = tms
@@ -45,15 +42,23 @@ export function MonthWrapper() {
     setMousemoveTime(time)
     return tms
   }
-  const onTimeContainerMouseup = (tms:IMonthMouseTime) => {
+  function clear() {
     setDragEvent(null)
+    setDragTime(null)
     setMousedownTime(null)
     setMousemoveTime(null)
     setCreateEvent(null)
     setCreateStart(null)
     setCreateEnd(null)
-    setIsMore(false)
+  }
+  const onTimeContainerMouseup = (tms:IMonthMouseTime) => {
+    clear()
     return tms
+  }
+
+  const onShowMore = (arg:ISlots) => {
+    console.log(dragTime)
+    console.log(arg)
   }
   const onMousedownEvent = (e:IMouseEvent) => {
     const { event, } = e
@@ -64,7 +69,7 @@ export function MonthWrapper() {
 
   // 开始点击时的处理
   useEffect(() => {
-    if  (mousedownTime && !isMore) {
+    if  (mousedownTime) {
       if (dragEvent) {
         const start = dragEvent.start
         const dragTime = (mousedownTime as number) - start
@@ -83,10 +88,11 @@ export function MonthWrapper() {
           allDay: false,
           title: `日历事件 ${events.length}`,
         }
-        setEvents([...events, createEvent])
+
         setCreateEvent(createEvent)
         setCreateStart(createStart)
         setCreateEnd(createEnd)
+        setEvents([...events, createEvent])
       }
     }
   }, [mousedownTime, dragEvent])
@@ -126,7 +132,6 @@ export function MonthWrapper() {
       // dragTime = (mousedownTime as number) - start
       const newStart = (mousemoveTime as number) - dragTime
       const newEnd = newStart + duration
-      console.log(duration)
       dragEvent.start = newStart
       dragEvent.end = newEnd
       resetEvents(dragEvent, dragEvent)

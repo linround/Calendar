@@ -7,6 +7,7 @@ import {
   getDayIdentifier, getTimestampIdentifier, MINUTES_IN_DAY
 } from './timesStamp'
 import { CalendarEventVisual } from './modes/common'
+import React from 'react'
 
 
 const EVENT_DEFAULT_BG_COLOR = 'white'
@@ -305,7 +306,7 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
   }
 }
 
-export function stopDefaultEvent(e:MouseEvent) {
+export function stopDefaultEvent(e:React.MouseEvent) {
   if (e.stopPropagation) {
     e.stopPropagation()
   }
