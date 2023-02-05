@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useContext
 } from 'react'
-import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
 import {
   DEFAULT_MAX_DAYS,
@@ -31,12 +30,11 @@ import {
   updateRelative,
   timestampToDate,
   updateFormatted,
-  DAYS_IN_MONTH_MAX, ROUND_TIME, getStartOfMonth, getEndOfMonth
+  DAYS_IN_MONTH_MAX, ROUND_TIME, getStartOfMonth, getEndOfMonth, isTruth
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
 import DayComponent from './components/DayComponent'
-import { MonthComponent } from './components/MonthComponent'
 import {
   BaseContext, CalendarContext, EventContext, IntervalsContext
 } from './props/propsContext'
@@ -55,11 +53,10 @@ export default function () {
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
 
-  const onMousedownEvent = ({ event, }: IMouseEvent) => {
+  const onMousedownEvent = (e: IMouseEvent) => {
+    const { event, } = e
     setDragEvent(event)
-  }
-  const onContextMenuEvent = ({ event, }:IMouseEvent) => {
-    console.log('onTimeContainerContextMenu', event)
+    return e
   }
 
 
@@ -70,6 +67,7 @@ export default function () {
     // 在这里设置mousemoveTime
     // 由于鼠标一直在移动，所以确保点击下去的时候不是之前设置的time值
     setMousemoveTime(null)
+    return tms
   }
 
 
@@ -77,21 +75,20 @@ export default function () {
   const onTimeContainerMousemove = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousemoveTime(time)
+    return tms
   }
 
 
 
 
-
-
-  const onTimeContainerMouseup = (time:IMouseTime) => {
+  const onTimeContainerMouseup = (tms:IMouseTime) => {
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
     setCreateEvent(null)
     setCreateStart(null)
+    return tms
   }
-
 
 
 
@@ -105,7 +102,6 @@ export default function () {
     )
     setEvents([...events])
   }
-
 
 
 
@@ -137,16 +133,27 @@ export default function () {
   }, [mousedownTime, dragEvent])
 
 
+  // 通过监听move事件的时间点，设置事件时间段
+  // 单独的将 createEvent 这个事件的逻辑提取出来
+  useEffect(() => {
+    if (createEvent &&
+      mousemoveTime &&
+      createStart) {
+      const mouseRound = roundTime(mousemoveTime)
+      createEvent.start = Math.min(mouseRound, createStart)
+      createEvent.end = Math.max(mouseRound, createStart)
+      resetEvents(createEvent, createEvent)
+    }
+  }, [createEvent, mousemoveTime, createStart])
 
 
 
   // 以下是点击日历事件，对日历事件进行拖拽的逻辑
   // 主要依赖拖拽的时间段 dragTime
   useEffect(() => {
-    if (dragEvent && mousedownTime) {
-      if (dragTime && mousemoveTime) {
-        const start = dragEvent.start
-        const end = dragEvent.end
+    if (dragEvent) {
+      if (isTruth(dragTime) && mousemoveTime) {
+        const { start, end, } = dragEvent
         // 计算事件的时长
         const duration = end - start
         // 以下即: (mousemoveTime-mousedownTime) + start
@@ -164,18 +171,6 @@ export default function () {
   }, [mousemoveTime, dragTime])
 
 
-  // 通过监听move事件的时间点，设置事件时间段
-  // 单独的将 createEvent 这个事件的逻辑提取出来
-  useEffect(() => {
-    if (createEvent &&
-      mousemoveTime &&
-      createStart) {
-      const mouseRound = roundTime(mousemoveTime)
-      createEvent.start = Math.min(mouseRound, createStart)
-      createEvent.end = Math.max(mouseRound, createStart)
-      resetEvents(createEvent, createEvent)
-    }
-  }, [createEvent, mousemoveTime, createStart])
 
 
 
@@ -306,11 +301,10 @@ export default function () {
           next={(amount) => move(amount)} />
         {
           type === 'month' ?
-            <MonthComponent
+            <MonthWrapper
             /> :
             <DayComponent
               onMousedownEvent={onMousedownEvent}
-              onContextMenuEvent={onContextMenuEvent}
               onTimeContainerMousedown={onTimeContainerMousedown}
               onTimeContainerMousemove={onTimeContainerMousemove}
               onTimeContainerMouseup={onTimeContainerMouseup} />

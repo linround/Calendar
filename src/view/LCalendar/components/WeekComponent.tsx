@@ -1,44 +1,56 @@
 import React  from 'react'
 import {
-  IMonthDay, IMonthWeek, IWeekSegments
+  IMonthDay, IMonthWeek, IWeekSegments, mouseDayTime, mouseEvent
 } from './type'
 import { GenSingleDay } from './GenSingleDay'
 import monthStyle from './month.module.less'
 import { EventRow } from './EventRow'
 import { EventRowEnd } from './EventRowEnd'
-import { IDayProps } from './dayPropsType'
+import {  IMonthProps } from './dayPropsType'
+import {
+  CalendarEvent,
+  IMonthMouseTime, IMouseEvent, IMouseTime
+} from '../utils/calendar'
 
-interface IWeekComponent extends Partial<IDayProps>{
+interface IWeekComponent extends IMonthProps{
   weekSegments: IWeekSegments
   weekDays:IMonthWeek
 }
-type IMouseType = 'onmousedown' | 'onmousemove' | 'onmouseup'
 
 function calcMonthTimes(
-  e:React.MouseEvent, rang:IMonthDay[], type:IMouseType
-) {
+  e:React.MouseEvent, rang:IMonthDay[], type:string
+):IMonthMouseTime {
   const { left, width, } = e.currentTarget.getBoundingClientRect()
   const { clientX, } = e
   const block = Math.floor((clientX - left) / (width / rang.length))
-  const time = {
-    ...rang[block],
+
+  return {
+    ... rang[block],
     type,
+    nativeEvent: e,
   }
-  return time
 }
 
 export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
-  const { weekSegments, weekDays, } = props
+  const { weekSegments,
+    weekDays,
+    onMousedownEvent = mouseEvent<IMouseEvent>(),
+    onTimeContainerMouseup = mouseDayTime<IMonthMouseTime>(),
+    onTimeContainerMousemove = mouseDayTime<IMonthMouseTime>(),
+    onTimeContainerMousedown = mouseDayTime<IMonthMouseTime>(), } = props
   const { levels, extra, slots, range, } = weekSegments
   return (
     <div
       className={monthStyle.monthWeekContainer}
-      onMouseDown={(e) => calcMonthTimes(
+      onMouseUp={(e) => onTimeContainerMouseup(calcMonthTimes(
+        e, range, 'onmouseup'
+      ))}
+      onMouseDown={(e) => onTimeContainerMousedown(calcMonthTimes(
         e, range, 'onmousedown'
-      )}
-      onMouseMove={(e) => calcMonthTimes(
+      )) }
+      onMouseMove={(e) => onTimeContainerMousemove(calcMonthTimes(
         e, range, 'onmousemove'
-      )}>
+      ))}>
       <div className={monthStyle.monthModal}>
         {
           weekDays.map((d, index) => (
@@ -54,7 +66,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
       <div className={monthStyle.monthWeekRowEvents}>
         {
           levels.map((segs, index) => (
-            <EventRow segments={segs} key={index} slots={slots as number} />
+            <EventRow segments={segs} key={index} slots={slots as number} onMousedownEvent={onMousedownEvent} />
           ))
         }
         {

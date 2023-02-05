@@ -1,61 +1,22 @@
 import {
-  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime, IValue, VTimestampInput
+  IMonthMouseTime, IMouseEvent, IMouseTime
 } from '../utils/calendar'
-import React from 'react'
 
-export interface ICalendar {
-  type: string
-  value: IValue
-}
-export interface ITimes {
-  now:CalendarTimestamp | null
-  today: CalendarTimestamp | null
-}
-export interface  IBase{
-  parsedStart: CalendarTimestamp
-  parsedEnd: CalendarTimestamp
-  weekdays: number[] | string
-  times: ITimes
+
+
+interface IHandleEvent<E, T> {
+  onMousedownEvent:(e: E) => E
+  onTimeContainerMouseup: (time:T) => T
+  onTimeContainerMousemove: (time:T) => T
+  onTimeContainerMousedown: (time:T) => T
 }
 
-export type IEvents = CalendarEvent[]
 
-export interface IIntervals {
-  maxDays: number
-  intervalWidth: number | string
+
+export interface IDayProps extends IHandleEvent<IMouseEvent, IMouseTime>{
   firstTime?: number|string|object
-  firstInterval: number|string
-  intervalMinutes: string |number
-  intervalCount: number
-  intervalHeight: number
 }
 
-export interface IEvent {
-  eventStart : string,
-  eventEnd : string,
-  eventTimed : string,
-  eventOverlapMode: string
-  eventOverlapThreshold: number|string
-}
+export type IMonthProps  = IHandleEvent<IMouseEvent, IMonthMouseTime>
 
-export interface IMonthMouseTime extends CalendarTimestamp{
-  nativeEvent: React.MouseEvent
-}
-export interface IMonthHandleEvent {
-  onMonthTimeContainerMousedown: (time:IMonthMouseTime) => void
-  onMonthTimeContainerMouseup: () => void
-  onMonthTimeContainerMousemove: (time:IMonthMouseTime) => void
-}
-export interface IHandleEvent {
-  onTimeHeaderClick: (e:React.MouseEvent, event:CalendarTimestamp) => any
-  onMousedownEvent:(event: IMouseEvent) => void
-  onContextMenuEvent: (event: IMouseEvent) => void
-  onTimeContainerMouseup: (time:IMouseTime) => void
-  onTimeContainerMousemove: (time:IMouseTime) => void
-  onTimeContainerMousedown: (time:IMouseTime) => void
-}
-
-export interface IDayProps extends IIntervals, IHandleEvent{
-  events: IEvents
-}
 

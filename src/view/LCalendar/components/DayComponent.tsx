@@ -21,7 +21,7 @@ import {
   CalendarDayBodySlotScope,
   CalendarDaySlotScope,
   CalendarEventParsed,
-  CalendarTimestamp, IMouseTime
+  CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
 import {
   BaseContext, CalendarContext, IntervalsContext, EventContext
@@ -29,15 +29,13 @@ import {
 import { CalendarEventVisual } from '../utils/modes/common'
 import { mouseDayTime, mouseEvent } from './type'
 
-export default function (props: Partial<IDayProps>) {
+export default function (props: IDayProps) {
   const {
     firstTime,
-    onMousedownEvent = mouseEvent,
-    onContextMenuEvent = mouseEvent,
-    onTimeHeaderClick = (e, event) => event,
-    onTimeContainerMouseup = mouseDayTime,
-    onTimeContainerMousemove = mouseDayTime,
-    onTimeContainerMousedown = mouseDayTime,
+    onMousedownEvent = mouseEvent<IMouseEvent>(),
+    onTimeContainerMouseup = mouseDayTime<IMouseTime>(),
+    onTimeContainerMousemove = mouseDayTime<IMouseTime>(),
+    onTimeContainerMousedown = mouseDayTime<IMouseTime>(),
   } = props
   const {
     parsedEvents,
@@ -173,13 +171,6 @@ export default function (props: Partial<IDayProps>) {
               <div
                 key={index}
                 className={dayStyle.dayBodyTimedItem}
-                onContextMenu={(nativeEvent) => {
-                  stopDefaultEvent(nativeEvent.nativeEvent)
-                  onContextMenuEvent({
-                    nativeEvent,
-                    event: rect.event,
-                  })
-                }}
                 onMouseDown={(nativeEvent) => onMousedownEvent({
                   nativeEvent,
                   event: rect.event,
@@ -210,9 +201,8 @@ export default function (props: Partial<IDayProps>) {
               <div>
                 <Button
                   type='primary'
-                  onClick={(e) => onTimeHeaderClick(e, day)}
                   shape='circle'>
-                  {day.day}</Button>
+                  {day.date}</Button>
               </div>
             </div>
           ))

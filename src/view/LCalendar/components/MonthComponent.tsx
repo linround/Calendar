@@ -24,8 +24,10 @@ import {
 } from './type'
 import weekStyle from './week.module.less'
 import classnames from 'classnames'
+import { IMonthProps } from './dayPropsType'
 
-export function MonthComponent(props:React.PropsWithChildren) {
+
+export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
   const {  events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
@@ -102,8 +104,10 @@ export function MonthComponent(props:React.PropsWithChildren) {
       event, month[index].map((w) => w.value), accessors, localizer
     ))
     // 还需要处理maxRows和minRows的来源
-    const maxRows = 6
+    const maxRows = 4
     const minRows = 0
+
+
     const { levels, extra, } = eventLevels(segments, Math.max(maxRows - 1, 1))
     while (levels.length < minRows) {
       levels.push([])

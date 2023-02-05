@@ -1,7 +1,8 @@
 import {
-  CalendarTimestamp, IMouseTime, VTimestampInput
+  CalendarEvent,
+  CalendarTimestamp, VTimestampInput
 } from '../calendar'
-import React from 'react'
+import localizer from '../segments/localizer'
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100
@@ -147,8 +148,9 @@ export function updateHasTime(
   return timestamp
 }
 
+export const isTruth = (v:any):v is number => v !== null && v !== undefined && v !== ''
 // 转换点击的时间为时间戳
-export const toTime = (tms:IMouseTime):number => new Date(
+export const toTime = (tms:CalendarTimestamp):number => new Date(
   tms.year, tms.month - 1, tms.day, tms.hour, tms.minute
 )
   .getTime()
@@ -160,7 +162,6 @@ export const roundTime = (time:number, down = true):number => {
     time - (time % roundDownTime) :
     time + (roundDownTime - (time % roundDownTime))
 }
-
 
 
 

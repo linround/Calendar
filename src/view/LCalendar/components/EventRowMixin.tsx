@@ -1,7 +1,8 @@
-import { CalendarEvent } from '../utils/calendar'
+import { CalendarEvent, IMouseEvent } from '../utils/calendar'
 import eventMixinStyle from './eventMixin.module.less'
 import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
+import { mouseEvent } from './type'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -20,7 +21,8 @@ export const EventRowMixin = {
     slots:number,
     len:number,
     content:any = '',
-    event: CalendarEvent
+    event: CalendarEvent,
+    onMousedownEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>()
   ) {
     const width = ((Math.abs(len) / slots) * 100) + '%'
     const bgColor = event.color
@@ -30,6 +32,10 @@ export const EventRowMixin = {
     })
     return (
       <div
+        onMouseDown={(nativeEvent) => onMousedownEvent({
+          nativeEvent,
+          event,
+        })}
         className={className}
         style={{
           flexBasis: width,

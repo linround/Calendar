@@ -9,7 +9,7 @@ export function GenSingleDay(props:React.PropsWithChildren<IGenDayProp>) {
   const { day, } = props
   return (
     <div className={monthStyle.monthWeekDay}>
-      {day.day.day}
+      {day.day.date}
     </div>
   )
 }

@@ -94,4 +94,11 @@ export interface IMouseEvent {
 
 export interface IMouseTime extends CalendarTimestamp {
   nativeEvent: React.MouseEvent
+
+}
+export interface IMonthMouseTime {
+  day: CalendarTimestamp
+  value: VTimestampInput
+  type: string
+  nativeEvent: React.MouseEvent
 }

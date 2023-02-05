@@ -9,9 +9,13 @@ export interface IWeekHeadColumn {
 }
 
 
-export const mouseDayTime = (time: IMouseTime) => undefined
-export const mouseMonthTime = (time: IMouseTime) => undefined
-export const mouseEvent = (event: IMouseEvent) => undefined
+export function mouseDayTime<T>():any {
+  return (time:T) => time
+}
+export function mouseEvent<T>():any {
+  return (event:T) => event
+}
+
 export interface IMonthDay {
   value: VTimestampInput
   day: CalendarTimestamp
