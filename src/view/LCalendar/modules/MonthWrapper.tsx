@@ -8,9 +8,11 @@ import {
 } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
+import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, setEvents, } = useContext(EventContext)
+  const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
@@ -24,6 +26,13 @@ export function MonthWrapper() {
       index, 1, newEvent
     )
     setEvents([...events])
+  }
+
+
+
+  const onShowMore = (arg:ISlots) => {
+    setIsMore(true)
+    console.log(arg)
   }
 
   const onTimeContainerMousedown = (tms:IMonthMouseTime) => {
@@ -43,6 +52,7 @@ export function MonthWrapper() {
     setCreateEvent(null)
     setCreateStart(null)
     setCreateEnd(null)
+    setIsMore(false)
     return tms
   }
   const onMousedownEvent = (e:IMouseEvent) => {
@@ -127,6 +137,7 @@ export function MonthWrapper() {
 
   return (
     <MonthComponent
+      onShowMore={onShowMore}
       onMousedownEvent={onMousedownEvent}
       onTimeContainerMouseup={onTimeContainerMouseup}
       onTimeContainerMousemove={onTimeContainerMousemove}

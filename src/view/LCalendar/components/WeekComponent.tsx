@@ -1,6 +1,7 @@
 import React  from 'react'
 import {
-  IMonthDay, IMonthWeek, IWeekSegments, mouseDayTime, mouseEvent
+  defaultShowMore,
+  IMonthDay, IMonthWeek, ISlots, IWeekSegments, mouseDayTime, mouseEvent
 } from './type'
 import { GenSingleDay } from './GenSingleDay'
 import monthStyle from './month.module.less'
@@ -34,11 +35,19 @@ function calcMonthTimes(
 export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
   const { weekSegments,
     weekDays,
+    onShowMore = (arg:ISlots) => undefined,
     onMousedownEvent = mouseEvent<IMouseEvent>(),
     onTimeContainerMouseup = mouseDayTime<IMonthMouseTime>(),
     onTimeContainerMousemove = mouseDayTime<IMonthMouseTime>(),
     onTimeContainerMousedown = mouseDayTime<IMonthMouseTime>(), } = props
   const { levels, extra, slots, range, } = weekSegments
+  const handleShowMore = (slot:number, nativeEvent:React.MouseEvent) => {
+    const events = weekSegments.getEventsForSlot(slot)
+    onShowMore({
+      events,
+      nativeEvent,
+    })
+  }
   return (
     <div
       className={monthStyle.monthWeekContainer}
@@ -71,7 +80,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
         }
         {
           !!extra.length && (
-            <EventRowEnd segments={extra} slots={slots} />
+            <EventRowEnd segments={extra} slots={slots} showMore={(slot, e) => handleShowMore(slot, e)}  />
           )
         }
       </div>

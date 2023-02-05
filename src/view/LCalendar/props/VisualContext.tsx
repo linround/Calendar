@@ -6,7 +6,9 @@ import {
   IntervalsContext,
   WeeksContext, DEFAULT_EVENT
 } from './propsContext'
-import React, { useMemo, useState } from 'react'
+import React, {
+  useEffect, useMemo, useState
+} from 'react'
 import {
   DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_WEEK_DAYS
 } from '../utils/time'

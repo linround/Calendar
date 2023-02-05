@@ -5,13 +5,15 @@ import React, { Fragment } from 'react'
 import range from 'lodash/range'
 import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
+import { defaultShowMore } from './type'
 
 interface IEventRow{
   segments: ISegments[]
   slots: number|string
+  showMore: (slot: number, e:React.MouseEvent) => void
 }
 export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
-  const { segments, slots, } = props
+  const { segments, slots, showMore = defaultShowMore,  } = props
   const rowSegments = eventLevels(segments).levels[0]
   let current = 1
   let lastEnd = 1
@@ -62,7 +64,9 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
           EventRowMixin.renderMore(
             slots as number,
             1,
-            EventRowMixin.renderMoreContent(segments, current)
+            EventRowMixin.renderMoreContent(
+              segments, current, showMore
+            )
           )
         }
       </Fragment>)

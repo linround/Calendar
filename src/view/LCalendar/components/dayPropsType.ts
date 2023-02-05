@@ -1,6 +1,9 @@
 import {
+  CalendarEvent,
   IMonthMouseTime, IMouseEvent, IMouseTime
 } from '../utils/calendar'
+import React from 'react'
+import { ISlots } from './type'
 
 
 
@@ -17,6 +20,8 @@ export interface IDayProps extends IHandleEvent<IMouseEvent, IMouseTime>{
   firstTime?: number|string|object
 }
 
-export type IMonthProps  = IHandleEvent<IMouseEvent, IMonthMouseTime>
+export interface IMonthProps  extends IHandleEvent<IMouseEvent, IMonthMouseTime> {
+  onShowMore:(arg:ISlots) => void
+}
 
 

@@ -2,7 +2,8 @@ import { CalendarEvent, IMouseEvent } from '../utils/calendar'
 import eventMixinStyle from './eventMixin.module.less'
 import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
-import { mouseEvent } from './type'
+import { defaultShowMore, mouseEvent } from './type'
+import React from 'react'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -46,15 +47,14 @@ export const EventRowMixin = {
       </div>
     )
   },
-  renderMoreContent(segments:ISegments[], slot:number) {
+  renderMoreContent(
+    segments:ISegments[], slot:number, showMore = defaultShowMore
+  ) {
     const count = eventsInSlot(segments, slot)
-    const onClick = () => {
-      console.log(segments, slot)
-    }
     return (
-      <span className={eventMixinStyle.eventMixinMoreContent} onClick={onClick}>
+      <div className={eventMixinStyle.eventMixinMoreContent} onClick={(e) => showMore(slot, e)}>
         + {count} more
-      </span>
+      </div>
     )
   },
   renderMore(
@@ -67,6 +67,7 @@ export const EventRowMixin = {
       [eventMixinStyle.eventMixinMore]: true,
       [eventMixinStyle.isMore]: true,
     })
+
     return (
       <div
         className={className}
