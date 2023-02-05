@@ -43,7 +43,6 @@ export function MonthWrapper() {
     return tms
   }
   const onTimeContainerMousemove = (tms:IMonthMouseTime) => {
-    console.log(events, 1111111111111)
     const { value: time, } = tms
     setMousemoveTime(time)
     return tms
