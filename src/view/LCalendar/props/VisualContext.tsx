@@ -63,7 +63,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     const ds = createDayList(
       parsedStart, parsedEnd, times.today, weekdaySkips
     )
-    console.log('days', ds)
     return ds
   },
   [parsedStart, parsedEnd, times, weekdaySkips])

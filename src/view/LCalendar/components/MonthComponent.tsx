@@ -33,7 +33,7 @@ import { IMonthProps } from './dayPropsType'
 export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
 
   // 还需要处理maxRows和minRows的来源
-  const maxRows = 4
+  const maxRows = 3
   const minRows = 0
 
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
@@ -148,7 +148,6 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       </div>
     )
   }
-  console.log(monthSegments)
   return (
     <div className={monthStyle.monthBodyContainer}>
       <div className={monthStyle.monthHeader}>
