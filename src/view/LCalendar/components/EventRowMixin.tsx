@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
 import { defaultShowMore, mouseEvent } from './type'
 import React from 'react'
+import { stopDefaultEvent } from '../utils/events'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -52,7 +53,9 @@ export const EventRowMixin = {
   ) {
     const count = eventsInSlot(segments, slot)
     return (
-      <div className={eventMixinStyle.eventMixinMoreContent} onClick={(e) => showMore(slot, e)}>
+      <div className={eventMixinStyle.eventMixinMoreContent} onMouseDown={(e) => {
+        showMore(slot, e)
+      }}>
         + {count} more
       </div>
     )
