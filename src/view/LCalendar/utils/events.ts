@@ -66,168 +66,170 @@ export function creatEvents() {
   const month = now.getMonth() + 1
   const date = now.getDate()
   return [
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 1}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
 
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
 
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    },
-
-    {
-      'name': '日历事件 27',
-      'color': 'green',
-      'start': new Date(`${year}-${month}-${date + 2}`)
-        .valueOf(),
-      'end': new Date(`${year}-${month}-${date + 4}`)
-        .valueOf(),
-      'timed': true,
-      'allDay': false,
-      'title': '日历事件 27',
-    }
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 1}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // },
+    //
+    // {
+    //   'name': '日历事件 27',
+    //   'color': 'green',
+    //   'start': new Date(`${year}-${month}-${date + 2}`)
+    //     .valueOf(),
+    //   'end': new Date(`${year}-${month}-${date + 4}`)
+    //     .valueOf(),
+    //   'timed': true,
+    //   'allDay': false,
+    //   'title': '日历事件 27',
+    // }
   ]
 }
 

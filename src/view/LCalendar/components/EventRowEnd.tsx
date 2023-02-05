@@ -14,13 +14,13 @@ interface IEventRow{
 }
 export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
   const { segments, slots, showMore = defaultShowMore,  } = props
-  const rowSegments = eventLevels(segments).levels[0]
+  // const rowSegments = eventLevels(segments).levels[0]
   let current = 1
   let lastEnd = 1
   const row = []
   while (current <= slots) {
     const key = `row_end_${current}`
-    const { event, left, right, span, } = rowSegments.filter((seg) => isSegmentInSlot(seg, current))[0] || {}
+    const { event, left, right, span, } = segments.filter((seg) => isSegmentInSlot(seg, current))[0] || {}
 
     if (!event) {
       current += 1
@@ -32,7 +32,9 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
         const count = eventsInSlot(segments, s)
         return count === 1
       })
+    console.log(canRenderSlotEvent, 'canRenderSlotEvent')
     if (canRenderSlotEvent) {
+      console.log(canRenderSlotEvent, 'canRenderSlotEvent')
       const content =  event.title
       if (gap) {
         row.push(<Fragment key={`${key}_gap`}>

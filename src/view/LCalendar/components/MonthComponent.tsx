@@ -148,7 +148,7 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       </div>
     )
   }
-
+  console.log(monthSegments)
   return (
     <div className={monthStyle.monthBodyContainer}>
       <div className={monthStyle.monthHeader}>
