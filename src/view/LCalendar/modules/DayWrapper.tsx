@@ -136,11 +136,6 @@ export function DayWrapper() {
     }
   }, [mousemoveTime, dragTime])
 
-
-
-
-
-
   return (
     <>
       <DayComponent
