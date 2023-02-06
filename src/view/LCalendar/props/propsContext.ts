@@ -61,6 +61,8 @@ export const BaseContext = createContext<IBaseContext>({
   setWeekDays: () => undefined,
   parsedWeekdays: DEFAULT_WEEK_DAYS,
   weekdaySkips: DEFAULT_WEEK_SKIPS,
+  setRef: () => undefined,
+  selectedRef: null,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: Date.now(),

@@ -2,7 +2,7 @@ import React, {
   useEffect,
   useContext
 } from 'react'
-import { MonthWrapper } from './modules/MonthWrapper'
+import { Popover } from './Popover/Popover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -30,6 +30,7 @@ import {
   BaseContext, CalendarContext, IntervalsContext
 } from './props/propsContext'
 import { DayWrapper } from './modules/DayWrapper'
+import { MonthWrapper } from './modules/MonthWrapper'
 
 
 
@@ -149,23 +150,27 @@ export default function () {
 
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.mainLeft}></div>
-      <div className={styles.mainRight}>
-        <MenuHeader
-          value={value}
-          type={type}
-          setToday={setValue}
-          setType={setType}
-          prev={(amount) => move(amount)}
-          next={(amount) => move(amount)} />
-        {
-          type === 'month' ?
-            <MonthWrapper
-            /> :
-            <DayWrapper />
-        }
+    <>
+      <Popover />
+      <div className={styles.mainContainer}>
+        <div className={styles.mainLeft}></div>
+        <div className={styles.mainRight}>
+          <MenuHeader
+            value={value}
+            type={type}
+            setToday={setValue}
+            setType={setType}
+            prev={(amount) => move(amount)}
+            next={(amount) => move(amount)} />
+          {
+            type === 'month' ?
+              <MonthWrapper
+              /> :
+              <DayWrapper />
+          }
+        </div>
       </div>
-    </div>
+    </>
+
   )
 }

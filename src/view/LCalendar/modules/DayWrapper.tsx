@@ -2,7 +2,7 @@ import React, {
   useCallback, useContext, useEffect, useState
 } from 'react'
 import DayComponent from '../components/DayComponent'
-import { EventContext } from '../props/propsContext'
+import { BaseContext, EventContext } from '../props/propsContext'
 import {
   CalendarEvent, IMouseEvent, IMouseTime
 } from '../utils/calendar'
@@ -14,7 +14,7 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-
+  const { setRef, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -24,7 +24,8 @@ export function DayWrapper() {
   const [createStart, setCreateStart] = useState<number| null>(null)
 
   const onMousedownEvent = (e: IMouseEvent) => {
-    const { event, } = e
+    const { event, nativeEvent, } = e
+    setRef(nativeEvent.currentTarget)
     setDragEvent(event)
     return e
   }

@@ -6,9 +6,7 @@ import {
   IntervalsContext,
   WeeksContext, DEFAULT_EVENT
 } from './propsContext'
-import React, {
-  useEffect, useMemo, useState
-} from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS
 } from '../utils/time'
@@ -27,6 +25,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const children = props.children
   const [now] = useState(Date.now())
   const [weekDays, setWeekDays] = useState<number[]>(DEFAULT_WEEK_DAYS)
+  const [selectedRef, setRef] = useState<Element | null>(null)
   const [start, setStart] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const [end, setEnd] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const times = useMemo<ITimes>(() => ({
@@ -108,6 +107,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
       parsedValue,
       weekdaySkips,
       days,
+      selectedRef,
+      setRef,
     }}>
       <CalendarContext.Provider value={{
         type,

@@ -35,6 +35,8 @@ export interface IBaseContext {
   setWeekDays: React.Dispatch<React.SetStateAction<number[]>>
   parsedWeekdays: number[]
   weekdaySkips:number[]
+  selectedRef: Element | null
+  setRef: React.Dispatch<Element | null>
   times?: ITimes
   parsedEnd?: CalendarTimestamp
   parsedStart?:CalendarTimestamp
