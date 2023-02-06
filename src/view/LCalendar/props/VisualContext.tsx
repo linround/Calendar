@@ -53,7 +53,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     return getTimestampIdentifier(newEnd) < getTimestampIdentifier(parsedStart) ? parsedStart : newEnd
   }, [parsedStart, end])
   const parsedWeekdays = useMemo(() => weekDays, [weekDays])
-  const parsedValue = useMemo<CalendarTimestamp>(() => (validateTimestamp(value) ?
+  const parsedValue = useMemo<CalendarTimestamp>(() =>  (validateTimestamp(value) ?
     parseTimeStamp(value, true) :
     (parsedStart || times.today)), [value])
   const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
