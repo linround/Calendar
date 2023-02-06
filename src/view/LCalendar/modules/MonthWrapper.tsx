@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useContext, useEffect, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
@@ -42,11 +43,12 @@ export function MonthWrapper() {
     setMousedownTime(time)
     return tms
   }
-  const onTimeContainerMousemove = (tms:IMonthMouseTime) => {
+  const onTimeContainerMousemove = useCallback((tms:IMonthMouseTime) => {
+    if (!mousedownTime) return tms
     const { value: time, } = tms
     setMousemoveTime(time)
     return tms
-  }
+  }, [mousedownTime])
   const onTimeContainerMouseup = (tms:IMonthMouseTime) => {
     setIsMore(false)
     setDragEvent(null)

@@ -148,7 +148,7 @@ export default function (props: IDayProps) {
     return parsedEvents.filter((event) => !event.allDay &&
       isEventOn(event, identifier))
   }
-
+  console.log('***************----*******************')
 
   function dayBodySlot(day: CalendarDayBodySlotScope) {
     const mode = eventModeFunction(

@@ -1,7 +1,7 @@
 import React, {
   useState,
   useEffect,
-  useContext
+  useContext, useCallback
 } from 'react'
 import { MonthWrapper } from './modules/MonthWrapper'
 import {
@@ -72,11 +72,12 @@ export default function () {
 
 
 
-  const onTimeContainerMousemove = (tms:IMouseTime) => {
+  const onTimeContainerMousemove = useCallback((tms:IMouseTime) => {
+    if (!mousedownTime) return tms
     const time = toTime(tms)
     setMousemoveTime(time)
     return tms
-  }
+  }, [mousedownTime])
 
 
 
@@ -235,8 +236,6 @@ export default function () {
       break
     }
     case 'day':{
-      console.log(newStart)
-      console.log(newEnd)
       break
     }
     }
