@@ -187,7 +187,6 @@ export default function () {
 
 
 
-
   // 这里的是为了响应type的变化
   // 目前在周视图和日视图中
   // 修改 maxDays 和 weekDays
@@ -293,6 +292,7 @@ export default function () {
       <div className={styles.mainLeft}></div>
       <div className={styles.mainRight}>
         <MenuHeader
+          value={value}
           type={type}
           setToday={setValue}
           setType={setType}

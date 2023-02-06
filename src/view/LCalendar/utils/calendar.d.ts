@@ -7,6 +7,7 @@ export interface IHeaderEvent {
   prev: (amount: number) => any
   next: (amount: number) => any
   type: string
+  value: IValue
   setType:(type: string) => any
   setToday:(type: IValue) => any
 }

@@ -15,17 +15,18 @@ import { IHeaderEvent } from '../utils/calendar'
 
 
 export default function (props:IHeaderEvent) {
+
   const {
-    type = 'day',
+    type,
+    value,
     prev = (amount) => amount,
     next = (amount) => amount,
     setType = (type) => type,
     setToday = (today) => today,
   } = props
 
-  const time = Date.now()
   const format = 'YYYY MM DD'
-  const timeStr = moment(time)
+  const timeStr = moment(value)
     .format(format)
 
 

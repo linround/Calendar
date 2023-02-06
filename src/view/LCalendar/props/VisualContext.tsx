@@ -10,7 +10,7 @@ import React, {
   useEffect, useMemo, useState
 } from 'react'
 import {
-  DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_WEEK_DAYS
+  DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS
 } from '../utils/time'
 import {
   createDayList,
@@ -36,7 +36,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
   const [type, setType] = useState<string>(DEFAULT_TYPE)
-  const [value, setValue] = useState<IValue>('')
+  const [value, setValue] = useState<IValue>(DEFAULT_VALUE)
 
   const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
   const [intervalHeight] = useState<number>(DEFAULT_INTERVALS.intervalHeight)
