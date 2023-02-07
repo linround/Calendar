@@ -37,6 +37,7 @@ export default function (props: IDayProps) {
     firstTime,
     onClickEvent = mouseEvent<IMouseEvent>(),
     onMousedownEvent = mouseEvent<IMouseEvent>(),
+    onTimeContainerClick = mouseDayTime<IMouseTime>(),
     onTimeContainerMouseup = mouseDayTime<IMouseTime>(),
     onTimeContainerMousemove = mouseDayTime<IMouseTime>(),
     onTimeContainerMousedown = mouseDayTime<IMouseTime>(),
@@ -252,7 +253,11 @@ export default function (props: IDayProps) {
                   <div
                     className={dayStyle.dayBodyDay}
                     key={index}
+                    onClick={(e) => {
+                      onTimeContainerClick(onTimeContainer(e, day))
+                    }}
                     onMouseDown={(e) => {
+                      // 确保是左键按下
                       if (e.button === 0) {
                         onTimeContainerMousedown(onTimeContainer(e, day))
                       }

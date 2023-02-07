@@ -36,16 +36,25 @@ export function DayWrapper() {
     return e
   }, [moving])
 
-
   // 只能右键
   const onMousedownEvent = (e: IMouseEvent) => {
+    console.log('onMousedownEvent')
     const { event, } = e
     setDragEvent(event)
     return e
   }
 
 
+
+
+
+
+  const onTimeContainerClick = (tms:IMouseTime) => {
+    console.log('onTimeContainerClick')
+    return tms
+  }
   const onTimeContainerMousedown = (tms:IMouseTime) => {
+    console.log('onTimeContainerMousedown')
     const time = toTime(tms)
     setMousedownTime(time)
     // 在这里设置mousemoveTime
@@ -63,6 +72,7 @@ export function DayWrapper() {
 
 
   const onTimeContainerMouseup = (tms:IMouseTime) => {
+    console.log('onTimeContainerMouseup')
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
@@ -147,6 +157,7 @@ export function DayWrapper() {
       <DayComponent
         onClickEvent={onClickEvent}
         onMousedownEvent={onMousedownEvent}
+        onTimeContainerClick={onTimeContainerClick}
         onTimeContainerMousedown={onTimeContainerMousedown}
         onTimeContainerMousemove={onTimeContainerMousemove}
         onTimeContainerMouseup={onTimeContainerMouseup} />
