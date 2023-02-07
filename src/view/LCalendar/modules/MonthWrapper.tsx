@@ -13,7 +13,7 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, setEvents, } = useContext(EventContext)
-  const { setRef, setShowPopover, } = useContext(BaseContext)
+  const { setRef, setMoving, moving, } = useContext(BaseContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -23,26 +23,28 @@ export function MonthWrapper() {
   const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
 
+  //
+  const onClickEvent = useCallback((e:IMouseEvent) => {
+    const { nativeEvent, } = e
+    // 这里处理下点击是 是对时间拖拽的问题
+    if (moving) {
+      setRef(null)
+      return e
+    }
 
-
-  const onClickEvent = (e:IMouseEvent) => {
-    const { event, nativeEvent, } = e
     setRef(nativeEvent.currentTarget)
-    setShowPopover(true)
     return e
-  }
+  }, [moving])
+
   const onMousedownEvent = (e:IMouseEvent) => {
     const { event, } = e
     setDragEvent(event)
     return e
   }
   const onShowMore = (arg:ISlots) => {
-    const { events, nativeEvent, } = arg
+    const {  nativeEvent, } = arg
     setIsMore(true)
     setRef(nativeEvent.currentTarget)
-
-    setShowPopover(true)
-    console.log(events)
   }
 
 
@@ -109,7 +111,6 @@ export function MonthWrapper() {
         setCreateEvent(createEvent)
         setCreateStart(createStart)
         setCreateEnd(createEnd)
-        setEvents([...events, createEvent])
       }
     }
   }, [mousedownTime, dragEvent, isMore])
@@ -152,7 +153,7 @@ export function MonthWrapper() {
       dragEvent.start = newStart
       dragEvent.end = newEnd
       resetEvents(dragEvent, dragEvent)
-
+      setMoving(true)
     }
   }, [mousemoveTime, dragTime])
 

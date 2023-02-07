@@ -27,7 +27,10 @@ import {
   BaseContext, CalendarContext, IntervalsContext, EventContext
 } from '../props/propsContext'
 import { CalendarEventVisual } from '../utils/modes/common'
-import { mouseDayTime, mouseEvent } from './type'
+import {
+  IS_EVENT, mouseDayTime, mouseEvent
+} from './type'
+import classnames from 'classnames'
 
 export default function (props: IDayProps) {
   const {
@@ -163,6 +166,10 @@ export default function (props: IDayProps) {
     const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
       day))
       .filter((i: any) => i !== false) as IEventsRect[]
+    const className = classnames({
+      [dayStyle.dayBodyTimedItem]: true,
+      [IS_EVENT]: true,
+    })
     return (
       <>
         {
@@ -170,7 +177,7 @@ export default function (props: IDayProps) {
             .map((rect, index) => (
               <div
                 key={index}
-                className={dayStyle.dayBodyTimedItem}
+                className={className}
                 onClick={(nativeEvent) => onClickEvent({
                   nativeEvent,
                   event: rect.event,

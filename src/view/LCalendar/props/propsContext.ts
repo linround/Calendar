@@ -63,8 +63,8 @@ export const BaseContext = createContext<IBaseContext>({
   weekdaySkips: DEFAULT_WEEK_SKIPS,
   setRef: () => undefined,
   selectedRef: null,
-  showPopover: false,
-  setShowPopover: () => undefined,
+  moving: false,
+  setMoving: () => undefined,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: Date.now(),

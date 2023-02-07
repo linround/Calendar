@@ -22,11 +22,14 @@ import { creatEvents, parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
+  // Popover相关
+  const [selectedRef, setRef] = useState<Element | null>(null)
+  const [moving, setMoving] = useState(false)
+
+
   const children = props.children
   const [now] = useState(Date.now())
   const [weekDays, setWeekDays] = useState<number[]>(DEFAULT_WEEK_DAYS)
-  const [selectedRef, setRef] = useState<Element | null>(null)
-  const [showPopover, setShowPopover] = useState(false)
   const [start, setStart] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const [end, setEnd] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const times = useMemo<ITimes>(() => ({
@@ -110,8 +113,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
       days,
       selectedRef,
       setRef,
-      showPopover,
-      setShowPopover,
+      moving,
+      setMoving,
     }}>
       <CalendarContext.Provider value={{
         type,

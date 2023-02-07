@@ -14,7 +14,7 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-  const { setRef, setShowPopover, } = useContext(BaseContext)
+  const { setRef, moving, setMoving, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -23,12 +23,19 @@ export function DayWrapper() {
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
 
-  const onClickEvent = (e:IMouseEvent) => {
+  // click只会在同一个元素上mousedown和mouseup才会触发
+  const onClickEvent = useCallback((e:IMouseEvent) => {
+    // 这里处理下点击是 是对时间拖拽的问题
+    if (moving) {
+      setRef(null)
+      return e
+    }
     const { nativeEvent, } = e
     setRef(nativeEvent.currentTarget)
-    setShowPopover(true)
     return e
-  }
+  }, [moving])
+
+
   // 只能右键
   const onMousedownEvent = (e: IMouseEvent) => {
     const { event, } = e
@@ -100,7 +107,6 @@ export function DayWrapper() {
         allDay: false,
         title: `日历事件 ${events.length}`,
       }
-      setEvents([...events, createEvent])
       setCreateEvent(createEvent)
       setCreateStart(createStart)
     }
@@ -137,9 +143,8 @@ export function DayWrapper() {
         const newEnd = newStart + duration
         dragEvent.start = newStart
         dragEvent.end = newEnd
-
         resetEvents(dragEvent, dragEvent)
-
+        setMoving(true)
       }
     }
   }, [mousemoveTime, dragTime])
