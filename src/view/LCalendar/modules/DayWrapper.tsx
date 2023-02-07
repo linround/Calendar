@@ -14,16 +14,17 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-  const { setRef, moving, setMoving, } = useContext(BaseContext)
+  const { setRef, moving, setMoving, createEvent, setCreateEvent, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<number|null>(null)
   const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
-  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
 
   // click只会在同一个元素上mousedown和mouseup才会触发
+  // 同一个元素上 mousedown => mouseup => click
+
   const onClickEvent = useCallback((e:IMouseEvent) => {
     // 这里处理下点击是 是对时间拖拽的问题
     if (moving) {
@@ -100,12 +101,10 @@ export function DayWrapper() {
       const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
       const createEvent = {
         name: `日历事件 ${events.length}`,
-        color: 'green',
+        color: 'black',
         start: createStart,
         end: createEnd,
         timed: true,
-        allDay: false,
-        title: `日历事件 ${events.length}`,
       }
       setCreateEvent(createEvent)
       setCreateStart(createStart)

@@ -13,13 +13,12 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, setEvents, } = useContext(EventContext)
-  const { setRef, setMoving, moving, } = useContext(BaseContext)
+  const { setRef, setMoving, moving, createEvent, setCreateEvent, } = useContext(BaseContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
   const [mousemoveTime, setMousemoveTime] = useState<VTimestampInput|null>(null)
-  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
 
@@ -104,8 +103,6 @@ export function MonthWrapper() {
           start: createStart,
           end: createEnd,
           timed: true,
-          allDay: false,
-          title: `日历事件 ${events.length}`,
         }
 
         setCreateEvent(createEvent)

@@ -24,7 +24,11 @@ import { CalendarEventOverlapModes } from '../utils/modes'
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   // Popover相关
   const [selectedRef, setRef] = useState<Element | null>(null)
-  const [moving, setMoving] = useState(false)
+  const [moving, setMoving] = useState<boolean>(false)
+  const [createEvent, setCreateEvent] = useState<CalendarEvent| null>(null)
+
+
+
 
 
   const children = props.children
@@ -115,6 +119,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
       setRef,
       moving,
       setMoving,
+      createEvent,
+      setCreateEvent,
     }}>
       <CalendarContext.Provider value={{
         type,

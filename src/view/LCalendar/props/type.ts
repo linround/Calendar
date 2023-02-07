@@ -38,6 +38,8 @@ export interface IBaseContext {
   selectedRef: Element | null
   setRef: React.Dispatch<React.SetStateAction<Element | null>>
   moving: boolean
+  createEvent: CalendarEvent | null
+  setCreateEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
   setMoving: React.Dispatch<React.SetStateAction<boolean>>
   times?: ITimes
   parsedEnd?: CalendarTimestamp

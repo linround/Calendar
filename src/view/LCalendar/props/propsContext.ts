@@ -65,6 +65,9 @@ export const BaseContext = createContext<IBaseContext>({
   selectedRef: null,
   moving: false,
   setMoving: () => undefined,
+
+  createEvent: null,
+  setCreateEvent: () => undefined,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: Date.now(),
