@@ -15,7 +15,7 @@ import {
 
 export function DayWrapper() {
   const { setRef, moving, setMoving, createEvent, setCreateEvent, } = useContext(BaseContext)
-  const { events, setEvents, } = useContext(EventContext)
+  const { events, resetEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<number|null>(null)
@@ -76,14 +76,6 @@ export function DayWrapper() {
 
 
 
-  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
-    const index = events.findIndex((e) => e === oldEvent)
-    events.splice(
-      index, 1, newEvent
-    )
-    setEvents([...events])
-  }
-
 
 
   // 以下处理是对原有的日历时间进行拖拽
@@ -105,6 +97,7 @@ export function DayWrapper() {
         start: createStart,
         end: createEnd,
         timed: true,
+        isCreate: true,
       }
       setCreateEvent(createEvent)
       setCreateStart(createStart)

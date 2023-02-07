@@ -12,7 +12,7 @@ import { isTruth, roundTime } from '../utils/timesStamp'
 import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
-  const { events, setEvents, } = useContext(EventContext)
+  const { events, resetEvents, } = useContext(EventContext)
   const { setRef, setMoving, moving, createEvent, setCreateEvent, } = useContext(BaseContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
@@ -47,15 +47,6 @@ export function MonthWrapper() {
   }
 
 
-
-
-  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
-    const index = events.findIndex((e) => e === oldEvent)
-    events.splice(
-      index, 1, newEvent
-    )
-    setEvents([...events])
-  }
 
 
 
@@ -103,6 +94,7 @@ export function MonthWrapper() {
           start: createStart,
           end: createEnd,
           timed: true,
+          isCreate: true,
         }
 
         setCreateEvent(createEvent)

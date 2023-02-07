@@ -24,6 +24,7 @@ export interface IEventContext {
   eventMarginBottom: number
   parsedEvents: CalendarEventParsed[]
   eventModeFunction: (parsedEvents: CalendarEventParsed[], parsedWeekdays:number, threshold: number)=> any
+  resetEvents: (o:CalendarEvent, n:CalendarEvent | null) => void
 }
 
 export interface IBaseContext {

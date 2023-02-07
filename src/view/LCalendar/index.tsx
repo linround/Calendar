@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext
+  useContext, useRef
 } from 'react'
 import { Popover } from './Popover/Popover'
 import {
@@ -148,11 +148,11 @@ export default function () {
     }
   }
 
-
+  const container = useRef(null)
   return (
     <>
-      <Popover />
-      <div className={styles.mainContainer}>
+      <Popover container={container} />
+      <div className={styles.mainContainer} ref={container}>
         <div className={styles.mainLeft}></div>
         <div className={styles.mainRight}>
           <MenuHeader

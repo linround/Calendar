@@ -50,6 +50,7 @@ export const EventContext = createContext<IEventContext>({
   eventMarginBottom: DEFAULT_EVENT.eventMarginBottom,
   eventHeight: DEFAULT_EVENT.eventHeight,
   eventModeFunction: () => undefined,
+  resetEvents: (a, b) => undefined,
 })
 
 export const BaseContext = createContext<IBaseContext>({

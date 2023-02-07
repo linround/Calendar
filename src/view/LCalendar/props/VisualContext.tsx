@@ -88,6 +88,18 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventOverlapThreshold] = useState(DEFAULT_EVENT.eventOverlapThreshold)
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
+  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
+    const index = events.findIndex((e) => e === oldEvent)
+    if (index > -1) {
+      events.splice(
+        index, 1, newEvent
+      )
+    } else {
+      events.push(newEvent)
+    }
+    const newEvents = events.filter((i) => !!i)
+    setEvents([...newEvents])
+  }
   const parsedEvents = useMemo<CalendarEventParsed[]>(() => events.map((input, index) => parseEvent(
     input,
     index,
@@ -152,7 +164,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               eventMarginBottom,
               parsedEvents,
               eventModeFunction,
-
+              resetEvents,
             }}>
               {children}
             </EventContext.Provider>

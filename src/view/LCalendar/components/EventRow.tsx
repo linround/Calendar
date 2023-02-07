@@ -19,7 +19,7 @@ export function EventRow(props:React.PropsWithChildren<IEventRow>) {
         segments.map((seg, index) => {
           const { event, left, right, span, } = seg
           const gap = left - lastEnd
-          const content = event.title
+          const content = event.name
           lastEnd = right + 1
           return (
             <Fragment key={index}>
