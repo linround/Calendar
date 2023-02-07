@@ -14,7 +14,7 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-  const { setRef, moving, setMoving, createEvent, setCreateEvent, } = useContext(BaseContext)
+  const { setRef, selectedRef, moving, setMoving, createEvent, setCreateEvent, } = useContext(BaseContext)
   const { events, resetEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -97,6 +97,7 @@ export function DayWrapper() {
         start: createStart,
         end: createEnd,
         timed: true,
+        allDay: false,
         isCreate: true,
       }
       setCreateEvent(createEvent)

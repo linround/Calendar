@@ -3,7 +3,7 @@ import React, {
   useCallback,
   useContext, useEffect, useState
 } from 'react'
-import { BaseContext, EventContext } from '../props/propsContext'
+import { BaseContext } from '../props/propsContext'
 import { IS_EVENT } from '../components/type'
 export function Popover(props: React.PropsWithChildren<{ container:React.RefObject<HTMLElement> }>) {
   const { container, } = props

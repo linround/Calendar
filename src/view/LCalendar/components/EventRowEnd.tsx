@@ -33,7 +33,7 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
         return count === 1
       })
     if (canRenderSlotEvent) {
-      const content =  event.title
+      const content =  event.name
       if (gap) {
         row.push(<Fragment key={`${key}_gap`}>
           {
