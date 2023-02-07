@@ -36,6 +36,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
   const { weekSegments,
     weekDays,
     onShowMore = (arg:ISlots) => undefined,
+    onClickEvent = mouseEvent<IMouseEvent>(),
     onMousedownEvent = mouseEvent<IMouseEvent>(),
     onTimeContainerMouseup = mouseDayTime<IMonthMouseTime>(),
     onTimeContainerMousemove = mouseDayTime<IMonthMouseTime>(),
@@ -75,7 +76,12 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
       <div className={monthStyle.monthWeekRowEvents}>
         {
           levels.map((segs, index) => (
-            <EventRow segments={segs} key={index} slots={slots as number} onMousedownEvent={onMousedownEvent} />
+            <EventRow
+              segments={segs}
+              key={index}
+              slots={slots as number}
+              onClickEvent={onClickEvent}
+              onMousedownEvent={onMousedownEvent} />
           ))
         }
         {

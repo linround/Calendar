@@ -8,9 +8,10 @@ interface IEventRow{
   segments: ISegments[]
   slots: number
   onMousedownEvent: (event:IMouseEvent) => IMouseEvent
+  onClickEvent: (event:IMouseEvent) =>IMouseEvent
 }
 export function EventRow(props:React.PropsWithChildren<IEventRow>) {
-  const { segments, slots, onMousedownEvent, } = props
+  const { segments, slots, onMousedownEvent, onClickEvent, } = props
   let lastEnd = 1
   return (
     <div className={eventRowStyle.eventRowContainer}>
@@ -29,7 +30,12 @@ export function EventRow(props:React.PropsWithChildren<IEventRow>) {
               }
               {
                 EventRowMixin.renderEvent(
-                  slots, span,  content, event, onMousedownEvent
+                  slots,
+                  span,
+                  content,
+                  event,
+                  onMousedownEvent,
+                  onClickEvent
                 )
               }
 

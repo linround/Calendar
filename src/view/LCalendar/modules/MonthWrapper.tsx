@@ -3,7 +3,7 @@ import React, {
   useContext, useEffect, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
-import { EventContext } from '../props/propsContext'
+import { BaseContext, EventContext } from '../props/propsContext'
 import {
   CalendarEvent, IMonthMouseTime, IMouseEvent, VTimestampInput
 } from '../utils/calendar'
@@ -13,6 +13,7 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, setEvents, } = useContext(EventContext)
+  const { setRef, setShowPopover, } = useContext(BaseContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -21,6 +22,30 @@ export function MonthWrapper() {
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
+
+
+
+  const onClickEvent = (e:IMouseEvent) => {
+    const { event, nativeEvent, } = e
+    setRef(nativeEvent.currentTarget)
+    setShowPopover(true)
+    return e
+  }
+  const onMousedownEvent = (e:IMouseEvent) => {
+    const { event, } = e
+    setDragEvent(event)
+    return e
+  }
+  const onShowMore = (arg:ISlots) => {
+    const { events, nativeEvent, } = arg
+    setIsMore(true)
+    setRef(nativeEvent.currentTarget)
+
+    setShowPopover(true)
+    console.log(events)
+  }
+
+
 
 
   const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
@@ -33,10 +58,6 @@ export function MonthWrapper() {
 
 
 
-  const onShowMore = (arg:ISlots) => {
-    setIsMore(true)
-    console.log(arg)
-  }
 
   const onTimeContainerMousedown = (tms:IMonthMouseTime) => {
     const { value: time, } = tms
@@ -59,11 +80,6 @@ export function MonthWrapper() {
     setCreateStart(null)
     setCreateEnd(null)
     return tms
-  }
-  const onMousedownEvent = (e:IMouseEvent) => {
-    const { event, } = e
-    setDragEvent(event)
-    return e
   }
 
 
@@ -144,6 +160,7 @@ export function MonthWrapper() {
   return (
     <MonthComponent
       onShowMore={onShowMore}
+      onClickEvent={onClickEvent}
       onMousedownEvent={onMousedownEvent}
       onTimeContainerMouseup={onTimeContainerMouseup}
       onTimeContainerMousemove={onTimeContainerMousemove}

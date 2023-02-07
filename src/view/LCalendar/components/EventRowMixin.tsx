@@ -2,7 +2,9 @@ import { CalendarEvent, IMouseEvent } from '../utils/calendar'
 import eventMixinStyle from './eventMixin.module.less'
 import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
-import { defaultShowMore, mouseEvent } from './type'
+import {
+  defaultShowMore, IS_EVENT, mouseEvent
+} from './type'
 import React from 'react'
 import { stopDefaultEvent } from '../utils/events'
 
@@ -24,20 +26,30 @@ export const EventRowMixin = {
     len:number,
     content:any = '',
     event: CalendarEvent,
-    onMousedownEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>()
+    onMousedownEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>(),
+    onClickEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>()
   ) {
     const width = ((Math.abs(len) / slots) * 100) + '%'
     const bgColor = event.color
     const className = classnames({
       [eventMixinStyle.eventMixinContainer]: true,
       [eventMixinStyle.isEvent]: true,
+      [IS_EVENT]: true,
     })
     return (
       <div
-        onMouseDown={(nativeEvent) => onMousedownEvent({
+        onClick={(nativeEvent) => onClickEvent({
           nativeEvent,
           event,
         })}
+        onMouseDown={(nativeEvent) => {
+          if (nativeEvent.button === 0) {
+            onMousedownEvent({
+              nativeEvent,
+              event,
+            })
+          }
+        }}
         className={className}
         style={{
           flexBasis: width,
@@ -53,7 +65,7 @@ export const EventRowMixin = {
   ) {
     const count = eventsInSlot(segments, slot)
     return (
-      <div className={eventMixinStyle.eventMixinMoreContent} onMouseDown={(e) => {
+      <div className={eventMixinStyle.eventMixinMoreContent} onClick={(e) => {
         showMore(slot, e)
       }}>
         + {count} more

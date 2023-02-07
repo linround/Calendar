@@ -32,6 +32,7 @@ import { mouseDayTime, mouseEvent } from './type'
 export default function (props: IDayProps) {
   const {
     firstTime,
+    onClickEvent = mouseEvent<IMouseEvent>(),
     onMousedownEvent = mouseEvent<IMouseEvent>(),
     onTimeContainerMouseup = mouseDayTime<IMouseTime>(),
     onTimeContainerMousemove = mouseDayTime<IMouseTime>(),
@@ -170,10 +171,18 @@ export default function (props: IDayProps) {
               <div
                 key={index}
                 className={dayStyle.dayBodyTimedItem}
-                onMouseDown={(nativeEvent) => onMousedownEvent({
+                onClick={(nativeEvent) => onClickEvent({
                   nativeEvent,
                   event: rect.event,
                 })}
+                onMouseDown={(nativeEvent) => {
+                  if (nativeEvent.button === 0) {
+                    onMousedownEvent({
+                      nativeEvent,
+                      event: rect.event,
+                    })
+                  }
+                }}
                 style={{ ...rect.style, } }>
                 <div>
                   <strong>
@@ -236,9 +245,17 @@ export default function (props: IDayProps) {
                   <div
                     className={dayStyle.dayBodyDay}
                     key={index}
-                    onMouseDown={(e) => onTimeContainerMousedown(onTimeContainer(e, day))}
-                    onMouseMove={(e) => onTimeContainerMousemove(onTimeContainer(e, day))}
-                    onMouseUp={(e) => onTimeContainerMouseup(onTimeContainer(e, day))}>
+                    onMouseDown={(e) => {
+                      if (e.button === 0) {
+                        onTimeContainerMousedown(onTimeContainer(e, day))
+                      }
+                    }}
+                    onMouseMove={(e) => {
+                      onTimeContainerMousemove(onTimeContainer(e, day))
+                    }}
+                    onMouseUp={(e) => {
+                      onTimeContainerMouseup(onTimeContainer(e, day))
+                    }}>
                     {
                       intervals[index].map((interval) => (
                         <div

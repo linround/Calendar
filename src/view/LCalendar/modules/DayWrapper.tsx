@@ -14,7 +14,7 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-  const { setRef, } = useContext(BaseContext)
+  const { setRef, setShowPopover, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -23,9 +23,15 @@ export function DayWrapper() {
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
 
-  const onMousedownEvent = (e: IMouseEvent) => {
-    const { event, nativeEvent, } = e
+  const onClickEvent = (e:IMouseEvent) => {
+    const { nativeEvent, } = e
     setRef(nativeEvent.currentTarget)
+    setShowPopover(true)
+    return e
+  }
+  // 只能右键
+  const onMousedownEvent = (e: IMouseEvent) => {
+    const { event, } = e
     setDragEvent(event)
     return e
   }
@@ -77,6 +83,7 @@ export function DayWrapper() {
   // 对于新建的日历事件 依赖dragEvent(被拖拽的事件) 和 点击处的时间点(mousedownTime)
   // 最终设置拖拽的时间段 dragTime
   useEffect(() => {
+    // 对事件进行拖拽
     if (dragEvent && mousedownTime) {
       const start = dragEvent.start
       const dragTime = mousedownTime - start
@@ -140,6 +147,7 @@ export function DayWrapper() {
   return (
     <>
       <DayComponent
+        onClickEvent={onClickEvent}
         onMousedownEvent={onMousedownEvent}
         onTimeContainerMousedown={onTimeContainerMousedown}
         onTimeContainerMousemove={onTimeContainerMousemove}

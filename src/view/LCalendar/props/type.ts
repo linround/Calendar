@@ -36,7 +36,9 @@ export interface IBaseContext {
   parsedWeekdays: number[]
   weekdaySkips:number[]
   selectedRef: Element | null
-  setRef: React.Dispatch<Element | null>
+  setRef: React.Dispatch<React.SetStateAction<Element | null>>
+  showPopover: boolean
+  setShowPopover: React.Dispatch<React.SetStateAction<boolean>>
   times?: ITimes
   parsedEnd?: CalendarTimestamp
   parsedStart?:CalendarTimestamp

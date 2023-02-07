@@ -1,5 +1,5 @@
 import {
-  CalendarEvent, CalendarTimestamp, IMouseEvent, IMouseTime, VTimestampInput
+  CalendarEvent, CalendarTimestamp, VTimestampInput
 } from '../utils/calendar'
 import { ISegments } from '../utils/segments/eventSegments'
 import React from 'react'
@@ -8,6 +8,10 @@ export interface IWeekHeadColumn {
   day: CalendarTimestamp
   index:number
 }
+
+export const IS_EVENT = 'is-event'
+export const IS_MORE = 'is_more'
+
 
 
 export function mouseDayTime<T>():any {
