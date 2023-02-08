@@ -12,6 +12,7 @@ import {
   roundTime,
   toTime
 } from '../utils/timesStamp'
+import { IS_FULL_WIDTH } from '../components/type'
 
 export function DayWrapper() {
   const { setRef,
@@ -58,10 +59,10 @@ export function DayWrapper() {
   const onMouseupEvent = (e:IMouseEvent) => {
     if (mousedownRef) {
       if (popover) {
-        mousedownRef.classList.remove('full-width')
+        mousedownRef.classList.remove(IS_FULL_WIDTH)
         setRef(mousedownRef)
       } else {
-        mousedownRef.classList.remove('full-width')
+        mousedownRef.classList.remove(IS_FULL_WIDTH)
         setPopover(false)
         setMouseDownRef(null)
         setRef(null)
@@ -93,7 +94,7 @@ export function DayWrapper() {
     setPopover(false)
 
     if (mousedownRef) {
-      mousedownRef.classList.add('full-width')
+      mousedownRef.classList.add(IS_FULL_WIDTH)
     }
     return tms
   }, [mousedownTime, mousedownRef])
