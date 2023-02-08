@@ -204,9 +204,7 @@ export default function (props: IDayProps) {
                 }}
                 style={{ ...rect.style, } }>
                 <div>
-                  <strong>
-                    {rect.content.title}
-                  </strong>
+                  {rect.content.title}
                 </div>
                 <div>{rect.content.timeRange}</div>
               </div>
