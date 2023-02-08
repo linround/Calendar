@@ -60,6 +60,9 @@ export interface IIntervalsContext {
 }
 
 export interface IMouseEventContext {
+  popoverEvent: CalendarEvent | null
+  setPopoverEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
+
   clickEvent: CalendarEvent | null
   setClickEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
 

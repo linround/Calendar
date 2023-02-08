@@ -20,7 +20,7 @@ export function DayWrapper() {
     mousedownRef,
     setMouseDownRef,
 
-    setMousedownEvent,
+    setPopoverEvent,
 
     createEvent,
     setCreateEvent,
@@ -49,7 +49,7 @@ export function DayWrapper() {
     const { event, nativeEvent, } = e
     setDragEvent(event)
 
-    setMousedownEvent(event)
+    setPopoverEvent(event)
     // 之前没有popover
     if (!selectedRef && !popover) {
       setMouseDownRef(nativeEvent.currentTarget)

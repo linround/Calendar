@@ -80,8 +80,13 @@ export const IntervalsContext = createContext<IIntervalsContext>({
 })
 
 export const MouseEventContext = createContext<IMouseEventContext>({
+  popoverEvent: null,
+  setPopoverEvent: () => void 0,
+
   clickEvent: null,
   setClickEvent: () => undefined,
+
+
 
   mousedownEvent: null,
   setMousedownEvent: () => undefined,
