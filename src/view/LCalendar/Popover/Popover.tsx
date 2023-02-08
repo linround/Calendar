@@ -15,15 +15,20 @@ export function Popover(props: React.PropsWithChildren<{ container:React.RefObje
   // 解决以上上的的办法就是设置一个变量，来判断是点击还是位移
   // 是做时间调整的操作 也会产生显示popover
   //
+  const clearEvent = useCallback(() => {
+    setPopover(false)
+    setMouseDownRef(null)
+    setRef(null)
+  }, [])
+
+
   const onMousedown = useCallback((e:MouseEvent) => {
     // 如果是点击的日历事件元素内部或则点击的日历事件元素本身，不响应即可
     if ((e.target as Element).parentElement?.classList.contains(IS_EVENT) ||
       (e.target as Element).classList.contains(IS_EVENT)) {
       return
     }
-    setPopover(false)
-    setMouseDownRef(null)
-    setRef(null)
+    clearEvent()
   }, [])
 
   useEffect(() => {
