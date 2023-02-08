@@ -85,10 +85,14 @@ export interface IMouseEventContext {
   selectedRef: Element | null
   setRef: React.Dispatch<React.SetStateAction<Element | null>>
 
+  mousedownRef: Element | null
+  setMouseDownRef: React.Dispatch<React.SetStateAction<Element | null>>
+
   createEvent: CalendarEvent | null
   setCreateEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
 
   popover: boolean
   setPopover: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 

@@ -33,6 +33,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [selectedRef, setRef] = useState<Element | null>(null)
   const [createEvent, setCreateEvent] = useState<CalendarEvent| null>(null)
   const [popover, setPopover] = useState<boolean>(false)
+  const [mousedownRef, setMouseDownRef] = useState<Element | null>(null)
 
 
 
@@ -192,11 +193,15 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
                 selectedRef,
                 setRef,
 
+                mousedownRef,
+                setMouseDownRef,
+
                 createEvent,
                 setCreateEvent,
 
                 popover,
                 setPopover,
+
               }}>
 
                 {children}

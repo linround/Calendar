@@ -16,6 +16,8 @@ import {
 export function DayWrapper() {
   const { setRef,
     selectedRef,
+    mousedownRef,
+    setMouseDownRef,
 
     createEvent,
     setCreateEvent,
@@ -35,25 +37,44 @@ export function DayWrapper() {
   // onTimeContainerMouseup => onClickEvent             => onTimeContainerClick
 
 
-  const onClickEvent = (e:IMouseEvent) => e
+  const onClickEvent = useCallback((e:IMouseEvent) => e, [mousedownRef, popover])
 
   // 只能右键
-  const onMousedownEvent = (e: IMouseEvent) => {
+  // 问题原因是因为在onMousedownEvent一开始就设置了 ref
+  const onMousedownEvent = useCallback((e: IMouseEvent) => {
 
     const { event, nativeEvent, } = e
     setDragEvent(event)
-    setRef(nativeEvent.currentTarget)
-    setPopover(true)
+    if (!selectedRef && !popover) {
+      setMouseDownRef(nativeEvent.currentTarget)
+      setPopover(true)
+    } else {
+      setMouseDownRef(nativeEvent.currentTarget)
+      setPopover(popover)
+    }
+    return e
+  }, [selectedRef, popover])
+  const onMouseupEvent = (e:IMouseEvent) => {
+    if (mousedownRef) {
+      if (popover) {
+        mousedownRef.classList.remove('full-width')
+        setRef(mousedownRef)
+      } else {
+        mousedownRef.classList.remove('full-width')
+        setPopover(false)
+        setMouseDownRef(null)
+        setRef(null)
+      }
+    }
     return e
   }
-  const onMouseupEvent = (e:IMouseEvent) => e
 
 
 
 
 
 
-  const onTimeContainerClick = useCallback((tms:IMouseTime) => tms, [selectedRef, popover])
+  const onTimeContainerClick = useCallback((tms:IMouseTime) => tms, [selectedRef, popover, mousedownRef])
   const onTimeContainerMousedown = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousedownTime(time)
@@ -67,28 +88,26 @@ export function DayWrapper() {
     if (!mousedownTime) return tms
     const time = toTime(tms)
     setMousemoveTime(time)
+
     setPopover(false)
-    if (selectedRef) {
-      selectedRef.classList.add('full-width')
+
+    if (mousedownRef) {
+      mousedownRef.classList.add('full-width')
     }
     return tms
-  }, [mousedownTime, selectedRef])
+  }, [mousedownTime, mousedownRef])
 
 
   const onTimeContainerMouseup = useCallback((tms:IMouseTime) => {
+    console.log('onTimeContainerMouseup')
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
     setCreateEvent(null)
     setCreateStart(null)
-    if (selectedRef && !popover) {
-      setRef(null)
-      setPopover(false)
-      selectedRef.classList.toggle('full-width')
-    }
+
     return tms
   }, [popover, selectedRef])
-
 
 
 

@@ -16,25 +16,20 @@ export function Popover(props: React.PropsWithChildren<{ container:React.RefObje
   // 是做时间调整的操作 也会产生显示popover
   //
   const onMousedown = useCallback((e:MouseEvent) => {
-    if (!(e.currentTarget as Element).classList.contains(IS_EVENT)) {
-      setRef(null)
-    }
+
   }, [createEvent])
 
   useEffect(() => {
-    if (selectedRef) {
+    if (selectedRef && popover) {
       const { left, top, } = selectedRef.getBoundingClientRect()
       setLeft(left - 200)
       setTop(top)
     }
-  }, [selectedRef])
+  }, [selectedRef, popover])
 
   useEffect(() => {
     if (container && container.current) {
       container.current.addEventListener('mousedown', onMousedown)
-      container.current.addEventListener('animationstart', () => {
-        console.log('animationstart')
-      })
     }
   }, [container])
 

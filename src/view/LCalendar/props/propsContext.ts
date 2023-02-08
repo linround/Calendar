@@ -105,6 +105,9 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   selectedRef: null,
   setRef: () => undefined,
 
+  mousedownRef: null,
+  setMouseDownRef: () => void 0,
+
   createEvent: null,
   setCreateEvent: () => undefined,
 
