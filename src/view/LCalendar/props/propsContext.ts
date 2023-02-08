@@ -1,10 +1,10 @@
-import { createContext } from 'react'
+import React, { createContext } from 'react'
 import {
   DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS, DEFAULT_WEEK_SKIPS
 } from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
-  IBaseContext, ICalendarContext, IEventContext, IIntervalsContext, IWeeksContext
+  IBaseContext, ICalendarContext, IEventContext, IIntervalsContext, IMouseEventContext, IWeeksContext
 } from './type'
 import { CalendarEvent } from '../utils/calendar'
 
@@ -50,7 +50,7 @@ export const EventContext = createContext<IEventContext>({
   eventMarginBottom: DEFAULT_EVENT.eventMarginBottom,
   eventHeight: DEFAULT_EVENT.eventHeight,
   eventModeFunction: () => undefined,
-  resetEvents: (a, b) => undefined,
+  resetEvents: (a:CalendarEvent, b: CalendarEvent|null) => undefined,
 })
 
 export const BaseContext = createContext<IBaseContext>({
@@ -62,13 +62,6 @@ export const BaseContext = createContext<IBaseContext>({
   setWeekDays: () => undefined,
   parsedWeekdays: DEFAULT_WEEK_DAYS,
   weekdaySkips: DEFAULT_WEEK_SKIPS,
-  setRef: () => undefined,
-  selectedRef: null,
-  moving: false,
-  setMoving: () => undefined,
-
-  createEvent: null,
-  setCreateEvent: () => undefined,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   value: Date.now(),
@@ -85,4 +78,39 @@ export const IntervalsContext = createContext<IIntervalsContext>({
   intervalCount: DEFAULT_INTERVALS.intervalCount,
   intervalMinutes: DEFAULT_INTERVALS.intervalMinutes,
 })
+
+export const MouseEventContext = createContext<IMouseEventContext>({
+  clickEvent: null,
+  setClickEvent: () => undefined,
+
+  mousedownEvent: null,
+  setMousedownEvent: () => undefined,
+
+  mouseupEvent: null,
+  setMouseupEvent: () => undefined,
+
+  timeContainerClick: false,
+  setTimeContainerClick: () => undefined,
+
+  timeContainerMouseDown: false,
+  setTimeContainerMouseDown: () => undefined,
+
+  timeContainerMousemove: false,
+  setTimeContainerMousemove: () => undefined,
+
+  timeContainerMouseUp: false,
+  setTimeContainerMouseUp: () => undefined,
+
+
+  selectedRef: null,
+  setRef: () => undefined,
+
+  createEvent: null,
+  setCreateEvent: () => undefined,
+
+  popover: false,
+  setPopover: () => void 0,
+})
+
+
 

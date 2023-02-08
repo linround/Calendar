@@ -2,7 +2,7 @@ import React, {
   useCallback, useContext, useEffect, useState
 } from 'react'
 import DayComponent from '../components/DayComponent'
-import { BaseContext, EventContext } from '../props/propsContext'
+import { EventContext, MouseEventContext } from '../props/propsContext'
 import {
   CalendarEvent, IMouseEvent, IMouseTime
 } from '../utils/calendar'
@@ -14,7 +14,14 @@ import {
 } from '../utils/timesStamp'
 
 export function DayWrapper() {
-  const { setRef, selectedRef, moving, setMoving, createEvent, setCreateEvent, } = useContext(BaseContext)
+  const { setRef,
+    selectedRef,
+
+    createEvent,
+    setCreateEvent,
+
+    popover,
+    setPopover, } = useContext(MouseEventContext)
   const { events, resetEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -22,39 +29,32 @@ export function DayWrapper() {
   const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
   const [createStart, setCreateStart] = useState<number| null>(null)
 
-  // click只会在同一个元素上mousedown和mouseup才会触发
-  // 同一个元素上 mousedown => mouseup => click
+  // 执行顺序，
+  // todo  container是容器 event是其中的子元素
+  // onMousedownEvent       => onTimeContainerMousedown => onMouseupEvent
+  // onTimeContainerMouseup => onClickEvent             => onTimeContainerClick
 
-  const onClickEvent = useCallback((e:IMouseEvent) => {
-    // 这里处理下点击是 是对时间拖拽的问题
-    if (moving) {
-      setRef(null)
-      return e
-    }
-    const { nativeEvent, } = e
-    setRef(nativeEvent.currentTarget)
-    return e
-  }, [moving])
+
+  const onClickEvent = (e:IMouseEvent) => e
 
   // 只能右键
   const onMousedownEvent = (e: IMouseEvent) => {
-    console.log('onMousedownEvent')
-    const { event, } = e
+
+    const { event, nativeEvent, } = e
     setDragEvent(event)
+    setRef(nativeEvent.currentTarget)
+    setPopover(true)
     return e
   }
+  const onMouseupEvent = (e:IMouseEvent) => e
 
 
 
 
 
 
-  const onTimeContainerClick = (tms:IMouseTime) => {
-    console.log('onTimeContainerClick')
-    return tms
-  }
+  const onTimeContainerClick = useCallback((tms:IMouseTime) => tms, [selectedRef, popover])
   const onTimeContainerMousedown = (tms:IMouseTime) => {
-    console.log('onTimeContainerMousedown')
     const time = toTime(tms)
     setMousedownTime(time)
     // 在这里设置mousemoveTime
@@ -67,19 +67,29 @@ export function DayWrapper() {
     if (!mousedownTime) return tms
     const time = toTime(tms)
     setMousemoveTime(time)
+    setPopover(false)
+    if (selectedRef) {
+      selectedRef.classList.add('full-width')
+    }
     return tms
-  }, [mousedownTime])
+  }, [mousedownTime, selectedRef])
 
 
-  const onTimeContainerMouseup = (tms:IMouseTime) => {
-    console.log('onTimeContainerMouseup')
+  const onTimeContainerMouseup = useCallback((tms:IMouseTime) => {
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
     setCreateEvent(null)
     setCreateStart(null)
+    if (selectedRef && !popover) {
+      setRef(null)
+      setPopover(false)
+      selectedRef.classList.toggle('full-width')
+    }
     return tms
-  }
+  }, [popover, selectedRef])
+
+
 
 
 
@@ -147,7 +157,6 @@ export function DayWrapper() {
         dragEvent.start = newStart
         dragEvent.end = newEnd
         resetEvents(dragEvent, dragEvent)
-        setMoving(true)
       }
     }
   }, [mousemoveTime, dragTime])
@@ -157,6 +166,8 @@ export function DayWrapper() {
       <DayComponent
         onClickEvent={onClickEvent}
         onMousedownEvent={onMousedownEvent}
+        onMouseupEvent={onMouseupEvent}
+
         onTimeContainerClick={onTimeContainerClick}
         onTimeContainerMousedown={onTimeContainerMousedown}
         onTimeContainerMousemove={onTimeContainerMousemove}

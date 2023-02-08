@@ -3,7 +3,7 @@ import {
   CalendarContext,
   EventContext,
   DEFAULT_INTERVALS, DEFAULT_WEEKS,
-  IntervalsContext,
+  IntervalsContext, MouseEventContext,
   WeeksContext, DEFAULT_EVENT
 } from './propsContext'
 import React, { useMemo, useState } from 'react'
@@ -23,9 +23,16 @@ import { CalendarEventOverlapModes } from '../utils/modes'
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   // Popover相关
+  const [clickEvent, setClickEvent] = useState<CalendarEvent | null>(null)
+  const [mousedownEvent, setMousedownEvent] = useState<CalendarEvent | null>(null)
+  const [mouseupEvent, setMouseupEvent] = useState<CalendarEvent | null>(null)
+  const [timeContainerClick, setTimeContainerClick] = useState<boolean>(false)
+  const [timeContainerMouseDown, setTimeContainerMouseDown] = useState<boolean>(false)
+  const [timeContainerMousemove, setTimeContainerMousemove] = useState<boolean>(false)
+  const [timeContainerMouseUp, setTimeContainerMouseUp] = useState<boolean>(false)
   const [selectedRef, setRef] = useState<Element | null>(null)
-  const [moving, setMoving] = useState<boolean>(false)
   const [createEvent, setCreateEvent] = useState<CalendarEvent| null>(null)
+  const [popover, setPopover] = useState<boolean>(false)
 
 
 
@@ -88,14 +95,14 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventOverlapThreshold] = useState(DEFAULT_EVENT.eventOverlapThreshold)
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
-  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent):void => {
+  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent | null):void => {
     const index = events.findIndex((e) => e === oldEvent)
     if (index > -1) {
       events.splice(
-        index, 1, newEvent
+        index, 1, newEvent as CalendarEvent
       )
     } else {
-      events.push(newEvent)
+      events.push(newEvent as CalendarEvent)
     }
     const newEvents = events.filter((i) => !!i)
     setEvents([...newEvents])
@@ -127,12 +134,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
       parsedValue,
       weekdaySkips,
       days,
-      selectedRef,
-      setRef,
-      moving,
-      setMoving,
-      createEvent,
-      setCreateEvent,
     }}>
       <CalendarContext.Provider value={{
         type,
@@ -166,7 +167,40 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               eventModeFunction,
               resetEvents,
             }}>
-              {children}
+              <MouseEventContext.Provider value={{
+                clickEvent,
+                setClickEvent,
+
+                mousedownEvent,
+                setMousedownEvent,
+
+                mouseupEvent,
+                setMouseupEvent,
+
+                timeContainerClick,
+                setTimeContainerClick,
+
+                timeContainerMouseDown,
+                setTimeContainerMouseDown,
+
+                timeContainerMousemove,
+                setTimeContainerMousemove,
+
+                timeContainerMouseUp,
+                setTimeContainerMouseUp,
+
+                selectedRef,
+                setRef,
+
+                createEvent,
+                setCreateEvent,
+
+                popover,
+                setPopover,
+              }}>
+
+                {children}
+              </MouseEventContext.Provider>
             </EventContext.Provider>
           </WeeksContext.Provider>
         </IntervalsContext.Provider>

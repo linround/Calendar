@@ -37,6 +37,9 @@ export default function (props: IDayProps) {
     firstTime,
     onClickEvent = mouseEvent<IMouseEvent>(),
     onMousedownEvent = mouseEvent<IMouseEvent>(),
+    onMouseupEvent = mouseEvent<IMouseEvent>(),
+
+
     onTimeContainerClick = mouseDayTime<IMouseTime>(),
     onTimeContainerMouseup = mouseDayTime<IMouseTime>(),
     onTimeContainerMousemove = mouseDayTime<IMouseTime>(),
@@ -177,7 +180,7 @@ export default function (props: IDayProps) {
           visualsRect
             .map((rect, index) => (
               <div
-                key={index}
+                key={rect.event.name}
                 className={className}
                 onClick={(nativeEvent) => onClickEvent({
                   nativeEvent,
@@ -186,6 +189,14 @@ export default function (props: IDayProps) {
                 onMouseDown={(nativeEvent) => {
                   if (nativeEvent.button === 0) {
                     onMousedownEvent({
+                      nativeEvent,
+                      event: rect.event,
+                    })
+                  }
+                }}
+                onMouseUp={(nativeEvent) => {
+                  if (nativeEvent.button === 0) {
+                    onMouseupEvent({
                       nativeEvent,
                       event: rect.event,
                     })

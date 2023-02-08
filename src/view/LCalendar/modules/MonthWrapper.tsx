@@ -3,7 +3,9 @@ import React, {
   useContext, useEffect, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
-import { BaseContext, EventContext } from '../props/propsContext'
+import {
+  BaseContext, EventContext, MouseEventContext
+} from '../props/propsContext'
 import {
   CalendarEvent, IMonthMouseTime, IMouseEvent, VTimestampInput
 } from '../utils/calendar'
@@ -13,7 +15,7 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, resetEvents, } = useContext(EventContext)
-  const { setRef, setMoving, moving, createEvent, setCreateEvent, } = useContext(BaseContext)
+  const { setRef, createEvent, setCreateEvent, } = useContext(MouseEventContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -25,15 +27,10 @@ export function MonthWrapper() {
   //
   const onClickEvent = useCallback((e:IMouseEvent) => {
     const { nativeEvent, } = e
-    // 这里处理下点击是 是对时间拖拽的问题
-    if (moving) {
-      setRef(null)
-      return e
-    }
 
     setRef(nativeEvent.currentTarget)
     return e
-  }, [moving])
+  }, [])
 
   const onMousedownEvent = (e:IMouseEvent) => {
     const { event, } = e
@@ -142,7 +139,6 @@ export function MonthWrapper() {
       dragEvent.start = newStart
       dragEvent.end = newEnd
       resetEvents(dragEvent, dragEvent)
-      setMoving(true)
     }
   }, [mousemoveTime, dragTime])
 

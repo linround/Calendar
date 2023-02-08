@@ -16,3 +16,8 @@ a {
     padding: 5px;
     display: flex;
 }
+.full-width {
+    width: 100% !important;
+    left: 0 !important;
+    z-index: 999 !important;
+}

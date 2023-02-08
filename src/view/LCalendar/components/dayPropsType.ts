@@ -10,6 +10,8 @@ import { ISlots } from './type'
 interface IHandleEvent<E, T> {
   onClickEvent:(e:E)=>E
   onMousedownEvent:(e: E) => E
+  onMouseupEvent:(e: E) => E
+
   onTimeContainerClick: (time:T) => T
   onTimeContainerMouseup: (time:T) => T
   onTimeContainerMousemove: (time:T) => T
