@@ -19,8 +19,8 @@ a {
 .is_full_width {
     width: 100% !important;
     left: 0 !important;
-    z-index: 999 !important;
+    z-index: 99 !important;
 }
 .is_high_level {
-    z-index: 999 !important;
+    z-index: 99 !important;
 }
