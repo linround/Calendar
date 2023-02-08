@@ -21,3 +21,6 @@ a {
     left: 0 !important;
     z-index: 999 !important;
 }
+.is_high_level {
+    z-index: 999 !important;
+}

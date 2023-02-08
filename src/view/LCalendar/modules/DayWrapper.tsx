@@ -12,13 +12,15 @@ import {
   roundTime,
   toTime
 } from '../utils/timesStamp'
-import { IS_FULL_WIDTH } from '../components/type'
+import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from '../components/type'
 
 export function DayWrapper() {
   const { setRef,
     selectedRef,
     mousedownRef,
     setMouseDownRef,
+
+    setMousedownEvent,
 
     createEvent,
     setCreateEvent,
@@ -46,11 +48,15 @@ export function DayWrapper() {
 
     const { event, nativeEvent, } = e
     setDragEvent(event)
+
+    setMousedownEvent(event)
+    nativeEvent.currentTarget.classList.add(IS_HIGH_LEVEL)
     // 之前没有popover
     if (!selectedRef && !popover) {
       setMouseDownRef(nativeEvent.currentTarget)
       setPopover(true)
     } else {
+      selectedRef?.classList.remove(IS_HIGH_LEVEL)
       setMouseDownRef(nativeEvent.currentTarget)
       setPopover(popover)
     }

@@ -12,6 +12,7 @@ export interface IWeekHeadColumn {
 export const IS_EVENT = 'is-event'
 export const IS_MORE = 'is_more'
 export const IS_FULL_WIDTH = 'is_full_width'
+export const IS_HIGH_LEVEL = 'is_high_level'
 
 
 
