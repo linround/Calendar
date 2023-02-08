@@ -45,6 +45,7 @@ export function DayWrapper() {
 
     const { event, nativeEvent, } = e
     setDragEvent(event)
+    // 之前没有popover
     if (!selectedRef && !popover) {
       setMouseDownRef(nativeEvent.currentTarget)
       setPopover(true)
@@ -99,7 +100,6 @@ export function DayWrapper() {
 
 
   const onTimeContainerMouseup = useCallback((tms:IMouseTime) => {
-    console.log('onTimeContainerMouseup')
     setDragEvent(null)
     setMousedownTime(null)
     setMousemoveTime(null)
