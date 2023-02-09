@@ -136,6 +136,7 @@ export function DayWrapper() {
       const createStart = roundTime(mousedownTime)
       const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
       const createEvent = {
+        id: Date.now(),
         name: `日历事件 ${events.length}`,
         color: 'black',
         start: createStart,
