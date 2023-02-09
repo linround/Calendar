@@ -1,18 +1,61 @@
 .popover {
   &Container {
     max-height: 600px;
-    min-height: 200px;
     max-width: 300px;
     position: absolute;
     z-index: 111;
-    box-shadow:0px 24px 38px 3px rgba(0,0,0,.14),
+    box-shadow: 0px 24px 38px 3px rgba(0,0,0,.14),
     0px 9px 46px 8px rgba(0,0,0,.12),
     0px 11px 15px -7px rgba(0,0,0,.2);
     opacity: 1;
-    background: white;
+    background: #ffffff;
     border-radius: 5px;
-    padding: 5px;
     transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
     transform-origin: left top;
+    display: flex;
+    flex-direction: column;
+  }
+  &Header {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
+    line-height: 0;
+    margin: 10px 5px 0 5px;
+  }
+  &Body {
+    margin: 10px;
+    &Icon {
+      color: #60786b;
+      margin-right: 10px;
+    }
+    &Item {
+      display: flex;
+      align-content: center;
+      margin: 10px 0;
+      &Content {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 14px;
+        color: #584b4b;
+        flex: 1;
+      }
+    }
+    &NameTime {
+      display: flex;
+      align-items: flex-start;
+    }
+    &Name {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 100%;
+    }
+    &Time {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
   }
 }

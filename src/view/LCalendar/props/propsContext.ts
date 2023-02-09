@@ -1,10 +1,20 @@
-import React, { createContext } from 'react'
+import
+{ createContext }
+  from 'react'
 import {
-  DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS, DEFAULT_WEEK_SKIPS
+  DEFAULT_TYPE,
+  DEFAULT_MAX_DAYS,
+  DEFAULT_WEEK_DAYS,
+  DEFAULT_WEEK_SKIPS
 } from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
-  IBaseContext, ICalendarContext, IEventContext, IIntervalsContext, IMouseEventContext, IWeeksContext
+  IBaseContext,
+  IEventContext,
+  IWeeksContext,
+  ICalendarContext,
+  IIntervalsContext,
+  IMouseEventContext
 } from './type'
 import { CalendarEvent } from '../utils/calendar'
 

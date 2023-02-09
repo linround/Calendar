@@ -1,16 +1,26 @@
+import React from 'react'
 import { CalendarEvent } from '../utils/calendar'
-import { CloseOutlined } from '@ant-design/icons'
+import styles from './style.module.less'
+import { EventDetailMixin } from './EventDetailMixin'
 
 export function PopoverContent(props:React.PropsWithChildren<{event:CalendarEvent}>) {
   const { event, } = props
   return (
     <>
-      <div>
-        <CloseOutlined />
-      </div>
-      <div>
+      <div className={styles.popoverHeader}>
         {
-          event.name
+          EventDetailMixin.renderHeader(event)
+        }
+      </div>
+      <div className={styles.popoverBody}>
+
+        {
+          [
+            EventDetailMixin.renderNameTime(event),
+            EventDetailMixin.renderLocation(event),
+            EventDetailMixin.renderPersonnel(event),
+            EventDetailMixin.renderAuthor(event)
+          ]
         }
       </div>
     </>

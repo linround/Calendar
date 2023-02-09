@@ -61,11 +61,10 @@ export function Popover(props: React.PropsWithChildren<{ container:React.RefObje
           <div
             style={{
               top: `${top}px`,
-              left: `${left}px`,
+              left: `${left - 5}px`,
               width: `${POPOVER_WIDTH_DEF}px`,
             }}
             className={styles.popoverContainer}>
-
             <PopoverContent event={popoverEvent} /></div> :
           ''
       }

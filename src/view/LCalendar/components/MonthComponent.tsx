@@ -1,6 +1,8 @@
 import { WeekComponent } from './WeekComponent'
 import monthStyle from './month.module.less'
-import React, { useContext, useMemo } from 'react'
+import React, {
+  useContext, useEffect, useMemo
+} from 'react'
 import {
   BaseContext, EventContext, WeeksContext
 } from '../props/propsContext'
@@ -80,7 +82,6 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       minDays
     )
   }, [minWeeks, parsedWeekdays, parsedStart, parsedEnd,  times])
-
 
   const weekDays = parsedWeekdays.length
   const month: IMonth = []

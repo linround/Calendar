@@ -9,7 +9,7 @@ import {
   MINUTES_IN_DAY,
   parseTime,
   updateMinutes,
-  VTime
+  VTime, weekdayFormatter
 } from '../utils/timesStamp'
 import {
   genTimedEvents, IEventsRect, isEventOn, stopDefaultEvent
@@ -31,6 +31,7 @@ import {
   IS_EVENT, mouseDayTime, mouseEvent
 } from './type'
 import classnames from 'classnames'
+import { WEEK_DAYS_TEXT } from '../utils/time'
 
 export default function (props: IDayProps) {
   const {
@@ -221,13 +222,13 @@ export default function (props: IDayProps) {
           days.map((day) => (
             <div className={dayStyle.dayHeaderDay} key={day.date} >
               <div>
-                {day.weekday}
+                周{WEEK_DAYS_TEXT[day.weekday]}
               </div>
               <div>
                 <Button
                   type='primary'
                   shape='circle'>
-                  {day.date}</Button>
+                  {day.day}</Button>
               </div>
             </div>
           ))

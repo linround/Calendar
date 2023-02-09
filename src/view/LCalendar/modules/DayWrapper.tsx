@@ -143,6 +143,9 @@ export function DayWrapper() {
         timed: true,
         allDay: false,
         isCreate: true,
+        author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者',
+        location: '地点地点地点地点地点地点地点地点地点地点地点地点地点地点',
+        personnel: '人员人员人员人员人员人员人员人员人员人员人员人员人员人员',
       }
       setCreateEvent(createEvent)
       setCreateStart(createStart)

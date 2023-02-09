@@ -67,7 +67,7 @@ function defineComparators(
 }
 function eq(
   a:VTimestampInput, b:VTimestampInput, unit?:moment.unitOfTime.DurationConstructor
-) {
+):boolean {
   const [dtA, dtB, datePart] = defineComparators(
     a, b, unit
   )
@@ -154,6 +154,7 @@ export interface ILocalizer{
   segmentOffset: number
   inEventRange:(arg:IRangeArg) => boolean
   sortEvents: (arg:ISortEventsArg) => (number)
+  eq: (a:VTimestampInput, b:VTimestampInput, unit?:moment.unitOfTime.DurationConstructor) => boolean
 }
 const localizer:ILocalizer = {
   add,
@@ -166,5 +167,6 @@ const localizer:ILocalizer = {
   segmentOffset: 0,
   inEventRange,
   sortEvents,
+  eq,
 }
 export default localizer

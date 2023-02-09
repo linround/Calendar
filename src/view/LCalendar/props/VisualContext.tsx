@@ -1,25 +1,44 @@
 import {
   BaseContext,
-  CalendarContext,
   EventContext,
-  DEFAULT_INTERVALS, DEFAULT_WEEKS,
-  IntervalsContext, MouseEventContext,
-  WeeksContext, DEFAULT_EVENT
+  WeeksContext,
+  DEFAULT_WEEKS,
+  DEFAULT_EVENT,
+  CalendarContext,
+  DEFAULT_INTERVALS,
+  IntervalsContext,
+  MouseEventContext
 } from './propsContext'
-import React, { useMemo, useState } from 'react'
+import React,
+{
+  useMemo,
+  useState
+} from 'react'
 import {
-  DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS
+  DEFAULT_TYPE,
+  DEFAULT_VALUE,
+  DEFAULT_MAX_DAYS,
+  DEFAULT_WEEK_DAYS
 } from '../utils/time'
 import {
   createDayList,
-  getTimestampIdentifier, getWeekdaySkips, parseTimeStamp, validateTimestamp
+  parseTimeStamp,
+  getWeekdaySkips,
+  validateTimestamp,
+  getTimestampIdentifier
 } from '../utils/timesStamp'
 import {
-  CalendarEvent, CalendarEventOverlapMode, CalendarEventParsed, CalendarTimestamp, IValue
+  IValue,
+  CalendarEvent,
+  CalendarTimestamp,
+  CalendarEventParsed,
+  CalendarEventOverlapMode
 } from '../utils/calendar'
 import { ITimes } from './type'
 import { creatEvents, parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
+
+
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   // Popover相关
