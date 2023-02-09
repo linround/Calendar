@@ -8,20 +8,13 @@ export function PopoverContent(props:React.PropsWithChildren<{event:CalendarEven
   return (
     <>
       <div className={styles.popoverHeader}>
-        {
-          EventDetailMixin.renderHeader(event)
-        }
+        {EventDetailMixin.renderHeader(event)}
       </div>
       <div className={styles.popoverBody}>
-
-        {
-          [
-            EventDetailMixin.renderNameTime(event),
-            EventDetailMixin.renderLocation(event),
-            EventDetailMixin.renderPersonnel(event),
-            EventDetailMixin.renderAuthor(event)
-          ]
-        }
+        {EventDetailMixin.renderNameTime(event)}
+        {EventDetailMixin.renderLocation(event)}
+        {EventDetailMixin.renderPersonnel(event)}
+        {EventDetailMixin.renderAuthor(event)}
       </div>
     </>
   )

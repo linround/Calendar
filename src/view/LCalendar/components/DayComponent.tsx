@@ -181,7 +181,7 @@ export default function (props: IDayProps) {
           visualsRect
             .map((rect, index) => (
               <div
-                key={rect.event.name}
+                key={rect.event.id}
                 className={className}
                 onClick={(nativeEvent) => onClickEvent({
                   nativeEvent,
