@@ -9,6 +9,7 @@ import {
 } from './utils/time'
 import { ITimes } from './props/type'
 import { CalendarTimestamp } from './utils/calendar'
+import { SideComponent } from './SideComponent'
 import {
   nextDay,
   prevDay,
@@ -153,7 +154,9 @@ export default function () {
     <>
       <Popover container={container} />
       <div className={styles.mainContainer} ref={container}>
-        <div className={styles.mainLeft}></div>
+        <div className={styles.mainLeft}>
+          <SideComponent />
+        </div>
         <div className={styles.mainRight}>
           <MenuHeader
             value={value}
