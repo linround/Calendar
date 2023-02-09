@@ -16,6 +16,9 @@ export function PopoverContent(props:React.PropsWithChildren<{event:CalendarEven
         {EventDetailMixin.renderPersonnel(event)}
         {EventDetailMixin.renderAuthor(event)}
       </div>
+      <div className={styles.popoverFooter}>
+        {EventDetailMixin.renderFooter(event)}
+      </div>
     </>
   )
 }

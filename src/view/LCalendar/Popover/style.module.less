@@ -19,7 +19,6 @@
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    flex-direction: row-reverse;
     line-height: 0;
     margin: 10px 5px 0 5px;
   }
@@ -56,6 +55,36 @@
       font-weight: 400;
       letter-spacing: 0.5px;
       margin-top: 5px;
+    }
+  }
+  &Footer {
+    display: flex;
+    margin: 10px;
+    &MoreButton {
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin: 5px;
+      user-select: none;
+      &:hover{
+        background-color: #f7edef;
+      }
+    }
+    &SaveButton {
+      cursor: pointer;
+      background-color: #1a73e8;
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin: 5px;
+      transition: all .3s ease ;
+      user-select: none;
+      &:hover {
+        background-color: #4e4ed5;
+        box-shadow:  1px 5px 6px 3px #a2abb7,
+        0px 9px 6px 3px #e4e6e9,
+        0px 1px 1px -7px #bed2ed;
+      }
     }
   }
 }

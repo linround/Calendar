@@ -56,15 +56,29 @@ export const EventDetailMixin = {
     }
     return (
       <>
-        <div className={mainStyles.iconHover} onClick={() => handleClick('delete', event)}>
-          <SvgIcon iconName='popover_x'/>
+        <div style={{
+          flex: 1,
+        }}></div>
+        <div className={mainStyles.iconHover}>
+          <SvgIcon iconName='popover_edit'/>
         </div>
         <div className={mainStyles.iconHover}>
           <SvgIcon iconName='popover_trash'/>
         </div>
-        <div className={mainStyles.iconHover}>
-          <SvgIcon iconName='popover_edit'/>
+        <div className={mainStyles.iconHover} onClick={() => handleClick('delete', event)}>
+          <SvgIcon iconName='popover_x'/>
         </div>
+      </>
+    )
+  },
+  renderFooter(event:CalendarEvent) {
+    return (
+      <>
+        <div style={{
+          flex: 1,
+        }}></div>
+        <div className={styles.popoverFooterMoreButton}>更多选项</div>
+        <div className={styles.popoverFooterSaveButton}>保存</div>
       </>
     )
   },
