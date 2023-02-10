@@ -24,7 +24,7 @@ import {
   CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
 import {
-  BaseContext, CalendarContext, IntervalsContext, EventContext
+  BaseContext, CalendarContext, IntervalsContext, EventContext, MouseEventContext
 } from '../props/propsContext'
 import { CalendarEventVisual } from '../utils/modes/common'
 import {

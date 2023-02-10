@@ -11,7 +11,7 @@ import {
 } from './propsContext'
 import React,
 {
-  useMemo,
+  useMemo, useRef,
   useState
 } from 'react'
 import {
@@ -59,8 +59,10 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [selectedRef, setRef] = useState<Element | null>(null)
   const [popoverRef, setPopoverRef] = useState<Element | null>(null)
   const [showPopover, setShowPopover] = useState<boolean>(false)
+  const [showCreatePopover, setShowCreatePopover] = useState<boolean>(false)
 
   const [createPopoverEvent, setCreatePopoverEvent] = useState<CalendarEvent | null>(null)
+  const [createPopoverCoordinate, setCreatePopoverCoordinate] = useState<number[]>([0, 0])
 
 
 
@@ -196,6 +198,21 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               resetEvents,
             }}>
               <MouseEventContext.Provider value={{
+                createPopoverCoordinate,
+                setCreatePopoverCoordinate,
+
+                createPopoverEvent,
+                setCreatePopoverEvent,
+
+                popoverRef,
+                setPopoverRef,
+
+                showCreatePopover,
+                setShowCreatePopover,
+
+                showPopover,
+                setShowPopover,
+
                 clickEvent,
                 setClickEvent,
 
@@ -219,6 +236,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
                 selectedRef,
                 setRef,
+
 
                 mousedownRef,
                 setMouseDownRef,

@@ -3,6 +3,7 @@ import React, {
 } from 'react'
 import DayComponent from '../components/DayComponent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
+
 import {
   CalendarEvent, IMouseEvent, IMouseTime
 } from '../utils/calendar'
@@ -13,17 +14,29 @@ import {
   toTime
 } from '../utils/timesStamp'
 import { IS_FULL_WIDTH } from '../components/type'
+import { stopDefaultEvent } from '../utils/events'
 
 export function DayWrapper() {
   const { setRef,
     selectedRef,
     mousedownRef,
     setMouseDownRef,
-
+    popoverRef,
+    setPopoverRef,
     setPopoverEvent,
+    showPopover,
+    setShowPopover,
+    createPopoverEvent,
+    setCreatePopoverEvent,
+
+    setCreatePopoverCoordinate,
+
+    showCreatePopover,
+    setShowCreatePopover,
 
     createEvent,
     setCreateEvent,
+    setMousedownEvent,
 
     popover,
     setPopover, } = useContext(MouseEventContext)
@@ -41,80 +54,99 @@ export function DayWrapper() {
 
 
   const onClickEvent = useCallback((e:IMouseEvent) => e, [mousedownRef, popover])
-
+  const mousedownEvent:{value:CalendarEvent| null} = {
+    value: null,
+  }
   // 只能右键
   // 问题原因是因为在onMousedownEvent一开始就设置了 ref
-  const onMousedownEvent = useCallback((e: IMouseEvent) => {
-
+  const onMousedownEvent = (e: IMouseEvent) => {
     const { event, nativeEvent, } = e
-    setDragEvent(event)
-
-    setPopoverEvent(event)
-    // 之前没有popover
-    if (!selectedRef && !popover) {
-      setMouseDownRef(nativeEvent.currentTarget)
-      setPopover(true)
-    } else {
-      setMouseDownRef(nativeEvent.currentTarget)
-      setPopover(popover)
-    }
-    return e
-  }, [selectedRef, popover])
-  const onMouseupEvent = (e:IMouseEvent) => {
-    if (mousedownRef) {
-      if (popover) {
-        mousedownRef.classList.remove(IS_FULL_WIDTH)
-        setRef(mousedownRef)
-      } else {
-        mousedownRef.classList.remove(IS_FULL_WIDTH)
-        setPopover(false)
-        setMouseDownRef(null)
-        setRef(null)
-      }
-    }
+    setRef(nativeEvent.currentTarget)
+    mousedownEvent.value = event
     return e
   }
+  const onMouseupEvent = (e:IMouseEvent) => e
 
 
 
 
 
 
-  const onTimeContainerClick = useCallback((tms:IMouseTime) => tms, [selectedRef, popover, mousedownRef])
+  const onTimeContainerClick = (tms:IMouseTime) => tms
   const onTimeContainerMousedown = (tms:IMouseTime) => {
     const time = toTime(tms)
     setMousedownTime(time)
     // 在这里设置mousemoveTime
     // 由于鼠标一直在移动，所以确保点击下去的时候不是之前设置的time值
     setMousemoveTime(null)
+
+
+    setShowCreatePopover(false)
+    if (!mousedownEvent.value) {
+      setShowPopover(false)
+      setRef(null)
+      setPopoverRef(null)
+    } else {
+      if (!mousedownEvent.value.isCreate) {
+        setDragEvent(mousedownEvent.value)
+        setCreatePopoverEvent(null)
+        setShowPopover(true)
+      } else {
+        setDragEvent(mousedownEvent.value)
+      }
+    }
     return tms
   }
+
+
 
   const onTimeContainerMousemove = useCallback((tms:IMouseTime) => {
     if (!mousedownTime) return tms
     const time = toTime(tms)
     setMousemoveTime(time)
-
-    setPopover(false)
-
-    if (mousedownRef) {
-      mousedownRef.classList.add(IS_FULL_WIDTH)
-    }
     return tms
-  }, [mousedownTime, mousedownRef])
-
+  }, [mousedownTime])
 
   const onTimeContainerMouseup = useCallback((tms:IMouseTime) => {
+    const { nativeEvent, } = tms
+    if (createEvent) {
+      setCreatePopoverEvent(createEvent)
+      setShowCreatePopover(true)
+      //  设置createPopover坐标点
+      setCreatePopoverCoordinate([
+        nativeEvent.clientX,
+        nativeEvent.clientY
+      ])
+    } else {
+      if (dragEvent) {
+        if (!dragEvent.isCreate) {
+          setPopoverEvent(dragEvent)
+          setShowPopover(true)
+          setPopoverRef(selectedRef)
+        } else {
+          setCreatePopoverEvent(dragEvent)
+          setShowCreatePopover(true)
+          setCreatePopoverCoordinate([
+            nativeEvent.clientX,
+            nativeEvent.clientY
+          ])
+        }
+      }
+    }
+    clear()
+    return tms
+  }, [createEvent, dragEvent])
+
+
+
+  function clear() {
     setDragEvent(null)
+    mousedownEvent.value = null
     setMousedownTime(null)
     setMousemoveTime(null)
     setCreateEvent(null)
     setCreateStart(null)
-
-    return tms
-  }, [popover, selectedRef])
-
-
+  }
 
 
 
@@ -128,28 +160,34 @@ export function DayWrapper() {
   // 最终设置拖拽的时间段 dragTime
   useEffect(() => {
     // 对事件进行拖拽
-    if (dragEvent && mousedownTime) {
-      const start = dragEvent.start
-      const dragTime = mousedownTime - start
-      setDragTime(dragTime)
-    } else if (mousedownTime && !dragEvent) {
-      const createStart = roundTime(mousedownTime)
-      const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
-      const createEvent = {
-        id: Date.now(),
-        name: `日历事件 ${events.length}`,
-        color: 'black',
-        start: createStart,
-        end: createEnd,
-        timed: true,
-        allDay: false,
-        isCreate: true,
-        author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者',
-        location: '地点地点地点地点地点地点地点地点地点地点地点地点地点地点',
-        personnel: '人员人员人员人员人员人员人员人员人员人员人员人员人员人员',
+    if (mousedownTime) {
+      if (dragEvent) {
+        const start = dragEvent.start
+        const dragTime = mousedownTime - start
+        setDragTime(dragTime)
+        if (dragEvent.isCreate) {
+          setShowCreatePopover(true)
+        }
+      } else {
+        const createStart = roundTime(mousedownTime)
+        const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
+        const createEvent = {
+          id: Date.now(),
+          name: `日历事件 ${events.length}`,
+          color: 'black',
+          start: createStart,
+          end: createEnd,
+          timed: true,
+          allDay: false,
+          isCreate: true,
+          author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者',
+          location: '地点地点地点地点地点地点地点地点地点地点地点地点地点地点',
+          personnel: '人员人员人员人员人员人员人员人员人员人员人员人员人员人员',
+        }
+        setCreateEvent(createEvent)
+        setCreateStart(createStart)
+        setShowCreatePopover(true)
       }
-      setCreateEvent(createEvent)
-      setCreateStart(createStart)
     }
   }, [mousedownTime, dragEvent])
 
@@ -187,7 +225,9 @@ export function DayWrapper() {
         resetEvents(dragEvent, dragEvent)
       }
     }
-  }, [mousemoveTime, dragTime])
+  }, [mousemoveTime, dragTime, dragEvent])
+
+
 
   return (
     <>

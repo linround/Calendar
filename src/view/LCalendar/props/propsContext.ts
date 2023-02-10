@@ -1,4 +1,4 @@
-import
+import React,
 { createContext }
   from 'react'
 import {
@@ -90,6 +90,22 @@ export const IntervalsContext = createContext<IIntervalsContext>({
 })
 
 export const MouseEventContext = createContext<IMouseEventContext>({
+  createPopoverCoordinate: [0, 0],
+  setCreatePopoverCoordinate: () => void 0,
+
+  createPopoverEvent: null,
+  setCreatePopoverEvent: () => void 0,
+
+  popoverRef: null,
+  setPopoverRef: () => void 0,
+
+
+  showCreatePopover: false,
+  setShowCreatePopover: () => void 0,
+
+  showPopover: false,
+  setShowPopover: () => void 0,
+
   popoverEvent: null,
   setPopoverEvent: () => void 0,
 

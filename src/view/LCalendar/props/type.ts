@@ -60,6 +60,23 @@ export interface IIntervalsContext {
 }
 
 export interface IMouseEventContext {
+
+
+  createPopoverCoordinate: number[]
+  setCreatePopoverCoordinate: React.Dispatch<React.SetStateAction<number[]>>
+
+  createPopoverEvent: CalendarEvent | null,
+  setCreatePopoverEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
+
+  popoverRef: Element | null
+  setPopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
+
+  showCreatePopover: boolean,
+  setShowCreatePopover: React.Dispatch<React.SetStateAction<boolean>>,
+
+  showPopover: boolean,
+  setShowPopover: React.Dispatch<React.SetStateAction<boolean>>,
+
   popoverEvent: CalendarEvent | null
   setPopoverEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
 

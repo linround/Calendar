@@ -1,8 +1,9 @@
 import React, {
   useEffect,
-  useContext, useRef
+  useContext, useCallback
 } from 'react'
 import { Popover } from './Popover/Popover'
+import { CreatePopover } from './Popover/CreatePopover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -28,7 +29,7 @@ import {
 import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
 import {
-  BaseContext, CalendarContext, IntervalsContext
+  BaseContext, CalendarContext, EventContext, IntervalsContext, MouseEventContext
 } from './props/propsContext'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
@@ -45,8 +46,13 @@ export default function () {
     setWeekDays,
     times,
     parsedValue, } = useContext(BaseContext)
+  const { events, setEvents, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
+  const { createPopoverEvent, showCreatePopover,
+    setShowPopover, setShowCreatePopover,
+    setRef, setPopoverRef, setMousedownEvent,
+    popoverEvent, popoverRef, showPopover, } = useContext(MouseEventContext)
 
 
 
@@ -149,11 +155,40 @@ export default function () {
     }
   }
 
-  const container = useRef(null)
+
+
+  const containerMousedown = useCallback(() => {
+
+    if ((createPopoverEvent && showCreatePopover) ||
+      (popoverEvent && popoverRef && showPopover)
+    ) {
+      if (createPopoverEvent && showCreatePopover) {
+        setRef(null)
+        setShowCreatePopover(false)
+      } else {
+        setRef(null)
+        setShowPopover(false)
+        setPopoverRef(null)
+      }
+
+
+    } else {
+
+      setRef(null)
+      setPopoverRef(null)
+      setShowPopover(false)
+      setShowCreatePopover(false)
+    }
+    setEvents(events.filter((e) => !e.isCreate))
+  }, [
+    createPopoverEvent, showCreatePopover,
+    popoverEvent, popoverRef, showPopover
+  ])
   return (
     <>
-      <Popover container={container} />
-      <div className={styles.mainContainer} ref={container}>
+      <CreatePopover />
+      <Popover  />
+      <div className={styles.mainContainer} onMouseDown={containerMousedown}>
         <div className={styles.mainLeft}>
           <SideComponent />
         </div>

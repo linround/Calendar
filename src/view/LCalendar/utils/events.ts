@@ -67,7 +67,7 @@ export function creatEvents() {
 
   return [
     {
-      'name': '日历事件 0',
+      'name': '日历事件 1',
       'color': 'black',
       'start': now.valueOf(),
       'end': addHour(1, now),
