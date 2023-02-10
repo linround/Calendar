@@ -30,7 +30,7 @@ function max(dateA:VTimestampInput, dateB:VTimestampInput) {
   return maxDt.toDate()
 }
 
-export function endOf(date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) {
+export function endOf(date:VTimestampInput|null = null, unit:moment.unitOfTime.DurationConstructor) {
   if (unit) {
     return moment(date)
       .endOf(unit)
@@ -148,6 +148,7 @@ export interface ILocalizer{
   diff: (a:VTimestampInput, b:VTimestampInput, unit: moment.unitOfTime.DurationConstructor) => number
   max: (dateA:VTimestampInput, dateB:VTimestampInput) => Date
   startOf: (date:(VTimestampInput | null), unit:moment.unitOfTime.DurationConstructor) => Date
+  endOf: (date:(VTimestampInput | null), unit:moment.unitOfTime.DurationConstructor) => Date
   min: (dateA:VTimestampInput, dateB:VTimestampInput) => Date
   ceil: (date:VTimestampInput, unit:moment.unitOfTime.DurationConstructor) => VTimestampInput
   isSameDate: (date1:VTimestampInput, date2:VTimestampInput)=>boolean
@@ -161,6 +162,7 @@ const localizer:ILocalizer = {
   diff,
   max,
   startOf,
+  endOf,
   min,
   ceil,
   isSameDate,

@@ -49,11 +49,18 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [timeContainerMouseDown, setTimeContainerMouseDown] = useState<boolean>(false)
   const [timeContainerMousemove, setTimeContainerMousemove] = useState<boolean>(false)
   const [timeContainerMouseUp, setTimeContainerMouseUp] = useState<boolean>(false)
-  const [selectedRef, setRef] = useState<Element | null>(null)
   const [createEvent, setCreateEvent] = useState<CalendarEvent| null>(null)
   const [popover, setPopover] = useState<boolean>(false)
   const [mousedownRef, setMouseDownRef] = useState<Element | null>(null)
   const [popoverEvent, setPopoverEvent] = useState<CalendarEvent | null>(null)
+
+
+
+  const [selectedRef, setRef] = useState<Element | null>(null)
+  const [popoverRef, setPopoverRef] = useState<Element | null>(null)
+  const [showPopover, setShowPopover] = useState<boolean>(false)
+
+  const [createPopoverEvent, setCreatePopoverEvent] = useState<CalendarEvent | null>(null)
 
 
 
