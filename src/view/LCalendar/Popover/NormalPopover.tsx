@@ -1,4 +1,4 @@
-import styles from './style.module.less'
+import styles from './normalEventPopover.module.less'
 import React, {
   useContext, useEffect, useState
 } from 'react'
@@ -7,7 +7,7 @@ import { PopoverContent } from './PopoverContent'
 import { POPOVER_WIDTH_DEF } from './helpers'
 
 
-export function Popover() {
+export function NormalPopover() {
   const [left, setLeft] = useState(100)
   const [top, setTop] = useState(100)
   const { popoverEvent,

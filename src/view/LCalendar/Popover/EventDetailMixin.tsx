@@ -1,5 +1,5 @@
 import { CalendarEvent } from '../utils/calendar'
-import styles from './style.module.less'
+import styles from './normalEventPopover.module.less'
 import { getEventDayLabel, getEventTimeLabel } from './helpers'
 import React from 'react'
 import mainStyles from '../style.module.less'

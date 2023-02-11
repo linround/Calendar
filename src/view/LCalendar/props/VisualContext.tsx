@@ -42,6 +42,38 @@ import { CalendarEventOverlapModes } from '../utils/modes'
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {
   // Popover相关
+  //
+
+  /**
+   * todo
+   * 这里和createPopover有关的变量
+   * */
+  const [createPopoverRef, setCreatePopoverRef] = useState<Element | null>(null)
+  const [showCreatePopover, setShowCreatePopover] = useState<boolean>(false)
+  const [normalEvent, setNormalEvent] = useState<CalendarEvent|null>(null)
+
+
+
+
+  /***
+   * todo
+   * 这里是普通的popover相关的变量
+   * 这里没有去存储event
+   * 因为可以使用memo来筛选出 createEvent
+   */
+  const [normalPopoverRef, setNormalPopoverRef] = useState<Element | null>(null)
+  const [showNormalPopover, setShowNormalPopover] = useState<boolean>(false)
+
+
+
+
+
+
+
+
+
+
+
   const [clickEvent, setClickEvent] = useState<CalendarEvent | null>(null)
   const [mousedownEvent, setMousedownEvent] = useState<CalendarEvent | null>(null)
   const [mouseupEvent, setMouseupEvent] = useState<CalendarEvent | null>(null)
@@ -59,7 +91,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [selectedRef, setRef] = useState<Element | null>(null)
   const [popoverRef, setPopoverRef] = useState<Element | null>(null)
   const [showPopover, setShowPopover] = useState<boolean>(false)
-  const [showCreatePopover, setShowCreatePopover] = useState<boolean>(false)
 
   const [createPopoverEvent, setCreatePopoverEvent] = useState<CalendarEvent | null>(null)
   const [createPopoverCoordinate, setCreatePopoverCoordinate] = useState<number[]>([0, 0])
@@ -198,6 +229,29 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               resetEvents,
             }}>
               <MouseEventContext.Provider value={{
+
+                createPopoverRef,
+                setCreatePopoverRef,
+                showCreatePopover,
+                setShowCreatePopover,
+
+
+                normalPopoverRef,
+                setNormalPopoverRef,
+                showNormalPopover,
+                setShowNormalPopover,
+                normalEvent,
+                setNormalEvent,
+
+
+
+
+
+
+
+
+
+
                 createPopoverCoordinate,
                 setCreatePopoverCoordinate,
 
@@ -207,8 +261,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
                 popoverRef,
                 setPopoverRef,
 
-                showCreatePopover,
-                setShowCreatePopover,
 
                 showPopover,
                 setShowPopover,

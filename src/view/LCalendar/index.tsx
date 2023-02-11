@@ -1,9 +1,10 @@
 import React, {
   useEffect,
-  useContext, useCallback
+  useContext, useCallback, useRef
 } from 'react'
 import { Popover } from './Popover/Popover'
 import { CreatePopover } from './Popover/CreatePopover'
+import { NormalPopover } from './Popover/NormalPopover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -184,10 +185,19 @@ export default function () {
     createPopoverEvent, showCreatePopover,
     popoverEvent, popoverRef, showPopover
   ])
+
+  const createRef = useRef<Element>(null)
+  useEffect(() => {
+    if (createRef) {
+      setPopoverRef(createRef.current)
+    } else {
+      setPopoverRef(null)
+    }
+  }, [createRef.current])
   return (
     <>
       <CreatePopover />
-      <Popover  />
+      <NormalPopover  />
       <div className={styles.mainContainer} onMouseDown={containerMousedown}>
         <div className={styles.mainLeft}>
           <SideComponent />
@@ -204,7 +214,9 @@ export default function () {
             type === 'month' ?
               <MonthWrapper
               /> :
-              <DayWrapper />
+              <DayWrapper
+                ref={createRef}
+              />
           }
         </div>
       </div>

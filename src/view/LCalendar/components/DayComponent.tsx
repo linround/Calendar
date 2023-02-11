@@ -33,7 +33,7 @@ import {
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 
-export default function (props: IDayProps) {
+export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
     firstTime,
     onClickEvent = mouseEvent<IMouseEvent>(),
@@ -181,6 +181,7 @@ export default function (props: IDayProps) {
           visualsRect
             .map((rect, index) => (
               <div
+                ref={rect.event.isCreate && ref}
                 key={rect.event.id}
                 className={className}
                 onClick={(nativeEvent) => onClickEvent({
@@ -299,4 +300,4 @@ export default function (props: IDayProps) {
       </div>
     </div>
   )
-}
+})

@@ -60,6 +60,57 @@ export interface IIntervalsContext {
 }
 
 export interface IMouseEventContext {
+  /**
+   * todo
+   * 这里和createPopover有关的变量
+   * */
+  showCreatePopover: boolean,
+  setShowCreatePopover: React.Dispatch<React.SetStateAction<boolean>>,
+  createPopoverRef: Element | null
+  setCreatePopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
+
+
+
+  /***
+   * todo
+   * 这里是普通的popover相关的变量
+   * 这里没有去存储event
+   * 因为可以使用memo来筛选出 createEvent
+   */
+  showNormalPopover: boolean
+  setShowNormalPopover: React.Dispatch<React.SetStateAction<boolean>>
+  normalPopoverRef: Element|null
+  setNormalPopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
+  normalEvent: CalendarEvent | null
+  setNormalEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  createEvent: CalendarEvent | null
+  setCreateEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
+
+
+
 
 
   createPopoverCoordinate: number[]
@@ -71,8 +122,6 @@ export interface IMouseEventContext {
   popoverRef: Element | null
   setPopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
 
-  showCreatePopover: boolean,
-  setShowCreatePopover: React.Dispatch<React.SetStateAction<boolean>>,
 
   showPopover: boolean,
   setShowPopover: React.Dispatch<React.SetStateAction<boolean>>,
@@ -108,8 +157,6 @@ export interface IMouseEventContext {
   mousedownRef: Element | null
   setMouseDownRef: React.Dispatch<React.SetStateAction<Element | null>>
 
-  createEvent: CalendarEvent | null
-  setCreateEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
 
   popover: boolean
   setPopover: React.Dispatch<React.SetStateAction<boolean>>

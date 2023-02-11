@@ -1,6 +1,6 @@
 import React from 'react'
 import { CalendarEvent } from '../utils/calendar'
-import styles from './style.module.less'
+import styles from './normalEventPopover.module.less'
 import { EventDetailMixin } from './EventDetailMixin'
 
 export function PopoverContent(props:React.PropsWithChildren<{event:CalendarEvent}>) {

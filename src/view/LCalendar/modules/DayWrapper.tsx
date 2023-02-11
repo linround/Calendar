@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useContext, useEffect, useState
+  useCallback, useContext, useEffect, useRef, useState
 } from 'react'
 import DayComponent from '../components/DayComponent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
@@ -16,7 +16,7 @@ import {
 import { IS_FULL_WIDTH } from '../components/type'
 import { stopDefaultEvent } from '../utils/events'
 
-export function DayWrapper() {
+export const DayWrapper = React.forwardRef((props, ref) =>  {
   const { setRef,
     selectedRef,
     mousedownRef,
@@ -228,10 +228,10 @@ export function DayWrapper() {
   }, [mousemoveTime, dragTime, dragEvent])
 
 
-
   return (
     <>
       <DayComponent
+        ref={ref}
         onClickEvent={onClickEvent}
         onMousedownEvent={onMousedownEvent}
         onMouseupEvent={onMouseupEvent}
@@ -242,4 +242,4 @@ export function DayWrapper() {
         onTimeContainerMouseup={onTimeContainerMouseup} />
     </>
   )
-}
+})

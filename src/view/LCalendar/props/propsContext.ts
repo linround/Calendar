@@ -90,6 +90,48 @@ export const IntervalsContext = createContext<IIntervalsContext>({
 })
 
 export const MouseEventContext = createContext<IMouseEventContext>({
+  /**
+   * todo
+   * 这里和createPopover有关的变量
+   * */
+  createPopoverRef: null,
+  setCreatePopoverRef: () => void 0,
+  showCreatePopover: false,
+  setShowCreatePopover: () => void 0,
+
+
+
+
+  /***
+   * todo
+   * 这里是普通的popover相关的变量
+   * 这里没有去存储event
+   * 因为可以使用memo来筛选出 createEvent
+   */
+  showNormalPopover: false,
+  setShowNormalPopover: () => void 0,
+  normalPopoverRef: null,
+  setNormalPopoverRef: () => void 0,
+  normalEvent: null,
+  setNormalEvent: () => void 0,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   createPopoverCoordinate: [0, 0],
   setCreatePopoverCoordinate: () => void 0,
 
@@ -100,8 +142,6 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   setPopoverRef: () => void 0,
 
 
-  showCreatePopover: false,
-  setShowCreatePopover: () => void 0,
 
   showPopover: false,
   setShowPopover: () => void 0,
