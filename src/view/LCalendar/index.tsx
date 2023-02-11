@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext, useRef
+  useContext, useRef, useState
 } from 'react'
 import { CreatePopover } from './Popover/CreatePopover'
 import { NormalPopover } from './Popover/NormalPopover'
@@ -9,7 +9,7 @@ import {
   DEFAULT_WEEK_DAYS
 } from './utils/time'
 import { IGlobalCache, ITimes } from './props/type'
-import { CalendarTimestamp } from './utils/calendar'
+import { CalendarEvent, CalendarTimestamp } from './utils/calendar'
 import { SideComponent } from './SideComponent'
 import {
   nextDay,
@@ -66,6 +66,17 @@ export default function () {
     setEvents(events.filter((e) => !e.isCreate))
     setShowCreatePopover(false)
   }
+
+
+  const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
+  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
+  const [dragTime, setDragTime] = useState<number|null>(null)
+  const [mousedownTime, setMousedownTime] = useState<number|null>(null)
+  const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
+  const [createStart, setCreateStart] = useState<number| null>(null)
+
+
+
 
   // 这里的是为了响应type的变化
   // 目前在周视图和日视图中
@@ -166,13 +177,51 @@ export default function () {
     }
   }
 
+  const setGlobalCacheValue = (key: keyof IGlobalCache, val:any):void => {
+    globalCache[key] = val
+  }
 
-
+  function clearGlobal() {
+    setGlobalCacheValue('currentMousedownEvent', null)
+    setGlobalCacheValue('currentMousedownRef', null)
+    setGlobalCacheValue('currentCreateEvent', null)
+    setGlobalCacheValue('isDragEvent', false)
+  }
+  function clear() {
+    setMousedownTime(null)
+    setMousemoveTime(null)
+    setCreateEvent(null)
+    setCreateStart(null)
+    setDragEvent(null)
+  }
   const containerMousedown = () => {
     if (!globalCache.currentMousedownRef) {
       clearPagePopover()
       clearCreateEvent()
     }
+  }
+  const containerMouseup = () => {
+    // 如果点击在事件上
+    if (globalCache.currentMousedownEvent) {
+      if (globalCache.currentMousedownEvent.isCreate) {
+        // 如果点击在create时间上结束的
+        // 显示createPopover
+        setShowCreatePopover(true)
+      } else {
+        // 如果点击事件是在 normal 事件上结束
+        if (!globalCache.isDragEvent) {
+          // 对normal事件执行的是不是拖拽操作功能
+          //  显示normalPopover
+          setNormalEvent(globalCache.currentMousedownEvent)
+          setNormalPopoverRef(globalCache.currentMousedownRef)
+          setShowNormalPopover(true)
+        }
+      }
+    }
+    // 创建事件结束
+    setShowCreatePopover(true)
+    clear()
+    clearGlobal()
   }
 
   const createRef = useRef<Element>(null)
@@ -186,14 +235,11 @@ export default function () {
   }, [createRef.current])
 
 
-  const setGlobalCacheValue = (key: keyof IGlobalCache, val:any):void => {
-    globalCache[key] = val
-  }
   return (
     <>
       <CreatePopover />
       <NormalPopover  />
-      <div className={styles.mainContainer} onMouseDown={containerMousedown}>
+      <div className={styles.mainContainer} onMouseDown={containerMousedown} onMouseUp={containerMouseup}>
         <div className={styles.mainLeft}>
           <SideComponent />
         </div>
@@ -210,6 +256,18 @@ export default function () {
               <MonthWrapper
               /> :
               <DayWrapper
+                dragEvent={dragEvent}
+                setDragEvent={setDragEvent}
+                createEvent={createEvent}
+                setCreateEvent={setCreateEvent}
+                dragTime={dragTime}
+                setDragTime={setDragTime}
+                mousedownTime={mousedownTime}
+                setMousedownTime={setMousedownTime}
+                mousemoveTime={mousemoveTime}
+                setMousemoveTime={setMousemoveTime}
+                createStart={createStart}
+                setCreateStart={setCreateStart}
                 clearCreateEvent={clearCreateEvent}
                 globalCache={globalCache}
                 setGlobalCacheValue={setGlobalCacheValue}

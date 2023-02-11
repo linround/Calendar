@@ -1,38 +1,29 @@
 import React, {
-  useCallback, useContext, useEffect, useState
+  useCallback, useContext, useEffect
 } from 'react'
 import DayComponent from '../components/DayComponent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
 
-import {
-  CalendarEvent, IMouseEvent, IMouseTime
-} from '../utils/calendar'
+import { IMouseEvent, IMouseTime } from '../utils/calendar'
 import {
   isTruth,
   ROUND_TIME,
   roundTime,
   toTime
 } from '../utils/timesStamp'
-import { IGlobalCache } from '../props/type'
+import { IDayWrapper } from './options'
 
 
-export const DayWrapper = React.forwardRef((props:{
-  globalCache:IGlobalCache,
-  clearCreateEvent:()=>void,
-  setGlobalCacheValue: (k:keyof IGlobalCache, v: any) => void
-}, ref) =>  {
-  const { globalCache, setGlobalCacheValue, clearCreateEvent, } = props
+export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
+  const { globalCache, setGlobalCacheValue, clearCreateEvent,
+    dragEvent, setDragEvent, createEvent, setCreateEvent, dragTime,
+    setDragTime, mousedownTime, setMousedownTime, mousemoveTime, setMousemoveTime,
+    createStart, setCreateStart, } = props
   const { setShowCreatePopover,
     setShowNormalPopover,
     setNormalPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
   const { events, resetEvents, } = useContext(EventContext)
-  const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
-  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
-  const [dragTime, setDragTime] = useState<number|null>(null)
-  const [mousedownTime, setMousedownTime] = useState<number|null>(null)
-  const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
-  const [createStart, setCreateStart] = useState<number| null>(null)
 
   /**
    * todo
@@ -44,19 +35,6 @@ export const DayWrapper = React.forwardRef((props:{
     setShowNormalPopover(false)
     setNormalPopoverRef(null)
     setNormalEvent(null)
-  }
-  function clearGlobal() {
-    setGlobalCacheValue('currentMousedownEvent', null)
-    setGlobalCacheValue('currentMousedownRef', null)
-    setGlobalCacheValue('currentCreateEvent', null)
-    setGlobalCacheValue('isDragEvent', false)
-  }
-  function clear() {
-    setMousedownTime(null)
-    setMousemoveTime(null)
-    setCreateEvent(null)
-    setCreateStart(null)
-    setDragEvent(null)
   }
   const onClickEvent = (e:IMouseEvent) => e
   const onMousedownEvent = (e: IMouseEvent) => {
@@ -107,42 +85,7 @@ export const DayWrapper = React.forwardRef((props:{
     return tms
   }, [mousedownTime])
 
-  const onTimeContainerMouseup = useCallback((tms:IMouseTime) => {
-    // 如果点击在事件上
-    if (globalCache.currentMousedownEvent) {
-      if (globalCache.currentMousedownEvent.isCreate) {
-        // 如果点击在create时间上结束的
-        // 显示createPopover
-        setShowCreatePopover(true)
-      } else {
-      // 如果点击事件是在 normal 事件上结束
-        if (!globalCache.isDragEvent) {
-          // 对normal事件执行的是不是拖拽操作功能
-          //  显示normalPopover
-          setNormalEvent(globalCache.currentMousedownEvent)
-          setNormalPopoverRef(globalCache.currentMousedownRef)
-          setShowNormalPopover(true)
-        }
-      }
-    } else {
-      if (dragEvent) {
-        // 是对事件拖拽结束
-        if (!dragEvent.isCreate) {
-          setShowNormalPopover(true)
-          setNormalEvent(globalCache.currentMousedownEvent)
-          setNormalPopoverRef(globalCache.currentMousedownRef)
-        } else {
-          setShowCreatePopover(true)
-        }
-      } else {
-        // 创建事件结束
-        setShowCreatePopover(true)
-      }
-    }
-    clear()
-    clearGlobal()
-    return tms
-  }, [createEvent, dragEvent])
+  const onTimeContainerMouseup = (tms:IMouseTime) => tms
 
 
 
