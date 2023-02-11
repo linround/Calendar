@@ -63,7 +63,6 @@ export const DayWrapper = React.forwardRef((props:{
     const { event, nativeEvent, } = e
     setGlobalCacheValue('currentMousedownRef', nativeEvent.currentTarget)
     setGlobalCacheValue('currentMousedownEvent', event)
-    setShowCreatePopover(false)
     return e
   }
 
@@ -231,6 +230,8 @@ export const DayWrapper = React.forwardRef((props:{
     if (globalCache.isDragEvent) {
       // 如果执行的是拖拽的操作就不在显示normal弹框
       clearNormal()
+      // 对create事件执行拖拽操作在短暂时间不显示
+      setShowCreatePopover(false)
     }
   }, [globalCache.isDragEvent])
 
