@@ -11,7 +11,7 @@ import {
 } from './propsContext'
 import React,
 {
-  useMemo, useRef,
+  useMemo,
   useState
 } from 'react'
 import {
@@ -73,27 +73,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
 
-
-  const [clickEvent, setClickEvent] = useState<CalendarEvent | null>(null)
-  const [mousedownEvent, setMousedownEvent] = useState<CalendarEvent | null>(null)
-  const [mouseupEvent, setMouseupEvent] = useState<CalendarEvent | null>(null)
-  const [timeContainerClick, setTimeContainerClick] = useState<boolean>(false)
-  const [timeContainerMouseDown, setTimeContainerMouseDown] = useState<boolean>(false)
-  const [timeContainerMousemove, setTimeContainerMousemove] = useState<boolean>(false)
-  const [timeContainerMouseUp, setTimeContainerMouseUp] = useState<boolean>(false)
-  const [createEvent, setCreateEvent] = useState<CalendarEvent| null>(null)
-  const [popover, setPopover] = useState<boolean>(false)
-  const [mousedownRef, setMouseDownRef] = useState<Element | null>(null)
-  const [popoverEvent, setPopoverEvent] = useState<CalendarEvent | null>(null)
-
-
-
-  const [selectedRef, setRef] = useState<Element | null>(null)
-  const [popoverRef, setPopoverRef] = useState<Element | null>(null)
-  const [showPopover, setShowPopover] = useState<boolean>(false)
-
-  const [createPopoverEvent, setCreatePopoverEvent] = useState<CalendarEvent | null>(null)
-  const [createPopoverCoordinate, setCreatePopoverCoordinate] = useState<number[]>([0, 0])
 
 
 
@@ -243,64 +222,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
                 normalEvent,
                 setNormalEvent,
 
-
-
-
-
-
-
-
-
-
-                createPopoverCoordinate,
-                setCreatePopoverCoordinate,
-
-                createPopoverEvent,
-                setCreatePopoverEvent,
-
-                popoverRef,
-                setPopoverRef,
-
-
-                showPopover,
-                setShowPopover,
-
-                clickEvent,
-                setClickEvent,
-
-                mousedownEvent,
-                setMousedownEvent,
-
-                mouseupEvent,
-                setMouseupEvent,
-
-                timeContainerClick,
-                setTimeContainerClick,
-
-                timeContainerMouseDown,
-                setTimeContainerMouseDown,
-
-                timeContainerMousemove,
-                setTimeContainerMousemove,
-
-                timeContainerMouseUp,
-                setTimeContainerMouseUp,
-
-                selectedRef,
-                setRef,
-
-
-                mousedownRef,
-                setMouseDownRef,
-
-                createEvent,
-                setCreateEvent,
-
-                popover,
-                setPopover,
-
-                setPopoverEvent,
-                popoverEvent,
 
               }}>
 

@@ -1,8 +1,4 @@
-import {
-  CalendarEvent,
-  CalendarTimestamp, VTimestampInput
-} from '../calendar'
-import localizer from '../segments/localizer'
+import { CalendarTimestamp, VTimestampInput } from '../calendar'
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100

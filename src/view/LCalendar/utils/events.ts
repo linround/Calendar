@@ -58,8 +58,8 @@ export function parseEvent(
 
 }
 
-function addHour(h, v) {
-  return v + h * 60 * 60 * 1000
+function addHour(h:number, v:number) {
+  return v + (h * 60 * 60 * 1000)
 }
 export function creatEvents() {
   const now = new Date()

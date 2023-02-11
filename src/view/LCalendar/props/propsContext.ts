@@ -1,4 +1,4 @@
-import React,
+import
 { createContext }
   from 'react'
 import {
@@ -116,74 +116,6 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   setNormalEvent: () => void 0,
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  createPopoverCoordinate: [0, 0],
-  setCreatePopoverCoordinate: () => void 0,
-
-  createPopoverEvent: null,
-  setCreatePopoverEvent: () => void 0,
-
-  popoverRef: null,
-  setPopoverRef: () => void 0,
-
-
-
-  showPopover: false,
-  setShowPopover: () => void 0,
-
-  popoverEvent: null,
-  setPopoverEvent: () => void 0,
-
-  clickEvent: null,
-  setClickEvent: () => undefined,
-
-
-
-  mousedownEvent: null,
-  setMousedownEvent: () => undefined,
-
-  mouseupEvent: null,
-  setMouseupEvent: () => undefined,
-
-  timeContainerClick: false,
-  setTimeContainerClick: () => undefined,
-
-  timeContainerMouseDown: false,
-  setTimeContainerMouseDown: () => undefined,
-
-  timeContainerMousemove: false,
-  setTimeContainerMousemove: () => undefined,
-
-  timeContainerMouseUp: false,
-  setTimeContainerMouseUp: () => undefined,
-
-
-  selectedRef: null,
-  setRef: () => undefined,
-
-  mousedownRef: null,
-  setMouseDownRef: () => void 0,
-
-  createEvent: null,
-  setCreateEvent: () => undefined,
-
-  popover: false,
-  setPopover: () => void 0,
 })
 
 

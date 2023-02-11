@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useContext, useEffect, useRef, useState
+  useCallback, useContext, useEffect, useState
 } from 'react'
 import DayComponent from '../components/DayComponent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
@@ -13,8 +13,6 @@ import {
   roundTime,
   toTime
 } from '../utils/timesStamp'
-import { IS_FULL_WIDTH } from '../components/type'
-import { stopDefaultEvent } from '../utils/events'
 import { IGlobalCache } from '../props/type'
 
 
@@ -24,17 +22,13 @@ export const DayWrapper = React.forwardRef((props:{
   setGlobalCacheValue: (k:keyof IGlobalCache, v: any) => void
 }, ref) =>  {
   const { globalCache, setGlobalCacheValue, clearCreateEvent, } = props
-  const { mousedownRef,
-    setCreatePopoverEvent,
-    createEvent,
-    setCreateEvent,
-    popover,
-    setShowCreatePopover,
+  const { setShowCreatePopover,
     setShowNormalPopover,
     setNormalPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
-  const { events, resetEvents, setEvents, } = useContext(EventContext)
+  const { events, resetEvents, } = useContext(EventContext)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
+  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
   const [mousedownTime, setMousedownTime] = useState<number|null>(null)
   const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
@@ -64,7 +58,7 @@ export const DayWrapper = React.forwardRef((props:{
     setCreateStart(null)
     setDragEvent(null)
   }
-  const onClickEvent = useCallback((e:IMouseEvent) => e, [mousedownRef, popover])
+  const onClickEvent = (e:IMouseEvent) => e
   const onMousedownEvent = (e: IMouseEvent) => {
     const { event, nativeEvent, } = e
     setGlobalCacheValue('currentMousedownRef', nativeEvent.currentTarget)
@@ -139,7 +133,6 @@ export const DayWrapper = React.forwardRef((props:{
           setNormalEvent(globalCache.currentMousedownEvent)
           setNormalPopoverRef(globalCache.currentMousedownRef)
         } else {
-          setCreatePopoverEvent(dragEvent)
           setShowCreatePopover(true)
         }
       } else {

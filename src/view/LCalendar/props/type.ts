@@ -2,7 +2,6 @@ import {
   CalendarEvent, CalendarEventParsed, CalendarTimestamp, IValue
 } from '../utils/calendar'
 import React from 'react'
-import { MouseEventContext } from './propsContext'
 
 export interface ITimes extends Object{
   now: CalendarTimestamp
@@ -91,83 +90,6 @@ export interface IMouseEventContext {
   setNormalPopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
   normalEvent: CalendarEvent | null
   setNormalEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  createEvent: CalendarEvent | null
-  setCreateEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-
-
-
-
-  createPopoverCoordinate: number[]
-  setCreatePopoverCoordinate: React.Dispatch<React.SetStateAction<number[]>>
-
-  createPopoverEvent: CalendarEvent | null,
-  setCreatePopoverEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-  popoverRef: Element | null
-  setPopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
-
-
-  showPopover: boolean,
-  setShowPopover: React.Dispatch<React.SetStateAction<boolean>>,
-
-  popoverEvent: CalendarEvent | null
-  setPopoverEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-  clickEvent: CalendarEvent | null
-  setClickEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-  mousedownEvent: CalendarEvent | null
-  setMousedownEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-  mouseupEvent: CalendarEvent | null
-  setMouseupEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
-
-  timeContainerClick: boolean
-  setTimeContainerClick: React.Dispatch<React.SetStateAction<boolean>>
-
-  timeContainerMouseDown: boolean
-  setTimeContainerMouseDown: React.Dispatch<React.SetStateAction<boolean>>
-
-  timeContainerMousemove: boolean
-  setTimeContainerMousemove: React.Dispatch<React.SetStateAction<boolean>>
-
-  timeContainerMouseUp: boolean
-  setTimeContainerMouseUp: React.Dispatch<React.SetStateAction<boolean>>
-
-
-  selectedRef: Element | null
-  setRef: React.Dispatch<React.SetStateAction<Element | null>>
-
-  mousedownRef: Element | null
-  setMouseDownRef: React.Dispatch<React.SetStateAction<Element | null>>
-
-
-  popover: boolean
-  setPopover: React.Dispatch<React.SetStateAction<boolean>>
 
 }
 
