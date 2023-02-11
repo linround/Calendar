@@ -15,7 +15,8 @@ import { ISlots } from '../components/type'
 
 export function MonthWrapper() {
   const { events, resetEvents, } = useContext(EventContext)
-  const { setRef, createEvent, setCreateEvent, } = useContext(MouseEventContext)
+
+  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [dragTime, setDragTime] = useState<number|null>(null)
@@ -28,7 +29,6 @@ export function MonthWrapper() {
   const onClickEvent = useCallback((e:IMouseEvent) => {
     const { nativeEvent, } = e
 
-    setRef(nativeEvent.currentTarget)
     return e
   }, [])
 
@@ -40,7 +40,6 @@ export function MonthWrapper() {
   const onShowMore = (arg:ISlots) => {
     const {  nativeEvent, } = arg
     setIsMore(true)
-    setRef(nativeEvent.currentTarget)
   }
 
 
