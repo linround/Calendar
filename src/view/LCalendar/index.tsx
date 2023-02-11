@@ -1,15 +1,14 @@
 import React, {
   useEffect,
-  useContext, useCallback, useRef
+  useContext, useRef
 } from 'react'
-import { Popover } from './Popover/Popover'
 import { CreatePopover } from './Popover/CreatePopover'
 import { NormalPopover } from './Popover/NormalPopover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
 } from './utils/time'
-import { ITimes } from './props/type'
+import { IGlobalCache, ITimes } from './props/type'
 import { CalendarTimestamp } from './utils/calendar'
 import { SideComponent } from './SideComponent'
 import {
@@ -35,8 +34,12 @@ import {
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
 
-
-
+const globalCache:IGlobalCache = {
+  currentMousedownRef: null,
+  currentMousedownEvent: null,
+  currentCreateEvent: null,
+  isDragEvent: false,
+}
 
 
 
@@ -50,12 +53,19 @@ export default function () {
   const { events, setEvents, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
-  const { createPopoverEvent, showCreatePopover,
-    setShowPopover, setShowCreatePopover,
-    setRef, setPopoverRef, setMousedownEvent,
-    popoverEvent, popoverRef, showPopover, } = useContext(MouseEventContext)
-
-
+  const {  setCreatePopoverRef, setShowCreatePopover,
+    setShowNormalPopover, setNormalPopoverRef, setNormalEvent, } = useContext(MouseEventContext)
+  function clearPagePopover() {
+    setCreatePopoverRef(null)
+    setShowCreatePopover(false)
+    setShowNormalPopover(false)
+    setNormalPopoverRef(null)
+    setNormalEvent(null)
+  }
+  function clearCreateEvent() {
+    setEvents(events.filter((e) => !e.isCreate))
+    setShowCreatePopover(false)
+  }
 
   // 这里的是为了响应type的变化
   // 目前在周视图和日视图中
@@ -158,42 +168,27 @@ export default function () {
 
 
 
-  const containerMousedown = useCallback(() => {
-
-    if ((createPopoverEvent && showCreatePopover) ||
-      (popoverEvent && popoverRef && showPopover)
-    ) {
-      if (createPopoverEvent && showCreatePopover) {
-        setRef(null)
-        setShowCreatePopover(false)
-      } else {
-        setRef(null)
-        setShowPopover(false)
-        setPopoverRef(null)
-      }
-
-
-    } else {
-
-      setRef(null)
-      setPopoverRef(null)
-      setShowPopover(false)
-      setShowCreatePopover(false)
+  const containerMousedown = () => {
+    if (!globalCache.currentMousedownRef) {
+      clearPagePopover()
+      clearCreateEvent()
     }
-    setEvents(events.filter((e) => !e.isCreate))
-  }, [
-    createPopoverEvent, showCreatePopover,
-    popoverEvent, popoverRef, showPopover
-  ])
+  }
 
   const createRef = useRef<Element>(null)
+
   useEffect(() => {
     if (createRef) {
-      setPopoverRef(createRef.current)
+      setCreatePopoverRef(createRef.current)
     } else {
-      setPopoverRef(null)
+      setCreatePopoverRef(null)
     }
   }, [createRef.current])
+
+
+  const setGlobalCacheValue = (key: keyof IGlobalCache, val:any):void => {
+    globalCache[key] = val
+  }
   return (
     <>
       <CreatePopover />
@@ -215,6 +210,9 @@ export default function () {
               <MonthWrapper
               /> :
               <DayWrapper
+                clearCreateEvent={clearCreateEvent}
+                globalCache={globalCache}
+                setGlobalCacheValue={setGlobalCacheValue}
                 ref={createRef}
               />
           }

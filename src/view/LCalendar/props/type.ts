@@ -59,6 +59,14 @@ export interface IIntervalsContext {
   intervalMinutes: number
 }
 
+
+
+export interface IGlobalCache{
+  currentMousedownRef: null | Element
+  currentMousedownEvent: CalendarEvent | null
+  currentCreateEvent: CalendarEvent | null
+  isDragEvent: boolean
+}
 export interface IMouseEventContext {
   /**
    * todo

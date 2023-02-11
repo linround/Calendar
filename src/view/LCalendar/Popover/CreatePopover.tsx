@@ -7,26 +7,24 @@ import styles from './createEventPopover.module.less'
 
 export function CreatePopover() {
   const { showCreatePopover,
-    popoverRef, } = useContext(MouseEventContext)
+    createPopoverRef, } = useContext(MouseEventContext)
   const { events, } = useContext(EventContext)
   const createEvent = useMemo(() => events.filter((e) => e.isCreate), [events])
   const [left, setLeft] = useState('50%')
   const [top, setTop] = useState('50%')
+
+
   useEffect(() => {
-    console.log('**')
-    if (popoverRef) {
-      const { left, top, } = popoverRef.getBoundingClientRect()
+    if (createPopoverRef) {
+      const { left, top, } = createPopoverRef.getBoundingClientRect()
       setLeft(left + 'px')
       setTop(top + 'px')
-      console.log(
-        left, top, popoverRef
-      )
     }
-  }, [popoverRef?.getBoundingClientRect()])
+  }, [createPopoverRef?.getBoundingClientRect()])
   return (
     <>
       {
-        (popoverRef && showCreatePopover) ?
+        (createPopoverRef && showCreatePopover) ?
           <div
             style={{
               left: `${left}`,
