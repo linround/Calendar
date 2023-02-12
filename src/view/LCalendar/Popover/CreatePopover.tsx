@@ -4,6 +4,7 @@ import React, {
 import { EventContext, MouseEventContext } from '../props/propsContext'
 import { POPOVER_WIDTH_DEF } from './helpers'
 import styles from './createEventPopover.module.less'
+import { IS_FULL_WIDTH } from './helpers'
 
 export function CreatePopover() {
   const { showCreatePopover,

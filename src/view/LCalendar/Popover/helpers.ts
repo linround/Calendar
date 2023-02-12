@@ -7,6 +7,8 @@ import { padNumber } from '../utils/timesStamp'
 
 
 export const POPOVER_WIDTH_DEF = 300
+export const IS_FULL_WIDTH = 'is_full_width'
+export const IS_HIGH_LEVEL = 'is_high_level'
 
 const joiner = '~'
 export function getEventTimeLabel(start:VTimestampInput, end:VTimestampInput):string {
