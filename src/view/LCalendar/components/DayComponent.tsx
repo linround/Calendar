@@ -19,7 +19,7 @@ import React, {
 } from 'react'
 import {
   CalendarDayBodySlotScope,
-  CalendarDaySlotScope,
+  CalendarDaySlotScope, CalendarEvent,
   CalendarEventParsed,
   CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
@@ -32,6 +32,7 @@ import {
 } from './type'
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
+import { RenderEvent } from './DayEventMixin'
 
 export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
@@ -165,8 +166,44 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       parsedEventOverlapThreshold
     )
     const events = getEventsForDayTimed(day)
+
+
+
+
+    // 过露出来新建的事件
+    const createEventIndex = events.findIndex((e) => e.input.isCreate)
+    let normalEvents:CalendarEventParsed[] = []
+    let createEvent:CalendarEventParsed[] = []
+    let createEventRect:IEventsRect = {
+      event: {},
+      style: {
+        top: '0',
+        height: '0',
+        left: '0',
+        width: '0',
+        backgroundColor: '',
+      },
+      content: {
+        title: '',
+        timeRange: '',
+      },
+    }
+    if (createEventIndex > -1) {
+      createEvent = events.splice(createEventIndex, 1)
+      const createEventVisual = { event: createEvent[0], left: 0, width: 100, }
+      createEventRect = genTimedEvents(createEventVisual as CalendarEventVisual, day) as IEventsRect
+    }
+    normalEvents = events
+
+
+
+
+
+
+
+
     const visuals = mode(
-      day, events, true, categoryMode
+      day, normalEvents, true, categoryMode
     )
     const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
       day))
@@ -177,39 +214,29 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
     })
     return (
       <>
+        {createEvent.length > 0 && (
+          <RenderEvent
+            rect={createEventRect}
+            className={className}
+            onClickEvent={onClickEvent}
+            onMousedownEvent={onMousedownEvent}
+            onMouseupEvent={onMouseupEvent}
+            ref={ref}
+            isCreate={true}
+          />
+        )}
         {
           visualsRect
             .map((rect, index) => (
-              <div
-                key={`${rect.event.id}${index}` }
-                ref={rect.event.isCreate && ref }
+              <RenderEvent
+                key={`${index}${rect.event.id}`}
+                rect={rect}
                 className={className}
-                onClick={(nativeEvent) => onClickEvent({
-                  nativeEvent,
-                  event: rect.event,
-                })}
-                onMouseDown={(nativeEvent) => {
-                  if (nativeEvent.button === 0) {
-                    onMousedownEvent({
-                      nativeEvent,
-                      event: rect.event,
-                    })
-                  }
-                }}
-                onMouseUp={(nativeEvent) => {
-                  if (nativeEvent.button === 0) {
-                    onMouseupEvent({
-                      nativeEvent,
-                      event: rect.event,
-                    })
-                  }
-                }}
-                style={{ ...rect.style, } }>
-                <div>
-                  {rect.content.title}
-                </div>
-                <div>{rect.content.timeRange}</div>
-              </div>
+                onClickEvent={onClickEvent}
+                onMousedownEvent={onMousedownEvent}
+                onMouseupEvent={onMouseupEvent}
+                isCreate={false}
+              />
             ))
         }
       </>
