@@ -20,7 +20,6 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     onMousedownEvent = mouseEvent<IMouseEvent>(),
     isCreate, } = props
   const nullRef = useRef(null)
-  console.log(className)
   const newClassName = classnames({
     [className]: true,
     [IS_HIGH_LEVEL]: isCreate,

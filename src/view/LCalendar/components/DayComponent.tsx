@@ -214,7 +214,10 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
     })
     return (
       <>
-        {createEvent.length > 0 && (
+        {/*在边界事件中比如00:00这个时间点，可以当作某天的节苏或另一天的开始,
+           在这个时间点虽然有事件，但不会形成图像createEventRect
+        */}
+        {createEvent.length > 0 && createEventRect && (
           <RenderEvent
             rect={createEventRect}
             className={className}
