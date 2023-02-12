@@ -12,6 +12,7 @@ import {
   toTime
 } from '../utils/timesStamp'
 import { IDayWrapper } from './options'
+import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from '../Popover/helpers'
 
 
 export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
@@ -175,6 +176,8 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       clearNormal()
       // 对create事件执行拖拽操作在短暂时间不显示
       setShowCreatePopover(false)
+      //  拖拽的话设置为最高层，最宽
+      globalCache.currentMousedownRef?.classList.add(IS_HIGH_LEVEL, IS_FULL_WIDTH)
     }
   }, [globalCache.isDragEvent])
 

@@ -33,6 +33,7 @@ import {
 } from './props/propsContext'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
+import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from './Popover/helpers'
 
 const globalCache:IGlobalCache = {
   currentMousedownRef: null,
@@ -215,6 +216,8 @@ export default function () {
           setNormalEvent(globalCache.currentMousedownEvent)
           setNormalPopoverRef(globalCache.currentMousedownRef)
           setShowNormalPopover(true)
+        } else {
+          globalCache.currentMousedownRef?.classList.remove(IS_FULL_WIDTH, IS_HIGH_LEVEL)
         }
       }
     }
