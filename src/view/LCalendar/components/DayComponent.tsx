@@ -12,7 +12,7 @@ import {
   VTime, weekdayFormatter
 } from '../utils/timesStamp'
 import {
-  genTimedEvents, IEventsRect, isEventOn, stopDefaultEvent
+  genTimedEvents, IEventsRect, isEventOn
 } from '../utils/events'
 import React, {
   useCallback, useContext, useEffect, useMemo, useRef
@@ -33,7 +33,7 @@ import {
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 
-export default React.forwardRef((props: IDayProps, ref:React.ForwardedRef<HTMLDivElement>) =>  {
+export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
     firstTime,
     onClickEvent = mouseEvent<IMouseEvent>(),
@@ -181,7 +181,7 @@ export default React.forwardRef((props: IDayProps, ref:React.ForwardedRef<HTMLDi
           visualsRect
             .map((rect, index) => (
               <div
-                key={index}
+                key={`${rect.event.id}${index}` }
                 ref={rect.event.isCreate && ref }
                 className={className}
                 onClick={(nativeEvent) => onClickEvent({
@@ -207,9 +207,6 @@ export default React.forwardRef((props: IDayProps, ref:React.ForwardedRef<HTMLDi
                 style={{ ...rect.style, } }>
                 <div>
                   {rect.content.title}
-
-                  {new Date(rect.event.start)
-                    .getDate()}
                 </div>
                 <div>{rect.content.timeRange}</div>
               </div>

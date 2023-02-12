@@ -56,17 +56,7 @@ export default function () {
   const {  setMaxDays, } = useContext(IntervalsContext)
   const {  setCreatePopoverRef, setShowCreatePopover,
     setShowNormalPopover, setNormalPopoverRef, setNormalEvent, } = useContext(MouseEventContext)
-  function clearPagePopover() {
-    setCreatePopoverRef(null)
-    setShowCreatePopover(false)
-    setShowNormalPopover(false)
-    setNormalPopoverRef(null)
-    setNormalEvent(null)
-  }
-  function clearCreateEvent() {
-    setEvents(events.filter((e) => !e.isCreate))
-    setShowCreatePopover(false)
-  }
+
 
 
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
@@ -194,6 +184,16 @@ export default function () {
     setCreateEvent(null)
     setCreateStart(null)
     setDragEvent(null)
+  }
+  function clearPagePopover() {
+    setCreatePopoverRef(null)
+    setShowCreatePopover(false)
+    setShowNormalPopover(false)
+    setNormalPopoverRef(null)
+    setNormalEvent(null)
+  }
+  function clearCreateEvent() {
+    setEvents(events.filter((e) => !e.isCreate))
   }
   const containerMousedown = () => {
     if (!globalCache.currentMousedownRef) {
