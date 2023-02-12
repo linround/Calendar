@@ -231,14 +231,11 @@ export default function () {
 
   useEffect(() => {
     if (createRef) {
-      console.log('***********************************')
-      console.log(createRef.current)
-      console.log('***********************************')
       setCreatePopoverRef(createRef.current)
     } else {
       setCreatePopoverRef(null)
     }
-  }, [createRef.current])
+  }, [createRef.current, events])
 
 
   return (
