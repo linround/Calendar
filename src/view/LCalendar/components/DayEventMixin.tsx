@@ -2,6 +2,8 @@ import React, { useRef } from 'react'
 import { mouseEvent } from './type'
 import { IMouseEvent } from '../utils/calendar'
 import { IEventsRect } from '../utils/events'
+import classnames from 'classnames'
+import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from '../Popover/helpers'
 interface  IProps {
   rect:IEventsRect
   className:string
@@ -18,10 +20,16 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     onMousedownEvent = mouseEvent<IMouseEvent>(),
     isCreate, } = props
   const nullRef = useRef(null)
+  console.log(className)
+  const newClassName = classnames({
+    [className]: true,
+    [IS_HIGH_LEVEL]: isCreate,
+    [IS_FULL_WIDTH]: isCreate,
+  })
   return (
     <div
       ref={(isCreate ? ref : nullRef) as React.ForwardedRef<HTMLDivElement> }
-      className={className}
+      className={newClassName}
       onClick={(nativeEvent) => onClickEvent({
         nativeEvent,
         event: rect.event,
