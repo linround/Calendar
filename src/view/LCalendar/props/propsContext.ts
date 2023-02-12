@@ -115,6 +115,8 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   normalEvent: null,
   setNormalEvent: () => void 0,
 
+  dayScrollRef: null,
+  setDayScrollRef: () => void 0,
 
 })
 

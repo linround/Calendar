@@ -10,6 +10,17 @@ export const POPOVER_WIDTH_DEF = 300
 export const IS_FULL_WIDTH = 'is_full_width'
 export const IS_HIGH_LEVEL = 'is_high_level'
 
+export const calcPosition = (content:Element, container:Element):{left:number, top:number} => {
+  const { left: contentLeft, top: contentTop, } = content.getBoundingClientRect()
+  const { left: containerLeft, top: containerTop, } = container.getBoundingClientRect()
+  // console.log('content', { contentLeft, contentTop, })
+  // console.log('container', { containerLeft, containerTop, })
+  return  {
+    left: contentLeft,
+    top: contentTop,
+  }
+}
+
 const joiner = '~'
 export function getEventTimeLabel(start:VTimestampInput, end:VTimestampInput):string {
   const startDate = new Date(start)

@@ -15,7 +15,7 @@ import {
   genTimedEvents, IEventsRect, isEventOn, stopDefaultEvent
 } from '../utils/events'
 import React, {
-  useCallback, useContext, useMemo
+  useCallback, useContext, useEffect, useMemo, useRef
 } from 'react'
 import {
   CalendarDayBodySlotScope,
@@ -33,7 +33,7 @@ import {
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 
-export default React.forwardRef((props: IDayProps, ref) =>  {
+export default React.forwardRef((props: IDayProps, ref:React.ForwardedRef<HTMLDivElement>) =>  {
   const {
     firstTime,
     onClickEvent = mouseEvent<IMouseEvent>(),
@@ -181,8 +181,8 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
           visualsRect
             .map((rect, index) => (
               <div
-                ref={rect.event.isCreate && ref}
-                key={rect.event.id}
+                key={index}
+                ref={rect.event.isCreate && ref }
                 className={className}
                 onClick={(nativeEvent) => onClickEvent({
                   nativeEvent,
@@ -207,6 +207,9 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                 style={{ ...rect.style, } }>
                 <div>
                   {rect.content.title}
+
+                  {new Date(rect.event.start)
+                    .getDate()}
                 </div>
                 <div>{rect.content.timeRange}</div>
               </div>
@@ -215,6 +218,15 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       </>
     )
   }
+
+  // 存储该scroll滚动容器
+  const dayScrollRef = useRef<HTMLDivElement|null>(null)
+  const { setDayScrollRef, } = useContext(MouseEventContext)
+  useEffect(() => {
+    if (dayScrollRef) {
+      setDayScrollRef(dayScrollRef.current)
+    }
+  }, [dayScrollRef])
   return (
     <div className={dayStyle.dayContainer}>
       <div className={dayStyle.dayHeader} style={{ marginRight: 17, }}>
@@ -236,7 +248,9 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         }
       </div>
       <div className={dayStyle.dayBody}>
-        <div className={dayStyle.dayBodyScrollArea}>
+        <div
+          ref={dayScrollRef}
+          className={dayStyle.dayBodyScrollArea}>
           <div
             className={dayStyle.dayBodyPane}
             style={{ height: intervalHeight * intervalCount, }}>

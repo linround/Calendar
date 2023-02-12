@@ -66,7 +66,11 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
 
-
+  /**
+   * todo
+   * 这里是和popover位置相关的
+   */
+  const [dayScrollRef, setDayScrollRef] = useState<Element | null>(null)
 
 
 
@@ -222,6 +226,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
                 normalEvent,
                 setNormalEvent,
 
+
+                dayScrollRef,
+                setDayScrollRef,
 
               }}>
 

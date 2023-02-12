@@ -4,7 +4,9 @@ import React, {
 } from 'react'
 import {  MouseEventContext } from '../props/propsContext'
 import { PopoverContent } from './PopoverContent'
-import { IS_HIGH_LEVEL, POPOVER_WIDTH_DEF } from './helpers'
+import {
+  IS_HIGH_LEVEL, POPOVER_WIDTH_DEF, calcPosition
+} from './helpers'
 import { CalendarEvent } from '../utils/calendar'
 const popoverCache:{ref:Element|null} = {
   ref: null,
@@ -13,10 +15,10 @@ const popoverCache:{ref:Element|null} = {
 export function NormalPopover() {
   const [left, setLeft] = useState(100)
   const [top, setTop] = useState(100)
-  const { showNormalPopover, normalEvent, normalPopoverRef, } = useContext(MouseEventContext)
+  const { showNormalPopover, normalEvent, normalPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
   useEffect(() => {
     if (normalPopoverRef) {
-      const { left, top, } = normalPopoverRef.getBoundingClientRect()
+      const { left, top, } = calcPosition(normalPopoverRef, dayScrollRef as Element)
       // 之前如果有之前存储的ref
       // 移除前一个的class
       if (popoverCache.ref) {

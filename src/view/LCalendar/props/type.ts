@@ -91,5 +91,13 @@ export interface IMouseEventContext {
   normalEvent: CalendarEvent | null
   setNormalEvent: React.Dispatch<React.SetStateAction<CalendarEvent | null>>
 
+
+  /**
+   * todo
+   * 这里是和popover位置相关的
+   */
+  dayScrollRef: Element|null
+  setDayScrollRef: React.Dispatch<React.SetStateAction<Element | null>>
+
 }
 
