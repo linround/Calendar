@@ -63,6 +63,7 @@ function addHour(h:number, v:number) {
 }
 export function creatEvents() {
   const now = new Date()
+    .setHours(1)
     .valueOf()
 
   return [
@@ -83,6 +84,30 @@ export function creatEvents() {
       'color': 'black',
       'start': now,
       'end': addHour(3, now),
+      'timed': true,
+      'allDay': false,
+      'author': '作者作者作者作者作者',
+      'location': '地点地点地点地点地点',
+      'personnel': '人员',
+      id: 6498,
+    },
+    {
+      'name': '日历事件 0',
+      'color': 'black',
+      'start': now,
+      'end': addHour(3, now),
+      'timed': true,
+      'allDay': false,
+      'author': '作者作者作者作者作者',
+      'location': '地点地点地点地点地点',
+      'personnel': '人员',
+      id: 6498,
+    },
+    {
+      'name': '日历事件 0',
+      'color': 'black',
+      'start': now,
+      'end': addHour(6, now),
       'timed': true,
       'allDay': false,
       'author': '作者作者作者作者作者',

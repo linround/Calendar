@@ -2,9 +2,7 @@ import React, {
   useContext, useEffect, useMemo, useState
 } from 'react'
 import { EventContext, MouseEventContext } from '../props/propsContext'
-import {
-  POPOVER_WIDTH_DEF, IS_FULL_WIDTH, IS_HIGH_LEVEL, calcPosition
-} from './helpers'
+import { POPOVER_WIDTH_DEF, calcPosition } from './helpers'
 import styles from './createEventPopover.module.less'
 const popoverCache:{ ref:Element | null} = {
   ref: null,

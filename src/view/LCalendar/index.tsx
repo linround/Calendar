@@ -2,14 +2,27 @@ import React, {
   useEffect,
   useContext, useRef, useState
 } from 'react'
+import {
+  BaseContext,
+  EventContext,
+  CalendarContext,
+  IntervalsContext,
+  MouseEventContext
+} from './props/propsContext'
 import { CreatePopover } from './Popover/CreatePopover'
 import { NormalPopover } from './Popover/NormalPopover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
 } from './utils/time'
-import { IGlobalCache, ITimes } from './props/type'
-import { CalendarEvent, CalendarTimestamp } from './utils/calendar'
+import {
+  IGlobalCache,
+  ITimes
+} from './props/type'
+import {
+  CalendarEvent,
+  CalendarTimestamp
+} from './utils/calendar'
 import { SideComponent } from './SideComponent'
 import {
   nextDay,
@@ -28,9 +41,6 @@ import {
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
-import {
-  BaseContext, CalendarContext, EventContext, IntervalsContext, MouseEventContext
-} from './props/propsContext'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
 import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from './Popover/helpers'
@@ -54,8 +64,11 @@ export default function () {
   const { events, setEvents, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
-  const {  setCreatePopoverRef, setShowCreatePopover,
-    setShowNormalPopover, setNormalPopoverRef, setNormalEvent, } = useContext(MouseEventContext)
+  const { setCreatePopoverRef,
+    setShowCreatePopover,
+    setShowNormalPopover,
+    setNormalPopoverRef,
+    setNormalEvent, } = useContext(MouseEventContext)
 
 
 

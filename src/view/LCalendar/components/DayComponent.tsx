@@ -9,7 +9,7 @@ import {
   MINUTES_IN_DAY,
   parseTime,
   updateMinutes,
-  VTime, weekdayFormatter
+  VTime
 } from '../utils/timesStamp'
 import {
   genTimedEvents, IEventsRect, isEventOn
@@ -19,7 +19,7 @@ import React, {
 } from 'react'
 import {
   CalendarDayBodySlotScope,
-  CalendarDaySlotScope, CalendarEvent,
+  CalendarDaySlotScope,
   CalendarEventParsed,
   CalendarTimestamp, IMouseEvent, IMouseTime
 } from '../utils/calendar'
