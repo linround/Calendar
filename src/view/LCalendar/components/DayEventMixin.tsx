@@ -22,7 +22,10 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
   const isDragging = rect.event.isDragging
   const newClassName = classnames({
     [className]: true,
-    [IS_HIGH_LEVEL]: (isCreate || isDragging), //
+    // create事件，在鼠标松开之后会形成新的布局
+    // 所以create事件 这个时候需要再顶层
+    [IS_HIGH_LEVEL]: (isCreate || isDragging),
+    // 在拖拽过程中这个日历事件需要保持最宽覆盖
     [IS_FULL_WIDTH]: isDragging,
   })
   return (
