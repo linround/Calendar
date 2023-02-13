@@ -239,6 +239,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
             onClickEvent={onClickEvent}
             onMousedownEvent={onMousedownEvent}
             onMouseupEvent={onMouseupEvent}
+            ref={ref}
           />
         )}
         {
@@ -271,18 +272,20 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
     <div className={dayStyle.dayContainer}>
       <div className={dayStyle.dayHeader} style={{ marginRight: 17, }}>
         <div className={dayStyle.dayHeaderIntervals} style={{ width: intervalWidth, }}></div>
-        {
-          days.map((day) => (
-            <div className={dayStyle.dayHeaderDay} key={day.date} >
-              <div>
-                周{WEEK_DAYS_TEXT[day.weekday]}
-              </div>
-              <div>
-                <div>{day.day}</div>
-              </div>
+        {days.map((day) => (
+          <div className={dayStyle.dayHeaderDay} key={day.date} >
+            <div>
+              周{WEEK_DAYS_TEXT[day.weekday]}
             </div>
-          ))
-        }
+            <div>
+              <Button
+                type='primary'
+                shape='circle'>
+                {day.day}
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
       <div className={dayStyle.dayBody}>
         <div
