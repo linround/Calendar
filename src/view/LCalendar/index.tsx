@@ -194,6 +194,7 @@ export default function () {
     setGlobalCacheValue('currentCreateEvent', null)
     setGlobalCacheValue('isDragging', false)
   }
+
   function clear() {
     setMousedownTime(null)
     setMousemoveTime(null)
@@ -211,8 +212,18 @@ export default function () {
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
   }
+  function clearDraggingEvent() {
+    const draggingEvents = events.filter((e) => e.isDragging)
+    if (draggingEvents.length > 0) {
+    // 清除isDragging属性
+      draggingEvents.map((e) => delete e.isDragging)
+    }
+    const normalEvents = events.filter((e) => !(e.isDragging || e.isCreate))
+
+    setEvents([...normalEvents, ...draggingEvents])
+  }
   const containerMousedown = () => {
-    if (!globalCache.currentMousedownRef) {
+    if (!globalCache.currentMousedownEvent) {
       clearPagePopover()
     }
   }
@@ -238,6 +249,7 @@ export default function () {
     }
     // 创建事件结束
     setShowCreatePopover(true)
+    clearDraggingEvent()
     clear()
     clearGlobal()
   }

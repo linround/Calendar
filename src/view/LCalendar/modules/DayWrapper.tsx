@@ -60,6 +60,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       clearCreateEvent()
       //清除普通事件点击之前的状态
       clearNormal()
+
     } else {
       // 发生在日历事件上
       // 为拖拽该事件做准备
