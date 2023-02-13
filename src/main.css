@@ -16,4 +16,6 @@ a {
     padding: 5px;
     display: flex;
 }
-
+.is_high_level {
+    z-index: 99;
+}
