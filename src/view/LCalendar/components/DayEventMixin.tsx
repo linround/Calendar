@@ -32,6 +32,7 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     // 在拖拽过程中这个日历事件需要保持最宽覆盖
     [styles.isFullWidth]: (isCreate || isDragging),
     [styles.isDragged]: isDragged,
+    [styles.boxShadow]: isDragging,
   })
   return (
     <div
