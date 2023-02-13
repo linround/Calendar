@@ -122,10 +122,12 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
           timed: true,
           allDay: false,
           isCreate: true,
+          isDragging: true,
           author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者',
           location: '地点地点地点地点地点地点地点地点地点地点地点地点地点地点',
           personnel: '人员人员人员人员人员人员人员人员人员人员人员人员人员人员',
         }
+        setGlobalCacheValue('currentCreateEvent', createEvent)
         setCreateEvent(createEvent)
         setCreateStart(createStart)
       }
@@ -142,7 +144,6 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       const mouseRound = roundTime(mousemoveTime)
       createEvent.start = Math.min(mouseRound, createStart)
       createEvent.end = Math.max(mouseRound, createStart)
-      setGlobalCacheValue('currentCreateEvent', createEvent)
       resetEvents(createEvent, createEvent)
     }
   }, [createEvent, mousemoveTime, createStart])

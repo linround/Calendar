@@ -1,38 +1,53 @@
+
+import {
+  IS_EVENT,
+  mouseEvent,
+  mouseDayTime
+} from './type'
+import { Button } from 'antd'
 import dayStyle from './day.module.less'
 import { IDayProps } from './dayPropsType'
-import { Button } from 'antd'
 import {
-  copyTimestamp,
-  createIntervalList,
-  getDayIdentifier,
-  getTimestampLabel,
-  MINUTES_IN_DAY,
   parseTime,
   updateMinutes,
+  copyTimestamp,
+  MINUTES_IN_DAY,
+  getDayIdentifier,
+  getTimestampLabel,
+  createIntervalList,
   VTime
 } from '../utils/timesStamp'
 import {
-  genTimedEvents, IEventsRect, isEventOn
+  isEventOn,
+  IEventsRect,
+  genTimedEvents
 } from '../utils/events'
 import React, {
-  useCallback, useContext, useEffect, useMemo, useRef
+  useRef,
+  useMemo,
+  useEffect,
+  useContext,
+  useCallback
 } from 'react'
 import {
-  CalendarDayBodySlotScope,
-  CalendarDaySlotScope,
+  IMouseTime,
+  IMouseEvent,
+  CalendarTimestamp,
   CalendarEventParsed,
-  CalendarTimestamp, IMouseEvent, IMouseTime
+  CalendarDaySlotScope,
+  CalendarDayBodySlotScope
 } from '../utils/calendar'
 import {
-  BaseContext, CalendarContext, IntervalsContext, EventContext, MouseEventContext
+  BaseContext,
+  EventContext,
+  CalendarContext,
+  IntervalsContext,
+  MouseEventContext
 } from '../props/propsContext'
-import { CalendarEventVisual } from '../utils/modes/common'
-import {
-  IS_EVENT, mouseDayTime, mouseEvent
-} from './type'
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 import { RenderEvent } from './DayEventMixin'
+import { CalendarEventVisual } from '../utils/modes/common'
 
 export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
@@ -224,7 +239,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
             onClickEvent={onClickEvent}
             onMousedownEvent={onMousedownEvent}
             onMouseupEvent={onMouseupEvent}
-            ref={ref}
           />
         )}
         {
@@ -264,10 +278,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                 周{WEEK_DAYS_TEXT[day.weekday]}
               </div>
               <div>
-                <Button
-                  type='primary'
-                  shape='circle'>
-                  {day.day}</Button>
+                <div>{day.day}</div>
               </div>
             </div>
           ))
