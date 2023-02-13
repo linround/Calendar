@@ -165,14 +165,14 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
         dragEvent.start = newStart
         dragEvent.end = newEnd
 
-        setGlobalCacheValue('isDrag', true)
+        setGlobalCacheValue('isDragging', true)
 
         resetEvents(dragEvent, dragEvent)
       }
     }
   }, [mousemoveTime, dragTime, dragEvent])
   useEffect(() => {
-    if (globalCache.isDrag) {
+    if (globalCache.isDragging) {
       // 如果执行的是拖拽的操作就不在显示normal弹框
       clearNormal()
       // 对create事件执行拖拽操作在短暂时间不显示
@@ -180,7 +180,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       //  拖拽的话设置为最高层，最宽
       globalCache.currentMousedownRef?.classList.add(IS_HIGH_LEVEL, IS_FULL_WIDTH)
     }
-  }, [globalCache.isDrag])
+  }, [globalCache.isDragging])
 
 
   return (

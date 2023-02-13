@@ -47,7 +47,7 @@ import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from './Popover/helpers'
 
 const globalCache:IGlobalCache = {
   isCreate: false,
-  isDrag: false,
+  isDragging: false,
   draggingEvent: null,
 
   currentMousedownRef: null,
@@ -192,7 +192,7 @@ export default function () {
     setGlobalCacheValue('currentMousedownEvent', null)
     setGlobalCacheValue('currentMousedownRef', null)
     setGlobalCacheValue('currentCreateEvent', null)
-    setGlobalCacheValue('isDrag', false)
+    setGlobalCacheValue('isDragging', false)
   }
   function clear() {
     setMousedownTime(null)
@@ -225,7 +225,7 @@ export default function () {
         setShowCreatePopover(true)
       } else {
         // 如果点击事件是在 normal 事件上结束
-        if (!globalCache.isDrag) {
+        if (!globalCache.isDragging) {
           // 对normal事件执行的是不是拖拽操作功能
           //  显示normalPopover
           setNormalEvent(globalCache.currentMousedownEvent)
