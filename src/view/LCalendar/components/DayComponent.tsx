@@ -237,6 +237,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                 onClickEvent={onClickEvent}
                 onMousedownEvent={onMousedownEvent}
                 onMouseupEvent={onMouseupEvent}
+                ref={ref}
               />
             ))
         }
