@@ -26,7 +26,7 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     // 所以create事件 这个时候需要再顶层
     [IS_HIGH_LEVEL]: (isCreate || isDragging),
     // 在拖拽过程中这个日历事件需要保持最宽覆盖
-    [IS_FULL_WIDTH]: isDragging,
+    [IS_FULL_WIDTH]: (isCreate || isDragging),
   })
   return (
     <div

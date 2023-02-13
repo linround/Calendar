@@ -185,30 +185,18 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
 
 
 
-    // 过露出来新建的事件
-    const draggingEventIndex = events.findIndex((e) => e.input.isDragging)
+    // 过露出来拖拽的事件
+    // 新建的event再拉伸是也被定义为dragging
+    // 如果对其进行点击拖拽，就会产生两个dragging
+    const draggingEvents = events.filter((e) => e.input.isDragging)
     let normalEvents:CalendarEventParsed[] = []
-    let draggingEvent:CalendarEventParsed[] = []
-    let draggingEventRect:IEventsRect = {
-      event: {},
-      style: {
-        top: '0',
-        height: '0',
-        left: '0',
-        width: '0',
-        backgroundColor: '',
-      },
-      content: {
-        title: '',
-        timeRange: '',
-      },
+    let draggingEventRects:IEventsRect[] = []
+    if (draggingEvents.length > 0) {
+      const draggingEventVisuals = draggingEvents.map((event) => ({
+        event, left: 0, width: 100,
+      }))
+      draggingEventRects = draggingEventVisuals.map((visual) => genTimedEvents(visual as CalendarEventVisual, day) as IEventsRect)
     }
-    if (draggingEventIndex > -1) {
-      draggingEvent = events.splice(draggingEventIndex, 1)
-      const draggingEventVisual = { event: draggingEvent[0], left: 0, width: 100, }
-      draggingEventRect = genTimedEvents(draggingEventVisual as CalendarEventVisual, day) as IEventsRect
-    }
-    normalEvents = events
 
 
 
@@ -216,7 +204,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
 
 
 
-
+    normalEvents = events.filter((e) => !e.input.isDragging)
     const visuals = mode(
       day, normalEvents, true, categoryMode
     )
@@ -232,16 +220,17 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         {/*在边界事件中比如00:00这个时间点，可以当作某天的节苏或另一天的开始,
            在这个时间点虽然有事件，但不会形成图像createEventRect
         */}
-        {draggingEvent.length > 0 && draggingEventRect && (
+        {draggingEventRects.map((rect, index) => (
           <RenderEvent
-            rect={draggingEventRect}
+            key={`${index}${rect.event.id}`}
+            rect={rect}
             className={className}
             onClickEvent={onClickEvent}
             onMousedownEvent={onMousedownEvent}
             onMouseupEvent={onMouseupEvent}
             ref={ref}
           />
-        )}
+        ))}
         {
           visualsRect
             .map((rect, index) => (

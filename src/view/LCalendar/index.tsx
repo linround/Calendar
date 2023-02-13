@@ -193,6 +193,8 @@ export default function () {
     setGlobalCacheValue('currentMousedownRef', null)
     setGlobalCacheValue('currentCreateEvent', null)
     setGlobalCacheValue('isDragging', false)
+    setGlobalCacheValue('isCreate', false)
+    setGlobalCacheValue('draggingEvent', null)
   }
 
   function clear() {
@@ -216,6 +218,12 @@ export default function () {
   const containerMousedown = () => {
     if (!globalCache.currentMousedownEvent) {
       clearPagePopover()
+      // 目前无法做到，创建事件。
+      // 放下后定位布局，此时点击查看别的事件。
+      // 由于去掉了新建事件，发生重绘。
+      // 导致了点击出的元素发生变化，从而导致的定位问题
+
+      // 目前的解决方案就是 新建占据大屏
       clearCreateEvent()
     }
   }
