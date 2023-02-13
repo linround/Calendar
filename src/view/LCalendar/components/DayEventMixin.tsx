@@ -10,20 +10,20 @@ interface  IProps {
   onClickEvent:()=>void
   onMousedownEvent:()=>void
   onMouseupEvent:()=>void
-  isCreate:boolean
 }
 export const RenderEvent = React.forwardRef((props:IProps, ref) => {
   const { rect,
     className,
     onMouseupEvent = mouseEvent<IMouseEvent>(),
     onClickEvent = mouseEvent<IMouseEvent>(),
-    onMousedownEvent = mouseEvent<IMouseEvent>(),
-    isCreate, } = props
+    onMousedownEvent = mouseEvent<IMouseEvent>(), } = props
   const nullRef = useRef(null)
+  const isCreate = rect.event.isCreate
+  const isDrag = rect.event.isDrag
   const newClassName = classnames({
     [className]: true,
-    [IS_HIGH_LEVEL]: isCreate,
-    [IS_FULL_WIDTH]: isCreate,
+    [IS_HIGH_LEVEL]: (isCreate || isDrag),
+    [IS_FULL_WIDTH]: isDrag,
   })
   return (
     <div

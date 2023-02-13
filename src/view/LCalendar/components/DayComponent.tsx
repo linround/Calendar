@@ -171,10 +171,10 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
 
 
     // 过露出来新建的事件
-    const createEventIndex = events.findIndex((e) => e.input.isCreate)
+    const dragEventIndex = events.findIndex((e) => e.input.isDrag)
     let normalEvents:CalendarEventParsed[] = []
-    let createEvent:CalendarEventParsed[] = []
-    let createEventRect:IEventsRect = {
+    let dragEvent:CalendarEventParsed[] = []
+    let dragEventRect:IEventsRect = {
       event: {},
       style: {
         top: '0',
@@ -188,10 +188,11 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         timeRange: '',
       },
     }
-    if (createEventIndex > -1) {
-      createEvent = events.splice(createEventIndex, 1)
-      const createEventVisual = { event: createEvent[0], left: 0, width: 100, }
-      createEventRect = genTimedEvents(createEventVisual as CalendarEventVisual, day) as IEventsRect
+    if (dragEventIndex > -1) {
+      dragEvent = events.splice(dragEventIndex, 1)
+      const dragEventVisual = { event: dragEvent[0], left: 0, width: 100, }
+      dragEventRect = genTimedEvents(dragEventVisual as CalendarEventVisual, day) as IEventsRect
+      console.log(dragEventRect, events)
     }
     normalEvents = events
 
@@ -217,15 +218,14 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         {/*在边界事件中比如00:00这个时间点，可以当作某天的节苏或另一天的开始,
            在这个时间点虽然有事件，但不会形成图像createEventRect
         */}
-        {createEvent.length > 0 && createEventRect && (
+        {dragEvent.length > 0 && dragEventRect && (
           <RenderEvent
-            rect={createEventRect}
+            rect={dragEventRect}
             className={className}
             onClickEvent={onClickEvent}
             onMousedownEvent={onMousedownEvent}
             onMouseupEvent={onMouseupEvent}
             ref={ref}
-            isCreate={true}
           />
         )}
         {
@@ -238,7 +238,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                 onClickEvent={onClickEvent}
                 onMousedownEvent={onMousedownEvent}
                 onMouseupEvent={onMouseupEvent}
-                isCreate={false}
+                ref={ref}
               />
             ))
         }

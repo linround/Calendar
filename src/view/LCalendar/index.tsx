@@ -46,10 +46,13 @@ import { MonthWrapper } from './modules/MonthWrapper'
 import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from './Popover/helpers'
 
 const globalCache:IGlobalCache = {
+  isCreate: false,
+  isDrag: false,
+  draggingEvent: null,
+
   currentMousedownRef: null,
   currentMousedownEvent: null,
   currentCreateEvent: null,
-  isDragEvent: false,
 }
 
 
@@ -189,7 +192,7 @@ export default function () {
     setGlobalCacheValue('currentMousedownEvent', null)
     setGlobalCacheValue('currentMousedownRef', null)
     setGlobalCacheValue('currentCreateEvent', null)
-    setGlobalCacheValue('isDragEvent', false)
+    setGlobalCacheValue('isDrag', false)
   }
   function clear() {
     setMousedownTime(null)
@@ -211,7 +214,6 @@ export default function () {
   const containerMousedown = () => {
     if (!globalCache.currentMousedownRef) {
       clearPagePopover()
-      clearCreateEvent()
     }
   }
   const containerMouseup = () => {
@@ -223,7 +225,7 @@ export default function () {
         setShowCreatePopover(true)
       } else {
         // 如果点击事件是在 normal 事件上结束
-        if (!globalCache.isDragEvent) {
+        if (!globalCache.isDrag) {
           // 对normal事件执行的是不是拖拽操作功能
           //  显示normalPopover
           setNormalEvent(globalCache.currentMousedownEvent)

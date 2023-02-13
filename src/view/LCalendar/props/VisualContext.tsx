@@ -139,6 +139,21 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventOverlapThreshold] = useState(DEFAULT_EVENT.eventOverlapThreshold)
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
+
+
+
+
+
+  /**
+   * todo
+   * 更改events
+   *
+   * 找到oldEvent位置，使用newEvent替换旧的
+   * 未找到oldEvent，直接添加newEvent
+   *
+   * @param oldEvent
+   * @param newEvent
+   */
   const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent | null):void => {
     const index = events.findIndex((e) => e === oldEvent)
     if (index > -1) {
