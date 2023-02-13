@@ -257,9 +257,15 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       setDayScrollRef(dayScrollRef.current)
     }
   }, [dayScrollRef])
+
+
+  const scrollContainerClass = classnames({
+    [dayStyle.dayBodyScrollArea]: true,
+    [dayStyle.scrollContainer]: true,
+  })
   return (
     <div className={dayStyle.dayContainer}>
-      <div className={dayStyle.dayHeader} style={{ marginRight: 17, }}>
+      <div className={dayStyle.dayHeader} style={{ marginRight: 10, }}>
         <div className={dayStyle.dayHeaderIntervals} style={{ width: intervalWidth, }}></div>
         {days.map((day) => (
           <div className={dayStyle.dayHeaderDay} key={day.date} >
@@ -279,7 +285,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       <div className={dayStyle.dayBody}>
         <div
           ref={dayScrollRef}
-          className={dayStyle.dayBodyScrollArea}>
+          className={scrollContainerClass}>
           <div
             className={dayStyle.dayBodyPane}
             style={{ height: intervalHeight * intervalCount, }}>
