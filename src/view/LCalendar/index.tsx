@@ -212,19 +212,11 @@ export default function () {
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
   }
-  function clearDraggingEvent() {
-    const draggingEvents = events.filter((e) => e.isDragging)
-    if (draggingEvents.length > 0) {
-    // 清除isDragging属性
-      draggingEvents.map((e) => delete e.isDragging)
-    }
-    const normalEvents = events.filter((e) => !(e.isDragging || e.isCreate))
 
-    setEvents([...normalEvents, ...draggingEvents])
-  }
   const containerMousedown = () => {
     if (!globalCache.currentMousedownEvent) {
       clearPagePopover()
+      clearCreateEvent()
     }
   }
   const containerMouseup = () => {
@@ -245,11 +237,11 @@ export default function () {
         } else {
           globalCache.currentMousedownRef?.classList.remove(IS_FULL_WIDTH, IS_HIGH_LEVEL)
         }
+
       }
     }
     // 创建事件结束
     setShowCreatePopover(true)
-    clearDraggingEvent()
     clear()
     clearGlobal()
   }
