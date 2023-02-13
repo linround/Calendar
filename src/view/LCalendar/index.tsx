@@ -49,7 +49,7 @@ const globalCache:IGlobalCache = {
   isCreate: false,
   isDragging: false,
   draggingEvent: null,
-
+  dragSource: null,
   currentMousedownRef: null,
   currentMousedownEvent: null,
   currentCreateEvent: null,
@@ -64,7 +64,7 @@ export default function () {
     setWeekDays,
     times,
     parsedValue, } = useContext(BaseContext)
-  const { events, setEvents, } = useContext(EventContext)
+  const { events, setEvents, resetEvents, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
   const { setCreatePopoverRef,
@@ -195,6 +195,7 @@ export default function () {
     setGlobalCacheValue('isDragging', false)
     setGlobalCacheValue('isCreate', false)
     setGlobalCacheValue('draggingEvent', null)
+    setGlobalCacheValue('dragSource', null)
   }
 
   function clear() {
@@ -214,6 +215,13 @@ export default function () {
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
   }
+  function clearDragEvent() {
+    // isCreate和isDragging 会同时出现在createEvent中
+    // 所以相对于dragEvent
+    // createEvent就是普通的normalEvent
+    const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
+    setEvents(normalEvent)
+  }
 
   const containerMousedown = () => {
     if (!globalCache.currentMousedownEvent) {
@@ -228,6 +236,8 @@ export default function () {
     }
   }
   const containerMouseup = () => {
+    //
+    const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
     // 如果点击在事件上
     if (globalCache.currentMousedownEvent) {
       if (globalCache.currentMousedownEvent.isCreate) {
@@ -238,18 +248,29 @@ export default function () {
         // 如果点击事件是在 normal 事件上结束
         if (!globalCache.isDragging) {
           // 对normal事件执行的是不是拖拽操作功能
-          //  显示normalPopover
+          // 显示normalPopover
           setNormalEvent(globalCache.currentMousedownEvent)
           setNormalPopoverRef(globalCache.currentMousedownRef)
           setShowNormalPopover(true)
         } else {
-          globalCache.currentMousedownRef?.classList.remove(IS_FULL_WIDTH, IS_HIGH_LEVEL)
+          if (dragEvent) {
+            // 这里使用dragSource记录，主要是为了区分createEvent时间上的拖拽
+            if (globalCache.dragSource) {
+              delete dragEvent?.isDragging
+              const index = normalEvent.findIndex((e) => e === globalCache.dragSource)
+              normalEvent.splice(
+                index, 1, dragEvent
+              )
+            }
+          }
+
         }
 
       }
     }
     // 创建事件结束
     setShowCreatePopover(true)
+    setEvents(normalEvent)
     clear()
     clearGlobal()
   }

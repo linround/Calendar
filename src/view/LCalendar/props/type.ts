@@ -65,6 +65,7 @@ export interface IGlobalCache{
   currentMousedownEvent: CalendarEvent | null
   currentCreateEvent: CalendarEvent | null
   draggingEvent: CalendarEvent| null
+  dragSource: CalendarEvent| null,
   isDragging: boolean
   isCreate: boolean
 }

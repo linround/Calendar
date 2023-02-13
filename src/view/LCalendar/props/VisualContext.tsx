@@ -154,7 +154,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
    * @param oldEvent
    * @param newEvent
    */
-  const resetEvents = (oldEvent:CalendarEvent, newEvent:CalendarEvent | null):void => {
+  const resetEvents = (oldEvent:CalendarEvent|null, newEvent:CalendarEvent | null):void => {
     const index = events.findIndex((e) => e === oldEvent)
     if (index > -1) {
       events.splice(

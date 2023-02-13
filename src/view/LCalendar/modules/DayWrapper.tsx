@@ -64,7 +64,16 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     } else {
       // 发生在日历事件上
       // 为拖拽该事件做准备
-      setDragEvent(globalCache.currentMousedownEvent)
+      if (globalCache.currentMousedownEvent.isCreate) {
+        setDragEvent(globalCache.currentMousedownEvent)
+      } else  {
+        setGlobalCacheValue('dragSource', globalCache.currentMousedownEvent)
+        const dragEvent = {
+          ...globalCache.currentMousedownEvent,
+          isDragging: true,
+        }
+        setDragEvent(dragEvent)
+      }
 
       if (globalCache.currentMousedownEvent.isCreate) {
         // 如果是发生在新建事件上
@@ -179,8 +188,6 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       clearNormal()
       // 对create事件执行拖拽操作在短暂时间不显示
       setShowCreatePopover(false)
-      //  拖拽的话设置为最高层，最宽
-      globalCache.currentMousedownRef?.classList.add(IS_HIGH_LEVEL, IS_FULL_WIDTH)
     }
   }, [globalCache.isDragging])
 
