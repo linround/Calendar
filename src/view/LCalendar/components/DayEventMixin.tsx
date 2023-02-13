@@ -28,11 +28,14 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     [className]: true,
     // create事件，在鼠标松开之后会形成新的布局
     // 所以create事件 这个时候需要再顶层
+    // create事件 具有两个属性  isCreate 和 isDragging
+    // 普通被拖拽的事件具有一个属性 dragged
+    // 普通事件被拖拽 所形成的虚拟事件 具有一个属性 isDragging
     [styles.isHighLevel]: (isCreate || isDragging),
     // 在拖拽过程中这个日历事件需要保持最宽覆盖
     [styles.isFullWidth]: (isCreate || isDragging),
-    [styles.isDragged]: isDragged,
-    [styles.boxShadow]: isDragging,
+    [styles.isDragged]: isDragged, // 被拖拽的事件
+    [styles.boxShadow]: isDragging, // 拖拽中的事件
   })
   return (
     <div
