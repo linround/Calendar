@@ -64,7 +64,6 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       // 发生在日历事件上
       // 为拖拽该事件做准备
       setDragEvent(globalCache.currentMousedownEvent)
-      setGlobalCacheValue('draggingEvent', { ...globalCache.currentMousedownEvent, })
 
       if (globalCache.currentMousedownEvent.isCreate) {
         // 如果是发生在新建事件上
