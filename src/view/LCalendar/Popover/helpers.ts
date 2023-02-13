@@ -9,6 +9,7 @@ import { padNumber } from '../utils/timesStamp'
 export const POPOVER_WIDTH_DEF = 300
 export const IS_FULL_WIDTH = 'is_full_width'
 export const IS_HIGH_LEVEL = 'is_high_level'
+export const IS_DRAGGED = 'is_dragged'
 
 export const calcPosition = (content:Element, container:Element):{left:number, top:number} => {
   const { left: contentLeft, top: contentTop, } = content.getBoundingClientRect()

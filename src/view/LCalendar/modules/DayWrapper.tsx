@@ -188,6 +188,10 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       clearNormal()
       // 对create事件执行拖拽操作在短暂时间不显示
       setShowCreatePopover(false)
+      if (globalCache.dragSource) {
+        globalCache.dragSource.dragged = true
+      }
+
     }
   }, [globalCache.isDragging])
 
