@@ -19,11 +19,11 @@ export const RenderEvent = React.forwardRef((props:IProps, ref) => {
     onMousedownEvent = mouseEvent<IMouseEvent>(), } = props
   const nullRef = useRef(null)
   const isCreate = rect.event.isCreate
-  const isDrag = rect.event.isDrag
+  const isDragging = rect.event.isDragging
   const newClassName = classnames({
     [className]: true,
-    [IS_HIGH_LEVEL]: (isCreate || isDrag),
-    [IS_FULL_WIDTH]: isDrag,
+    [IS_HIGH_LEVEL]: (isCreate || isDragging), //
+    [IS_FULL_WIDTH]: isDragging,
   })
   return (
     <div
