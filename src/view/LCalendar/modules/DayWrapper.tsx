@@ -12,7 +12,6 @@ import {
   toTime
 } from '../utils/timesStamp'
 import { IDayWrapper } from './options'
-import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from '../Popover/helpers'
 
 
 export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
@@ -72,6 +71,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
           ...globalCache.currentMousedownEvent,
           isDragging: true,
         }
+        // 记录dragEvent最终用该值替换dragSource
         setDragEvent(dragEvent)
       }
 

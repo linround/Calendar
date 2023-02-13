@@ -236,7 +236,6 @@ export default function () {
     }
   }
   const containerMouseup = () => {
-    //
     const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
     // 如果点击在事件上
     if (globalCache.currentMousedownEvent) {
