@@ -15,22 +15,14 @@ export const CreatePopoverContent = (props:IContentProps) => {
     top,
     onClose,
     onConfirm,
-    setName,
-    name,
-    location,
-    setLocation, } = props
+    ...bodyProps } = props
 
   return (
     <div
       className={styles.createEventPopoverContainer}
       style={{ left, top, }}>
       {CreatePopoverMixin.renderHeader(onClose)}
-      {CreatePopoverMixin.renderBody({
-        setName,
-        name,
-        location,
-        setLocation,
-      })}
+      {CreatePopoverMixin.renderBody(bodyProps)}
       {CreatePopoverMixin.renderFooter(onConfirm)}
     </div>
   )

@@ -24,6 +24,10 @@ export interface IMixinPopoverBody {
   setName: React.Dispatch<React.SetStateAction<IDefaultValue>>
   location: string | undefined,
   setLocation:React.Dispatch<React.SetStateAction<string|undefined>>
+  start: number,
+  setStart:React.Dispatch<React.SetStateAction<number>>
+  end: number,
+  setEnd:React.Dispatch<React.SetStateAction<number>>
 }
 
 

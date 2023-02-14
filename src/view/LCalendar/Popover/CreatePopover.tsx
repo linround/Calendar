@@ -45,6 +45,8 @@ export function CreatePopover() {
 
   const [name, setName] = useState<IDefaultValue>()
   const [location, setLocation] = useState<string|undefined>()
+  const [start, setStart] = useState(Date.now())
+  const [end, setEnd] = useState(Date.now())
 
 
 
@@ -83,11 +85,15 @@ export function CreatePopover() {
   function clearState() {
     setName(undefined)
     setLocation(undefined)
+    setStart(Date.now())
+    setEnd(Date.now())
   }
   function init() {
-    const { name, location, } = createEvent
+    const { name, location, end, start, } = createEvent
     setName(name)
     setLocation(location)
+    setStart(start)
+    setEnd(end)
   }
   useEffect(() => {
     if (createEvent) {
@@ -111,6 +117,10 @@ export function CreatePopover() {
           setName={setName}
           location={location}
           setLocation={setLocation}
+          start={start}
+          setStart={setStart}
+          end={end}
+          setEnd={setEnd}
         />
       }
     </>

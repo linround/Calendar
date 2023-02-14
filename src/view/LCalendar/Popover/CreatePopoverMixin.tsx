@@ -1,7 +1,8 @@
 import styles from './createEventPopover.module.less'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
-import { Input, Button } from 'antd'
+import { Input } from 'antd'
+import TimePicker from './SingleComponent/TimePicker'
 import React from 'react'
 import { IMixinPopoverBody } from './helpers'
 import classnames from 'classnames'
@@ -22,7 +23,8 @@ export const CreatePopoverMixin = {
   renderBody(props:IMixinPopoverBody):JSX.Element {
     const namePlaceholder = '标题'
     const locationPlaceholder = '地点'
-    const { name, setName, location, setLocation, } = props
+    const { name, setName, location, setLocation,
+      start, setStart, end, setEnd, } = props
     return (
       <div className={styles.createEventPopoverBody}>
         <div className={styles.createEventPopoverName}>
@@ -30,6 +32,14 @@ export const CreatePopoverMixin = {
             defaultValue={name}
             placeholder={namePlaceholder}
             onChange={(e) => setName(e.target.value)} />
+        </div>
+        <div className={styles.createEventPopoverInputItem}>
+          <div className={styles.createEventPopoverInputIcon}>
+            <SvgIcon iconName='popover-clock' />
+          </div>
+          <TimePicker time={start} />
+          ~
+          <TimePicker  time={end} />
         </div>
         <div className={styles.createEventPopoverInputItem}>
           <div className={styles.createEventPopoverInputIcon}>
