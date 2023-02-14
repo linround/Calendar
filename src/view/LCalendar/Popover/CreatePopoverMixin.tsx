@@ -21,7 +21,7 @@ export const CreatePopoverMixin = {
   renderBody(props:IMixinPopoverBody):JSX.Element {
     const namePlaceholder = '标题'
     const locationPlaceholder = '地点'
-    const { name, setName, } = props
+    const { name, setName, location, setLocation, } = props
     return (
       <div className={styles.createEventPopoverBody}>
         <div className={styles.createEventPopoverName}>
@@ -34,7 +34,11 @@ export const CreatePopoverMixin = {
           <div className={styles.createEventPopoverInputIcon}>
             <SvgIcon iconName='popover_location' />
           </div>
-          <Input placeholder={locationPlaceholder} />
+          <Input
+            defaultValue={location}
+            placeholder={locationPlaceholder}
+            onChange={(e) => setLocation(e.target.value)}
+          />
         </div>
       </div>
     )
