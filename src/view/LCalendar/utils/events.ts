@@ -68,7 +68,7 @@ export function creatEvents() {
 
   return [{
     'name': '创建事件',
-    'color': 'rgb(62 55 55)',
+    'color': 'rgb(79 102 7 / 99%)',
     'start': now.valueOf(),
     'end': addHour(1, now),
     'timed': true,
@@ -82,7 +82,7 @@ export function creatEvents() {
   },
   {
     'name': '日历事件 1',
-    'color': 'rgb(62 55 55)',
+    'color': 'lch(15.78 45.08 286.24 / 0.95)',
     'start': now.valueOf(),
     'end': addHour(1, now),
     'timed': true,
@@ -94,7 +94,7 @@ export function creatEvents() {
   },
   {
     'name': '日历事件 0',
-    'color': 'rgb(62 55 55)',
+    'color': 'rgb(104 85 85)',
     'start': now,
     'end': addHour(3, now),
     'timed': true,
@@ -106,7 +106,7 @@ export function creatEvents() {
   },
   {
     'name': '日历事件 0',
-    'color': 'rgb(62 55 55)',
+    'color': 'rgb(79 102 7 / 99%)',
     'start': now,
     'end': addHour(3, now),
     'timed': true,
@@ -118,7 +118,7 @@ export function creatEvents() {
   },
   {
     'name': '日历事件 0',
-    'color': 'rgb(62 55 55)',
+    'color': 'rgb(73 71 207 / 95%)',
     'start': now,
     'end': addHour(6, now),
     'timed': true,
