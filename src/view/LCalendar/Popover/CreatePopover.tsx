@@ -2,7 +2,7 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useContext
+  useContext, useCallback
 } from 'react'
 import {  calcPosition, IDefaultValue } from './helpers'
 
@@ -44,28 +44,60 @@ export function CreatePopover() {
 
 
   const [name, setName] = useState<IDefaultValue>()
+  const [location, setLocation] = useState<string|undefined>()
 
-  const onClose = () => {
+
+
+
+
+
+
+  const onClose = useCallback(() => {
     const normalEvent = events.filter((e) => !e.isCreate)
     setEvents(normalEvent)
-  }
+  }, [events])
   const onConfirm = () => {
     delete createEvent.isCreate
     delete createEvent.isDragging
     resetEvents(createEvent, {
       ...createEvent,
       name,
+      location,
     })
+  }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function clearState() {
+    setName(undefined)
+    setLocation(undefined)
+  }
+  function init() {
+    const { name, location, } = createEvent
+    setName(name)
+    setLocation(location)
   }
   useEffect(() => {
     if (createEvent) {
-      const { name, } = createEvent
-      setName(name)
+      init()
     } else {
-      setName(undefined)
+      clearState()
     }
   }, [createEvent])
+
+
   return (
     <>
       {
@@ -77,6 +109,8 @@ export function CreatePopover() {
           onConfirm={onConfirm}
           name={name}
           setName={setName}
+          location={location}
+          setLocation={setLocation}
         />
       }
     </>

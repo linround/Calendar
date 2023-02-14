@@ -11,20 +11,27 @@ interface IContentProps extends IMixinPopoverHeader, IMixinPopoverBody{
   onConfirm:()=> void
 }
 export const CreatePopoverContent = (props:IContentProps) => {
-  const { left, top,  onClose, onConfirm, setName, name, } = props
+  const { left,
+    top,
+    onClose,
+    onConfirm,
+    setName,
+    name,
+    location,
+    setLocation, } = props
 
   return (
     <div
       className={styles.createEventPopoverContainer}
       style={{ left, top, }}>
-      { (
-        <>
-          {CreatePopoverMixin.renderHeader(onClose)}
-          {CreatePopoverMixin.renderBody({ setName, name, })}
-          {CreatePopoverMixin.renderFooter(onConfirm)}
-        </>
-      )
-      }
+      {CreatePopoverMixin.renderHeader(onClose)}
+      {CreatePopoverMixin.renderBody({
+        setName,
+        name,
+        location,
+        setLocation,
+      })}
+      {CreatePopoverMixin.renderFooter(onConfirm)}
     </div>
   )
 }

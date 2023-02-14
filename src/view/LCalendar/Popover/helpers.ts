@@ -22,6 +22,8 @@ export interface IMixinPopoverHeader {
 export interface IMixinPopoverBody {
   name: IDefaultValue
   setName: React.Dispatch<React.SetStateAction<IDefaultValue>>
+  location: string | undefined,
+  setLocation:React.Dispatch<React.SetStateAction<string|undefined>>
 }
 
 

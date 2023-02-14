@@ -125,7 +125,8 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
         const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
         const createEvent = {
           id: Date.now(),
-          name: `日历事件 ${events.length}`,
+          name: '',
+          location: '',
           color: 'black',
           start: createStart,
           end: createEnd,
@@ -133,9 +134,8 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
           allDay: false,
           isCreate: true,
           isDragging: true,
-          author: '作者作者作者作者作者作者作者作者作者作者作者作者作者作者',
-          location: '地点地点地点地点地点地点地点地点地点地点地点地点地点地点',
-          personnel: '人员人员人员人员人员人员人员人员人员人员人员人员人员人员',
+          author: '作者',
+          personnel: '人员',
         }
         setGlobalCacheValue('currentCreateEvent', createEvent)
         setCreateEvent(createEvent)
