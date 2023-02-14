@@ -48,7 +48,11 @@ export default function TimePicker(props: React.PropsWithChildren<IProps>) {
         {...getReferenceProps()} >
       </div>
       <input
+        style={{
+          width: 60,
+        }}
         defaultValue={helpers.getTime(time)}/>
+      {time}
       {open && (
         <FloatingFocusManager context={context} modal={false}>
           <div

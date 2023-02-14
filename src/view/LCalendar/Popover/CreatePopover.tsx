@@ -101,7 +101,7 @@ export function CreatePopover() {
     } else {
       clearState()
     }
-  }, [createEvent])
+  }, [createEvent?.start, createEvent?.end])
 
 
   return (
