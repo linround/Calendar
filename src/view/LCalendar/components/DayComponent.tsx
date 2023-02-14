@@ -1,6 +1,5 @@
-
+import { DayBodySlot } from './DayBodySlot'
 import {
-  IS_EVENT,
   mouseEvent,
   mouseDayTime
 } from './type'
@@ -17,11 +16,7 @@ import {
   createIntervalList,
   VTime
 } from '../utils/timesStamp'
-import {
-  isEventOn,
-  IEventsRect,
-  genTimedEvents
-} from '../utils/events'
+import { isEventOn } from '../utils/events'
 import React, {
   useRef,
   useMemo,
@@ -46,8 +41,6 @@ import {
 } from '../props/propsContext'
 import classnames from 'classnames'
 import { WEEK_DAYS_TEXT } from '../utils/time'
-import { RenderEvent } from './DayEventMixin'
-import { CalendarEventVisual } from '../utils/modes/common'
 
 export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
@@ -64,12 +57,11 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
   } = props
   const {
     parsedEvents,
-    eventOverlapThreshold, eventModeFunction,
+    eventOverlapThreshold,
   } = useContext(EventContext)
   const {
     times,
     days = [],
-    parsedWeekdays,
   } = useContext(BaseContext)
   const { type, } = useContext(CalendarContext)
   const {
@@ -174,80 +166,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       isEventOn(event, identifier))
   }
 
-  function dayBodySlot(day: CalendarDayBodySlotScope) {
-    const mode = eventModeFunction(
-      parsedEvents,
-      parsedWeekdays[0],
-      parsedEventOverlapThreshold
-    )
-    const events = getEventsForDayTimed(day)
-
-
-
-
-    // 过露出来拖拽的事件
-    // 新建的event再拉伸是也被定义为dragging
-    // 如果对其进行点击拖拽，就会产生两个dragging
-    const draggingEvents = events.filter((e) => e.input.isDragging)
-    let normalEvents:CalendarEventParsed[] = []
-    let draggingEventRects:IEventsRect[] = []
-    if (draggingEvents.length > 0) {
-      const draggingEventVisuals = draggingEvents.map((event) => ({
-        event, left: 0, width: 100,
-      }))
-      draggingEventRects = draggingEventVisuals.map((visual) => genTimedEvents(visual as CalendarEventVisual, day) as IEventsRect)
-    }
-
-
-
-
-
-
-
-    normalEvents = events.filter((e) => !e.input.isDragging)
-    const visuals = mode(
-      day, normalEvents, true, categoryMode
-    )
-    const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
-      day))
-      .filter((i: any) => i !== false) as IEventsRect[]
-    const className = classnames({
-      [dayStyle.dayBodyTimedItem]: true,
-      [IS_EVENT]: true,
-    })
-    return (
-      <>
-        {/*在边界事件中比如00:00这个时间点，可以当作某天的节苏或另一天的开始,
-           在这个时间点虽然有事件，但不会形成图像createEventRect
-        */}
-        {draggingEventRects.map((rect, index) => (
-          <RenderEvent
-            key={`${index}${rect.event.id}`}
-            rect={rect}
-            className={className}
-            onClickEvent={onClickEvent}
-            onMousedownEvent={onMousedownEvent}
-            onMouseupEvent={onMouseupEvent}
-            ref={ref}
-          />
-        ))}
-        {
-          visualsRect
-            .map((rect, index) => (
-              <RenderEvent
-                key={`${index}${rect.event.id}`}
-                rect={rect}
-                className={className}
-                onClickEvent={onClickEvent}
-                onMousedownEvent={onMousedownEvent}
-                onMouseupEvent={onMouseupEvent}
-                ref={ref}
-              />
-            ))
-        }
-      </>
-    )
-  }
 
   // 存储该scroll滚动容器
   const dayScrollRef = useRef<HTMLDivElement|null>(null)
@@ -338,7 +256,15 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                     }
                     <div
                       className={dayStyle.dayBodyTimedContainer}>
-                      {dayBodySlot(getSlotScope(day))}
+                      <DayBodySlot
+                        ref={ref}
+                        day={getSlotScope(day)}
+                        categoryMode={categoryMode}
+                        getEventsForDayTimed={getEventsForDayTimed}
+                        onClickEvent={onClickEvent}
+                        onMousedownEvent={onMousedownEvent}
+                        onMouseupEvent={onMouseupEvent}
+                      />
                     </div>
                   </div>
                 ))

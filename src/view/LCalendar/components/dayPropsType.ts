@@ -1,11 +1,17 @@
 import {
-  CalendarEvent,
   IMonthMouseTime, IMouseEvent, IMouseTime
 } from '../utils/calendar'
-import React from 'react'
 import { ISlots } from './type'
 
 
+
+
+
+export interface ICalendarHandleEvent<E> {
+  onClickEvent:(e:E)=>E
+  onMousedownEvent:(e: E) => E
+  onMouseupEvent:(e: E) => E
+}
 
 interface IHandleEvent<E, T> {
   onClickEvent:(e:E)=>E
