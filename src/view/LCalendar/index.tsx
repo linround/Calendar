@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext, useRef, useState
+  useContext, useRef, useState, createRef
 } from 'react'
 import {
   BaseContext,
@@ -275,15 +275,15 @@ export default function () {
     clearGlobal()
   }
 
-  const createRef = useRef<Element>(null)
+  const ref = createRef<Element>()
 
   useEffect(() => {
-    if (createRef) {
-      setCreatePopoverRef(createRef.current)
+    if (ref) {
+      setCreatePopoverRef(ref.current)
     } else {
       setCreatePopoverRef(null)
     }
-  }, [createRef.current, events])
+  }, [ref.current, events])
 
 
   return (
@@ -322,7 +322,7 @@ export default function () {
                 clearCreateEvent={clearCreateEvent}
                 globalCache={globalCache}
                 setGlobalCacheValue={setGlobalCacheValue}
-                ref={createRef}
+                ref={ref}
               />
           }
         </div>
