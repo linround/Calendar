@@ -1,9 +1,10 @@
 import styles from './createEventPopover.module.less'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
 import React from 'react'
 import { IMixinPopoverBody } from './helpers'
+import classnames from 'classnames'
 
 export const CreatePopoverMixin = {
   renderHeader(onClose:()=>void):JSX.Element {
@@ -44,10 +45,18 @@ export const CreatePopoverMixin = {
     )
   },
   renderFooter(onConfirm:()=>void):JSX.Element {
+    const confirmClassName = classnames({
+      [styles.createEventPopoverFooterButton]: true,
+      [styles.createEventPopoverFooterConfirm]: true,
+    })
+    const cancelClassName = classnames({
+      [styles.createEventPopoverFooterButton]: true,
+      [styles.createEventPopoverFooterCancel]: true,
+    })
     return (
-      <div>
-        <button >更多选项</button>
-        <button onClick={onConfirm}>确认</button>
+      <div className={styles.createEventPopoverFooter}>
+        <button className={cancelClassName}>更多选项</button>
+        <button className={confirmClassName} onClick={onConfirm}>确认</button>
       </div>
     )
   },
