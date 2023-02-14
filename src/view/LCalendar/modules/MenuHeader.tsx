@@ -7,11 +7,11 @@ import {
 } from 'antd'
 import { typeOptions } from './options'
 import styles from './style.module.less'
-import moment from '@/src/utils/moment.ts'
-import { SvgIcon } from '@/src/components'
-import { MIDDLE_SIZE } from '@/src/components/SvgIcon'
+import moment from 'moment'
+import { SvgIcon } from '../../../components'
 import { DownOutlined, GithubOutlined } from '@ant-design/icons'
 import { IHeaderEvent } from '../utils/calendar'
+import mainStyles from '../style.module.less'
 
 
 export default function (props:IHeaderEvent) {
@@ -57,21 +57,25 @@ export default function (props:IHeaderEvent) {
           <span
             onClick={() => prev(-1)}>
             <SvgIcon
-              iconName='left-arrow'
-              className={styles.headerLeftIcon} />
+              iconName='header_arrow-left-circle'
+              className={mainStyles.iconHover}
+            />
           </span>
+          <>  </>
           <span
             onClick={() => next(1)}>
             <SvgIcon
-              iconName='right-arrow'
-              className={styles.headerRightIcon} />
+              iconName='header_arrow-right-circle'
+              className={mainStyles.iconHover} />
           </span>
         </div>
         <div>{timeStr}</div>
       </div>
 
       <div className={styles.headerRight}>
-        <SvgIcon iconName='search' className={styles.headerRightIconSearch}></SvgIcon>
+        <SvgIcon
+          iconName='header_search'
+          className={mainStyles.iconHover}></SvgIcon>
         <Dropdown menu={menuProps} trigger={['click']} className={styles.headerRightOptions}>
           <Button>
             <Space>
@@ -80,7 +84,7 @@ export default function (props:IHeaderEvent) {
             </Space>
           </Button>
         </Dropdown>
-        <GithubOutlined style={{ fontSize: MIDDLE_SIZE, }} />
+        <GithubOutlined style={{ fontSize: 30, }} />
       </div>
     </div>
   )

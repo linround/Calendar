@@ -1,22 +1,27 @@
 import React, {
-  useContext, useEffect, useMemo, useState
+  useMemo,
+  useState,
+  useEffect,
+  useContext
 } from 'react'
+import {  calcPosition, IDefaultValue } from './helpers'
+
+import { CreatePopoverContent } from './CreatePopoverContent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
-import { POPOVER_WIDTH_DEF, calcPosition } from './helpers'
-import styles from './createEventPopover.module.less'
-const popoverCache:{ ref:Element | null} = {
-  ref: null,
-}
+
+// 用来存储popover的来源
+const popoverCache:{ ref:Element | null} = { ref: null, }
+
 
 export function CreatePopover() {
   const { showCreatePopover,
     createPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
-  const { events, } = useContext(EventContext)
-  const createEvent = useMemo(() => events.filter((e) => e.isCreate), [events])
+  const { events, setEvents, resetEvents, } = useContext(EventContext)
+
+  const createEvent = useMemo(() => events.filter((e) => e.isCreate)[0], [events])
+
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
-
-
   useEffect(() => {
     if (createPopoverRef) {
       const { left, top, } = calcPosition(createPopoverRef, dayScrollRef as Element)
@@ -26,27 +31,53 @@ export function CreatePopover() {
       setTop(Math.max(0, top))
       return
     }
-
-
-
   }, [createPopoverRef?.getBoundingClientRect(), createPopoverRef])
+
+
+
+
+
+
+
+
+
+
+
+  const [name, setName] = useState<IDefaultValue>()
+
+  const onClose = () => {
+    const normalEvent = events.filter((e) => !e.isCreate)
+    setEvents(normalEvent)
+  }
+  const onConfirm = () => {
+    delete createEvent.isCreate
+    delete createEvent.isDragging
+    resetEvents(createEvent, {
+      ...createEvent,
+      name,
+    })
+
+  }
+  useEffect(() => {
+    if (createEvent) {
+      const { name, } = createEvent
+      setName(name)
+    } else {
+      setName(undefined)
+    }
+  }, [createEvent])
   return (
     <>
       {
-        (createPopoverRef && showCreatePopover) ?
-          <div
-            style={{
-              left: `${left}px`,
-              top: `${top}px`,
-              width: `${POPOVER_WIDTH_DEF}px`,
-            }}
-            className={styles.createEventPopoverContainer}>
-            CreatePopover
-            {
-              createEvent[0]?.name
-            }
-          </div> :
-          ''
+        (createPopoverRef && showCreatePopover) &&
+        <CreatePopoverContent
+          left={left}
+          top={top}
+          onClose={onClose}
+          onConfirm={onConfirm}
+          name={name}
+          setName={setName}
+        />
       }
     </>
   )

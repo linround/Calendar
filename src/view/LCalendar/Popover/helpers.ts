@@ -2,6 +2,7 @@ import { VTimestampInput } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 import { padNumber } from '../utils/timesStamp'
+import React, { HTMLAttributes, InputHTMLAttributes } from 'react'
 
 
 
@@ -11,14 +12,41 @@ export const IS_FULL_WIDTH = 'is_full_width'
 export const IS_HIGH_LEVEL = 'is_high_level'
 export const IS_DRAGGED = 'is_dragged'
 
+
+
+
+export type IDefaultValue = string | number | ReadonlyArray<string> | undefined;
+export interface IMixinPopoverHeader {
+  onClose:()=>void
+}
+export interface IMixinPopoverBody {
+  name: IDefaultValue
+  setName: React.Dispatch<React.SetStateAction<IDefaultValue>>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const calcPosition = (content:Element, container:Element):{left:number, top:number} => {
   const { left: contentLeft, top: contentTop, } = content.getBoundingClientRect()
   const { left: containerLeft, top: containerTop, } = container.getBoundingClientRect()
   // console.log('content', { contentLeft, contentTop, })
   // console.log('container', { containerLeft, containerTop, })
   return  {
-    left: contentLeft,
-    top: contentTop,
+    left: contentLeft + 10,
+    top: contentTop + 10,
   }
 }
 

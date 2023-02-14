@@ -18,6 +18,7 @@
     "antd": "^5.1.5",
     "babel-plugin-macros": "^3.1.0",
     "date-arithmetic": "^4.1.0",
+    "loadsh": "0.0.4",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "path": "^0.12.7",

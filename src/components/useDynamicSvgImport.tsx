@@ -18,7 +18,7 @@ export function useDynamicSvgImport(iconName:string) {
       }
     }
     importSvgIcon()
-      .then((r) => console.log(r))
+      .then()
   }, [iconName])
   return { error, loading, SvgIcon: importedIconRef.current, }
 }

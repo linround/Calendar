@@ -1,9 +1,9 @@
-import { CalendarEvent } from '../utils/calendar'
-import styles from './normalEventPopover.module.less'
-import { getEventDayLabel, getEventTimeLabel } from './helpers'
 import React from 'react'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
+import { CalendarEvent } from '../utils/calendar'
+import styles from './normalEventPopover.module.less'
+import { getEventDayLabel, getEventTimeLabel } from './helpers'
 
 export const EventDetailMixin = {
   renderPersonnel(event:CalendarEvent) {

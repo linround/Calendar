@@ -49,7 +49,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
    * 这里和createPopover有关的变量
    * */
   const [createPopoverRef, setCreatePopoverRef] = useState<Element | null>(null)
-  const [showCreatePopover, setShowCreatePopover] = useState<boolean>(false)
+  const [showCreatePopover, setShowCreatePopover] = useState<boolean>(true)
   const [normalEvent, setNormalEvent] = useState<CalendarEvent|null>(null)
 
 

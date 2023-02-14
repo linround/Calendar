@@ -253,7 +253,8 @@ export default function () {
           setShowNormalPopover(true)
         } else {
           if (dragEvent) {
-            // 这里使用dragSource记录，主要是为了区分createEvent时间上的拖拽
+            // 这里使用dragSource记录，
+            // 主要是为了区分createEvent时间上的拖拽
             if (globalCache.dragSource) {
               delete dragEvent?.isDragging
               const index = normalEvent.findIndex((e) => e === globalCache.dragSource)
