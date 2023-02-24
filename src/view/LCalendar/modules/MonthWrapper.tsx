@@ -7,7 +7,7 @@ import {
   BaseContext, EventContext, MouseEventContext
 } from '../props/propsContext'
 import {
-  CalendarEvent, IMonthMouseTime, IMouseEvent, VTimestampInput
+  CalendarEvent, IMonthMouseTime, IMouseEvent, IMouseTime, VTimestampInput
 } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
@@ -142,11 +142,17 @@ export function MonthWrapper() {
   }, [mousemoveTime, dragTime])
 
 
+  const onMouseupEvent = (e:IMouseEvent) => e
+  const onTimeContainerClick = (tms:IMonthMouseTime) => tms
   return (
     <MonthComponent
       onShowMore={onShowMore}
       onClickEvent={onClickEvent}
       onMousedownEvent={onMousedownEvent}
+      onMouseupEvent={onMouseupEvent}
+
+
+      onTimeContainerClick={onTimeContainerClick}
       onTimeContainerMouseup={onTimeContainerMouseup}
       onTimeContainerMousemove={onTimeContainerMousemove}
       onTimeContainerMousedown={onTimeContainerMousedown}

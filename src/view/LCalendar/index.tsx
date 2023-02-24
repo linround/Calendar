@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext, useRef, useState, createRef
+  useContext, useState, createRef
 } from 'react'
 import {
   BaseContext,
@@ -43,7 +43,6 @@ import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
-import { IS_FULL_WIDTH, IS_HIGH_LEVEL } from './Popover/helpers'
 
 const globalCache:IGlobalCache = {
   isCreate: false,
@@ -64,7 +63,7 @@ export default function () {
     setWeekDays,
     times,
     parsedValue, } = useContext(BaseContext)
-  const { events, setEvents, resetEvents, } = useContext(EventContext)
+  const { events, setEvents, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
   const { setCreatePopoverRef,
@@ -214,13 +213,6 @@ export default function () {
   }
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
-  }
-  function clearDragEvent() {
-    // isCreate和isDragging 会同时出现在createEvent中
-    // 所以相对于dragEvent
-    // createEvent就是普通的normalEvent
-    const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
-    setEvents(normalEvent)
   }
 
   const containerMousedown = () => {

@@ -131,7 +131,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [minWeeks] = useState<number>(DEFAULT_WEEKS.minWeeks)
 
 
-  const [events, setEvents] = useState<CalendarEvent[]>(creatEvents())
+  const [events, setEvents] = useState<CalendarEvent[]>([])
   const [eventStart] = useState(DEFAULT_EVENT.eventStart)
   const [eventEnd] = useState(DEFAULT_EVENT.eventEnd)
   const [eventTimed] = useState(DEFAULT_EVENT.eventTimed)

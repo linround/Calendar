@@ -6,6 +6,7 @@ import Loading from './view/Loading'
 import Click from './view/Click'
 import Icons from './view/Icons'
 import LCalendar from './view/LCalendar'
+import { LibraryComponent } from './view/Library'
 import { VisualContext } from './view/LCalendar/props/VisualContext'
 
 
@@ -34,6 +35,10 @@ function App() {
           <LCalendar></LCalendar>
         </VisualContext>
       ),
+    },
+    {
+      path: '/LibraryComponent',
+      element: <LibraryComponent />,
     },
     {
       path: '/Home',
