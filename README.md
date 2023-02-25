@@ -28,3 +28,7 @@
 - `refactor`：重构（即不是新增功能，也不是修改bug的代码变动）
 - `test`：增加测试
 - `chore`：构建过程或辅助工具的变动
+
+
+## 无关接口
+- [获取github项目相关信息](https://api.github.com/repos/vercel/swr)

@@ -11,6 +11,7 @@ import {
 } from './propsContext'
 import React,
 {
+  useEffect,
   useMemo,
   useState
 } from 'react'
@@ -35,8 +36,9 @@ import {
   CalendarEventOverlapMode
 } from '../utils/calendar'
 import { ITimes } from './type'
-import { creatEvents, parseEvent } from '../utils/events'
+import {  parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
+import { getEventList } from '../../../api/event'
 
 
 
@@ -140,7 +142,15 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
 
-
+  useEffect(() => {
+    (async () => {
+      const { data, } = await getEventList({
+        start: Date.now(),
+        end: Date.now(),
+      })
+      setEvents(data.list)
+    })()
+  }, [value])
 
 
 
