@@ -8,6 +8,8 @@ import {  calcPosition, IDefaultValue } from './helpers'
 
 import { CreatePopoverContent } from './CreatePopoverContent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
+import { handleCreateEvent } from '../../../api/event'
+import { SUCCESS_CODE } from '../../../request'
 
 // 用来存储popover的来源
 const popoverCache:{ ref:Element | null} = { ref: null, }
@@ -58,9 +60,15 @@ export function CreatePopover() {
     const normalEvent = events.filter((e) => !e.isCreate)
     setEvents(normalEvent)
   }, [events])
-  const onConfirm = () => {
+  const onConfirm = async () => {
     delete createEvent.isCreate
     delete createEvent.isDragging
+    delete createEvent.id
+    const { code, } = await handleCreateEvent(createEvent)
+    if (code !== SUCCESS_CODE) {
+      console.log('创建事件失败')
+      return
+    }
     resetEvents(createEvent, {
       ...createEvent,
       name,
