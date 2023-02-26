@@ -4,12 +4,11 @@ import React, {
   useEffect,
   useContext, useCallback
 } from 'react'
+import { SUCCESS_CODE } from '../../../request'
+import { handleCreateEvent } from '../../../api/event'
 import {  calcPosition, IDefaultValue } from './helpers'
-
 import { CreatePopoverContent } from './CreatePopoverContent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
-import { handleCreateEvent } from '../../../api/event'
-import { SUCCESS_CODE } from '../../../request'
 
 // 用来存储popover的来源
 const popoverCache:{ ref:Element | null} = { ref: null, }
@@ -18,7 +17,7 @@ const popoverCache:{ ref:Element | null} = { ref: null, }
 export function CreatePopover() {
   const { showCreatePopover,
     createPopoverRef, dayScrollRef, updateEventList, } = useContext(MouseEventContext)
-  const { events, setEvents, resetEvents, } = useContext(EventContext)
+  const { events, setEvents, } = useContext(EventContext)
 
   const createEvent = useMemo(() => events.filter((e) => e.isCreate)[0], [events])
 
@@ -65,16 +64,10 @@ export function CreatePopover() {
     delete createEvent.isDragging
     delete createEvent.id
     const { code, } = await handleCreateEvent(createEvent)
-    if (code !== SUCCESS_CODE) {
-      console.log('创建事件失败')
+    if (code === SUCCESS_CODE) {
+      updateEventList()
       return
     }
-    updateEventList()
-    // resetEvents(createEvent, {
-    //   ...createEvent,
-    //   name,
-    //   location,
-    // })
   }
 
 

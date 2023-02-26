@@ -120,12 +120,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const weekdaySkips = useMemo<number[]>(() => getWeekdaySkips(parsedWeekdays), [parsedWeekdays])
 
 
-  const days = useMemo<CalendarTimestamp[]>(() => {
-    const ds = createDayList(
-      parsedStart, parsedEnd, times.today, weekdaySkips
-    )
-    return ds
-  },
+  const days = useMemo<CalendarTimestamp[]>(() => createDayList(
+    parsedStart, parsedEnd, times.today, weekdaySkips
+  ),
   [parsedStart, parsedEnd, times, weekdaySkips])
 
 
