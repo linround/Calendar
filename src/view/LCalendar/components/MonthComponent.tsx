@@ -113,12 +113,11 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
     const segments = weekEvents.map((event) => eventSegments(
       event, month[index].map((w) => w.value), accessors, localizer
     ))
+    // 这里将创建日历部分提取到最上层
+    const normalSegments = segments.filter((segment) => !segment.event.isCreate)
+    const createSegments = segments.filter((segment) => segment.event.isCreate)
+    const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRows - 1, 1))
 
-
-    const { levels, extra, } = eventLevels(segments, Math.max(maxRows - 1, 1))
-    while (levels.length < minRows) {
-      levels.push([])
-    }
     return {
       levels,
       extra,

@@ -7,7 +7,7 @@ import {
   BaseContext, EventContext, MouseEventContext
 } from '../props/propsContext'
 import {
-  CalendarEvent, IMonthMouseTime, IMouseEvent, IMouseTime, VTimestampInput
+  CalendarEvent, IMonthMouseTime, IMouseEvent, VTimestampInput
 } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
