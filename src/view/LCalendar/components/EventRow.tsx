@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
 import { CalendarEvent, IMouseEvent } from '../utils/calendar'
+import { NO_NAME_EVENT_VALUE } from '../utils/time'
 
 interface IEventRow{
   segments: ISegments[]
@@ -19,7 +20,7 @@ export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRo
         segments.map((seg, index) => {
           const { event, left, right, span, } = seg
           const gap = left - lastEnd
-          const content = event.name
+          const content = event.name || NO_NAME_EVENT_VALUE
           lastEnd = right + 1
           return (
             <Fragment key={index}>
@@ -30,13 +31,13 @@ export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRo
               }
               {
                 EventRowMixin.renderEvent(
-                  ref,
                   slots,
                   span,
                   content,
                   event,
                   onMousedownEvent,
-                  onClickEvent
+                  onClickEvent,
+                  ref
 
                 )
               }

@@ -22,13 +22,13 @@ export const EventRowMixin = {
     )
   },
   renderEvent(
-    ref:any,
     slots:number,
     len:number,
     content:any = '',
     event: CalendarEvent,
     onMousedownEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>(),
-    onClickEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>()
+    onClickEvent: (event:IMouseEvent) => IMouseEvent = mouseEvent<IMouseEvent>(),
+    ref?:any
   ) {
     const width = ((Math.abs(len) / slots) * 100) + '%'
     const bgColor = event.color

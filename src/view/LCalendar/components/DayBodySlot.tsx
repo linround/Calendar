@@ -42,7 +42,7 @@ export const DayBodySlot = React.forwardRef((props:IProps, ref) => {
 
 
 
-  // 过露出来拖拽的事件
+  // 过滤出来拖拽的事件
   // 新建的event再拉伸是也被定义为dragging
   // 如果对其进行点击拖拽，就会产生两个dragging
   const draggingEvents = events.filter((e) => e.input.isDragging)
@@ -53,8 +53,8 @@ export const DayBodySlot = React.forwardRef((props:IProps, ref) => {
       event, left: 0, width: 100,
     }))
     draggingEventRects = draggingEventVisuals.map((visual) => genTimedEvents(visual as CalendarEventVisual, day) as IEventsRect)
+      .filter((i) => i)
   }
-
 
 
 
