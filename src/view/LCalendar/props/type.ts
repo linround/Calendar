@@ -102,5 +102,8 @@ export interface IMouseEventContext {
   dayScrollRef: Element|null
   setDayScrollRef: React.Dispatch<React.SetStateAction<Element | null>>
 
+  clearPagePopover:()=>void
+  updateEventList:()=>void
+
 }
 

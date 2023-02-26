@@ -17,7 +17,7 @@ const popoverCache:{ ref:Element | null} = { ref: null, }
 
 export function CreatePopover() {
   const { showCreatePopover,
-    createPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
+    createPopoverRef, dayScrollRef, updateEventList, } = useContext(MouseEventContext)
   const { events, setEvents, resetEvents, } = useContext(EventContext)
 
   const createEvent = useMemo(() => events.filter((e) => e.isCreate)[0], [events])
@@ -69,11 +69,12 @@ export function CreatePopover() {
       console.log('创建事件失败')
       return
     }
-    resetEvents(createEvent, {
-      ...createEvent,
-      name,
-      location,
-    })
+    updateEventList()
+    // resetEvents(createEvent, {
+    //   ...createEvent,
+    //   name,
+    //   location,
+    // })
   }
 
 

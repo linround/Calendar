@@ -3,7 +3,9 @@ import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
 import { CalendarEvent } from '../utils/calendar'
 import styles from './normalEventPopover.module.less'
-import { getEventDayLabel, getEventTimeLabel } from './helpers'
+import {
+  getEventDayLabel, getEventTimeLabel, INormalPopoverContentProps
+} from './helpers'
 
 export const EventDetailMixin = {
   renderPersonnel(event:CalendarEvent) {
@@ -50,10 +52,8 @@ export const EventDetailMixin = {
       </div>
     )
   },
-  renderHeader(event:CalendarEvent) {
-    const handleClick = (type:string, calendarEvent:CalendarEvent) => {
-      console.log(calendarEvent)
-    }
+  renderHeader(props:INormalPopoverContentProps) {
+    const { event, deleteEvent, } = props
     return (
       <>
         <div style={{
@@ -62,10 +62,10 @@ export const EventDetailMixin = {
         <div className={mainStyles.iconHover}>
           <SvgIcon iconName='popover_edit'/>
         </div>
-        <div className={mainStyles.iconHover}>
+        <div className={mainStyles.iconHover} onClick={() => deleteEvent(event)}>
           <SvgIcon iconName='popover_trash'/>
         </div>
-        <div className={mainStyles.iconHover} onClick={() => handleClick('delete', event)}>
+        <div className={mainStyles.iconHover} >
           <SvgIcon iconName='popover_x'/>
         </div>
       </>

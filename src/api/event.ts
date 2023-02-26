@@ -23,9 +23,21 @@ export function getEventList(data:IEventListParams) {
 }
 
 
+export function updateEvent(data:CalendarEvent) {
+  return request <any, IEventResponse<any>>({
+    url: '/event/update',
+    method: 'POST',
+    data,
+  })
+}
 
-
-
+export function deleteEvent(data:CalendarEvent) {
+  return request <any, IEventResponse<any>>({
+    url: '/event/delete',
+    method: 'POST',
+    data,
+  })
+}
 
 export function handleCreateEvent(data:CalendarEvent) {
   return request<any, IEventResponse<any>>({

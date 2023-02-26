@@ -118,6 +118,8 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   dayScrollRef: null,
   setDayScrollRef: () => void 0,
 
+  clearPagePopover: () => void 0,
+  updateEventList: () => void 0,
 })
 
 

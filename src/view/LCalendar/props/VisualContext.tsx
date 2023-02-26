@@ -11,6 +11,7 @@ import {
 } from './propsContext'
 import React,
 {
+  useCallback,
   useEffect,
   useMemo,
   useState
@@ -142,14 +143,18 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
 
+  const updateEventList = useCallback(async function () {
+    const { data, } = await getEventList({
+      start: Date.now(),
+      end: Date.now(),
+    })
+    setEvents(data.list)
+    return
+
+  }, [])
   useEffect(() => {
-    (async () => {
-      const { data, } = await getEventList({
-        start: Date.now(),
-        end: Date.now(),
-      })
-      setEvents(data.list)
-    })()
+    updateEventList()
+      .then((res) => console.log(res))
   }, [value])
 
 
@@ -186,6 +191,14 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
 
 
+
+  function clearPagePopover() {
+    setCreatePopoverRef(null)
+    setShowCreatePopover(false)
+    setShowNormalPopover(false)
+    setNormalPopoverRef(null)
+    setNormalEvent(null)
+  }
 
 
   return (
@@ -254,6 +267,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
                 dayScrollRef,
                 setDayScrollRef,
+
+                clearPagePopover,
+                updateEventList,
 
               }}>
 

@@ -1,4 +1,4 @@
-import { VTimestampInput } from '../utils/calendar'
+import { CalendarEvent, VTimestampInput } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 import { padNumber } from '../utils/timesStamp'
@@ -31,6 +31,12 @@ export interface IMixinPopoverBody {
 }
 
 
+
+// 详情popover弹框所传入的参数
+export interface INormalPopoverContentProps {
+  event: CalendarEvent
+  deleteEvent: (e:CalendarEvent)=>void
+}
 
 
 

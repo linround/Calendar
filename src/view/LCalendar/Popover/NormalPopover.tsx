@@ -8,6 +8,8 @@ import {
   IS_HIGH_LEVEL, POPOVER_WIDTH_DEF, calcPosition
 } from './helpers'
 import { CalendarEvent } from '../utils/calendar'
+import { deleteEvent } from '../../../api/event'
+import { SUCCESS_CODE } from '../../../request'
 const popoverCache:{ref:Element|null} = {
   ref: null,
 }
@@ -15,6 +17,7 @@ const popoverCache:{ref:Element|null} = {
 export function NormalPopover() {
   const [left, setLeft] = useState(100)
   const [top, setTop] = useState(100)
+  const { clearPagePopover, updateEventList, } = useContext(MouseEventContext)
   const { showNormalPopover, normalEvent, normalPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
   useEffect(() => {
     if (normalPopoverRef) {
@@ -37,7 +40,14 @@ export function NormalPopover() {
       popoverCache.ref = null
     }
   }, [normalPopoverRef])
-
+  async function handleDeleteEvent(e:CalendarEvent) {
+    const { code, } = await deleteEvent(e)
+    if (code === SUCCESS_CODE) {
+      console.log('删除成功')
+      clearPagePopover()
+      updateEventList()
+    }
+  }
 
 
 
@@ -52,7 +62,10 @@ export function NormalPopover() {
               width: `${POPOVER_WIDTH_DEF}px`,
             }}
             className={styles.popoverContainer}>
-            <PopoverContent event={normalEvent as CalendarEvent} /></div> :
+            <PopoverContent
+              event={normalEvent as CalendarEvent}
+              deleteEvent={handleDeleteEvent}
+            /></div> :
           ''
       }
     </>

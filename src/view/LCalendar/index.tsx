@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext, useState, createRef
+  useContext, useState, createRef, useCallback
 } from 'react'
 import {
   BaseContext,
@@ -43,6 +43,8 @@ import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
+import { updateEvent } from '../../api/event'
+import { SUCCESS_CODE } from '../../request'
 
 const globalCache:IGlobalCache = {
   isCreate: false,
@@ -70,7 +72,7 @@ export default function () {
     setShowCreatePopover,
     setShowNormalPopover,
     setNormalPopoverRef,
-    setNormalEvent, } = useContext(MouseEventContext)
+    setNormalEvent, clearPagePopover, updateEventList, } = useContext(MouseEventContext)
 
 
 
@@ -204,13 +206,7 @@ export default function () {
     setCreateStart(null)
     setDragEvent(null)
   }
-  function clearPagePopover() {
-    setCreatePopoverRef(null)
-    setShowCreatePopover(false)
-    setShowNormalPopover(false)
-    setNormalPopoverRef(null)
-    setNormalEvent(null)
-  }
+
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
   }
@@ -227,6 +223,14 @@ export default function () {
       clearCreateEvent()
     }
   }
+
+  const handleUpdateEvent = useCallback(async (event:CalendarEvent) => {
+    const { code, } = await updateEvent(event)
+    if (code === SUCCESS_CODE) {
+      updateEventList()
+    }
+  }, [])
+
   const containerMouseup = () => {
     const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
     // 如果点击在事件上
@@ -247,12 +251,9 @@ export default function () {
           if (dragEvent) {
             // 这里使用dragSource记录，
             // 主要是为了区分createEvent时间上的拖拽
-            if (globalCache.dragSource) {
-              delete dragEvent?.isDragging
-              const index = normalEvent.findIndex((e) => e === globalCache.dragSource)
-              normalEvent.splice(
-                index, 1, dragEvent
-              )
+            if (globalCache.dragSource) { // 这
+              handleUpdateEvent(dragEvent)
+                .then((r) => r)
             }
           }
 
@@ -261,6 +262,7 @@ export default function () {
       }
     }
     // 创建事件结束
+    console.log(normalEvent)
     setShowCreatePopover(true)
     setEvents(normalEvent)
     clear()
