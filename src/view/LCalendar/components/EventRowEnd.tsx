@@ -44,7 +44,10 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
       row.push(<Fragment key={key}>
         {
           EventRowMixin.renderEvent(
-            (slots as number), span, content, event
+            (slots as number),
+            span,
+            content,
+            event
           )
         }
       </Fragment>)
