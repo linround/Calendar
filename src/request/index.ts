@@ -3,7 +3,7 @@ export const SUCCESS_CODE = 200
 
 
 const service = axios.create({
-  baseURL: 'http://192.168.10.141:8888',
+  baseURL: 'http://121.199.1.247:8888',
 })
 
 
