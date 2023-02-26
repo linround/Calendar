@@ -52,6 +52,7 @@ export interface INormalPopoverContentProps {
 
 
 export const calcPosition = (content:Element, container:Element):{left:number, top:number} => {
+
   const { left: contentLeft, top: contentTop, } = content.getBoundingClientRect()
   const { left: containerLeft, top: containerTop, } = container.getBoundingClientRect()
   // console.log('content', { contentLeft, contentTop, })

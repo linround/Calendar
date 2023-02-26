@@ -1,10 +1,10 @@
 import { WeekComponent } from './WeekComponent'
 import monthStyle from './month.module.less'
 import React, {
-  useContext, useEffect, useMemo
+  useContext, useEffect, useMemo, useRef
 } from 'react'
 import {
-  BaseContext, EventContext, WeeksContext
+  BaseContext, EventContext, MouseEventContext, WeeksContext
 } from '../props/propsContext'
 import {
   createDayList,
@@ -32,7 +32,7 @@ import { IMonthProps } from './dayPropsType'
 
 
 
-export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
+export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IMonthProps>, ref) => {
 
   // 还需要处理maxRows和minRows的来源
   const maxRows = 3
@@ -149,8 +149,19 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       </div>
     )
   }
+
+  // 存储该scroll滚动容器
+  const containerRef = useRef<HTMLDivElement|null>(null)
+  const { setDayScrollRef, } = useContext(MouseEventContext)
+  useEffect(() => {
+    if (containerRef) {
+      setDayScrollRef(containerRef.current)
+    }
+  }, [containerRef])
   return (
-    <div className={monthStyle.monthBodyContainer}>
+    <div
+      ref={containerRef}
+      className={monthStyle.monthBodyContainer}>
       <div className={monthStyle.monthHeader}>
         {
           todayWeek.map((day, index) => (
@@ -162,6 +173,7 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       </div>
       {
         month.map((weekDays, index) => <WeekComponent
+          ref={ref}
           {...props}
           weekDays={weekDays}
           weekSegments={monthSegments[index]}
@@ -169,4 +181,4 @@ export function MonthComponent(props:React.PropsWithChildren<IMonthProps>) {
       }
     </div>
   )
-}
+})

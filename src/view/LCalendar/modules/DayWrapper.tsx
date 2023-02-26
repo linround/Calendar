@@ -23,7 +23,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     setShowNormalPopover,
     setNormalPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
-  const { events, resetEvents, } = useContext(EventContext)
+  const { resetEvents, } = useContext(EventContext)
 
   /**
    * todo

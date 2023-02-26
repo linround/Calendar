@@ -57,7 +57,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
   } = props
   const {
     parsedEvents,
-    eventOverlapThreshold,
   } = useContext(EventContext)
   const {
     times,
@@ -74,7 +73,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
 
 
   const categoryMode = useMemo<boolean>(() => type === 'category', [type])
-  const parsedEventOverlapThreshold = useMemo<number>(() => eventOverlapThreshold, [eventOverlapThreshold])
   const parsedIntervalHeight: number = useMemo(() => intervalHeight, [intervalHeight])
   const parsedFirstTime: number | false = useMemo(() => parseTime(firstTime), [firstTime])
   const parsedFirstInterval: number = useMemo(() => (firstInterval), [firstInterval])

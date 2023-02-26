@@ -32,7 +32,7 @@ function calcMonthTimes(
   }
 }
 
-export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
+export const WeekComponent = React.forwardRef((props:React.PropsWithChildren<IWeekComponent >, ref) => {
   const { weekSegments,
     weekDays,
     onShowMore = (arg:ISlots) => undefined,
@@ -77,6 +77,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
         {
           levels.map((segs, index) => (
             <EventRow
+              ref={ref}
               segments={segs}
               key={index}
               slots={slots as number}
@@ -92,7 +93,7 @@ export function WeekComponent(props:React.PropsWithChildren<IWeekComponent >) {
       </div>
     </div>
   )
-}
+})
 
 
 

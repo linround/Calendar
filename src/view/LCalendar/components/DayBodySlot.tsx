@@ -97,7 +97,7 @@ export const DayBodySlot = React.forwardRef((props:IProps, ref) => {
               onClickEvent={onClickEvent}
               onMousedownEvent={onMousedownEvent}
               onMouseupEvent={onMouseupEvent}
-              ref={ref}
+              ref={null}
             />
           ))
       }

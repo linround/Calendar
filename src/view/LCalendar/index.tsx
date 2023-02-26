@@ -262,7 +262,6 @@ export default function () {
       }
     }
     // 创建事件结束
-    console.log(normalEvent)
     setShowCreatePopover(true)
     setEvents(normalEvent)
     clear()
@@ -299,6 +298,7 @@ export default function () {
           {
             type === 'month' ?
               <MonthWrapper
+                ref={ref}
               /> :
               <DayWrapper
                 dragEvent={dragEvent}

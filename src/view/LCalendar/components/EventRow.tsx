@@ -10,7 +10,7 @@ interface IEventRow{
   onMousedownEvent: (event:IMouseEvent) => IMouseEvent
   onClickEvent: (event:IMouseEvent) =>IMouseEvent
 }
-export function EventRow(props:React.PropsWithChildren<IEventRow>) {
+export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRow>, ref) => {
   const { segments, slots, onMousedownEvent, onClickEvent, } = props
   let lastEnd = 1
   return (
@@ -30,12 +30,14 @@ export function EventRow(props:React.PropsWithChildren<IEventRow>) {
               }
               {
                 EventRowMixin.renderEvent(
+                  ref,
                   slots,
                   span,
                   content,
                   event,
                   onMousedownEvent,
                   onClickEvent
+
                 )
               }
 
@@ -46,4 +48,4 @@ export function EventRow(props:React.PropsWithChildren<IEventRow>) {
       }
     </div>
   )
-}
+})

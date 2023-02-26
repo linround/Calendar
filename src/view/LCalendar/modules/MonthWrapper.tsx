@@ -13,7 +13,7 @@ import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
 import { ISlots } from '../components/type'
 
-export function MonthWrapper() {
+export const MonthWrapper = React.forwardRef((props, ref) => {
   const { events, resetEvents, } = useContext(EventContext)
 
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
@@ -128,7 +128,7 @@ export function MonthWrapper() {
   useEffect(() => {
     if (dragEvent &&
       isTruth(dragTime) &&
-        mousemoveTime) {
+      mousemoveTime) {
       const { start, end, } = dragEvent
       const duration = end - start
       // dragTime 在点击是已经确定了点击处与事件开始时间的间距
@@ -146,6 +146,7 @@ export function MonthWrapper() {
   const onTimeContainerClick = (tms:IMonthMouseTime) => tms
   return (
     <MonthComponent
+      ref={ref}
       onShowMore={onShowMore}
       onClickEvent={onClickEvent}
       onMousedownEvent={onMousedownEvent}
@@ -158,4 +159,4 @@ export function MonthWrapper() {
       onTimeContainerMousedown={onTimeContainerMousedown}
     />
   )
-}
+})

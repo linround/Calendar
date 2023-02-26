@@ -5,7 +5,7 @@ import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
 import {
   defaultShowMore, IS_EVENT, mouseEvent
 } from './type'
-import React from 'react'
+import React, { useRef } from 'react'
 import { stopDefaultEvent } from '../utils/events'
 
 export const EventRowMixin = {
@@ -22,6 +22,7 @@ export const EventRowMixin = {
     )
   },
   renderEvent(
+    ref:any,
     slots:number,
     len:number,
     content:any = '',
@@ -31,6 +32,7 @@ export const EventRowMixin = {
   ) {
     const width = ((Math.abs(len) / slots) * 100) + '%'
     const bgColor = event.color
+    const isCreate = event.isCreate
     const className = classnames({
       [eventMixinStyle.eventMixinContainer]: true,
       [eventMixinStyle.isEvent]: true,
@@ -50,6 +52,7 @@ export const EventRowMixin = {
             })
           }
         }}
+        ref={isCreate ? ref : null}
         className={className}
         style={{
           flexBasis: width,
