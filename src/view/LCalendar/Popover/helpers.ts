@@ -60,15 +60,15 @@ export const calcPosition = (
     top: contentTop,
     bottom: contentBottom,
   } = content.getBoundingClientRect()
+
   const {
     left: containerLeft,
     right: containerRight,
     top: containerTop,
     bottom: containerBottom,
   } = container.getBoundingClientRect()
-  // console.log('content', { contentLeft, contentTop, })
-  // console.log('container', { containerLeft, containerTop, })
-  const startTop = contentTop
+
+  let startTop = contentTop
   let startLeft = contentLeft
   if (eventRef) {
     const {
@@ -78,8 +78,19 @@ export const calcPosition = (
       bottom: eventBottom,
     } = eventRef.getBoundingClientRect()
     const eventWidth = eventRight - eventLeft
+    const eventHeight = eventBottom - eventTop
+    // 可以在左边
     if (contentLeft > eventWidth) {
       startLeft = contentLeft - eventWidth
+    } else if (containerRight - contentRight > eventWidth) {
+    //   可以在右边
+      startLeft = contentRight
+    } else if (containerBottom - contentBottom > eventHeight) {
+    //  可以在下边
+      startTop = contentBottom
+    } else if (contentTop - containerTop > eventHeight) {
+    //  可以在上边
+      startTop = contentTop - eventHeight
     }
 
 
