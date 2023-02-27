@@ -10,7 +10,7 @@ interface IContentProps extends IMixinPopoverHeader, IMixinPopoverBody{
   onClose: () => void
   onConfirm:()=> void
 }
-export const CreatePopoverContent = (props:IContentProps) => {
+export const CreatePopoverContent = React.forwardRef((props:IContentProps, ref:React.ForwardedRef<HTMLDivElement>) => {
   const { left,
     top,
     onClose,
@@ -19,6 +19,7 @@ export const CreatePopoverContent = (props:IContentProps) => {
 
   return (
     <div
+      ref={ref}
       className={styles.createEventPopoverContainer}
       style={{ left, top, }}>
       {CreatePopoverMixin.renderHeader(onClose)}
@@ -26,4 +27,4 @@ export const CreatePopoverContent = (props:IContentProps) => {
       {CreatePopoverMixin.renderFooter(onConfirm)}
     </div>
   )
-}
+})
