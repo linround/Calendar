@@ -26,7 +26,7 @@ export function CreatePopover() {
   const eventRef = createRef<HTMLDivElement|undefined>()
 
   // 此处使用 useLayoutEffect 来优化页面抖动的问题
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (createPopoverRef && eventRef.current) {
       const { left, top, } = calcPosition(
         createPopoverRef, dayScrollRef as Element, eventRef.current
