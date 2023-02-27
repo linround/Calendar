@@ -16,7 +16,7 @@ const popoverCache:{ ref:Element | null} = { ref: null, }
 
 export function CreatePopover() {
   const { showCreatePopover,
-    createPopoverRef, dayScrollRef, updateEventList, } = useContext(MouseEventContext)
+    createPopoverRef, dayScrollRef, updateEventList, clearPagePopover, } = useContext(MouseEventContext)
   const { events, setEvents, } = useContext(EventContext)
 
   const createEvent = useMemo(() => events.filter((e) => e.isCreate)[0], [events])
@@ -64,12 +64,14 @@ export function CreatePopover() {
     const normalEvent = events.filter((e) => !e.isCreate)
     setEvents(normalEvent)
   }, [events])
+
   const onConfirm = async () => {
     delete createEvent.isCreate
     delete createEvent.isDragging
     delete createEvent.id
     const { code, } = await handleCreateEvent(createEvent)
     if (code === SUCCESS_CODE) {
+      clearState()
       updateEventList()
       return
     }
@@ -90,6 +92,7 @@ export function CreatePopover() {
 
 
   function clearState() {
+    clearPagePopover()
     setName(undefined)
     setLocation(undefined)
     setStart(Date.now())
@@ -102,7 +105,7 @@ export function CreatePopover() {
     setStart(start)
     setEnd(end)
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (createEvent) {
       init()
     } else {
