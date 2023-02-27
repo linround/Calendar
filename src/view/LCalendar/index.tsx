@@ -283,7 +283,10 @@ export default function () {
     <>
       <CreatePopover />
       <NormalPopover  />
-      <div className={styles.mainContainer} onMouseDown={containerMousedown} onMouseUp={containerMouseup}>
+      <div
+        className={styles.mainContainer}
+        onMouseDown={containerMousedown}
+        onMouseUp={containerMouseup}>
         <div className={styles.mainLeft}>
           <SideComponent />
         </div>
