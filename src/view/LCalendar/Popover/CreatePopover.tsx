@@ -2,7 +2,7 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useContext, useCallback, useLayoutEffect
+  useContext, useCallback, useLayoutEffect, createRef
 } from 'react'
 import { SUCCESS_CODE } from '../../../request'
 import { handleCreateEvent } from '../../../api/event'
@@ -23,16 +23,21 @@ export function CreatePopover() {
 
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
+  const eventRef = createRef<HTMLDivElement|undefined>()
+
+  // 此处使用 useLayoutEffect 来优化页面抖动的问题
   useLayoutEffect(() => {
-    if (createPopoverRef) {
-      const { left, top, } = calcPosition(createPopoverRef, dayScrollRef as Element)
+    if (createPopoverRef && eventRef.current) {
+      const { left, top, } = calcPosition(
+        createPopoverRef, dayScrollRef as Element, eventRef.current
+      )
       popoverCache.ref = createPopoverRef
       // 这里无法在全局处理
       setLeft(Math.max(0, left))
       setTop(Math.max(0, top))
       return
     }
-  }, [createPopoverRef?.getBoundingClientRect(), createPopoverRef])
+  }, [createPopoverRef?.getBoundingClientRect(), createPopoverRef, eventRef.current])
 
 
 
@@ -111,6 +116,7 @@ export function CreatePopover() {
       {
         (createPopoverRef && showCreatePopover) &&
         <CreatePopoverContent
+          ref={eventRef as React.ForwardedRef<HTMLDivElement>}
           left={left}
           top={top}
           onClose={onClose}
