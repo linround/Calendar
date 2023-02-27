@@ -51,12 +51,48 @@ export interface INormalPopoverContentProps {
 
 
 
-export const calcPosition = (content:Element, container:Element):{left:number, top:number} => {
-
-  const { left: contentLeft, top: contentTop, } = content.getBoundingClientRect()
-  const { left: containerLeft, top: containerTop, } = container.getBoundingClientRect()
+export const calcPosition = (
+  content:Element, container:Element, eventRef?:Element
+):{left:number, top:number} => {
+  const {
+    left: contentLeft,
+    right: contentRight,
+    top: contentTop,
+    bottom: contentBottom,
+  } = content.getBoundingClientRect()
+  const {
+    left: containerLeft,
+    right: containerRight,
+    top: containerTop,
+    bottom: containerBottom,
+  } = container.getBoundingClientRect()
   // console.log('content', { contentLeft, contentTop, })
   // console.log('container', { containerLeft, containerTop, })
+  const startTop = contentTop
+  let startLeft = contentLeft
+  if (eventRef) {
+    const {
+      left: eventLeft,
+      right: eventRight,
+      top: eventTop,
+      bottom: eventBottom,
+    } = eventRef.getBoundingClientRect()
+    const eventWidth = eventRight - eventLeft
+    if (contentLeft > eventWidth) {
+      startLeft = contentLeft - eventWidth
+    }
+
+
+
+    return {
+      left: startLeft,
+      top: startTop,
+    }
+  }
+
+
+
+
   return  {
     left: contentLeft + 10,
     top: contentTop + 10,

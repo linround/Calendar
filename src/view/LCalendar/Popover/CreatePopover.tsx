@@ -2,7 +2,7 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useContext, useCallback
+  useContext, useCallback, useLayoutEffect
 } from 'react'
 import { SUCCESS_CODE } from '../../../request'
 import { handleCreateEvent } from '../../../api/event'
@@ -23,7 +23,7 @@ export function CreatePopover() {
 
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (createPopoverRef) {
       const { left, top, } = calcPosition(createPopoverRef, dayScrollRef as Element)
       popoverCache.ref = createPopoverRef
