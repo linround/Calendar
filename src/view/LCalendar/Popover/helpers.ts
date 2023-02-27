@@ -85,6 +85,7 @@ export const calcPosition = (
     } else if (containerRight - contentRight > eventWidth) {
     //   可以在右边
       startLeft = contentRight
+      // 在右边边的时候 考虑下部分是否被隐藏
     } else if (containerBottom - contentBottom > eventHeight) {
     //  可以在下边
       startTop = contentBottom
@@ -93,6 +94,10 @@ export const calcPosition = (
       startTop = contentTop - eventHeight
     }
 
+    // 如果小于页面底部
+    if (startTop + eventHeight > containerBottom) {
+      startTop = containerBottom - eventHeight - 20
+    }
 
 
     return {
