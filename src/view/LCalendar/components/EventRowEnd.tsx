@@ -1,5 +1,5 @@
 import {
-  eventLevels, eventsInSlot, ISegments, isSegmentInSlot
+  eventsInSlot, ISegments, isSegmentInSlot
 } from '../utils/segments/eventSegments'
 import React, { Fragment } from 'react'
 import range from 'lodash/range'
@@ -15,7 +15,6 @@ interface IEventRow{
 }
 export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
   const { segments, slots, showMore = defaultShowMore,  } = props
-  // const rowSegments = eventLevels(segments).levels[0]
   let current = 1
   let lastEnd = 1
   const row = []

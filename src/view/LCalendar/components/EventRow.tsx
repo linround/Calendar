@@ -2,7 +2,7 @@ import { ISegments } from '../utils/segments/eventSegments'
 import React, { Fragment } from 'react'
 import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
-import { CalendarEvent, IMouseEvent } from '../utils/calendar'
+import { IMouseEvent } from '../utils/calendar'
 import { NO_NAME_EVENT_VALUE } from '../utils/time'
 
 interface IEventRow{
