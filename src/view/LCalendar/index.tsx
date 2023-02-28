@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useContext, useState, createRef, useCallback
+  useContext, useState, createRef, useCallback, useLayoutEffect
 } from 'react'
 import {
   BaseContext,
@@ -114,7 +114,7 @@ export default function () {
   // value 会改变当前页面的显示日期
   // 这里还会依赖到 maxDays weekDays
   // 当修改type完成后,根据上面两个值渲染新的页面
-  useEffect(() => {
+  useLayoutEffect(() => {
     const around = parsedValue as CalendarTimestamp
     let newStart = around.date
     let newEnd = around.date
