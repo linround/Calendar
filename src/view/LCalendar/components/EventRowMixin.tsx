@@ -1,12 +1,12 @@
 import { CalendarEvent, IMouseEvent } from '../utils/calendar'
 import eventMixinStyle from './eventMixin.module.less'
+import styles from './day.module.less'
 import classnames from 'classnames'
 import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
 import {
   defaultShowMore, IS_EVENT, mouseEvent
 } from './type'
-import React, { useRef } from 'react'
-import { stopDefaultEvent } from '../utils/events'
+import React  from 'react'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -33,10 +33,14 @@ export const EventRowMixin = {
     const width = ((Math.abs(len) / slots) * 100) + '%'
     const bgColor = event.color
     const isCreate = event.isCreate
+    const isDragging = event.isDragging
+    const isDragged = event.dragged
     const className = classnames({
       [eventMixinStyle.eventMixinContainer]: true,
       [eventMixinStyle.isEvent]: true,
       [IS_EVENT]: true,
+      [styles.isDragged]: isDragged, // 被拖拽的事件
+      [styles.boxShadow]: isDragging, // 拖拽中的事件
     })
     return (
       <div

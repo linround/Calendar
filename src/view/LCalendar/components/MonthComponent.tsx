@@ -114,8 +114,8 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
       event, month[index].map((w) => w.value), accessors, localizer
     ))
     // 这里将创建日历部分提取到最上层
-    const normalSegments = segments.filter((segment) => !segment.event.isCreate)
-    const createSegments = segments.filter((segment) => segment.event.isCreate)
+    const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
+    const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
     const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRows - 1, 1))
 
     return {

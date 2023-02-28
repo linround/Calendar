@@ -6,6 +6,7 @@ import range from 'lodash/range'
 import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
 import { defaultShowMore } from './type'
+import { NO_NAME_EVENT_VALUE } from '../utils/time'
 
 interface IEventRow{
   segments: ISegments[]
@@ -33,7 +34,7 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
         return count === 1
       })
     if (canRenderSlotEvent) {
-      const content =  event.name
+      const content =  event.name || NO_NAME_EVENT_VALUE
       if (gap) {
         row.push(<Fragment key={`${key}_gap`}>
           {

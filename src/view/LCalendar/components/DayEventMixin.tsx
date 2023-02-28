@@ -4,9 +4,6 @@ import { IMouseEvent } from '../utils/calendar'
 import { IEventsRect } from '../utils/events'
 import classnames from 'classnames'
 import styles from './day.module.less'
-import {
-  IS_DRAGGED, IS_FULL_WIDTH, IS_HIGH_LEVEL
-} from '../Popover/helpers'
 interface  IProps {
   rect:IEventsRect
   className:string
