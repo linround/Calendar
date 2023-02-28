@@ -1,10 +1,11 @@
 import React from 'react'
 import {
-  Button,
   Space,
   Dropdown,
   MenuProps
 } from 'antd'
+
+import Button from '@mui/material/Button'
 import { typeOptions } from './options'
 import styles from './style.module.less'
 import moment from 'moment'
@@ -50,9 +51,7 @@ export default function (props:IHeaderEvent) {
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
-        <Button onClick={() => setToday(Date.now())}>
-          今
-        </Button>
+        <Button variant="outlined" onClick={() => setToday(Date.now())}>今</Button>
         <div className={styles.headerLeftIconContainer}>
           <span
             onClick={() => prev(-1)}>
