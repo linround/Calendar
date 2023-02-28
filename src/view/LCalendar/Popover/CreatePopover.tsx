@@ -1,7 +1,6 @@
 import React, {
   useMemo,
   useState,
-  useEffect,
   useContext, useCallback, useLayoutEffect, createRef
 } from 'react'
 import { SUCCESS_CODE } from '../../../request'
@@ -9,7 +8,7 @@ import { handleCreateEvent } from '../../../api/event'
 import {  calcPosition, IDefaultValue } from './helpers'
 import { CreatePopoverContent } from './CreatePopoverContent'
 import { EventContext, MouseEventContext } from '../props/propsContext'
-
+import styles from './createEventPopover.module.less'
 // 用来存储popover的来源
 const popoverCache:{ ref:Element | null} = { ref: null, }
 
@@ -118,21 +117,24 @@ export function CreatePopover() {
     <>
       {
         (createPopoverRef && showCreatePopover) &&
-        <CreatePopoverContent
+        <div
+          className={styles.createEventPopoverContainer}
           ref={eventRef as React.ForwardedRef<HTMLDivElement>}
-          left={left}
-          top={top}
-          onClose={onClose}
-          onConfirm={onConfirm}
-          name={name}
-          setName={setName}
-          location={location}
-          setLocation={setLocation}
-          start={start}
-          setStart={setStart}
-          end={end}
-          setEnd={setEnd}
-        />
+          style={{ left, top, }}>
+          <CreatePopoverContent
+            onClose={onClose}
+            onConfirm={onConfirm}
+            name={name}
+            setName={setName}
+            location={location}
+            setLocation={setLocation}
+            start={start}
+            setStart={setStart}
+            end={end}
+            setEnd={setEnd}
+          />
+        </div>
+
       }
     </>
   )

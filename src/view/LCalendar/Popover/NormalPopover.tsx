@@ -22,7 +22,7 @@ export function NormalPopover() {
   const { showNormalPopover, normalEvent, normalPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
   const eventRef = createRef()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (normalPopoverRef && eventRef.current) {
       const { left, top, } = calcPosition(
         normalPopoverRef, dayScrollRef as Element, eventRef.current as Element
