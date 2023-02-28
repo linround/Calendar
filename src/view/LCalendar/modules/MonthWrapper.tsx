@@ -25,6 +25,7 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   const { setShowCreatePopover,
     setShowNormalPopover,
     setNormalPopoverRef,
+    createPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
 
   const [isMore, setIsMore] = useState<boolean>(false)
@@ -34,6 +35,10 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   const onClickEvent = (e:IMouseEvent) => e
   const onMousedownEvent = (e:IMouseEvent) => {
     const { event, nativeEvent, } = e
+    // 这里为了处理在月视图中的不正常渲染
+    if (createPopoverRef && !event.isCreate) {
+      return e
+    }
     setGlobalCacheValue('currentMousedownRef', nativeEvent.currentTarget)
     setGlobalCacheValue('currentMousedownEvent', event)
     return e
