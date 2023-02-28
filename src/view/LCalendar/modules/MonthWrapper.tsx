@@ -3,55 +3,94 @@ import React, {
   useContext, useEffect, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
+import { EventContext, MouseEventContext } from '../props/propsContext'
 import {
-  BaseContext, EventContext, MouseEventContext
-} from '../props/propsContext'
-import {
-  CalendarEvent, IMonthMouseTime, IMouseEvent, VTimestampInput
+  IMonthMouseTime, IMouseEvent, VTimestampInput
 } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
 import { ISlots } from '../components/type'
+import { IMonthWrapper } from './options'
 
-export const MonthWrapper = React.forwardRef((props, ref) => {
+export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
+  const { globalCache, setGlobalCacheValue,
+    createEvent, setCreateEvent,
+    dragEvent, setDragEvent,
+    dragTime, setDragTime,
+    mousedownTime, setMousedownTime,
+    mousemoveTime, setMousemoveTime,
+    createStart, setCreateStart,
+    clearCreateEvent, } = props
   const { events, resetEvents, } = useContext(EventContext)
+  const { setShowCreatePopover,
+    setShowNormalPopover,
+    setNormalPopoverRef,
+    setNormalEvent, } = useContext(MouseEventContext)
 
-  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
   const [isMore, setIsMore] = useState<boolean>(false)
-  const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
-  const [dragTime, setDragTime] = useState<number|null>(null)
-  const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
-  const [mousemoveTime, setMousemoveTime] = useState<VTimestampInput|null>(null)
-  const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
 
   //
-  const onClickEvent = useCallback((e:IMouseEvent) => {
-    const { nativeEvent, } = e
-
-    return e
-  }, [])
-
+  const onClickEvent = (e:IMouseEvent) => e
   const onMousedownEvent = (e:IMouseEvent) => {
-    const { event, } = e
-    setDragEvent(event)
+    const { event, nativeEvent, } = e
+    setGlobalCacheValue('currentMousedownRef', nativeEvent.currentTarget)
+    setGlobalCacheValue('currentMousedownEvent', event)
     return e
   }
   const onShowMore = (arg:ISlots) => {
-    const {  nativeEvent, } = arg
+    console.log(arg, 'more')
     setIsMore(true)
   }
 
 
 
+  function clearNormal() {
+    setShowNormalPopover(false)
+    setNormalPopoverRef(null)
+    setNormalEvent(null)
+  }
 
-
-
+  const onMouseupEvent = (e:IMouseEvent) => e
+  const onTimeContainerClick = (tms:IMonthMouseTime) => tms
   const onTimeContainerMousedown = (tms:IMonthMouseTime) => {
-    const { value: time, } = tms
-    setMousedownTime(time)
+
+    setMousedownTime(tms.value)
+    // 由于鼠标一直在移动，所以确保点击下去的时候不是之前设置的time值
+    setMousemoveTime(null)
+    // 不是发生在事件上操作就直接非常规处理了
+    if (!globalCache.currentMousedownEvent) {
+      // 清除新建的事件
+      clearCreateEvent()
+      //清除普通事件点击之前的状态
+      clearNormal()
+    } else {
+      // 发生在日历事件上
+      // 为拖拽该事件做准备
+      if (globalCache.currentMousedownEvent.isCreate) {
+        setDragEvent(globalCache.currentMousedownEvent)
+      } else {
+        setGlobalCacheValue('dragSource', globalCache.currentMousedownEvent)
+        const dragEvent = {
+          ...globalCache.currentMousedownEvent,
+          isDragging: true,
+        }
+        // 记录dragEvent最终用该值替换dragSource
+        setDragEvent(dragEvent)
+      }
+      if (globalCache.currentMousedownEvent.isCreate) {
+        // 如果是发生在新建事件上
+        // 关闭新建的popover 在子级有了这个行为
+      } else {
+        // 如果是发生在普通事件上
+        // 清除新建事件的状态信息
+        clearCreateEvent()
+      }
+    }
     return tms
   }
+
+
   const onTimeContainerMousemove = useCallback((tms:IMonthMouseTime) => {
     if (!mousedownTime) return tms
     const { value: time, } = tms
@@ -122,8 +161,6 @@ export const MonthWrapper = React.forwardRef((props, ref) => {
 
 
 
-
-
   // 开始对日历事件拖拽平移
   useEffect(() => {
     if (dragEvent &&
@@ -137,13 +174,26 @@ export const MonthWrapper = React.forwardRef((props, ref) => {
       const newEnd = newStart + duration
       dragEvent.start = newStart
       dragEvent.end = newEnd
+
+      setGlobalCacheValue('isDragging', true)
+
       resetEvents(dragEvent, dragEvent)
     }
   }, [mousemoveTime, dragTime])
 
+  useEffect(() => {
+    if (globalCache.isDragging) {
+      // 如果执行的是拖拽的操作就不在显示normal弹框
+      clearNormal()
+      // 对create事件执行拖拽操作在短暂时间不显示
+      setShowCreatePopover(false)
+      if (globalCache.dragSource) {
+        globalCache.dragSource.dragged = true
+      }
 
-  const onMouseupEvent = (e:IMouseEvent) => e
-  const onTimeContainerClick = (tms:IMonthMouseTime) => tms
+    }
+  }, [globalCache.isDragging])
+
   return (
     <MonthComponent
       ref={ref}

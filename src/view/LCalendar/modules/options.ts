@@ -1,5 +1,5 @@
 import { IGlobalCache } from '../props/type'
-import { CalendarEvent } from '../utils/calendar'
+import { CalendarEvent, VTimestampInput } from '../utils/calendar'
 import React from 'react'
 
 export const typeOptions = [
@@ -19,19 +19,40 @@ export const typeOptions = [
 
 
 export interface IDayWrapper {
+  setGlobalCacheValue: (k:keyof IGlobalCache, v: any) => void,
   globalCache:IGlobalCache,
   clearCreateEvent:()=>void,
-  setGlobalCacheValue: (k:keyof IGlobalCache, v: any) => void,
   dragEvent:CalendarEvent | null,
   setDragEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>,
   createEvent:CalendarEvent | null
   setCreateEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>,
-  dragTime:number|null,
-  setDragTime:React.Dispatch<React.SetStateAction<number|null>>,
-  mousedownTime:number|null,
-  setMousedownTime:React.Dispatch<React.SetStateAction<number|null>>,
-  mousemoveTime:number|null,
-  setMousemoveTime:React.Dispatch<React.SetStateAction<number|null>>,
-  createStart:number|null,
-  setCreateStart:React.Dispatch<React.SetStateAction<number|null>>,
+  dragTime:VTimestampInput|null,
+  setDragTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  mousedownTime:VTimestampInput|null,
+  setMousedownTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  mousemoveTime:VTimestampInput|null,
+  setMousemoveTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  createStart:VTimestampInput|null,
+  setCreateStart:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
 }
+
+export interface IMonthWrapper {
+  createEvent:CalendarEvent | null
+  setCreateEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>,
+  dragEvent:CalendarEvent | null,
+  setDragEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>,
+  dragTime:VTimestampInput|null,
+  setDragTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  mousedownTime:VTimestampInput|null,
+  setMousedownTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  mousemoveTime:VTimestampInput|null,
+  setMousemoveTime:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+  createStart:VTimestampInput|null,
+  setCreateStart:React.Dispatch<React.SetStateAction<VTimestampInput|null>>,
+
+  setGlobalCacheValue: (k:keyof IGlobalCache, v: any) => void,
+  globalCache:IGlobalCache,
+  clearCreateEvent:()=>void,
+}
+
+

@@ -16,8 +16,11 @@ import { IDayWrapper } from './options'
 
 export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
   const { globalCache, setGlobalCacheValue, clearCreateEvent,
-    dragEvent, setDragEvent, createEvent, setCreateEvent, dragTime,
-    setDragTime, mousedownTime, setMousedownTime, mousemoveTime, setMousemoveTime,
+    createEvent, setCreateEvent,
+    dragEvent, setDragEvent,
+    dragTime, setDragTime,
+    mousedownTime, setMousedownTime,
+    mousemoveTime, setMousemoveTime,
     createStart, setCreateStart, } = props
   const { setShowCreatePopover,
     setShowNormalPopover,
@@ -118,10 +121,10 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     if (mousedownTime) {
       if (dragEvent) {
         const start = dragEvent.start
-        const dragTime = mousedownTime - start
+        const dragTime = mousedownTime as number - start
         setDragTime(dragTime)
       } else {
-        const createStart = roundTime(mousedownTime)
+        const createStart = roundTime(mousedownTime  as number)
         const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
         const createEvent = {
           id: Date.now(),
@@ -151,9 +154,9 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     if (createEvent &&
       mousemoveTime &&
       createStart) {
-      const mouseRound = roundTime(mousemoveTime)
-      createEvent.start = Math.min(mouseRound, createStart)
-      createEvent.end = Math.max(mouseRound, createStart)
+      const mouseRound = roundTime(mousemoveTime as number)
+      createEvent.start = Math.min(mouseRound, createStart  as number)
+      createEvent.end = Math.max(mouseRound, createStart as number)
       resetEvents(createEvent, createEvent)
     }
   }, [createEvent, mousemoveTime, createStart])
@@ -170,7 +173,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
         const duration = end - start
         // 以下即: (mousemoveTime-mousedownTime) + start
         // 从而得到了一个新的开始时间
-        const newStartTime = mousemoveTime - dragTime
+        const newStartTime = mousemoveTime as number - dragTime
         const newStart = roundTime(newStartTime)
         const newEnd = newStart + duration
         dragEvent.start = newStart
@@ -182,6 +185,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       }
     }
   }, [mousemoveTime, dragTime, dragEvent])
+
   useEffect(() => {
     if (globalCache.isDragging) {
       // 如果执行的是拖拽的操作就不在显示normal弹框

@@ -21,7 +21,7 @@ import {
 } from './props/type'
 import {
   CalendarEvent,
-  CalendarTimestamp
+  CalendarTimestamp, VTimestampInput
 } from './utils/calendar'
 import { SideComponent } from './SideComponent'
 import {
@@ -78,10 +78,10 @@ export default function () {
 
   const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
   const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
-  const [dragTime, setDragTime] = useState<number|null>(null)
-  const [mousedownTime, setMousedownTime] = useState<number|null>(null)
-  const [mousemoveTime, setMousemoveTime] = useState<number|null>(null)
-  const [createStart, setCreateStart] = useState<number| null>(null)
+  const [dragTime, setDragTime] = useState<VTimestampInput|null>(null)
+  const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
+  const [mousemoveTime, setMousemoveTime] = useState<VTimestampInput|null>(null)
+  const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
 
 
 
@@ -301,6 +301,21 @@ export default function () {
           {
             type === 'month' ?
               <MonthWrapper
+                dragEvent={dragEvent}
+                setDragEvent={setDragEvent}
+                createEvent={createEvent}
+                setCreateEvent={setCreateEvent}
+                dragTime={dragTime}
+                setDragTime={setDragTime}
+                mousedownTime={mousedownTime}
+                setMousedownTime={setMousedownTime}
+                mousemoveTime={mousemoveTime}
+                setMousemoveTime={setMousemoveTime}
+                createStart={createStart}
+                setCreateStart={setCreateStart}
+                setGlobalCacheValue={setGlobalCacheValue}
+                globalCache={globalCache}
+                clearCreateEvent={clearCreateEvent}
                 ref={ref}
               /> :
               <DayWrapper
