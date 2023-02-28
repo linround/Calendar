@@ -16,9 +16,6 @@ export function PopoverContent(props:React.PropsWithChildren<INormalPopoverConte
         {EventDetailMixin.renderPersonnel(event)}
         {EventDetailMixin.renderAuthor(event)}
       </div>
-      <div className={styles.popoverFooter}>
-        {EventDetailMixin.renderFooter(event)}
-      </div>
     </>
   )
 }

@@ -7,7 +7,7 @@ import React, { HTMLAttributes, InputHTMLAttributes } from 'react'
 
 
 
-export const POPOVER_WIDTH_DEF = 300
+export const POPOVER_WIDTH_DEF = 400
 export const IS_FULL_WIDTH = 'is_full_width'
 export const IS_HIGH_LEVEL = 'is_high_level'
 export const IS_DRAGGED = 'is_dragged'
@@ -62,7 +62,6 @@ export const calcPosition = (
   } = content.getBoundingClientRect()
 
   const {
-    left: containerLeft,
     right: containerRight,
     top: containerTop,
     bottom: containerBottom,
@@ -96,7 +95,7 @@ export const calcPosition = (
 
     // 如果小于页面底部
     if (startTop + eventHeight > containerBottom) {
-      startTop = containerBottom - eventHeight - 20
+      startTop = containerBottom - eventHeight - 50
     }
 
 

@@ -1,6 +1,7 @@
 import styles from './normalEventPopover.module.less'
 import React, {
-  useContext, useEffect, useState
+  createRef,
+  useContext, useEffect, useLayoutEffect, useState
 } from 'react'
 import {  MouseEventContext } from '../props/propsContext'
 import { PopoverContent } from './PopoverContent'
@@ -19,9 +20,13 @@ export function NormalPopover() {
   const [top, setTop] = useState(100)
   const { clearPagePopover, updateEventList, } = useContext(MouseEventContext)
   const { showNormalPopover, normalEvent, normalPopoverRef, dayScrollRef, } = useContext(MouseEventContext)
-  useEffect(() => {
-    if (normalPopoverRef) {
-      const { left, top, } = calcPosition(normalPopoverRef, dayScrollRef as Element)
+  const eventRef = createRef()
+
+  useLayoutEffect(() => {
+    if (normalPopoverRef && eventRef.current) {
+      const { left, top, } = calcPosition(
+        normalPopoverRef, dayScrollRef as Element, eventRef.current as Element
+      )
       // 之前如果有之前存储的ref
       // 移除前一个的class
       if (popoverCache.ref) {
@@ -39,7 +44,9 @@ export function NormalPopover() {
       popoverCache.ref?.classList.remove(IS_HIGH_LEVEL)
       popoverCache.ref = null
     }
-  }, [normalPopoverRef])
+  }, [normalPopoverRef, eventRef.current])
+
+
   async function handleDeleteEvent(e:CalendarEvent) {
     const { code, } = await deleteEvent(e)
     if (code === SUCCESS_CODE) {
@@ -56,16 +63,16 @@ export function NormalPopover() {
       {
         (showNormalPopover && normalPopoverRef) ?
           <div
+            ref={eventRef as React.ForwardedRef<HTMLDivElement>}
             style={{
-              top: `${top}px`,
-              left: `${left}px`,
-              width: `${POPOVER_WIDTH_DEF}px`,
+              top: top,
+              left: left,
             }}
             className={styles.popoverContainer}>
             <PopoverContent
               event={normalEvent as CalendarEvent}
-              deleteEvent={handleDeleteEvent}
-            /></div> :
+              deleteEvent={handleDeleteEvent} />
+          </div> :
           ''
       }
     </>
