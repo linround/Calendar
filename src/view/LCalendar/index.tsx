@@ -1,6 +1,10 @@
 import React, {
+  useState,
   useEffect,
-  useContext, useState, createRef, useCallback, useLayoutEffect
+  useContext,
+  createRef,
+  useCallback,
+  useLayoutEffect
 } from 'react'
 import {
   BaseContext,
@@ -9,8 +13,6 @@ import {
   IntervalsContext,
   MouseEventContext
 } from './props/propsContext'
-import { CreatePopover } from './Popover/CreatePopover'
-import { NormalPopover } from './Popover/NormalPopover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -21,9 +23,9 @@ import {
 } from './props/type'
 import {
   CalendarEvent,
-  CalendarTimestamp, VTimestampInput
+  VTimestampInput,
+  CalendarTimestamp
 } from './utils/calendar'
-import { SideComponent } from './SideComponent'
 import {
   nextDay,
   prevDay,
@@ -32,28 +34,34 @@ import {
   DAYS_IN_WEEK,
   getEndOfWeek,
   copyTimestamp,
+  getEndOfMonth,
   updateWeekday,
   getStartOfWeek,
   updateRelative,
   timestampToDate,
   updateFormatted,
-  DAYS_IN_MONTH_MAX, getStartOfMonth, getEndOfMonth
+  getStartOfMonth,
+  DAYS_IN_MONTH_MAX
 } from './utils/timesStamp'
 import styles from './style.module.less'
 import MenuHeader from './modules/MenuHeader'
-import { DayWrapper } from './modules/DayWrapper'
-import { MonthWrapper } from './modules/MonthWrapper'
 import { updateEvent } from '../../api/event'
 import { SUCCESS_CODE } from '../../request'
+import { SideComponent } from './SideComponent'
+import { DayWrapper } from './modules/DayWrapper'
+import { MonthWrapper } from './modules/MonthWrapper'
+import { CreatePopover } from './Popover/CreatePopover'
+import { NormalPopover } from './Popover/NormalPopover'
+
 
 const globalCache:IGlobalCache = {
   isCreate: false,
+  dragSource: null,
   isDragging: false,
   draggingEvent: null,
-  dragSource: null,
+  currentCreateEvent: null,
   currentMousedownRef: null,
   currentMousedownEvent: null,
-  currentCreateEvent: null,
 }
 
 
