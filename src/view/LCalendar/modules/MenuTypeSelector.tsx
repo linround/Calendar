@@ -25,7 +25,7 @@ export default function MenuTypeSelector(props:IProps) {
   }
   return (
     <Dropdown menu={menuProps} trigger={['click']} className={styles.headerRightOptions}>
-      <Button variant="outlined">
+      <Button variant="outlined" style={{ margin: '0 15px', }}>
         <Space>
           { itemMap.get(type) }
           <DownOutlined />
