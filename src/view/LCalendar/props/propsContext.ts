@@ -28,6 +28,7 @@ export const DEFAULT_INTERVALS = {
 
 export const DEFAULT_WEEKS = {
   minWeeks: 1,
+  maxWeeks: 6,
 }
 
 export const DEFAULT_EVENT = {
@@ -44,6 +45,7 @@ export const DEFAULT_EVENT = {
 
 export const WeeksContext = createContext<IWeeksContext>({
   minWeeks: DEFAULT_WEEKS.minWeeks,
+  maxWeeks: DEFAULT_WEEKS.maxWeeks,
 })
 
 

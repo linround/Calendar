@@ -10,6 +10,7 @@ export interface ITimes extends Object{
 
 export interface IWeeksContext {
   minWeeks: number
+  maxWeeks: number
 }
 
 export interface IEventContext {

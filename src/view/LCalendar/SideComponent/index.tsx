@@ -2,6 +2,7 @@ import styles from './style.module.less'
 import React from 'react'
 import { CreateButton } from './CreateButton'
 import { ISideAdd } from '../modules/options'
+import { SimpleCalendar } from './SimpleCalendar'
 
 export function SideComponent(props:ISideAdd) {
   return (
@@ -10,6 +11,7 @@ export function SideComponent(props:ISideAdd) {
         C a l e n d a r
       </div>
       <CreateButton {...props} />
+      <SimpleCalendar />
       <div>简版日历</div>
       <div>搜索栏目</div>
       <div>相关日历列表</div>

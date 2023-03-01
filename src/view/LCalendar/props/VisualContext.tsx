@@ -129,6 +129,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
   const [minWeeks] = useState<number>(DEFAULT_WEEKS.minWeeks)
+  const [maxWeeks] = useState<number>(DEFAULT_WEEKS.maxWeeks)
 
 
   const [events, setEvents] = useState<CalendarEvent[]>([])
@@ -231,6 +232,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         }}>
           <WeeksContext.Provider value={{
             minWeeks,
+            maxWeeks,
           }}>
             <EventContext.Provider value={{
               events,
