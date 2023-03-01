@@ -1,18 +1,13 @@
 import React from 'react'
-import {
-  Space,
-  Dropdown,
-  MenuProps
-} from 'antd'
 
 import Button from '@mui/material/Button'
-import { typeOptions } from './options'
 import styles from './style.module.less'
 import moment from 'moment'
 import { SvgIcon } from '../../../components'
-import { DownOutlined, GithubOutlined } from '@ant-design/icons'
+import {  GithubOutlined } from '@ant-design/icons'
 import { IHeaderEvent } from '../utils/calendar'
 import mainStyles from '../style.module.less'
+import MenuTypeSelector from './MenuTypeSelector'
 
 
 export default function (props:IHeaderEvent) {
@@ -33,21 +28,9 @@ export default function (props:IHeaderEvent) {
 
 
 
-  const itemMap = new Map()
-  typeOptions.map((item) => {
-    item && itemMap.set(item.key, item?.label)
-  })
 
 
 
-  const onClick:MenuProps['onClick'] = (e) => {
-    const { key, } = e
-    setType(key)
-  }
-  const menuProps = {
-    items: typeOptions,
-    onClick: onClick,
-  }
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
@@ -60,7 +43,6 @@ export default function (props:IHeaderEvent) {
               className={mainStyles.iconHover}
             />
           </span>
-          <>  </>
           <span
             onClick={() => next(1)}>
             <SvgIcon
@@ -75,14 +57,7 @@ export default function (props:IHeaderEvent) {
         <SvgIcon
           iconName='header_search'
           className={mainStyles.iconHover}></SvgIcon>
-        <Dropdown menu={menuProps} trigger={['click']} className={styles.headerRightOptions}>
-          <Button>
-            <Space>
-              { itemMap.get(type) }
-              <DownOutlined />
-            </Space>
-          </Button>
-        </Dropdown>
+        <MenuTypeSelector selectType={(type) => setType(type)} type={type} />
         <GithubOutlined style={{ fontSize: 30, }} />
       </div>
     </div>
