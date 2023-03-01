@@ -1,13 +1,12 @@
 import React from 'react'
-
-import Button from '@mui/material/Button'
-import styles from './style.module.less'
 import moment from 'moment'
-import { SvgIcon } from '../../../components'
-import {  GithubOutlined } from '@ant-design/icons'
-import { IHeaderEvent } from '../utils/calendar'
+import styles from './style.module.less'
+import Button from '@mui/material/Button'
 import mainStyles from '../style.module.less'
+import { SvgIcon } from '../../../components'
+import { IHeaderEvent } from '../utils/calendar'
 import MenuTypeSelector from './MenuTypeSelector'
+import {  GithubOutlined } from '@ant-design/icons'
 
 
 export default function (props:IHeaderEvent) {
@@ -28,9 +27,6 @@ export default function (props:IHeaderEvent) {
 
 
 
-
-
-
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
@@ -38,15 +34,12 @@ export default function (props:IHeaderEvent) {
         <div className={styles.headerLeftIconContainer}>
           <span
             onClick={() => prev(-1)}>
-            <SvgIcon
-              iconName='header_arrow-left-circle'
-              className={mainStyles.iconHover}
-            />
+            <SvgIcon iconName='header_arrow-left-circle'
+              className={mainStyles.iconHover}/>
           </span>
           <span
             onClick={() => next(1)}>
-            <SvgIcon
-              iconName='header_arrow-right-circle'
+            <SvgIcon iconName='header_arrow-right-circle'
               className={mainStyles.iconHover} />
           </span>
         </div>
@@ -54,9 +47,8 @@ export default function (props:IHeaderEvent) {
       </div>
 
       <div className={styles.headerRight}>
-        <SvgIcon
-          iconName='header_search'
-          className={mainStyles.iconHover}></SvgIcon>
+        <SvgIcon iconName='header_search'
+          className={mainStyles.iconHover} />
         <MenuTypeSelector selectType={(type) => setType(type)} type={type} />
         <GithubOutlined style={{ fontSize: 30, }} />
       </div>

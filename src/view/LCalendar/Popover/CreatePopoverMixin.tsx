@@ -1,11 +1,12 @@
-import styles from './createEventPopover.module.less'
+import React from 'react'
+import { Input } from 'antd'
+import classnames from 'classnames'
+import Button from '@mui/material/Button'
+import { IMixinPopoverBody } from './helpers'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
-import { Input } from 'antd'
 import TimePicker from './SingleComponent/TimePicker'
-import React from 'react'
-import { IMixinPopoverBody } from './helpers'
-import classnames from 'classnames'
+import styles from './createEventPopover.module.less'
 
 export const CreatePopoverMixin = {
   renderHeader(onClose:()=>void):JSX.Element {
@@ -65,8 +66,8 @@ export const CreatePopoverMixin = {
     })
     return (
       <div className={styles.createEventPopoverFooter}>
-        <button className={cancelClassName}>更多选项</button>
-        <button className={confirmClassName} onClick={onConfirm}>确认</button>
+        <Button variant="outlined" className={cancelClassName}>更多选项</Button >
+        <Button variant="contained" className={confirmClassName} onClick={onConfirm}>确认</Button >
       </div>
     )
   },
