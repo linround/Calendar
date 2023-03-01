@@ -11,6 +11,7 @@ import localizer from '../utils/segments/localizer'
 import { isTruth, roundTime } from '../utils/timesStamp'
 import { ISlots } from '../components/type'
 import { IMonthWrapper } from './options'
+import { createTimeEvent } from '../utils/events'
 
 export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   const { globalCache, setGlobalCacheValue,
@@ -21,7 +22,7 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
     mousemoveTime, setMousemoveTime,
     createStart, setCreateStart,
     clearCreateEvent, } = props
-  const { events, resetEvents, } = useContext(EventContext)
+  const { resetEvents, } = useContext(EventContext)
   const { setShowCreatePopover,
     setShowNormalPopover,
     setNormalPopoverRef,
@@ -128,14 +129,7 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
         const createEnd = localizer.add(
           createStart, 1, 'day'
         )
-        const createEvent = {
-          name: `日历事件 ${events.length + 1}`,
-          color: 'green',
-          start: createStart,
-          end: createEnd,
-          timed: true,
-          isCreate: true,
-        }
+        const createEvent = createTimeEvent(createStart, createEnd)
 
         setCreateEvent(createEvent)
         setCreateStart(createStart)

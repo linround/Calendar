@@ -296,7 +296,7 @@ export default function () {
         onMouseDown={containerMousedown}
         onMouseUp={containerMouseup}>
         <div className={styles.mainLeft}>
-          <SideComponent />
+          <SideComponent setCreateEvent={setCreateEvent} />
         </div>
         <div className={styles.mainRight}>
           <MenuHeader

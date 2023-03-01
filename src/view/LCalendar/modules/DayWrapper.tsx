@@ -12,6 +12,7 @@ import {
   toTime
 } from '../utils/timesStamp'
 import { IDayWrapper } from './options'
+import { createTimeEvent } from '../utils/events'
 
 
 export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
@@ -126,20 +127,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       } else {
         const createStart = roundTime(mousedownTime  as number)
         const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
-        const createEvent = {
-          id: Date.now(),
-          name: '',
-          location: '',
-          color: 'black',
-          start: createStart,
-          end: createEnd,
-          timed: true,
-          allDay: false,
-          isCreate: true,
-          isDragging: true,
-          author: '作者',
-          personnel: '人员',
-        }
+        const createEvent = createTimeEvent(createStart, createEnd)
         setGlobalCacheValue('currentCreateEvent', createEvent)
         setCreateEvent(createEvent)
         setCreateStart(createStart)

@@ -1,6 +1,6 @@
 import {
   CalendarDayBodySlotScope,
-  CalendarEvent, CalendarEventParsed, CalendarTimestamp
+  CalendarEvent, CalendarEventParsed, CalendarTimestamp, VTimestampInput
 } from './calendar'
 import {
   isTimedLess, parseTimeStamp, updateHasTime,
@@ -131,6 +131,23 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
       width: `${width}%`,
       backgroundColor: inputContent.backgroundColor,
     },
+  }
+}
+
+
+export function createTimeEvent(start:VTimestampInput, end:VTimestampInput):CalendarEvent {
+  return {
+    name: '',
+    location: '',
+    color: 'black',
+    start,
+    end,
+    timed: true,
+    allDay: false,
+    isCreate: true,
+    isDragging: true,
+    author: '作者',
+    personnel: '人员',
   }
 }
 
