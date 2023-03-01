@@ -1,7 +1,8 @@
 import React from 'react'
-import { Input } from 'antd'
+import {
+  Input, Button, TextField
+} from '@mui/material'
 import classnames from 'classnames'
-import Button from '@mui/material/Button'
 import { IMixinPopoverBody } from './helpers'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
@@ -22,17 +23,20 @@ export const CreatePopoverMixin = {
     )
   },
   renderBody(props:IMixinPopoverBody):JSX.Element {
-    const namePlaceholder = '标题'
-    const locationPlaceholder = '地点'
+    const namePlaceholder = '输入标题'
+    const locationPlaceholder = '输入地点'
     const { name, setName, location, setLocation,
       start, setStart, end, setEnd, } = props
     return (
       <div className={styles.createEventPopoverBody}>
         <div className={styles.createEventPopoverName}>
           <Input
+            fullWidth={true}
             defaultValue={name}
             placeholder={namePlaceholder}
-            onChange={(e) => setName(e.target.value)} />
+            onChange={(e) => {
+              setName(e.target.value)
+            }} />
         </div>
         <div className={styles.createEventPopoverInputItem}>
           <div className={styles.createEventPopoverInputIcon}>
@@ -46,11 +50,12 @@ export const CreatePopoverMixin = {
           <div className={styles.createEventPopoverInputIcon}>
             <SvgIcon iconName='popover_location' />
           </div>
-          <Input
+          <TextField
+            fullWidth={true}
             defaultValue={location}
             placeholder={locationPlaceholder}
-            onChange={(e) => setLocation(e.target.value)}
-          />
+            onChange={(e) => setLocation(e.target.value)}/>
+
         </div>
       </div>
     )
@@ -66,7 +71,7 @@ export const CreatePopoverMixin = {
     })
     return (
       <div className={styles.createEventPopoverFooter}>
-        <Button variant="outlined" className={cancelClassName}>更多选项</Button >
+        <Button variant="outlined"  className={cancelClassName}>更多选项</Button >
         <Button variant="contained" className={confirmClassName} onClick={onConfirm}>确认</Button >
       </div>
     )
