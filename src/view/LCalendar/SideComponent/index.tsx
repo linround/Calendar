@@ -12,7 +12,6 @@ export function SideComponent(props:ISideAdd) {
       </div>
       <CreateButton {...props} />
       <SimpleCalendar />
-      <div>简版日历</div>
       <div>搜索栏目</div>
       <div>相关日历列表</div>
       <div>订阅日历，添加其他日历相关功能</div>

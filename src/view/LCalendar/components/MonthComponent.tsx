@@ -11,8 +11,8 @@ import {
   getEndOfMonth,
   getEndOfWeek,
   getStartOfMonth,
-  getStartOfWeek, isOutSide,
-  parseTimeStamp, timestampToDate, weekdayFormatter
+  getStartOfWeek,
+  parseTimeStamp, timestampToDate
 } from '../utils/timesStamp'
 import { CalendarTimestamp } from '../utils/calendar'
 import moment from 'moment'
@@ -22,11 +22,10 @@ import {
 import { accessors } from '../utils/segments/accessors'
 import localizer from '../utils/segments/localizer'
 import {
-  IMonth, IMonthEvents, IMonthSegments, IWeekHeadColumn
+  IMonth, IMonthEvents, IMonthSegments
 } from './type'
-import weekStyle from './week.module.less'
-import classnames from 'classnames'
 import { IMonthProps } from './dayPropsType'
+import { CommonMonthHeader } from './CommonMonthHeader'
 
 
 
@@ -130,24 +129,6 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
       },
     }
   })
-  function WeekHeadColumn(props: React.PropsWithChildren<IWeekHeadColumn>) {
-    const { day, } = props
-    const outSide = isOutSide(
-      day, parsedStart, parsedEnd
-    )
-    const weekText = weekdayFormatter(day)
-    const className = classnames({
-      [weekStyle.isPresent]: day.present,
-      [weekStyle.isPast]: day.past,
-      [weekStyle.isFuture]: day.future,
-      [weekStyle.isOutside]: outSide,
-    })
-    return (
-      <div className={className}>
-        {weekText}
-      </div>
-    )
-  }
 
   // 存储该scroll滚动容器
   const containerRef = useRef<HTMLDivElement|null>(null)
@@ -161,15 +142,10 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
     <div
       ref={containerRef}
       className={monthStyle.monthBodyContainer}>
-      <div className={monthStyle.monthHeader}>
-        {
-          todayWeek.map((day, index) => (
-            <div  key={day.date} className={monthStyle.monthHeaderColumn}>
-              <WeekHeadColumn day={day} index={index}  />
-            </div>
-          ))
-        }
-      </div>
+      <CommonMonthHeader
+        parsedEnd={parsedEnd}
+        todayWeek={todayWeek}
+        parsedStart={parsedStart} />
       {
         month.map((weekDays, index) => <WeekComponent
           ref={ref}

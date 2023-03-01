@@ -39,23 +39,27 @@ export function SimpleCalendar() {
   }, [maxWeeks, parsedWeekdays, parsedStart, parsedEnd,  times])
 
   const month = useMemo(() => {
-    const arr:IMonth = []
+    const weeks:IMonth = []
     const weekDays = parsedWeekdays.length
     for (let i = 0; i < days.length;i += weekDays) {
       const week = days.slice(i, i + weekDays)
-      arr.push(week.map((day) => ({
+      weeks.push(week.map((day) => ({
         value: moment(timestampToDate(day))
           .startOf('day')
           .valueOf(),
         day,
       })))
     }
-    return arr
+    return weeks
   }, [days])
 
 
   return (
     <>
+      <div>
+        <div></div>
+        <div></div>
+      </div>
       {month[0][0].day.date}
     </>
   )
