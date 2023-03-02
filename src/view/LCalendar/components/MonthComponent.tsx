@@ -1,10 +1,19 @@
-import { WeekComponent } from './WeekComponent'
-import monthStyle from './month.module.less'
+import {
+  IMonth,
+  IMonthEvents,
+  IMonthSegments
+} from './type'
 import React, {
-  useContext, useEffect, useMemo, useRef
+  useRef,
+  useMemo,
+  useEffect,
+  useContext
 } from 'react'
 import {
-  BaseContext, EventContext, MouseEventContext, WeeksContext
+  BaseContext,
+  EventContext,
+  MouseEventContext,
+  WeeksContext
 } from '../props/propsContext'
 import {
   createDayList,
@@ -12,19 +21,23 @@ import {
   getEndOfWeek,
   getStartOfMonth,
   getStartOfWeek,
-  parseTimeStamp, timestampToDate
+  parseTimeStamp,
+  timestampToDate
 } from '../utils/timesStamp'
-import { CalendarTimestamp } from '../utils/calendar'
-import moment from 'moment'
 import {
-  eventLevels, eventSegments, eventsForWeek, isSegmentInSlot, sortEvents
+  sortEvents,
+  eventLevels,
+  eventSegments,
+  eventsForWeek,
+  isSegmentInSlot
 } from '../utils/segments/eventSegments'
-import { accessors } from '../utils/segments/accessors'
-import localizer from '../utils/segments/localizer'
-import {
-  IMonth, IMonthEvents, IMonthSegments
-} from './type'
+import moment from 'moment'
 import { IMonthProps } from './dayPropsType'
+import monthStyle from './month.module.less'
+import { WeekComponent } from './WeekComponent'
+import { CalendarTimestamp } from '../utils/calendar'
+import localizer from '../utils/segments/localizer'
+import { accessors } from '../utils/segments/accessors'
 import { CommonMonthHeader } from './CommonMonthHeader'
 
 
@@ -138,6 +151,7 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
       setDayScrollRef(containerRef.current)
     }
   }, [containerRef])
+
   return (
     <div
       ref={containerRef}
@@ -147,12 +161,14 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
         todayWeek={todayWeek}
         parsedStart={parsedStart} />
       {
-        month.map((weekDays, index) => <WeekComponent
-          ref={ref}
-          {...props}
-          weekDays={weekDays}
-          weekSegments={monthSegments[index]}
-          key={index} />)
+        month.map((weekDays, index) => (
+          <WeekComponent
+            ref={ref}
+            {...props}
+            key={index}
+            weekDays={weekDays}
+            weekSegments={monthSegments[index]}/>
+        ))
       }
     </div>
   )
