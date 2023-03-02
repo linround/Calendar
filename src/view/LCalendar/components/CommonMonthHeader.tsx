@@ -1,16 +1,37 @@
 import monthStyle from './month.module.less'
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import { CalendarTimestamp } from '../utils/calendar'
 import { CommonWeekHeadColumn } from './CommonWeekHeadColumn'
+import {
+  createDayList, getEndOfWeek, getStartOfWeek
+} from '../utils/timesStamp'
+import { BaseContext } from '../props/propsContext'
 
 
 interface IProps {
-  todayWeek: CalendarTimestamp[]
   parsedStart: CalendarTimestamp,
   parsedEnd:CalendarTimestamp
 }
 export function CommonMonthHeader(props: IProps) {
-  const { todayWeek, parsedStart, parsedEnd, } = props
+  const {  parsedStart, parsedEnd, } = props
+  const {  parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
+  const todayWeek = useMemo(() => {
+    const today = times?.today as CalendarTimestamp
+    const newStart = getStartOfWeek(
+      today, parsedWeekdays, today
+    )
+    const newEnd = getEndOfWeek(
+      today, parsedWeekdays, today
+    )
+    return createDayList(
+      newStart,
+      newEnd,
+      today,
+      weekdaySkips,
+      parsedWeekdays.length,
+      parsedWeekdays.length
+    )
+  }, [times, parsedWeekdays, weekdaySkips])
   return (
 
     <div className={monthStyle.monthHeader}>

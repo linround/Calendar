@@ -54,23 +54,6 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
   const {  events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
 
-  const todayWeek = useMemo(() => {
-    const today = times?.today as CalendarTimestamp
-    const newStart = getStartOfWeek(
-      today, parsedWeekdays, today
-    )
-    const newEnd = getEndOfWeek(
-      today, parsedWeekdays, today
-    )
-    return createDayList(
-      newStart,
-      newEnd,
-      today,
-      weekdaySkips,
-      parsedWeekdays.length,
-      parsedWeekdays.length
-    )
-  }, [times, parsedWeekdays, weekdaySkips])
 
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
@@ -158,7 +141,6 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
       className={monthStyle.monthBodyContainer}>
       <CommonMonthHeader
         parsedEnd={parsedEnd}
-        todayWeek={todayWeek}
         parsedStart={parsedStart} />
       {
         month.map((weekDays, index) => (
