@@ -1,4 +1,5 @@
 import { CalendarTimestamp, VTimestampInput } from '../calendar'
+import { WEEK_DAYS_TEXT } from '../time'
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100
@@ -81,7 +82,7 @@ export function parseDate(date:Date):CalendarTimestamp {
 export function timestampToDate(timestamp:CalendarTimestamp):Date {
   const time = `${padNumber(timestamp.hour, 2)}:${padNumber(timestamp.minute, 2)}`
   const date = timestamp.date
-  return new Date(`${date}T${time}:00+00:00`)
+  return new Date(`${date}T${time}`)
 }
 
 // 将日期转换为数字形式的年月日 2020-01-01 转变为 20200101
@@ -285,13 +286,11 @@ export function isOutSide(
 
 
 
-export function weekdayFormatter(day:CalendarTimestamp) {
-  const intlFormatter = new Intl.DateTimeFormat('default', {
-    weekday: 'long',
-    // calendar: 'chinese', // 这个设置可获取农历日期
-    timeZone: 'UTC',
-  })
-  return intlFormatter.format(timestampToDate(day))
+export function weekdayFormatter(day:CalendarTimestamp):string {
+  const weekDay = timestampToDate(day)
+    .getDay()
+  const weekLabel = WEEK_DAYS_TEXT[weekDay]
+  return weekLabel
 }
 
 export function getTimestampLabel(timestamp:CalendarTimestamp):string {

@@ -153,6 +153,7 @@ export default function () {
 
   function move(amount = 1):void {
     const moved = copyTimestamp(parsedValue as CalendarTimestamp)
+
     const forward = amount > 0
     const mover = forward ? nextDay : prevDay
     const limit = forward ? DAYS_IN_MONTH_MAX : DAY_MIN
@@ -183,6 +184,7 @@ export default function () {
     // 设置 time 和 date
     updateFormatted(moved)
     updateRelative(moved, (times as ITimes).now)
+
     if (value instanceof Date) {
       setValue(timestampToDate(moved))
     } else if (typeof value === 'number') {
