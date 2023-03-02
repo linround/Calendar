@@ -28,11 +28,19 @@
     font-size: 12px;
     line-height: 100%;
     padding: 5px 0;
-    &:hover{
-      background-color: @IconHoverBgColor;
+    &Active {
+      background-color: rgb(26,115,232);
+      color: #fff;
+      &:hover{}
+      &:active{}
     }
-    &:active{
-      background-color: @IconActiveColor;
+    &Normal {
+      &:hover{
+        background-color: @IconHoverBgColor;
+      }
+      &:active{
+        background-color: @IconActiveColor;
+      }
     }
     &:visited{
       background-color: #1a73e8 !important;

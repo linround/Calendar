@@ -13,7 +13,8 @@ import {
   getStartOfWeek,
   parseTimeStamp,
   timestampToDate,
-  getStartOfMonth, getWeekdaySkips
+  getStartOfMonth,
+  getWeekdaySkips
 } from '../utils/timesStamp'
 import moment from 'moment/moment'
 import { IMonth } from '../components/type'
@@ -25,8 +26,8 @@ import { DEFAULT_WEEK_DAYS } from '../utils/time'
 
 export function SimpleCalendar() {
 
-  const { start, end,  times, } = useContext(BaseContext)
   const weekdaySkips = getWeekdaySkips(DEFAULT_WEEK_DAYS)
+  const { start, end,  times,  } = useContext(BaseContext)
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
   const parsedEnd = useMemo(() => getEndOfMonth(parseTimeStamp(end, true)),

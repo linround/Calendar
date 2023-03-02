@@ -8,7 +8,7 @@ export function SideComponent(props:ISideAdd) {
   return (
     <>
       <div className={styles.sideTitle}>
-        C a l e n d a r
+        U C a l e n d a r
       </div>
       <CreateButton {...props} />
       <SimpleCalendar />
