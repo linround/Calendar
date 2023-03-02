@@ -152,7 +152,6 @@ export default function () {
 
 
   function move(amount = 1, calendarType:string):void {
-    console.log(4)
     const moved = copyTimestamp(parsedValue as CalendarTimestamp)
 
     const forward = amount > 0
