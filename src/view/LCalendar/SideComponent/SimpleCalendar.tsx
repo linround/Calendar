@@ -13,7 +13,7 @@ import {
   getStartOfWeek,
   parseTimeStamp,
   timestampToDate,
-  getStartOfMonth
+  getStartOfMonth, getWeekdaySkips
 } from '../utils/timesStamp'
 import moment from 'moment/moment'
 import { IMonth } from '../components/type'
@@ -21,22 +21,24 @@ import { CalendarTimestamp } from '../utils/calendar'
 import { SimpleMonthBody } from './SimpleMonthBody'
 import { CommonMonthHeader } from '../components/CommonMonthHeader'
 import simpleStyles from './styleSimpleMonth.module.less'
+import { DEFAULT_WEEK_DAYS } from '../utils/time'
 
 export function SimpleCalendar() {
 
-  const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
+  const { start, end,  times, } = useContext(BaseContext)
+  const weekdaySkips = getWeekdaySkips(DEFAULT_WEEK_DAYS)
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
   const parsedEnd = useMemo(() => getEndOfMonth(parseTimeStamp(end, true)),
     [end])
   const { maxWeeks, } = useContext(WeeksContext)
   const days = useMemo(() => {
-    const maxDays = maxWeeks * parsedWeekdays.length
+    const maxDays = maxWeeks * DEFAULT_WEEK_DAYS.length
     const newStart = getStartOfWeek(
-      parsedStart, parsedWeekdays, times?.today
+      parsedStart, DEFAULT_WEEK_DAYS, times?.today
     )
     const newEnd = getEndOfWeek(
-      parsedEnd, parsedWeekdays, times?.today
+      parsedEnd, DEFAULT_WEEK_DAYS, times?.today
     )
     return createDayList(
       newStart,
@@ -46,11 +48,11 @@ export function SimpleCalendar() {
       maxDays,
       maxDays
     )
-  }, [maxWeeks, parsedWeekdays, parsedStart, parsedEnd,  times])
+  }, [maxWeeks, DEFAULT_WEEK_DAYS, parsedStart, parsedEnd,  times])
 
   const month:IMonth = useMemo(() => {
     const weeks:IMonth = []
-    const weekDays = parsedWeekdays.length
+    const weekDays = DEFAULT_WEEK_DAYS.length
     for (let i = 0; i < days.length;i += weekDays) {
       const week = days.slice(i, i + weekDays)
       weeks.push(week.map((day) => ({
@@ -62,7 +64,6 @@ export function SimpleCalendar() {
     }
     return weeks
   }, [days])
-
 
   return (
     <>
