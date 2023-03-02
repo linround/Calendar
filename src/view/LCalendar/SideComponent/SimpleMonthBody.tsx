@@ -15,10 +15,10 @@ export function SimpleMonthBody(props:React.PropsWithChildren<IProps>) {
   return (
     <div className={simpleStyles.containerMonth}>
       {
-        month.map((week) => (
-          <div className={simpleStyles.containerWeek}>
-            {week.map((day) => (
-              <div className={dayClassName}>
+        month.map((week, weekIndex) => (
+          <div key={weekIndex} className={simpleStyles.containerWeek}>
+            {week.map((day, dayIndex) => (
+              <div key={dayIndex} className={dayClassName}>
                 {day.day.day}
               </div>
             ))}
