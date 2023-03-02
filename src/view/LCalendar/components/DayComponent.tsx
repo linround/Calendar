@@ -14,7 +14,7 @@ import {
   getDayIdentifier,
   getTimestampLabel,
   createIntervalList,
-  VTime
+  VTime, weekdayFormatter
 } from '../utils/timesStamp'
 import { isEventOn } from '../utils/events'
 import React, {
@@ -40,7 +40,6 @@ import {
   MouseEventContext
 } from '../props/propsContext'
 import classnames from 'classnames'
-import { WEEK_DAYS_TEXT } from '../utils/time'
 
 export default React.forwardRef((props: IDayProps, ref) =>  {
   const {
@@ -186,7 +185,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         {days.map((day) => (
           <div className={dayStyle.dayHeaderDay} key={day.date} >
             <div>
-              周{WEEK_DAYS_TEXT[day.weekday]}
+              {weekdayFormatter(day)}
             </div>
             <div>
               <Button

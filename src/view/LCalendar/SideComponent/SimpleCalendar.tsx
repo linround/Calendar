@@ -1,16 +1,24 @@
-import { useContext, useMemo } from 'react'
-import { BaseContext, WeeksContext } from '../props/propsContext'
 import {
+  useMemo,
+  useContext
+} from 'react'
+import {
+  BaseContext,
+  WeeksContext
+} from '../props/propsContext'
+import {
+  getEndOfWeek,
   createDayList,
   getEndOfMonth,
-  getEndOfWeek,
-  getStartOfMonth,
   getStartOfWeek,
-  parseTimeStamp, timestampToDate
+  parseTimeStamp,
+  timestampToDate,
+  getStartOfMonth
 } from '../utils/timesStamp'
-import { CalendarTimestamp } from '../utils/calendar'
-import { IMonth } from '../components/type'
 import moment from 'moment/moment'
+import { IMonth } from '../components/type'
+import { CalendarTimestamp } from '../utils/calendar'
+import { CommonMonthHeader } from '../components/CommonMonthHeader'
 
 export function SimpleCalendar() {
 
@@ -57,10 +65,11 @@ export function SimpleCalendar() {
   return (
     <>
       <div>
-        <div></div>
+        <CommonMonthHeader
+          parsedStart={parsedStart}
+          parsedEnd={parsedEnd} />
         <div></div>
       </div>
-      {month[0][0].day.date}
     </>
   )
 }

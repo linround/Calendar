@@ -3,9 +3,10 @@ import React, { useContext, useMemo } from 'react'
 import { CalendarTimestamp } from '../utils/calendar'
 import { CommonWeekHeadColumn } from './CommonWeekHeadColumn'
 import {
-  createDayList, getEndOfWeek, getStartOfWeek
+  createDayList, getEndOfWeek, getStartOfWeek, getWeekdaySkips
 } from '../utils/timesStamp'
 import { BaseContext } from '../props/propsContext'
+import { DEFAULT_WEEK_DAYS } from '../utils/time'
 
 
 interface IProps {
@@ -14,24 +15,25 @@ interface IProps {
 }
 export function CommonMonthHeader(props: IProps) {
   const {  parsedStart, parsedEnd, } = props
-  const {  parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
+  const {  times, } = useContext(BaseContext)
+  const weekdaySkips = getWeekdaySkips(DEFAULT_WEEK_DAYS)
   const todayWeek = useMemo(() => {
     const today = times?.today as CalendarTimestamp
     const newStart = getStartOfWeek(
-      today, parsedWeekdays, today
+      today, DEFAULT_WEEK_DAYS, today
     )
     const newEnd = getEndOfWeek(
-      today, parsedWeekdays, today
+      today, DEFAULT_WEEK_DAYS, today
     )
     return createDayList(
       newStart,
       newEnd,
       today,
       weekdaySkips,
-      parsedWeekdays.length,
-      parsedWeekdays.length
+      DEFAULT_WEEK_DAYS.length,
+      DEFAULT_WEEK_DAYS.length
     )
-  }, [times, parsedWeekdays, weekdaySkips])
+  }, [times, DEFAULT_WEEK_DAYS, weekdaySkips])
   return (
 
     <div className={monthStyle.monthHeader}>

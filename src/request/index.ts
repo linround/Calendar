@@ -7,10 +7,7 @@ const service = axios.create({
 })
 
 
-service.interceptors.request.use((config) => {
-  console.log('请求拦截')
-  return config
-}, (err) => {
+service.interceptors.request.use((config) => config, (err) => {
   console.log('请求错误', err)
 })
 

@@ -81,7 +81,7 @@ export function parseDate(date:Date):CalendarTimestamp {
 export function timestampToDate(timestamp:CalendarTimestamp):Date {
   const time = `${padNumber(timestamp.hour, 2)}:${padNumber(timestamp.minute, 2)}`
   const date = timestamp.date
-  return new Date(`${date}T${time}:00+08:00`)
+  return new Date(`${date}T${time}:00+00:00`)
 }
 
 // 将日期转换为数字形式的年月日 2020-01-01 转变为 20200101
@@ -286,9 +286,10 @@ export function isOutSide(
 
 
 export function weekdayFormatter(day:CalendarTimestamp) {
-  const intlFormatter = new Intl.DateTimeFormat('zh-cn', {
+  const intlFormatter = new Intl.DateTimeFormat('default', {
+    weekday: 'long',
+    // calendar: 'chinese', // 这个设置可获取农历日期
     timeZone: 'UTC',
-    weekday: 'short',
   })
   return intlFormatter.format(timestampToDate(day))
 }
