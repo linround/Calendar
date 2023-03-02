@@ -18,7 +18,9 @@ import {
 import moment from 'moment/moment'
 import { IMonth } from '../components/type'
 import { CalendarTimestamp } from '../utils/calendar'
+import { SimpleMonthBody } from './SimpleMonthBody'
 import { CommonMonthHeader } from '../components/CommonMonthHeader'
+import simpleStyles from './styleSimpleMonth.module.less'
 
 export function SimpleCalendar() {
 
@@ -46,7 +48,7 @@ export function SimpleCalendar() {
     )
   }, [maxWeeks, parsedWeekdays, parsedStart, parsedEnd,  times])
 
-  const month = useMemo(() => {
+  const month:IMonth = useMemo(() => {
     const weeks:IMonth = []
     const weekDays = parsedWeekdays.length
     for (let i = 0; i < days.length;i += weekDays) {
@@ -64,11 +66,11 @@ export function SimpleCalendar() {
 
   return (
     <>
-      <div>
+      <div className={simpleStyles.container}>
         <CommonMonthHeader
           parsedStart={parsedStart}
           parsedEnd={parsedEnd} />
-        <div></div>
+        <SimpleMonthBody month={month} />
       </div>
     </>
   )
