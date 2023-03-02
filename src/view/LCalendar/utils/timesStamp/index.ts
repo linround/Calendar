@@ -337,7 +337,9 @@ export function createDayList(
     )
   }
 
-  if (!days.length) throw new Error()
+  if (!days.length) {
+    days.push(current)
+  }
 
   return days
 }
@@ -413,7 +415,6 @@ export function nextDay (timestamp: CalendarTimestamp): CalendarTimestamp {
       timestamp.year += 1
     }
   }
-
   return timestamp
 }
 export function prevDay(timestamp:CalendarTimestamp) :CalendarTimestamp {

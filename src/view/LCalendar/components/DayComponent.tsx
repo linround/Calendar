@@ -244,7 +244,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                       onTimeContainerMouseup(onTimeContainer(e, day))
                     }}>
                     {
-                      intervals.map((interval, index) => (
+                      intervals[0].map((interval, index) => (
                         <div
                           className={dayStyle.dayBodyDayInterval}
                           style={{ height: intervalHeight, }}
