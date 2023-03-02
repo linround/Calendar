@@ -20,3 +20,25 @@ export function getDayNowTime(day:VTimestampInput):VTimestampInput {
     .valueOf()
   return time
 }
+
+export function getValueFormat(value:VTimestampInput, type:string):string {
+  let str = ''
+  switch (type) {
+  case 'month':{
+    str = moment(value)
+      .format('YYYY年MM月')
+    break
+  }
+  case 'week' :{
+    str = moment(value)
+      .format('YYYY年MM月')
+    break
+  }
+  case 'day' :{
+    str = moment(value)
+      .format('YYYY年MM月DD日')
+    break
+  }
+  }
+  return str
+}

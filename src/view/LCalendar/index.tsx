@@ -151,7 +151,8 @@ export default function () {
   // 点击下一天，应该提前更新parsedValue
 
 
-  function move(amount = 1):void {
+  function move(amount = 1, calendarType:string):void {
+    console.log(4)
     const moved = copyTimestamp(parsedValue as CalendarTimestamp)
 
     const forward = amount > 0
@@ -159,7 +160,7 @@ export default function () {
     const limit = forward ? DAYS_IN_MONTH_MAX : DAY_MIN
     let newAmount = forward ? amount : -amount
     while ((newAmount -= 1) >= 0) {
-      switch (type) {
+      switch (calendarType) {
       case 'month':{
         moved.day = limit
         mover(moved)
@@ -298,7 +299,10 @@ export default function () {
         onMouseDown={containerMousedown}
         onMouseUp={containerMouseup}>
         <div className={styles.mainLeft}>
-          <SideComponent setCreateEvent={setCreateEvent} />
+          <SideComponent
+            setCreateEvent={setCreateEvent}
+            prev={(amount) => move(amount, 'month')}
+            next={(amount) => move(amount, 'month')} />
         </div>
         <div className={styles.mainRight}>
           <MenuHeader
@@ -306,8 +310,8 @@ export default function () {
             type={type}
             setToday={setValue}
             setType={setType}
-            prev={(amount) => move(amount)}
-            next={(amount) => move(amount)} />
+            prev={(amount) => move(amount, type)}
+            next={(amount) => move(amount, type)} />
           {
             type === 'month' ?
               <MonthWrapper

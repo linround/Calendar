@@ -7,3 +7,8 @@ export function isActiveDay(monthDay:IMonthDay, value:CalendarTimestamp) {
   const day = getDayIdentifier(monthDay.day)
   return day === selectedDay
 }
+
+export interface ISimpleControllerProps {
+  prev: (amount: number) => any
+  next: (amount: number) => any
+}

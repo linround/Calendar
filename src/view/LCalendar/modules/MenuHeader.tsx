@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import styles from './style.module.less'
 import Button from '@mui/material/Button'
 import mainStyles from '../style.module.less'
@@ -7,6 +6,7 @@ import { SvgIcon } from '../../../components'
 import { IHeaderEvent } from '../utils/calendar'
 import MenuTypeSelector from './MenuTypeSelector'
 import {  GithubOutlined } from '@ant-design/icons'
+import { getValueFormat } from '../utils/time'
 
 
 export default function (props:IHeaderEvent) {
@@ -19,11 +19,6 @@ export default function (props:IHeaderEvent) {
     setType = (type) => type,
     setToday = (today) => today,
   } = props
-
-  const format = 'YYYY MM DD'
-  const timeStr = moment(value)
-    .format(format)
-
 
 
 
@@ -43,7 +38,7 @@ export default function (props:IHeaderEvent) {
               className={mainStyles.iconHover} />
           </span>
         </div>
-        <div>{timeStr}</div>
+        <div>{getValueFormat(value, type)}</div>
       </div>
 
       <div className={styles.headerRight}>
