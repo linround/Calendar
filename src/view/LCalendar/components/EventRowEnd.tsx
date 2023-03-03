@@ -15,14 +15,13 @@ interface IEventRow{
 }
 export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
   const { segments, slots, showMore = defaultShowMore,  } = props
-  console.log('slots:', slots)
   let current = 1
   let lastEnd = 1
   const row = []
   while (current <= slots) {
     const key = `row_end_${current}`
     const { event, left, right, span, } = segments.filter((seg) => isSegmentInSlot(seg, current))[0] || {}
-    console.log(current, event)
+
     if (!event) {
       current += 1
       continue
