@@ -52,6 +52,7 @@ export function CalendarGroups(props:IProps) {
           <div
             key={index}
             className={styles.groupItem}
+            onClick={() => handleChange(group)}
             onMouseEnter={() => setHover(group.id)}
             onMouseLeave={() => setHover(null)}>
             <Checkbox
@@ -59,7 +60,6 @@ export function CalendarGroups(props:IProps) {
                 color: group.color,
               }}
               checked={checked.includes(group.id)}
-              onChange={() => handleChange(group)}
               inputProps={{ 'aria-label': 'controlled', }}
             />
             <div className={styles.groupContent}>
