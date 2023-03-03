@@ -93,12 +93,12 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
 
 
 
-  const onTimeContainerMousemove = useCallback((tms:IMouseTime) => {
+  const onTimeContainerMousemove = (tms:IMouseTime) => {
     if (!mousedownTime) return tms
     const time = toTime(tms)
     setMousemoveTime(time)
     return tms
-  }, [mousedownTime])
+  }
 
   const onTimeContainerMouseup = (tms:IMouseTime) => tms
 

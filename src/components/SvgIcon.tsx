@@ -9,12 +9,9 @@ interface IProps {
 }
 function SvgIcon(props:IProps):React.ReactElement {
   const { iconName, svgProp, className, } = props
-  const { loading, SvgIcon, } = useDynamicSvgImport(iconName)
+  const { SvgIcon, } = useDynamicSvgImport(iconName)
   return (
     <>
-      {loading && (
-        <div>正在加载svg</div>
-      )}
       {SvgIcon && (
         <SvgIcon {...svgProp} className={className}></SvgIcon>
       )}

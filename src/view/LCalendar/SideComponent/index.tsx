@@ -20,9 +20,8 @@ export function SideComponent(props:IProps) {
       <SimpleController {...props} />
       <SimpleCalendar />
       <SearchComponent />
-      <CalendarGroups />
-      <div>相关日历列表</div>
-      <div>订阅日历，添加其他日历相关功能</div>
+      <CalendarGroups name='我的日历' />
+      <CalendarGroups name='订阅日历' />
     </>
   )
 }

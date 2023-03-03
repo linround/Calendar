@@ -1,14 +1,63 @@
 @import "../variables.less";
 
 
+.group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5px;
+  &Item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 100%;
+    padding: 5px 25px;
+    cursor: pointer;
+
+    &:hover{
+      background-color: @IconHoverBgColor;
+    }
+    &Right {
+      display: flex;
+      justify-content: center;
+    }
+    &Icon {
+    }
+  }
+  &Content {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 100%;
+    padding: 5px 25px;
+    cursor: pointer;
+    &:hover{
+      background-color: @IconHoverBgColor;
+    }
+    &Icon{
+      display: flex;
+      align-items: center;
+    }
+  }
+}
 .search {
   display: flex;
-  align-items: center;
-  margin: 10px 25px 0 25px;
-  background-color: @SearchBgColor;
-  border-radius: 5px 5px 0 0;
-  input {
-    padding: 10px;
+  justify-content: center;
+  margin: 10px 0;
+
+  &Input {
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid blueviolet;
+    &:focus-visible {
+      outline: 0px;
+    }
   }
 }
 .controller {
