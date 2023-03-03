@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Collapse from '@mui/material/Collapse'
 import { SvgIcon } from '../../../components'
 import styles from './styleSimpleMonth.module.less'
+import Checkbox from '@mui/material/Checkbox'
 
 interface IProps {
   name: string
@@ -10,6 +11,10 @@ export function CalendarGroups(props:IProps) {
   const { name, } = props
   const [open, setOpen] = useState(false)
   const [show, setShow] = useState(false)
+  const [checked, setChecked] = React.useState(true)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked)
+  }
 
   const handleClick = () => {
     setOpen(!open)
@@ -17,6 +22,7 @@ export function CalendarGroups(props:IProps) {
   return (
     <div className={styles.group}>
       <div className={styles.groupHeader} onClick={handleClick}>
+
         <div
           className={styles.groupContent}>
           {name}
@@ -29,10 +35,16 @@ export function CalendarGroups(props:IProps) {
         </div>
       </div>
       <Collapse in={open}>
+
         <div
           className={styles.groupItem}
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}>
+          <Checkbox
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ 'aria-label': 'controlled', }}
+          />
           <div className={styles.groupContent}>
             日历名
           </div>
