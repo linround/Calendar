@@ -4,13 +4,14 @@ import { CreateButton } from './CreateButton'
 import { ISideAdd } from '../modules/options'
 import { SimpleCalendar } from './SimpleCalendar'
 import { SimpleController } from './SimpleController'
-import { ISimpleControllerProps } from './utils'
+import { createCalendarGroup, ISimpleControllerProps } from './utils'
 import { SearchComponent } from './SearchComponent'
 import { CalendarGroups } from './CalendarGroups'
 
 interface IProps extends ISideAdd, ISimpleControllerProps {}
 
 export function SideComponent(props:IProps) {
+  const calendarGroups = createCalendarGroup()
   return (
     <>
       <div className={styles.sideTitle}>
@@ -20,8 +21,8 @@ export function SideComponent(props:IProps) {
       <SimpleController {...props} />
       <SimpleCalendar />
       <SearchComponent />
-      <CalendarGroups name='我的日历' />
-      <CalendarGroups name='订阅日历' />
+      <CalendarGroups calendarGroups={calendarGroups} type={0} name='我的日历' />
+      <CalendarGroups calendarGroups={calendarGroups} type={1} name='其他日历' />
     </>
   )
 }
