@@ -103,6 +103,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [value, setValue] = useState<IValue>(DEFAULT_VALUE)
   const [groups]  = useState(createCalendarGroup())
   const [checks, setChecks] = useState<calendarGroup[]>([])
+  const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
 
 
 
@@ -208,6 +209,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     setShowNormalPopover(false)
     setNormalPopoverRef(null)
     setNormalEvent(null)
+    setAddCalendarRef(null)
   }
 
 
@@ -235,6 +237,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         groups,
         checks,
         setChecks,
+        addCalendarRef,
+        setAddCalendarRef,
       }}>
         <IntervalsContext.Provider value={{
           maxDays,

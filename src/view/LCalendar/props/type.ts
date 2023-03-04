@@ -57,7 +57,8 @@ export interface ICalendarContext extends IDataGroups{
   type: string,
   setType: React.Dispatch<React.SetStateAction<string>>
 
-
+  addCalendarRef: Element|null // 添加日历的popover
+  setAddCalendarRef: React.Dispatch<React.SetStateAction<Element | null>>
 }
 export interface IIntervalsContext {
   maxDays: number
