@@ -5,12 +5,12 @@ import React, {
 } from 'react'
 import {  MouseEventContext } from '../props/propsContext'
 import { PopoverContent } from './PopoverContent'
-import {
-  IS_HIGH_LEVEL, POPOVER_WIDTH_DEF, calcPosition
-} from './helpers'
+import { IS_HIGH_LEVEL, calcPosition } from './helpers'
 import { CalendarEvent } from '../utils/calendar'
 import { deleteEvent } from '../../../api/event'
 import { SUCCESS_CODE } from '../../../request'
+import classnames from 'classnames'
+import commonPopoverStyle from '../commonStyle/popover.module.less'
 const popoverCache:{ref:Element|null} = {
   ref: null,
 }
@@ -57,7 +57,10 @@ export function NormalPopover() {
   }
 
 
-
+  const className = classnames({
+    [styles.popoverContainer]: true,
+    [commonPopoverStyle.popover]: true,
+  })
   return (
     <>
       {
@@ -68,7 +71,7 @@ export function NormalPopover() {
               top: top,
               left: left,
             }}
-            className={styles.popoverContainer}>
+            className={className}>
             <PopoverContent
               event={normalEvent as CalendarEvent}
               deleteEvent={handleDeleteEvent} />

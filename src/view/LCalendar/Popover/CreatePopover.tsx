@@ -3,12 +3,14 @@ import React, {
   useState,
   useContext, useCallback, useLayoutEffect, createRef
 } from 'react'
+import classnames from 'classnames'
 import { SUCCESS_CODE } from '../../../request'
+import styles from './createEventPopover.module.less'
 import { handleCreateEvent } from '../../../api/event'
 import {  calcPosition, IDefaultValue } from './helpers'
 import { CreatePopoverContent } from './CreatePopoverContent'
+import commonPopoverStyle from '../commonStyle/popover.module.less'
 import { EventContext, MouseEventContext } from '../props/propsContext'
-import styles from './createEventPopover.module.less'
 // 用来存储popover的来源
 const popoverCache:{ ref:Element | null} = { ref: null, }
 
@@ -115,12 +117,16 @@ export function CreatePopover() {
   }, [createEvent?.start, createEvent?.end])
 
 
+  const className = classnames({
+    [styles.createEventPopoverContainer]: true,
+    [commonPopoverStyle.popover]: true,
+  })
   return (
     <>
       {
         (createPopoverRef && showCreatePopover) &&
         <div
-          className={styles.createEventPopoverContainer}
+          className={className}
           ref={eventRef as React.ForwardedRef<HTMLDivElement>}
           style={{ left, top, }}>
           <CreatePopoverContent
