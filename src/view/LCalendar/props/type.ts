@@ -2,6 +2,7 @@ import {
   CalendarEvent, CalendarEventParsed, CalendarTimestamp, IValue
 } from '../utils/calendar'
 import React from 'react'
+import { calendarGroup } from '../SideComponent/utils'
 
 export interface ITimes extends Object{
   now: CalendarTimestamp
@@ -43,11 +44,20 @@ export interface IBaseContext {
   parsedValue?:CalendarTimestamp
   days?:CalendarTimestamp[]
 }
-export interface ICalendarContext {
+
+
+export interface IDataGroups {
+  groups: calendarGroup[]
+  checks: calendarGroup[]
+  setChecks: React.Dispatch<React.SetStateAction<calendarGroup[]>>
+}
+export interface ICalendarContext extends IDataGroups{
   value: IValue,
   setValue: React.Dispatch<React.SetStateAction<IValue>>
   type: string,
   setType: React.Dispatch<React.SetStateAction<string>>
+
+
 }
 export interface IIntervalsContext {
   maxDays: number

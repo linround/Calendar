@@ -40,6 +40,7 @@ import { ITimes } from './type'
 import {  parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
 import { getEventList } from '../../../api/event'
+import { calendarGroup, createCalendarGroup } from '../SideComponent/utils'
 
 
 
@@ -96,8 +97,19 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   }), [now])
 
 
+
+
   const [type, setType] = useState<string>(DEFAULT_TYPE)
   const [value, setValue] = useState<IValue>(DEFAULT_VALUE)
+  const [groups]  = useState(createCalendarGroup())
+  const [checks, setChecks] = useState<calendarGroup[]>([])
+
+
+
+
+
+
+
 
   const [maxDays, setMaxDays] = useState<number>(DEFAULT_MAX_DAYS)
   const [intervalHeight] = useState<number>(DEFAULT_INTERVALS.intervalHeight)
@@ -220,6 +232,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         setType,
         value,
         setValue,
+        groups,
+        checks,
+        setChecks,
       }}>
         <IntervalsContext.Provider value={{
           maxDays,

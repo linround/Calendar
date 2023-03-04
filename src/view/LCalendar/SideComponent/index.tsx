@@ -1,17 +1,19 @@
 import styles from './style.module.less'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CreateButton } from './CreateButton'
 import { ISideAdd } from '../modules/options'
 import { SimpleCalendar } from './SimpleCalendar'
 import { SimpleController } from './SimpleController'
-import { createCalendarGroup, ISimpleControllerProps } from './utils'
+import { ISimpleControllerProps } from './utils'
 import { SearchComponent } from './SearchComponent'
 import { CalendarGroups } from './CalendarGroups'
+import { CalendarContext } from '../props/propsContext'
 
 interface IProps extends ISideAdd, ISimpleControllerProps {}
 
 export function SideComponent(props:IProps) {
-  const calendarGroups = createCalendarGroup()
+  const { groups, setChecks, checks, } = useContext(CalendarContext)
+
   return (
     <>
       <div className={styles.sideTitle}>
@@ -21,8 +23,18 @@ export function SideComponent(props:IProps) {
       <SimpleController {...props} />
       <SimpleCalendar />
       <SearchComponent />
-      <CalendarGroups calendarGroups={calendarGroups} type={0} name='我的日历' />
-      <CalendarGroups calendarGroups={calendarGroups} type={1} name='其他日历' />
+      <CalendarGroups
+        groups={groups}
+        setChecks={setChecks}
+        checks={checks}
+        type={0}
+        name='我的日历' />
+      <CalendarGroups
+        groups={groups}
+        setChecks={setChecks}
+        checks={checks}
+        type={1}
+        name='订阅日历' />
     </>
   )
 }

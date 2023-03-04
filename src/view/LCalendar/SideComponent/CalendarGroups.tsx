@@ -3,30 +3,39 @@ import Collapse from '@mui/material/Collapse'
 import { SvgIcon } from '../../../components'
 import styles from './styleSimpleMonth.module.less'
 import Checkbox from '@mui/material/Checkbox'
-import { calendarGroup, createCalendarGroup } from './utils'
+import { calendarGroup } from './utils'
+import { IDataGroups } from '../props/type'
 
 
 
 
-interface IProps {
+interface IProps extends IDataGroups{
   name: string
-  calendarGroups: calendarGroup[]
   type: number
 }
+function isChecked(checks:calendarGroup[], checked:calendarGroup) {
+  const index = checks.findIndex((g) => g.id === checked.id)
+  return index > -1
+}
+
+
 export function CalendarGroups(props:IProps) {
-  const { name, calendarGroups, type, } = props
-  const groups = calendarGroups.filter((item) => item.type === type)
+  const { name, groups, type, checks, setChecks, } = props
+  const calendarGroups = groups.filter((item) => item.type === type)
   const [open, setOpen] = useState(false)
   const [hover, setHover] = useState(null)
-  const [checked, setChecked] = useState<number[]>([])
+
+
+
+
   const handleChange = (group: calendarGroup) => {
-    const index = checked.findIndex((id) => id === group.id)
+    const index = checks.findIndex((g) => g.id === group.id)
     if (index > -1) {
-      checked.splice(index, 1)
+      checks.splice(index, 1)
     } else {
-      checked.push(group.id)
+      checks.push(group)
     }
-    setChecked([...checked])
+    setChecks([...checks])
   }
   const handleClick = () => {
     setOpen(!open)
@@ -48,7 +57,7 @@ export function CalendarGroups(props:IProps) {
         </div>
       </div>
       <Collapse in={open}>
-        {groups.map((group, index) => (
+        {calendarGroups.map((group, index) => (
           <div
             key={index}
             className={styles.groupItem}
@@ -59,7 +68,7 @@ export function CalendarGroups(props:IProps) {
               style={{
                 color: group.color,
               }}
-              checked={checked.includes(group.id)}
+              checked={isChecked(checks, group)}
               inputProps={{ 'aria-label': 'controlled', }}
             />
             <div className={styles.groupContent}>
