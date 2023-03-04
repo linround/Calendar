@@ -1,6 +1,6 @@
 import styles from './styleSimpleMonth.module.less'
 import React, {
-  useContext, useEffect, useState
+  useContext, useEffect, useLayoutEffect, useState
 } from 'react'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
 import classnames from 'classnames'
@@ -14,7 +14,7 @@ export  const AddCalendarPopover = () => {
     [styles.searchPopover]: true,
     [commonPopoverStyle.popover]: true,
   })
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (addCalendarRef) {
       const { top, left, } = addCalendarRef.getBoundingClientRect()
       setLeft(left)

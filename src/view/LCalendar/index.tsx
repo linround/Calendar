@@ -222,6 +222,13 @@ export default function () {
     setEvents(events.filter((e) => !e.isCreate))
   }
 
+  const handleUpdateEvent = useCallback(async (event:CalendarEvent) => {
+    const { code, } = await updateEvent(event)
+    if (code === SUCCESS_CODE) {
+      updateEventList()
+    }
+  }, [])
+
   const containerMousedown = () => {
     if (!globalCache.currentMousedownEvent) {
       clearPagePopover()
@@ -234,14 +241,6 @@ export default function () {
       clearCreateEvent()
     }
   }
-
-  const handleUpdateEvent = useCallback(async (event:CalendarEvent) => {
-    const { code, } = await updateEvent(event)
-    if (code === SUCCESS_CODE) {
-      updateEventList()
-    }
-  }, [])
-
   const containerMouseup = () => {
     const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
     // 如果点击在事件上
