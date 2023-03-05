@@ -4,7 +4,6 @@ import { SvgIcon } from '../../../components'
 import { CalendarContext } from '../props/propsContext'
 
 
-
 export  function SearchComponent() {
   const { setAddCalendarRef, } = useContext(CalendarContext)
   const showPopover = (event:React.MouseEvent) => {

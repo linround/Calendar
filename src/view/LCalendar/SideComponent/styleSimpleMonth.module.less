@@ -1,6 +1,55 @@
 @import "../variables.less";
 
 
+.createDialog {
+  display: flex;
+  width: 300px;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 10px ;
+  user-select: none;
+  &Icon {
+    line-height: 0;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover{
+      background-color: @IconHoverBgColor;
+    }
+    &:active {
+      background-color: @IconActiveColor;
+    }
+  }
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &Body {
+    display: flex;
+  }
+  &Footer {}
+}
+
+.add {
+  border-radius: 4px;
+  padding: 2px;
+  &Item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    &:hover{
+      background-color: @IconHoverBgColor;
+    }
+    &Icon {
+      line-height: 0;
+      margin-right: 2px;
+    }
+  }
+}
+
 .group {
   display: flex;
   flex-direction: column;
@@ -55,9 +104,6 @@
     cursor: pointer;
     line-height: 0;
     margin-left: 5px;
-  }
-  &Popover {
-    position: fixed;
   }
   &Input {
     padding: 5px;
