@@ -9,7 +9,7 @@ import SvgIcon from '../../../components/SvgIcon'
 import { CreateCalendar, IArg } from './CreateCalendar'
 
 export  const AddCalendarPopover = () => {
-  const { addCalendarRef, setAddCalendarRef, } = useContext(CalendarContext)
+  const { addCalendarRef, setAddCalendarRef, groups, setGroups, } = useContext(CalendarContext)
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
   const [openCreateDialog, setCreateDialog] = useState(false)
@@ -39,7 +39,14 @@ export  const AddCalendarPopover = () => {
     setSubscribeDialog(true)
   }
   const onCreateCalendar = (arg:IArg) => {
-    console.log(arg)
+    const { color, name, } = arg
+    const group = {
+      id: Date.now(),
+      name,
+      color,
+      type: 0, // 0自己的日历 1订阅的日历
+    }
+    setGroups([...groups, group])
   }
 
 

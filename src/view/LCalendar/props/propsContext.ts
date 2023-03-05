@@ -82,6 +82,7 @@ export const CalendarContext = createContext<ICalendarContext>({
   setType: () => undefined,
 
   groups: [],
+  setGroups: () => void 0,
   checks: [],
   setChecks: () => void 0,
 

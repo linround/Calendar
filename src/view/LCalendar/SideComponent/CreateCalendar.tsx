@@ -16,20 +16,35 @@ export interface IProps {
   onConfirm: (arg:IArg)=> void
 }
 
+const defaultColor = '#B80000'
+const defaultName = ''
+
 export function CreateCalendar(props: IProps) {
   const { onClose, open, onConfirm, } = props
-  const [color, setColor] = useState('#B80000')
-  const [name, setName] = useState<string>('')
+  const [color, setColor] = useState(defaultColor)
+  const [name, setName] = useState<string>(defaultName)
   const handleChange = (v:any) => {
     setColor(v.hex)
   }
-
+  const clear = () => {
+    setColor(defaultColor)
+    setName(defaultName)
+  }
+  const handleClose = () => {
+    clear()
+    onClose()
+  }
+  const handleConfirm = () => {
+    clear()
+    onConfirm({ color, name, })
+    onClose()
+  }
   return (
     <Dialog open={open}>
       <div className={style.createDialog}  >
         <div className={style.createDialogHeader}>
           <div className={style.createDialogTitle}>新建日历</div>
-          <div className={style.createDialogIcon} onClick={onClose}>
+          <div className={style.createDialogIcon} onClick={handleClose}>
             <SvgIcon iconName='popover_x' />
           </div>
         </div>
@@ -58,7 +73,7 @@ export function CreateCalendar(props: IProps) {
           </div>
         </div>
         <div className={style.createDialogFooter}>
-          <Button variant="contained" onClick={() => onConfirm({ color, name, })}>确认</Button>
+          <Button variant="contained" onClick={handleConfirm}>确认</Button>
         </div>
       </div>
     </Dialog>

@@ -101,7 +101,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
   const [type, setType] = useState<string>(DEFAULT_TYPE)
   const [value, setValue] = useState<IValue>(DEFAULT_VALUE)
-  const [groups]  = useState(createCalendarGroup())
+  const [groups, setGroups]  = useState<calendarGroup[]>(createCalendarGroup())
   const [checks, setChecks] = useState<calendarGroup[]>([])
   const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
 
@@ -235,6 +235,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         value,
         setValue,
         groups,
+        setGroups,
         checks,
         setChecks,
         addCalendarRef,

@@ -48,6 +48,8 @@ export interface IBaseContext {
 
 export interface IDataGroups {
   groups: calendarGroup[]
+  setGroups:React.Dispatch<React.SetStateAction<calendarGroup[]>>
+
   checks: calendarGroup[]
   setChecks: React.Dispatch<React.SetStateAction<calendarGroup[]>>
 }

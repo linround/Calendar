@@ -5,6 +5,8 @@ import styles from './styleSimpleMonth.module.less'
 import Checkbox from '@mui/material/Checkbox'
 import { calendarGroup } from './utils'
 import { IDataGroups } from '../props/type'
+import dayStyle from '../components/day.module.less'
+import classnames from 'classnames'
 
 
 
@@ -41,6 +43,10 @@ export function CalendarGroups(props:IProps) {
     setOpen(!open)
   }
 
+  const ItemContainerClass = classnames({
+    [styles.groupItemContainer]: true,
+    [dayStyle.scrollContainer]: true,
+  })
   return (
     <div className={styles.group}>
       <div className={styles.groupHeader} onClick={handleClick}>
@@ -57,30 +63,33 @@ export function CalendarGroups(props:IProps) {
         </div>
       </div>
       <Collapse in={open}>
-        {calendarGroups.map((group, index) => (
-          <div
-            key={index}
-            className={styles.groupItem}
-            onClick={() => handleChange(group)}
-            onMouseEnter={() => setHover(group.id)}
-            onMouseLeave={() => setHover(null)}>
-            <Checkbox
-              style={{
-                color: group.color,
-              }}
-              checked={isChecked(checks, group)}
-              inputProps={{ 'aria-label': 'controlled', }}
-            />
-            <div className={styles.groupContent}>
-              {group.name}
+        <div className={ItemContainerClass}>
+          {calendarGroups.map((group, index) => (
+            <div
+              key={index}
+              className={styles.groupItem}
+              onClick={() => handleChange(group)}
+              onMouseEnter={() => setHover(group.id)}
+              onMouseLeave={() => setHover(null)}>
+              <Checkbox
+                style={{
+                  color: group.color,
+                }}
+                checked={isChecked(checks, group)}
+                inputProps={{ 'aria-label': 'controlled', }}
+              />
+              <div className={styles.groupContent}>
+                {group.name}
+              </div>
+              <div className={styles.groupItemRight} style={{
+                display: hover === group.id ? '' : 'none',
+              }}>
+                <SvgIcon className={styles.groupItemIcon}  iconName='side_settings' />
+              </div>
             </div>
-            <div className={styles.groupItemRight} style={{
-              display: hover === group.id ? '' : 'none',
-            }}>
-              <SvgIcon className={styles.groupItemIcon}  iconName='side_settings' />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
 
       </Collapse>
     </div>
