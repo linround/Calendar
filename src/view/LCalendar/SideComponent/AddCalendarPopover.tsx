@@ -7,6 +7,7 @@ import classnames from 'classnames'
 import { CalendarContext } from '../props/propsContext'
 import SvgIcon from '../../../components/SvgIcon'
 import { CreateCalendar, IArg } from './CreateCalendar'
+import { CommonMessage } from '../commonMessage/message'
 
 export  const AddCalendarPopover = () => {
   const { addCalendarRef, setAddCalendarRef, groups, setGroups, } = useContext(CalendarContext)
@@ -14,6 +15,7 @@ export  const AddCalendarPopover = () => {
   const [top, setTop] = useState(0)
   const [openCreateDialog, setCreateDialog] = useState(false)
   const [openSubscribeDialog, setSubscribeDialog] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
 
 
   const className = classnames({
@@ -47,11 +49,13 @@ export  const AddCalendarPopover = () => {
       type: 0, // 0自己的日历 1订阅的日历
     }
     setGroups([...groups, group])
+    setShowMessage(true)
   }
 
 
   return ((
     <>
+      <CommonMessage setOpen={setShowMessage} open={showMessage} />
       <CreateCalendar
         open={openCreateDialog}
         onConfirm={onCreateCalendar}

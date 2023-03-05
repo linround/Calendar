@@ -8,12 +8,11 @@ import { ISimpleControllerProps } from './utils'
 import { SearchComponent } from './SearchComponent'
 import { CalendarGroups } from './CalendarGroups'
 import { CalendarContext } from '../props/propsContext'
-import { CreateCalendar } from './CreateCalendar'
 
 interface IProps extends ISideAdd, ISimpleControllerProps {}
 
 export function SideComponent(props:IProps) {
-  const { groups, setChecks, checks, } = useContext(CalendarContext)
+  const { groups, setChecks, checks, setGroups, } = useContext(CalendarContext)
 
   return (
     <>
@@ -29,12 +28,14 @@ export function SideComponent(props:IProps) {
         setChecks={setChecks}
         checks={checks}
         type={0}
+        setGroups={setGroups}
         name='我的日历' />
       <CalendarGroups
         groups={groups}
         setChecks={setChecks}
         checks={checks}
         type={1}
+        setGroups={setGroups}
         name='订阅日历' />
     </>
   )
