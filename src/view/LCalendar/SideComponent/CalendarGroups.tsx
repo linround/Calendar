@@ -24,7 +24,7 @@ function isChecked(checks:calendarGroup[], checked:calendarGroup) {
 export function CalendarGroups(props:IProps) {
   const { name, groups, type, checks, setChecks, } = props
   const calendarGroups = groups.filter((item) => item.type === type)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   const [hover, setHover] = useState(null)
 
 
