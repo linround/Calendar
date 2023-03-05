@@ -6,8 +6,12 @@
   width: 300px;
   overflow: hidden;
   flex-direction: column;
-  padding: 10px ;
   user-select: none;
+  &Title {
+    font-weight: 600;
+    font-size: 20px;
+    color: #343431;
+  }
   &Icon {
     line-height: 0;
     cursor: pointer;
@@ -20,14 +24,23 @@
     }
   }
   &Header {
+    padding: 10px ;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   &Body {
     display: flex;
+    justify-content: center;
+
+    &Name {
+      margin: 10px 0;
+    }
   }
-  &Footer {}
+  &Footer {
+    text-align: right;
+    padding: 10px 20px ;
+  }
 }
 
 .add {
