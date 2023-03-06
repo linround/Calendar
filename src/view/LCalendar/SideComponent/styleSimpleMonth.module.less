@@ -3,7 +3,7 @@
 
 .createDialog {
   display: flex;
-  width: 300px;
+  width: 334px;
   overflow: hidden;
   flex-direction: column;
   user-select: none;
@@ -32,6 +32,17 @@
   &Body {
     display: flex;
     justify-content: center;
+    &Container {
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+      :global{
+        .circle-picker {
+          display: flex;
+          gap: 10px;
+        }
+      }
+    }
 
     &Name {
       margin: 10px 0;

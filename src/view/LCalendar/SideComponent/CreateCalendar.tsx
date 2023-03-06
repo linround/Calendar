@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import SvgIcon from '../../../components/SvgIcon'
 import style from './styleSimpleMonth.module.less'
-import { GithubPicker } from 'react-color'
+import { CirclePicker } from 'react-color'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
@@ -16,7 +16,7 @@ export interface IProps {
   onConfirm: (arg:IArg)=> void
 }
 
-const defaultColor = '#B80000'
+const defaultColor = '#F44336'
 const defaultName = ''
 
 export function CreateCalendar(props: IProps) {
@@ -49,7 +49,7 @@ export function CreateCalendar(props: IProps) {
           </div>
         </div>
         <div className={style.createDialogBody}>
-          <div>
+          <div className={style.createDialogBodyContainer}>
             <div className={style.createDialogBodyName} >
               <TextField
                 style={{
@@ -58,18 +58,18 @@ export function CreateCalendar(props: IProps) {
                 hiddenLabel
                 defaultValue={name}
                 onChange={(e) => setName(e.currentTarget.value)}
-                variant="filled"
+                variant="outlined"
                 size="small"
                 placeholder='日历名（如工作、学习日历）'
               />
             </div>
-            <GithubPicker
+            <CirclePicker
               onChange={handleChange}
-              color='#455A64'
-              triangle='hide'
+              color={color}
+              circleSpacing='0'
               width='100%'
-              colors = {['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76',
-                '#1273DE', '#004DCF', '#5300EB', '#7B64FF', '#666666']} />
+              colors = {['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+                '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FF9800', '#FF5722', '#795548', '#607D8B']} />
           </div>
         </div>
         <div className={style.createDialogFooter}>
