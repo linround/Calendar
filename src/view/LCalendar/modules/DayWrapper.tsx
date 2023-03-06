@@ -1,8 +1,10 @@
 import React, {
-  useCallback, useContext, useEffect
+  useCallback, useContext, useEffect, useMemo
 } from 'react'
 import DayComponent from '../components/DayComponent'
-import { EventContext, MouseEventContext } from '../props/propsContext'
+import {
+  CalendarContext, EventContext, MouseEventContext
+} from '../props/propsContext'
 
 import { IMouseEvent, IMouseTime } from '../utils/calendar'
 import {
@@ -28,6 +30,8 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     setNormalPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
   const { resetEvents, } = useContext(EventContext)
+  const { checks, groups, } = useContext(CalendarContext)
+  const group = useMemo(() => checks[0] || groups[0], [checks, groups])
 
   /**
    * todo
@@ -127,7 +131,9 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
       } else {
         const createStart = roundTime(mousedownTime  as number)
         const createEnd = createStart + (ROUND_TIME  * 60 * 1000)
-        const createEvent = createTimeEvent(createStart, createEnd)
+        const createEvent = createTimeEvent(
+          createStart, createEnd, group
+        )
         setGlobalCacheValue('currentCreateEvent', createEvent)
         setCreateEvent(createEvent)
         setCreateStart(createStart)

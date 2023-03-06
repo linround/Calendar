@@ -7,8 +7,8 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
 export interface IArg {
-  color: string
-  name: string
+  groupColor: string
+  groupName: string
 }
 export interface IProps {
   open: boolean
@@ -36,7 +36,7 @@ export function CreateCalendar(props: IProps) {
   }
   const handleConfirm = () => {
     clear()
-    onConfirm({ color, name, })
+    onConfirm({ groupColor: color, groupName: name, })
     onClose()
   }
   return (

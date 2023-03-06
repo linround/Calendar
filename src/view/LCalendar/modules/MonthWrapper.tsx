@@ -1,9 +1,11 @@
 import React, {
   useCallback,
-  useContext, useEffect, useState
+  useContext, useEffect, useMemo, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
-import { EventContext, MouseEventContext } from '../props/propsContext'
+import {
+  CalendarContext, EventContext, MouseEventContext
+} from '../props/propsContext'
 import {
   IMonthMouseTime, IMouseEvent, VTimestampInput
 } from '../utils/calendar'
@@ -28,7 +30,8 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
     setNormalPopoverRef,
     createPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
-
+  const { checks, groups, } = useContext(CalendarContext)
+  const group = useMemo(() => checks[0] || groups[0], [checks, groups])
   const [isMore, setIsMore] = useState<boolean>(false)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
 
@@ -129,7 +132,9 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
         const createEnd = localizer.add(
           createStart, 1, 'day'
         )
-        const createEvent = createTimeEvent(createStart, createEnd)
+        const createEvent = createTimeEvent(
+          createStart, createEnd, group
+        )
 
         setCreateEvent(createEvent)
         setCreateStart(createStart)

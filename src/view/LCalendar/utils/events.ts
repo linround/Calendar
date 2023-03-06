@@ -8,6 +8,7 @@ import {
 } from './timesStamp'
 import { CalendarEventVisual } from './modes/common'
 import React from 'react'
+import { calendarGroup } from '../SideComponent/utils'
 
 
 const EVENT_DEFAULT_BG_COLOR = 'white'
@@ -135,11 +136,13 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
 }
 
 
-export function createTimeEvent(start:VTimestampInput, end:VTimestampInput):CalendarEvent {
+export function createTimeEvent(
+  start:VTimestampInput, end:VTimestampInput, group:calendarGroup
+):CalendarEvent {
   return {
     eventName: '',
     eventLocation: '',
-    eventColor: 'black',
+    eventColor: group.groupColor,
     start,
     end,
     eventTimed: true,

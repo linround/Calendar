@@ -41,12 +41,12 @@ export  const AddCalendarPopover = () => {
     setSubscribeDialog(true)
   }
   const onCreateCalendar = (arg:IArg) => {
-    const { color, name, } = arg
+    const { groupName, groupColor, } = arg
     const group = {
-      id: Date.now(),
-      name,
-      color,
-      type: 0, // 0自己的日历 1订阅的日历
+      groupId: Date.now(),
+      groupName,
+      groupColor,
+      groupType: 0, // 0自己的日历 1订阅的日历
     }
     setGroups([...groups, group])
     setShowMessage(true)
