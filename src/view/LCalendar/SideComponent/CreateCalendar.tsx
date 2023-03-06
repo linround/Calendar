@@ -64,6 +64,7 @@ export function CreateCalendar(props: IProps) {
               />
             </div>
             <CirclePicker
+              className={style.createDialogBodyCirclePicker}
               onChange={handleChange}
               color={color}
               circleSpacing={0}
