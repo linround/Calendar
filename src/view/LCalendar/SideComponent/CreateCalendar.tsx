@@ -67,6 +67,7 @@ export function CreateCalendar(props: IProps) {
               className={style.createDialogBodyCirclePicker}
               onChange={handleChange}
               color={color}
+              circleSize={18}
               circleSpacing={0}
               width='100%'
               colors = {['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
