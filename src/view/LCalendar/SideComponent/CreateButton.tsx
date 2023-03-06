@@ -11,7 +11,7 @@ import { createTimeEvent } from '../utils/events'
 import { ISideAdd } from '../modules/options'
 
 export function CreateButton(props:ISideAdd) {
-  const { value, } = useContext(CalendarContext)
+  const { value, group, } = useContext(CalendarContext)
   const { setShowCreatePopover, } = useContext(MouseEventContext)
   const { resetEvents, } = useContext(EventContext)
   const { setCreateEvent, } = props
@@ -20,7 +20,9 @@ export function CreateButton(props:ISideAdd) {
     const dayTime = getDayNowTime(value)
     const startTime = roundTime(dayTime as number, false)
     const endTime = startTime + (ROUND_TIME  * 60 * 1000)
-    const createEvent = createTimeEvent(startTime, endTime)
+    const createEvent = createTimeEvent(
+      startTime, endTime, group
+    )
     setCreateEvent(createEvent)
     setShowCreatePopover(true)
     resetEvents(createEvent, createEvent)

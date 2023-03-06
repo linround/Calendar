@@ -1,3 +1,4 @@
+
 import {
   BaseContext,
   EventContext,
@@ -12,7 +13,7 @@ import {
 import React,
 {
   useCallback,
-  useEffect,
+  useEffect, useLayoutEffect,
   useMemo,
   useState
 } from 'react'
@@ -39,7 +40,8 @@ import {
 import { ITimes } from './type'
 import {  parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
-import { getEventList } from '../../../api/event'
+import { getEventList, getGroupList } from '../../../api'
+
 import { calendarGroup, createCalendarGroup } from '../SideComponent/utils'
 
 
@@ -105,6 +107,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [checks, setChecks] = useState<calendarGroup[]>([])
   const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
 
+  const group = useMemo(() => checks[0] || groups[0], [checks, groups])
 
 
 
@@ -167,6 +170,18 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     updateEventList()
       .then((res) => console.log(res))
   }, [value])
+
+
+
+  const updateGroupList = useCallback(async function () {
+    const { data, } = await getGroupList()
+    setGroups(data.list)
+    return
+  }, [])
+  useLayoutEffect(function() {
+    updateGroupList()
+      .then((r) => r)
+  }, [])
 
 
 
@@ -237,9 +252,11 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         groups,
         setGroups,
         checks,
+        group,
         setChecks,
         addCalendarRef,
         setAddCalendarRef,
+        updateGroupList,
       }}>
         <IntervalsContext.Provider value={{
           maxDays,

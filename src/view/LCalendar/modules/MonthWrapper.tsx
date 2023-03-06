@@ -30,8 +30,7 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
     setNormalPopoverRef,
     createPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
-  const { checks, groups, } = useContext(CalendarContext)
-  const group = useMemo(() => checks[0] || groups[0], [checks, groups])
+  const { group, } = useContext(CalendarContext)
   const [isMore, setIsMore] = useState<boolean>(false)
   const [createEnd, setCreateEnd] = useState<VTimestampInput| null>(null)
 

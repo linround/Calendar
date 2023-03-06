@@ -54,7 +54,9 @@ export interface IDataGroups {
   setChecks: React.Dispatch<React.SetStateAction<calendarGroup[]>>
 }
 export interface ICalendarContext extends IDataGroups{
-  value: IValue,
+  updateGroupList:()=>void
+  group:calendarGroup
+  value: IValue
   setValue: React.Dispatch<React.SetStateAction<IValue>>
   type: string,
   setType: React.Dispatch<React.SetStateAction<string>>

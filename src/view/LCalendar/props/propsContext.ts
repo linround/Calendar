@@ -17,6 +17,7 @@ import {
   IMouseEventContext
 } from './type'
 import { CalendarEvent } from '../utils/calendar'
+import { calendarGroup } from '../SideComponent/utils'
 
 export const DEFAULT_INTERVALS = {
   intervalHeight: 48,
@@ -76,11 +77,12 @@ export const BaseContext = createContext<IBaseContext>({
   weekdaySkips: DEFAULT_WEEK_SKIPS,
 })
 export const CalendarContext = createContext<ICalendarContext>({
+  updateGroupList: () => void 0,
   value: Date.now(),
   setValue: () => undefined,
   type: DEFAULT_TYPE,
   setType: () => undefined,
-
+  group: {} as calendarGroup,
   groups: [],
   setGroups: () => void 0,
   checks: [],

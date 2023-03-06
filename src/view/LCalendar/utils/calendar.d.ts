@@ -59,6 +59,10 @@ export interface CalendarDayBodySlotScope extends CalendarDaySlotScope {
 }
 
 
+export interface CalendarGroup {
+  [prop :string] :any
+}
+
 export interface CalendarEvent {
   [prop:string]: any
 }

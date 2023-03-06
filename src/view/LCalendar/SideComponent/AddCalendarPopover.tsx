@@ -8,9 +8,11 @@ import { CalendarContext } from '../props/propsContext'
 import SvgIcon from '../../../components/SvgIcon'
 import { CreateCalendar, IArg } from './CreateCalendar'
 import { CommonMessage } from '../commonMessage/message'
+import { handleCreateGroup } from '../../../api'
+import { SUCCESS_CODE } from '../../../request'
 
 export  const AddCalendarPopover = () => {
-  const { addCalendarRef, setAddCalendarRef, groups, setGroups, } = useContext(CalendarContext)
+  const { addCalendarRef, setAddCalendarRef, updateGroupList, } = useContext(CalendarContext)
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
   const [openCreateDialog, setCreateDialog] = useState(false)
@@ -40,16 +42,19 @@ export  const AddCalendarPopover = () => {
     setAddCalendarRef(null)
     setSubscribeDialog(true)
   }
-  const onCreateCalendar = (arg:IArg) => {
+  const onCreateCalendar = async (arg:IArg) => {
     const { groupName, groupColor, } = arg
     const group = {
-      groupId: Date.now(),
-      groupName,
-      groupColor,
+      userId: 123456,
       groupType: 0, // 0自己的日历 1订阅的日历
+      groupColor,
+      groupName,
     }
-    setGroups([...groups, group])
-    setShowMessage(true)
+    const { code, } = await handleCreateGroup(group)
+    if (code === SUCCESS_CODE) {
+      setShowMessage(true)
+      updateGroupList()
+    }
   }
 
 

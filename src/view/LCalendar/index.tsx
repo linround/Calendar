@@ -53,6 +53,7 @@ import { MonthWrapper } from './modules/MonthWrapper'
 import { CreatePopover } from './Popover/CreatePopover'
 import { NormalPopover } from './Popover/NormalPopover'
 import { AddCalendarPopover } from './SideComponent/AddCalendarPopover'
+import { getGroupList } from '../../api'
 
 
 const globalCache:IGlobalCache = {

@@ -30,8 +30,7 @@ export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {
     setNormalPopoverRef,
     setNormalEvent, } = useContext(MouseEventContext)
   const { resetEvents, } = useContext(EventContext)
-  const { checks, groups, } = useContext(CalendarContext)
-  const group = useMemo(() => checks[0] || groups[0], [checks, groups])
+  const { group, } = useContext(CalendarContext)
 
   /**
    * todo
