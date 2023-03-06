@@ -21,28 +21,32 @@ export interface calendarGroup {
 export function createCalendarGroup() {
   return [
     {
-      id: 1,
-      name: '主日历',
-      type: 0, // 0自己的日历 1订阅的日历
-      color: 'blue',
+      groupId: 1,
+      userId: '',
+      groupType: 0, // 0自己的日历 1订阅的日历
+      groupName: '主日历',
+      groupColor: 'blue',
     },
     {
-      id: 2,
-      name: '读书',
-      type: 0, // 0自己的日历 1订阅的日历
-      color: 'green',
+      groupId: 2,
+      userId: '',
+      groupType: 0, // 0自己的日历 1订阅的日历
+      groupName: '主日历',
+      groupColor: 'blue',
     },
     {
-      id: 3,
-      name: '张三的日历',
-      type: 1, // 0自己的日历 1订阅的日历
-      color: 'red',
+      groupId: 3,
+      userId: '',
+      groupType: 1, // 0自己的日历 1订阅的日历
+      groupName: '主日历',
+      groupColor: 'blue',
     },
     {
-      id: 4,
-      name: '王二的日历',
-      type: 1, // 0自己的日历 1订阅的日历
-      color: 'yellow',
+      groupId: 4,
+      userId: '',
+      groupType: 1, // 0自己的日历 1订阅的日历
+      groupName: '主日历',
+      groupColor: 'blue',
     }
   ]
 }

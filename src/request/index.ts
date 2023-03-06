@@ -1,9 +1,11 @@
 import axios from 'axios'
 export const SUCCESS_CODE = 200
 
+const cloud = 'http://121.199.1.247:8888'
+const local = 'http://127.0.0.1:8888'
 
 const service = axios.create({
-  baseURL: 'http://121.199.1.247:8888',
+  baseURL: local,
 })
 
 

@@ -70,21 +70,21 @@ export function setColumnCount(groups:ColumnGroup[]) {
 }
 
 export function getOpenGroup(
-  groups:ColumnGroup[], start:number, end:number, timed:boolean
+  groups:ColumnGroup[], start:number, end:number, eventTimed:boolean
 ):number {
   for (let i = 0; i < groups.length; i++) {
     const group = groups[i]
     let intersected = false
     // 如果当前事件的时间段 和 当前组存在堆叠
     if (hasOverlap(
-      start, end, group.start, group.end, timed
+      start, end, group.start, group.end, eventTimed
     )) {
       for (let k = 0; k < group.visuals.length; k++) {
         const groupVisual = group.visuals[k]
-        const [groupStart, groupEnd] = timed ? getRange(groupVisual.event) : getDayRange(groupVisual.event)
+        const [groupStart, groupEnd] = eventTimed ? getRange(groupVisual.event) : getDayRange(groupVisual.event)
 
         if (hasOverlap(
-          start, end, groupStart, groupEnd, timed
+          start, end, groupStart, groupEnd, eventTimed
         )) {
           intersected = true
           break
@@ -111,7 +111,7 @@ export function getOverlapGroupHandler(firstWeekday:number) {
     },
     // 得到某天 中的日历事件的视图
     getVisuals(
-      day:CalendarTimestamp, dayEvents:CalendarEventParsed[], timed:boolean, reset:boolean
+      day:CalendarTimestamp, dayEvents:CalendarEventParsed[], eventTimed:boolean, reset:boolean
     ) {
       //
       if (day.weekday === firstWeekday) {
@@ -122,16 +122,16 @@ export function getOverlapGroupHandler(firstWeekday:number) {
       // 设置 columnCount,column,left,width基本属性，并按照规则排序
       const visuals = getVisuals(dayEvents, dayStart)
       visuals.forEach((visual) => {
-        const [start, end] = timed ? getRange(visual.event) : getDayRange(visual.event)
+        const [start, end] = eventTimed ? getRange(visual.event) : getDayRange(visual.event)
         if (handler.groups.length > 0 && !hasOverlap(
-          start, end, handler.min, handler.max, timed
+          start, end, handler.min, handler.max, eventTimed
         )) {
           // 如果没有堆叠
           setColumnCount(handler.groups)
           handler.reset()
         }
         let targetGroup = getOpenGroup(
-          handler.groups, start, end, timed
+          handler.groups, start, end, eventTimed
         )
         if (targetGroup === -1) {
           targetGroup = handler.groups.length
@@ -157,7 +157,7 @@ export function getOverlapGroupHandler(firstWeekday:number) {
 
       setColumnCount(handler.groups)
 
-      if (timed) {
+      if (eventTimed) {
         handler.reset()
       }
       return visuals

@@ -20,7 +20,7 @@ export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRo
         segments.map((seg, index) => {
           const { event, left, right, span, } = seg
           const gap = left - lastEnd
-          const content = event.name || NO_NAME_EVENT_VALUE
+          const content = event.eventName || NO_NAME_EVENT_VALUE
           lastEnd = right + 1
           return (
             <Fragment key={index}>

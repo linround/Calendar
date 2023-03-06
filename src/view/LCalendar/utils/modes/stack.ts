@@ -195,11 +195,11 @@ export const stack:CalendarEventOverlapMode = (
 ) => {
   const handler = getOverlapGroupHandler(firstWeekday)
   return (
-    day, dayEvents, timed, reset
+    day, dayEvents, eventTimed, reset
   ) => {
-    if (!timed) {
+    if (!eventTimed) {
       return handler.getVisuals(
-        day, dayEvents, timed, reset
+        day, dayEvents, eventTimed, reset
       )
     }
     // 当日的时间

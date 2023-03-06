@@ -16,14 +16,14 @@ interface IProps extends IDataGroups{
   type: number
 }
 function isChecked(checks:calendarGroup[], checked:calendarGroup) {
-  const index = checks.findIndex((g) => g.id === checked.id)
+  const index = checks.findIndex((g) => g.groupId === checked.groupId)
   return index > -1
 }
 
 
 export function CalendarGroups(props:IProps) {
   const { name, groups, type, checks, setChecks, } = props
-  const calendarGroups = groups.filter((item) => item.type === type)
+  const calendarGroups = groups.filter((item) => item.groupType === type)
   const [open, setOpen] = useState(true)
   const [hover, setHover] = useState(null)
 
@@ -31,7 +31,7 @@ export function CalendarGroups(props:IProps) {
 
 
   const handleChange = (group: calendarGroup) => {
-    const index = checks.findIndex((g) => g.id === group.id)
+    const index = checks.findIndex((g) => g.groupId === group.groupId)
     if (index > -1) {
       checks.splice(index, 1)
     } else {
@@ -69,20 +69,20 @@ export function CalendarGroups(props:IProps) {
               key={index}
               className={styles.groupItem}
               onClick={() => handleChange(group)}
-              onMouseEnter={() => setHover(group.id)}
+              onMouseEnter={() => setHover(group.groupId)}
               onMouseLeave={() => setHover(null)}>
               <Checkbox
                 style={{
-                  color: group.color,
+                  color: group.groupColor,
                 }}
                 checked={isChecked(checks, group)}
                 inputProps={{ 'aria-label': 'controlled', }}
               />
               <div className={styles.groupContent}>
-                {group.name}
+                {group.groupName}
               </div>
               <div className={styles.groupItemRight} style={{
-                display: hover === group.id ? '' : 'none',
+                display: hover === group.groupId ? '' : 'none',
               }}>
                 <SvgIcon className={styles.groupItemIcon}  iconName='side_settings' />
               </div>

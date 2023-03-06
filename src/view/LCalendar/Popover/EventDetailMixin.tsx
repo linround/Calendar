@@ -9,30 +9,30 @@ import {
 
 export const EventDetailMixin = {
   renderPersonnel(event:CalendarEvent) {
-    const { personnel, } = event
+    const { eventPersonnel, } = event
     return (
       <div className={styles.popoverBodyItem}>
         <SvgIcon iconName='popover_users' className={styles.popoverBodyIcon}/>
-        <div className={styles.popoverBodyItemContent}>{personnel}</div>
+        <div className={styles.popoverBodyItemContent}>{eventPersonnel}</div>
       </div>
     )
   },
   renderLocation(event:CalendarEvent) {
-    const { location, } = event
+    const { eventLocation, } = event
     return (
       <div className={styles.popoverBodyItem}>
         <SvgIcon iconName='popover_location' className={styles.popoverBodyIcon}/>
-        <div className={styles.popoverBodyItemContent}>{location}</div>
+        <div className={styles.popoverBodyItemContent}>{eventLocation}</div>
       </div>
     )
   },
   renderAuthor(event:CalendarEvent) {
-    const { author, } = event
+    const { userName, } = event
     return (
       <div className={styles.popoverBodyItem}>
         <SvgIcon iconName='popover_calendar' className={styles.popoverBodyIcon}/>
         <div className={styles.popoverBodyItemContent}>
-          {author}
+          {userName}
         </div>
       </div>
     )

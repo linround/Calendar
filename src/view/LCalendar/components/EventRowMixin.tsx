@@ -31,7 +31,7 @@ export const EventRowMixin = {
     ref?:any
   ) {
     const width = ((Math.abs(len) / slots) * 100) + '%'
-    const bgColor = event.color
+    const bgColor = event.eventColor
     const isCreate = event.isCreate
     const isDragging = event.isDragging
     const isDragged = event.dragged

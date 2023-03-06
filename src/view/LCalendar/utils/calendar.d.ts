@@ -84,7 +84,7 @@ export type CalendarEventOverlapMode = (
   overlapThreshold: number) => (
     day: CalendarDaySlotScope,
     dayEvents: CalendarEventParsed[],
-    timed: boolean,
+    eventTimed: boolean,
     reset: boolean) => CalendarEventVisual[]
 
 

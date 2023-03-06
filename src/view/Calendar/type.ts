@@ -3,5 +3,5 @@ export interface IEvent {
   color:string
   start: number
   end:number
-  timed: boolean
+  eventTimed: boolean
 }

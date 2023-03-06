@@ -35,7 +35,7 @@ export const DEFAULT_EVENT = {
   events: [],
   eventStart: 'start',
   eventEnd: 'end',
-  eventTimed: 'timed',
+  eventTimed: 'eventTimed',
   eventOverlapMode: 'stack',
   eventOverlapThreshold: 60,
   eventHeight: 20,

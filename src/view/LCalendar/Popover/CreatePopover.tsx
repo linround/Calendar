@@ -70,8 +70,8 @@ export function CreatePopover() {
     delete createEvent.isCreate
     delete createEvent.isDragging
     delete createEvent.id
-    createEvent.name = name
-    createEvent.location = location
+    createEvent.eventName = name
+    createEvent.eventLocation = location
     const { code, } = await handleCreateEvent(createEvent)
     if (code === SUCCESS_CODE) {
       clearState()

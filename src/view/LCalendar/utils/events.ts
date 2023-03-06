@@ -18,7 +18,7 @@ export function parseEvent(
   index:number,
   startProperty: string,
   endProperty:string,
-  timed = false,
+  eventTimed = false,
   category: string | false = false
 ): CalendarEventParsed {
   const startInput = input[startProperty]
@@ -28,10 +28,10 @@ export function parseEvent(
 
 
   const start:CalendarTimestamp = isTimedLess(startInput) ?
-    updateHasTime(startParsed as CalendarTimestamp, timed) :
+    updateHasTime(startParsed as CalendarTimestamp, eventTimed) :
     startParsed as CalendarTimestamp
   const end:CalendarTimestamp = isTimedLess(endInput) ?
-    updateHasTime(endParsed as CalendarTimestamp, timed) :
+    updateHasTime(endParsed as CalendarTimestamp, eventTimed) :
     endParsed as CalendarTimestamp
 
   const startIdentifier: number = getDayIdentifier(start)
@@ -99,11 +99,11 @@ function isEventHiddenOn(event:CalendarEventParsed, day:CalendarTimestamp):boole
 
 export function genTimeVisualContent(eventParsed:CalendarEventParsed) {
   const { input, start, end, } = eventParsed
-  const { color = EVENT_DEFAULT_BG_COLOR, name = EVENT_DEFAULT_BG_TITLE, } = input
+  const { eventColor = EVENT_DEFAULT_BG_COLOR, eventName = EVENT_DEFAULT_BG_TITLE, } = input
   return {
-    title: name,
+    title: eventName,
     timeRange: `${start.time}-${end.time}`,
-    backgroundColor: color,
+    backgroundColor: eventColor,
   }
 }
 export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:CalendarDayBodySlotScope):IEventsRect|false {
@@ -137,17 +137,17 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
 
 export function createTimeEvent(start:VTimestampInput, end:VTimestampInput):CalendarEvent {
   return {
-    name: '',
-    location: '',
-    color: 'black',
+    eventName: '',
+    eventLocation: '',
+    eventColor: 'black',
     start,
     end,
-    timed: true,
+    eventTimed: true,
     allDay: false,
     isCreate: true,
     isDragging: true,
-    author: '作者',
-    personnel: '人员',
+    userName: '作者',
+    eventPersonnel: '人员',
   }
 }
 
