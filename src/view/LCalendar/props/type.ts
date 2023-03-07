@@ -1,5 +1,5 @@
 import {
-  CalendarEvent, CalendarEventParsed, CalendarTimestamp, IValue
+  CalendarEvent, CalendarEventParsed, CalendarTimestamp, CalendarUser, IValue
 } from '../utils/calendar'
 import React from 'react'
 import { calendarGroup } from '../SideComponent/utils'
@@ -43,6 +43,8 @@ export interface IBaseContext {
   parsedStart?:CalendarTimestamp
   parsedValue?:CalendarTimestamp
   days?:CalendarTimestamp[]
+  user:CalendarUser | null
+  setUser: React.Dispatch<React.SetStateAction<CalendarUser | null>>
 }
 
 

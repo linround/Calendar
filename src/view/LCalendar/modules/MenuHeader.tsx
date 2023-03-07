@@ -6,11 +6,12 @@ import { SvgIcon } from '../../../components'
 import { IHeaderEvent } from '../utils/calendar'
 import MenuTypeSelector from './MenuTypeSelector'
 import { getValueFormat } from '../utils/time'
-import { CalendarContext } from '../props/propsContext'
+import { BaseContext, CalendarContext } from '../props/propsContext'
 
 
 export default function (props:IHeaderEvent) {
   const { setAccountRef, accountRef, } = useContext(CalendarContext)
+  const { user, } = useContext(BaseContext)
   const showAccountPopover = (event:React.MouseEvent) => {
     if (accountRef) {
       return
@@ -55,7 +56,7 @@ export default function (props:IHeaderEvent) {
           {accountRef && <div className={styles.headerImgMask}></div>}
 
           <div className={styles.headerImg} onClick={showAccountPopover}>
-            <img src='https://avatars.githubusercontent.com/u/44738166?v=4'
+            <img src={user?.avatarUrl}
               height={30}
               width={30}/>
           </div>

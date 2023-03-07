@@ -2,12 +2,14 @@ import {
   useContext, useLayoutEffect, useState
 } from 'react'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
-import { CalendarContext } from '../props/propsContext'
+import { BaseContext, CalendarContext } from '../props/propsContext'
 import style from './accountPopover.module.less'
 import classnames from 'classnames'
+import SvgIcon from '../../../components/SvgIcon'
 
 export const AccountPopover = () => {
   const { accountRef, } = useContext(CalendarContext)
+  const { user, } = useContext(BaseContext)
   const [right] = useState(10)
   const [top, setTop] = useState(0)
 
@@ -24,12 +26,37 @@ export const AccountPopover = () => {
   })
   return (
     <>
-      {accountRef &&
-        <div
-          className={className}
+      {
+        accountRef &&
+        <div className={className}
           style={{ top, right, }}>
-          <div>个人中心个人中心个</div>
-        </div>}
+          <div className={style.containerUser}>
+            <div className={style.containerUserContainer}>
+              <div className={style.containerUserImg}>
+                <img src={user?.avatarUrl}
+                  height={60}
+                  width={60} />
+              </div>
+              <div className={style.containerUserInfo}>
+                <div className={style.containerUserInfoName}>{user?.userName}</div>
+                <div className={style.containerUserInfoEmail}>{user?.email}</div>
+              </div>
+            </div>
+            <div className={style.containerUserCenter}>
+              <SvgIcon iconName='user' />
+              <div className={style.containerUserCenterText}>
+                个人中心
+              </div>
+            </div>
+          </div>
+          <div className={style.containerLoginOut}>
+            <SvgIcon iconName='user_log-out' />
+            <div className={style.containerLoginOutText}>
+              退出登录
+            </div>
+          </div>
+        </div>
+      }
     </>
   )
 }

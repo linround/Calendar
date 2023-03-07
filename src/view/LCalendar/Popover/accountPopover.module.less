@@ -1,4 +1,61 @@
+@HoverBgColor: #e0e9f8;
 .container {
-  width: 200px;
+  width: 400px;
+  background-color: #f3f6fc;
+  padding: 20px;
+  border-radius: 15px;
+  &User {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    &Img {
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    &Info{
+      padding:0 15px;
+      &Name{}
+      &Email{
+        margin-top: 3px;
+        font-size: 12px;
+        color: #aeb0af;
+      }
+    }
+    &Container {
+      display: flex;
+      align-items: center;
+    }
 
+    &Center {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 10px;
+      &:hover{
+        background-color:@HoverBgColor;
+      }
+      &Text {
+        margin-left: 5px;
+      }
+    }
+  }
+  &LoginOut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    &:hover{
+      background-color:@HoverBgColor;
+    }
+    &Text {
+      margin-left: 5px;
+    }
+
+  }
 }
