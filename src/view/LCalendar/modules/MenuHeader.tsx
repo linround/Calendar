@@ -51,13 +51,15 @@ export default function (props:IHeaderEvent) {
         <SvgIcon iconName='header_search'
           className={mainStyles.iconHover} />
         <MenuTypeSelector selectType={(type) => setType(type)} type={type} />
-        <div className={styles.headerImg} >
+        <div className={styles.headerImgContainer}>
           {accountRef && <div className={styles.headerImgMask}></div>}
-          <img
-            onClick={showAccountPopover}
-            src='https://avatars.githubusercontent.com/u/44738166?v=4'
-            height={30}
-            width={30}/>
+
+          <div className={styles.headerImg} onClick={showAccountPopover}>
+            <img src='https://avatars.githubusercontent.com/u/44738166?v=4'
+              height={30}
+              width={30}/>
+          </div>
+
         </div>
       </div>
     </div>
