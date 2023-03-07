@@ -12,19 +12,29 @@
       border-radius: 50%;
       overflow: hidden;
       cursor: pointer;
-      border: 8px solid #f5f5f1;
       transition: border-color .3s ease-in-out;
+      border: 8px solid #f5f5f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:hover{
         border-color: rgba(60, 64, 67, 0.08);
       }
     }
     &Info{
       padding:0 15px;
-      &Name{}
+      overflow: hidden;
+      &Name{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       &Email{
         margin-top: 3px;
         font-size: 12px;
         color: #aeb0af;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     &Container {

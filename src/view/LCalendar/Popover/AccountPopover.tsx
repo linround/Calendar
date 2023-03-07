@@ -32,10 +32,15 @@ export const AccountPopover = () => {
           style={{ top, right, }}>
           <div className={style.containerUser}>
             <div className={style.containerUserContainer}>
-              <div className={style.containerUserImg}>
-                <img src={user?.avatarUrl}
-                  height={60}
-                  width={60} />
+              <div
+                style={{ minHeight: 86,
+                  minWidth: 86, }}
+                className={style.containerUserImg}>
+                <img
+                  src={user?.avatarUrl}
+                  width={70}
+                  height={70}
+                />
               </div>
               <div className={style.containerUserInfo}>
                 <div className={style.containerUserInfoName}>{user?.userName}</div>
