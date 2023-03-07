@@ -214,7 +214,6 @@ export default function () {
     setCreateEvent(null)
     setCreateStart(null)
     setDragEvent(null)
-    setAccountRef(null)
   }
 
   function clearCreateEvent() {
@@ -239,7 +238,7 @@ export default function () {
       // 目前的解决方案就是 新建占据大屏
       clearCreateEvent()
     }
-
+    setAccountRef(null)
   }
   const containerMouseup = () => {
     const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
