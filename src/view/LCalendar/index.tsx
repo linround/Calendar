@@ -73,7 +73,7 @@ export default function () {
     times,
     parsedValue, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
-  const { type, value, setValue, setType, } = useContext(CalendarContext)
+  const { type, value, setValue, setType, setAccountRef, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
   const { setCreatePopoverRef,
     setShowCreatePopover,
@@ -214,6 +214,7 @@ export default function () {
     setCreateEvent(null)
     setCreateStart(null)
     setDragEvent(null)
+    setAccountRef(null)
   }
 
   function clearCreateEvent() {
@@ -238,6 +239,7 @@ export default function () {
       // 目前的解决方案就是 新建占据大屏
       clearCreateEvent()
     }
+
   }
   const containerMouseup = () => {
     const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)

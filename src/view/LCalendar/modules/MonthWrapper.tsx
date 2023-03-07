@@ -62,7 +62,6 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   const onMouseupEvent = (e:IMouseEvent) => e
   const onTimeContainerClick = (tms:IMonthMouseTime) => tms
   const onTimeContainerMousedown = (tms:IMonthMouseTime) => {
-
     setMousedownTime(tms.value)
     // 由于鼠标一直在移动，所以确保点击下去的时候不是之前设置的time值
     setMousemoveTime(null)
@@ -71,6 +70,7 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
       // 清除新建的事件
       clearCreateEvent()
       //清除普通事件点击之前的状态
+
       clearNormal()
     } else {
       // 发生在日历事件上
