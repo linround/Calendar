@@ -106,6 +106,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [groups, setGroups]  = useState<calendarGroup[]>(createCalendarGroup())
   const [checks, setChecks] = useState<calendarGroup[]>([])
   const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
+  const [accountRef, setAccountRef] = useState<Element| null>(null)
 
   const group = useMemo(() => checks[0] || groups[0], [checks, groups])
 
@@ -225,6 +226,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     setNormalPopoverRef(null)
     setNormalEvent(null)
     setAddCalendarRef(null)
+    setAccountRef(null)
   }
 
 
@@ -255,6 +257,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
         group,
         setChecks,
         addCalendarRef,
+        accountRef,
+        setAccountRef,
+
         setAddCalendarRef,
         updateGroupList,
       }}>

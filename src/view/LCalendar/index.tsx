@@ -50,10 +50,7 @@ import { SUCCESS_CODE } from '../../request'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
-import { CreatePopover } from './Popover/CreatePopover'
-import { NormalPopover } from './Popover/NormalPopover'
-import { AddCalendarPopover } from './SideComponent/AddCalendarPopover'
-import { getGroupList } from '../../api'
+import { PopoverComponents } from './Popover'
 
 
 const globalCache:IGlobalCache = {
@@ -292,9 +289,7 @@ export default function () {
 
   return (
     <>
-      <AddCalendarPopover />
-      <CreatePopover />
-      <NormalPopover  />
+      <PopoverComponents />
       <div
         className={styles.mainContainer}
         onMouseDown={containerMousedown}

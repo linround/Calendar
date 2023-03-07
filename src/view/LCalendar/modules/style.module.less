@@ -29,9 +29,26 @@
       cursor: pointer;
     }
   }
+  &Img {
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: rgba(60,64,67,.08);
+    border: 5px solid transparent;
+    position: relative;
+    &Mask {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+    &:hover {
+      border: 5px solid rgba(60,64,67,.08);
+    }
+  }
   &Right {
     display: flex;
     align-items: center;
+
     &Options {
       margin: 0 20px;
     }

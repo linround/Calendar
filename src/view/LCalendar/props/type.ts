@@ -63,6 +63,12 @@ export interface ICalendarContext extends IDataGroups{
 
   addCalendarRef: Element|null // 添加日历的popover
   setAddCalendarRef: React.Dispatch<React.SetStateAction<Element | null>>
+
+  accountRef: Element | null
+  setAccountRef: React.Dispatch<React.SetStateAction<Element | null>>
+
+
+
 }
 export interface IIntervalsContext {
   maxDays: number

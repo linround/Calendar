@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './style.module.less'
 import Button from '@mui/material/Button'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
 import { IHeaderEvent } from '../utils/calendar'
 import MenuTypeSelector from './MenuTypeSelector'
-import {  GithubOutlined } from '@ant-design/icons'
 import { getValueFormat } from '../utils/time'
+import { CalendarContext } from '../props/propsContext'
 
 
 export default function (props:IHeaderEvent) {
-
+  const { setAccountRef, accountRef, } = useContext(CalendarContext)
+  const showAccountPopover = (event:React.MouseEvent) => {
+    if (accountRef) {
+      return
+    }
+    setAccountRef(event.currentTarget)
+  }
   const {
     type,
     value,
@@ -45,7 +51,14 @@ export default function (props:IHeaderEvent) {
         <SvgIcon iconName='header_search'
           className={mainStyles.iconHover} />
         <MenuTypeSelector selectType={(type) => setType(type)} type={type} />
-        <GithubOutlined style={{ fontSize: 30, }} />
+        <div className={styles.headerImg} >
+          {accountRef && <div className={styles.headerImgMask}></div>}
+          <img
+            onClick={showAccountPopover}
+            src='https://avatars.githubusercontent.com/u/44738166?v=4'
+            height={30}
+            width={30}/>
+        </div>
       </div>
     </div>
   )

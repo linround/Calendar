@@ -91,6 +91,9 @@ export const CalendarContext = createContext<ICalendarContext>({
   addCalendarRef: null,
   setAddCalendarRef: () => void 0,
 
+  accountRef: null,
+  setAccountRef: () => void 0,
+
 })
 export const IntervalsContext = createContext<IIntervalsContext>({
   maxDays: DEFAULT_MAX_DAYS,
