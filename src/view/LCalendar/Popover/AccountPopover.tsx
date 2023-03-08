@@ -44,7 +44,7 @@ export const AccountPopover = () => {
               </div>
               <div className={style.containerUserInfo}>
                 <div className={style.containerUserInfoName}>{user?.userName}</div>
-                <div className={style.containerUserInfoEmail}>{user?.email}</div>
+                <div className={style.containerUserInfoEmail}>{user?.userEmail}</div>
               </div>
             </div>
             <div className={style.containerUserCenter}>
