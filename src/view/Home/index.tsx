@@ -38,44 +38,11 @@ export default function () {
   }
   return (
     <>
-      material-ui\packages\mui-material\src\Button\Button.d.ts
       <Link to='/Calendar' target='_blank'>
         <div className={menuStyles.panel}
           onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
           <div className={menuStyles.content} style={CalendarStyle}>
-            Calendar
-          </div>
-        </div>
-      </Link>
-      <Link to='/Buttons' target='_blank'>
-        <div className={menuStyles.panel} >
-          <div className={menuStyles.content} style={ButtonsStyle}
-            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
-            Buttons
-          </div>
-        </div>
-      </Link>
-      <Link to='/Click' target='_blank'>
-        <div className={menuStyles.panel} >
-          <div className={menuStyles.content} style={ClickStyle}
-            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
-            Click
-          </div>
-        </div>
-      </Link>
-      <Link to='/Loading' target='_blank'>
-        <div className={menuStyles.panel} >
-          <div className={menuStyles.content} style={LoadingStyle}
-            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
-            Loading
-          </div>
-        </div>
-      </Link>
-      <Link to='/Icons' target='_blank'>
-        <div className={menuStyles.panel} >
-          <div className={menuStyles.content} style={LoadingStyle}
-            onMouseMove={onMouseMove} onMouseOut={onMouseOut}>
-            Icons
+            U日历
           </div>
         </div>
       </Link>
