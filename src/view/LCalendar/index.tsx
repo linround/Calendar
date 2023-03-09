@@ -18,8 +18,8 @@ import {
   DEFAULT_WEEK_DAYS
 } from './utils/time'
 import {
-  IGlobalCache,
-  ITimes
+  ITimes,
+  IGlobalCache
 } from './props/type'
 import {
   CalendarEvent,
