@@ -1,12 +1,14 @@
 import './main.css'
-import App from './App'
 import React from 'react'
 import 'antd/dist/reset.css'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { store } from './store'
+import { router } from './routes'
+import { Provider } from 'react-redux'
+import {  RouterProvider } from 'react-router-dom'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-  .render(<BrowserRouter>
-    <App />
-  </BrowserRouter>)
+  .render(<Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>)

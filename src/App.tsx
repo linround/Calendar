@@ -1,8 +1,13 @@
-import { useRoutes } from 'react-router-dom'
-import Home from './view/Home'
+import {
+  Outlet, useRoutes, useNavigate
+} from 'react-router-dom'
+import { HomePage } from './view/Home'
 import Icons from './view/Icons'
-import LCalendar from './view/LCalendar'
-import { VisualContext } from './view/LCalendar/props/VisualContext'
+import { CalendarPage } from './view/LCalendar/calendar'
+import { useAppSelector } from './store/hooks'
+import { selectUser } from './store/features/user/userSlice'
+import React, { useEffect } from 'react'
+import { ErrorPage } from './view/ErrorPage'
 
 
 
@@ -16,7 +21,18 @@ import { VisualContext } from './view/LCalendar/props/VisualContext'
 
 
 
-
+function Index() {
+  const user = useAppSelector(selectUser)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) navigate('/')
+  }, [user])
+  return (
+    <>
+      <Outlet />
+    </>
+  )
+}
 
 
 
@@ -25,22 +41,30 @@ function App() {
   const element = useRoutes([
     {
       path: '/',
-      element: <Home />,
-    },
-    {
-      path: '/Calendar',
-      element: (
-        <VisualContext value={{}}>
-          <LCalendar></LCalendar>
-        </VisualContext>
-      ),
-    },
-    {
-      path: '/Icons',
-      element: <Icons />,
+      element: <Index />,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true,  element: <HomePage />, },
+        {
+          path: 'calendar',
+          element: <CalendarPage />,
+        },
+        {
+          path: 'icons',
+          element: <Icons />,
+        }
+      ],
     }
+
+
+
   ])
   return element
 }
 
-export default App
+export default function AppComponent() {
+
+  return (
+    <App />
+  )
+}

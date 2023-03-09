@@ -90,11 +90,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
   const children = props.children
   const [now] = useState(Date.now())
-  const [user, setUser] = useState<CalendarUser|null>({
-    userName: '大林',
-    avatarUrl: 'https://avatars.githubusercontent.com/u/44738166?v=4',
-    userEmail: 'yuanlincuc@gmail.com',
-  })
   const [weekDays, setWeekDays] = useState<number[]>(DEFAULT_WEEK_DAYS)
   const [start, setStart] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
   const [end, setEnd] = useState<string>(parseTimeStamp(Date.now(), true)?.date as string)
@@ -250,8 +245,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
       parsedValue,
       weekdaySkips,
       days,
-      user,
-      setUser,
 
     }}>
       <CalendarContext.Provider value={{

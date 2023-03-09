@@ -7,11 +7,17 @@ import classnames from 'classnames'
 import style from './accountPopover.module.less'
 import SvgIcon from '../../../components/SvgIcon'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
-import { BaseContext, CalendarContext } from '../props/propsContext'
+import { CalendarContext } from '../props/propsContext'
+import { useAppDispatch, useAppSelector } from '../../../store/hooks'
+import { removerUser, selectUser } from '../../../store/features/user/userSlice'
+import { useNavigate } from 'react-router-dom'
+
 
 export const AccountPopover = () => {
   const { accountRef, } = useContext(CalendarContext)
-  const { user, } = useContext(BaseContext)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const user = useAppSelector(selectUser)
   const [right] = useState(10)
   const [top, setTop] = useState(0)
 
@@ -26,6 +32,11 @@ export const AccountPopover = () => {
     [commonPopoverStyle.popover]: true,
     [style.container]: true,
   })
+  const handleLogOut = () => {
+    dispatch(removerUser())
+    navigate('/')
+
+  }
   return (
     <>
       {
@@ -56,7 +67,7 @@ export const AccountPopover = () => {
               </div>
             </div>
           </div>
-          <div className={style.containerLoginOut}>
+          <div className={style.containerLoginOut} onClick={handleLogOut}>
             <SvgIcon iconName='user_log-out' />
             <div className={style.containerLoginOutText}>
               退出登录

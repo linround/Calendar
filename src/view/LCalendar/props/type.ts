@@ -43,8 +43,6 @@ export interface IBaseContext {
   parsedStart?:CalendarTimestamp
   parsedValue?:CalendarTimestamp
   days?:CalendarTimestamp[]
-  user:CalendarUser | null
-  setUser: React.Dispatch<React.SetStateAction<CalendarUser | null>>
 }
 
 

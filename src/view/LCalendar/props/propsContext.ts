@@ -75,8 +75,6 @@ export const BaseContext = createContext<IBaseContext>({
   setWeekDays: () => undefined,
   parsedWeekdays: DEFAULT_WEEK_DAYS,
   weekdaySkips: DEFAULT_WEEK_SKIPS,
-  user: null,
-  setUser: () => undefined,
 })
 export const CalendarContext = createContext<ICalendarContext>({
   updateGroupList: () => void 0,
