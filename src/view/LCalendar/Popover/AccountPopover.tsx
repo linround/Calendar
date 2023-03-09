@@ -1,11 +1,13 @@
 import {
-  useContext, useLayoutEffect, useState
+  useState,
+  useContext,
+  useLayoutEffect
 } from 'react'
+import classnames from 'classnames'
+import style from './accountPopover.module.less'
+import SvgIcon from '../../../components/SvgIcon'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
 import { BaseContext, CalendarContext } from '../props/propsContext'
-import style from './accountPopover.module.less'
-import classnames from 'classnames'
-import SvgIcon from '../../../components/SvgIcon'
 
 export const AccountPopover = () => {
   const { accountRef, } = useContext(CalendarContext)

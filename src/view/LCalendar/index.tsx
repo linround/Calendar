@@ -44,13 +44,13 @@ import {
   DAYS_IN_MONTH_MAX
 } from './utils/timesStamp'
 import styles from './style.module.less'
+import { SUCCESS_CODE } from '../../request'
+import { PopoverComponents } from './Popover'
 import MenuHeader from './modules/MenuHeader'
 import { updateEvent } from '../../api/event'
-import { SUCCESS_CODE } from '../../request'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
-import { PopoverComponents } from './Popover'
 
 
 const globalCache:IGlobalCache = {
