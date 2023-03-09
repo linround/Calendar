@@ -60,7 +60,10 @@ export  const AddCalendarPopover = () => {
 
   return ((
     <>
-      <CommonMessage setOpen={setShowMessage} open={showMessage} />
+      <CommonMessage
+        setOpen={setShowMessage}
+        severity='success'
+        open={showMessage} >创建成功</CommonMessage>
       <CreateCalendar
         open={openCreateDialog}
         onConfirm={onCreateCalendar}

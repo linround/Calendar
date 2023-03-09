@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
   ref) {
@@ -11,9 +11,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 interface IProps {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  severity: AlertColor
 }
-export  function CommonMessage(props:IProps) {
-  const { open, setOpen, } = props
+export  function CommonMessage(props:React.PropsWithChildren<IProps>) {
+  const { open, setOpen, children, severity, } = props
   const handleClose = () => {
     setOpen(false)
   }
@@ -22,9 +23,9 @@ export  function CommonMessage(props:IProps) {
     <Stack>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center', }}
-        open={open} autoHideDuration={30000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          创建成功
+        open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity}>
+          { children}
         </Alert>
       </Snackbar>
     </Stack>

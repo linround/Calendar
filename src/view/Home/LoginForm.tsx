@@ -50,6 +50,7 @@ export function LoginForm(props:IProps) {
     <div className={styles.containerFormContainer}>
       <div className={styles.containerForm}>
         <TextField
+          error={true}
           defaultValue={userName}
           className={styles.containerFormItem}
           placeholder='邮箱或手机号' variant='outlined'
