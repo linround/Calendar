@@ -1,9 +1,11 @@
-import styles from './style.module.less'
-import TextField from '@mui/material/TextField'
 import React, { useState } from 'react'
+import styles from './style.module.less'
 import Button from '@mui/material/Button'
-import { CommonMessage } from '../LCalendar/commonMessage/message'
 import { AlertColor } from '@mui/material/Alert'
+import TextField from '@mui/material/TextField'
+import { handleRegisterUser } from '../../api/user'
+import { CommonMessage } from '../LCalendar/commonMessage/message'
+import { SUCCESS_CODE } from '../../request'
 
 interface IProps {
   setState:(s:string)=>void
@@ -57,22 +59,31 @@ export function RegisterForm(props:IProps) {
     }
     return true
   }
-  const onRegister = () => {
+  const onRegister = async () => {
     if (!validate()) {
       setMessageStatus('info')
       setShowMessage(true)
+      return
     }
 
 
     const params = {
-      userName: '',
       password,
       userAccount,
-      userId: 0,
-      avatarUrl: 'https://avatars.githubusercontent.com/u/44738166?v=4',
-      userEmail: 'yuanlincuc@gmail.com',
+      userName: '',
+      avatarUrl: '',
+      userEmail: '',
     }
-    console.log(params)
+    const { code, msg, } = await handleRegisterUser(params)
+    if (code === SUCCESS_CODE) {
+      setMessageStatus('success')
+      setMessage('注册成功')
+      setShowMessage(true)
+      return
+    }
+    setMessageStatus('error')
+    setMessage(msg)
+    setShowMessage(true)
   }
   return (
     <>
@@ -92,11 +103,13 @@ export function RegisterForm(props:IProps) {
             defaultValue={password}
             className={styles.containerFormItem}
             placeholder='密码' variant='outlined'
+            type='password'
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'password') } />
           <TextField
             defaultValue={repeat}
             className={styles.containerFormItem}
             placeholder='确认密码' variant='outlined'
+            type='password'
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'repeat') } />
           <Button
             onClick={onRegister}

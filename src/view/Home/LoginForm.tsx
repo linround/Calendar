@@ -88,6 +88,7 @@ export function LoginForm(props:IProps) {
             defaultValue={password}
             className={styles.containerFormItem}
             placeholder='密码' variant='outlined'
+            type='password'
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'password') } />
           <Button
             onClick={onLogin}
