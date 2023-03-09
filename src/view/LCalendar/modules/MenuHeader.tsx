@@ -58,11 +58,14 @@ export default function (props:IHeaderEvent) {
           {accountRef && <div className={styles.headerImgMask}></div>}
 
           <div className={styles.headerImg} onClick={showAccountPopover}>
-            <img src={user?.avatarUrl}
-              height={30}
-              width={30}/>
+            {
+              user.avatarUrl ?
+                <img src={user?.avatarUrl}
+                  height={30}
+                  width={30}/> :
+                <SvgIcon iconName='user' />
+            }
           </div>
-
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   useContext,
   useLayoutEffect
@@ -49,11 +49,15 @@ export const AccountPopover = () => {
                 style={{ minHeight: 86,
                   minWidth: 86, }}
                 className={style.containerUserImg}>
-                <img
-                  src={user?.avatarUrl}
-                  width={70}
-                  height={70}
-                />
+                {
+                  user?.avatarUrl ?
+                    <img
+                      src={user?.avatarUrl}
+                      width={70}
+                      height={70}
+                    /> :
+                    <SvgIcon iconName='user' />
+                }
               </div>
               <div className={style.containerUserInfo}>
                 <div className={style.containerUserInfoName}>{user?.userName}</div>
