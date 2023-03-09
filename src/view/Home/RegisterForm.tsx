@@ -11,17 +11,17 @@ interface IProps {
 
 export function RegisterForm(props:IProps) {
   const { setState, } = props
-  const [userName, setUserName] = useState('')
+  const [userAccount, setUserAccount] = useState('')
   const [password, setPassword] = useState('')
   const [repeat, setRepeat] = useState('')
-  const [showMessage, setShowMessage] = useState(true)
+  const [showMessage, setShowMessage] = useState(false)
   const [message, setMessage] = useState<string>('注册成功')
   const [messageStatus, setMessageStatus] = useState<AlertColor>('success')
   const onchange = (event:React.ChangeEvent<HTMLInputElement>, type:string) => {
     const value = event.target.value
     switch (type) {
-    case 'userName':{
-      setUserName(value)
+    case 'userAccount':{
+      setUserAccount(value)
       break
     }
     case 'password':{
@@ -37,10 +37,37 @@ export function RegisterForm(props:IProps) {
     }
     }
   }
+
+  function validate() {
+    if (!userAccount) {
+      setMessage('请输入账户')
+      return false
+    }
+    if (!password) {
+      setMessage('请输入密码')
+      return false
+    }
+    if (!repeat) {
+      setMessage('请确认密码')
+      return false
+    }
+    if (repeat !== password) {
+      setMessage('密码不一致')
+      return false
+    }
+    return true
+  }
   const onRegister = () => {
+    if (!validate()) {
+      setMessageStatus('info')
+      setShowMessage(true)
+    }
+
+
     const params = {
-      userName,
+      userName: '',
       password,
+      userAccount,
       userId: 0,
       avatarUrl: 'https://avatars.githubusercontent.com/u/44738166?v=4',
       userEmail: 'yuanlincuc@gmail.com',
@@ -57,10 +84,10 @@ export function RegisterForm(props:IProps) {
       <div className={styles.containerFormContainer}>
         <div className={styles.containerForm}>
           <TextField
-            defaultValue={userName}
+            defaultValue={userAccount}
             className={styles.containerFormItem}
             placeholder='邮箱或手机号' variant='outlined'
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'userName') } />
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'userAccount') } />
           <TextField
             defaultValue={password}
             className={styles.containerFormItem}
