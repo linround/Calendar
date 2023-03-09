@@ -45,7 +45,7 @@ export function HomePage () {
   return (
     <>
       {user && <Navigate to='calendar'/>}
-      <div>
+      <div className={styles.containerWrapper}>
         <div className={styles.container}>
           <SvgIcon iconName='UCalendar'></SvgIcon>
           <div className={styles.containerFormContainer}>
