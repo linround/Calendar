@@ -7,6 +7,8 @@ import { useAppDispatch } from '../../store/hooks'
 import { setUser } from '../../store/features/user/userSlice'
 import { AlertColor } from '@mui/material/Alert'
 import { CommonMessage } from '../LCalendar/commonMessage/message'
+import { handleLogin } from '../../api/user'
+import { SUCCESS_CODE } from '../../request'
 
 interface IProps {
   setState:(s:string)=>void
@@ -53,7 +55,7 @@ export function LoginForm(props:IProps) {
   const onRegister = () => {
     setState('register')
   }
-  const onLogin = () => {
+  const onLogin = async () => {
     if (!validate()) {
       setMessageStatus('info')
       setShowMessage(true)
@@ -63,12 +65,18 @@ export function LoginForm(props:IProps) {
       userName: '',
       userAccount,
       password,
-      userId: 0,
       avatarUrl: 'https://avatars.githubusercontent.com/u/44738166?v=4',
       userEmail: 'yuanlincuc@gmail.com',
     }
-    dispatch(setUser(params))
-    navigate('/calendar')
+    const { code, data, msg, } = await handleLogin(params)
+    if (code === SUCCESS_CODE) {
+      dispatch(setUser(data))
+      navigate('/calendar')
+      return
+    }
+    setMessage(msg)
+    setMessageStatus('error')
+    setShowMessage(true)
   }
   return (
     <>

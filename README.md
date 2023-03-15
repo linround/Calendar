@@ -13,6 +13,7 @@
 - [react-flow](https://github.com/linyuan1105/react-flow)
 - [react-diagrams](https://github.com/projectstorm/react-diagrams)
 - [drawFlow](https://github.com/linyuan1105/Drawflow)
+- [plyr](https://github.com/sampotts/plyr)
 
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)

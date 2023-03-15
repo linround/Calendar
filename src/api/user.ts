@@ -4,7 +4,13 @@ import { IResponse } from './common'
 
 
 
-
+export function handleLogin(data:CalendarUser) {
+  return request <any, IResponse<any>>({
+    url: '/base/login',
+    method: 'POST',
+    data,
+  })
+}
 
 
 export function updateUser(data:CalendarUser) {
