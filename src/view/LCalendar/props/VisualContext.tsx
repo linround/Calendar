@@ -107,7 +107,6 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [checks, setChecks] = useState<calendarGroup[]>([])
   const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
   const [accountRef, setAccountRef] = useState<Element| null>(null)
-
   const group = useMemo(() => checks[0] || groups[0], [checks, groups])
 
 

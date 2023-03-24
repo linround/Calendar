@@ -31,7 +31,7 @@ export function deleteUser(data:CalendarUser) {
 
 export function handleRegisterUser(data:CalendarUser) {
   return request<any, IResponse<any>>({
-    url: '/user/register',
+    url: '/base/register',
     method: 'POST',
     data,
   })
