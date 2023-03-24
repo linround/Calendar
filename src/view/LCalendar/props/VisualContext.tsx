@@ -21,7 +21,7 @@ import {
   DEFAULT_TYPE,
   DEFAULT_VALUE,
   DEFAULT_MAX_DAYS,
-  DEFAULT_WEEK_DAYS
+  DEFAULT_WEEK_DAYS, DEFAULT_CALENDAR_GROUPS
 } from '../utils/time'
 import {
   createDayList,
@@ -103,7 +103,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
   const [type, setType] = useState<string>(DEFAULT_TYPE)
   const [value, setValue] = useState<IValue>(DEFAULT_VALUE)
-  const [groups, setGroups]  = useState<calendarGroup[]>(createCalendarGroup())
+  const [groups, setGroups]  = useState<calendarGroup[]>(DEFAULT_CALENDAR_GROUPS)
   const [checks, setChecks] = useState<calendarGroup[]>([])
   const [addCalendarRef, setAddCalendarRef] = useState<Element | null>(null)
   const [accountRef, setAccountRef] = useState<Element| null>(null)
