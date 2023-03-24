@@ -23,7 +23,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 ##### _Author Email_： yuanlincuc@gmail.com  
 
 ##### _WeChat Public Account_：  [Web Technology](https://mp.weixin.qq.com/s/2Up1CBJERQay_cCzTZU_zg)
-![https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzIwODQyODc4NA==&mid=2247484061&idx=1&sn=e748636941f002a762bcaf94f1f1f907&send_time=](img.png)
+![](https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzIwODQyODc4NA==&mid=2247484061&idx=1&sn=e748636941f002a762bcaf94f1f1f907&send_time=)
 
 # 产品相关
 
