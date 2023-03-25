@@ -27,6 +27,7 @@ export function AssistantComponent() {
       role: 'self',
       content: value,
     })
+    clear()
     handleAddMessage()
     const { choices, } = await handleSendChatMessage(value)
     allMessage.push({
@@ -34,8 +35,6 @@ export function AssistantComponent() {
       content: choices[0].message.content,
     })
     handleAddMessage()
-    clear()
-    setInput('')
   }
   return (
     <div className={classnames({

@@ -10,7 +10,7 @@ const createOpenaiRequest = function (url:string, input:any) {
     data: input,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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',
+      'Authorization': 'Bearer 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',
     },
   })
 }
