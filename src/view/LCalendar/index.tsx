@@ -51,6 +51,7 @@ import { updateEvent } from '../../api/event'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
+import { AssistantComponent } from './AssistantComponent'
 
 
 const globalCache:IGlobalCache = {
@@ -290,6 +291,8 @@ export default function () {
 
   return (
     <>
+
+      <AssistantComponent />
       <PopoverComponents />
       <div
         className={styles.mainContainer}
@@ -301,7 +304,7 @@ export default function () {
             prev={(amount) => move(amount, 'month')}
             next={(amount) => move(amount, 'month')} />
         </div>
-        <div className={styles.mainRight}>
+        <div className={styles.mainCenter}>
           <MenuHeader
             value={value}
             type={type}

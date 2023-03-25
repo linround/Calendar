@@ -2,11 +2,10 @@ import axios from 'axios'
 export const SUCCESS_CODE = 200
 import { selectUser } from '../store/features/user/userSlice'
 
-const cloud = 'http://121.199.1.247:8888'
-const local = 'http://127.0.0.1:8888'
+const baseURL = '/api'
 
 const service = axios.create({
-  baseURL: local,
+  baseURL,
 })
 
 
