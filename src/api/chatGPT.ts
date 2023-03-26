@@ -11,7 +11,7 @@ const createOpenaiRequest = function (url:string) {
       data: input,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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',
+        'Authorization': 'Bearer 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',
       },
     })
   }
