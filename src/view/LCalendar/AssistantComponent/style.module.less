@@ -15,132 +15,179 @@
     margin-left:0 ;
   }
 }
+@scrollbar-width: 5px;
 
+@chat-thread-bgd-color: rgb(29 30 30);
+@chat-thread-msg-arrow-size: 10px;
+@chat-thread-avatar-size: 25px;
+
+@chat-thread-offset: @chat-thread-avatar-size + 20px;
+@default-shadow-color: rgb(0, 0, 0);
 
 .floatingChat {
-  position: fixed;
-  right: 20px;
-  bottom: 80px;
-  z-index: 999;
-
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(70px);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
   transition: all 250ms ease-out;
   border-radius: 50%;
-  opacity: 1;
-  color: white;
-  background-color: #383333;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.14);
-
+  background-color: #c0cbd9;
+  color: black;
+  z-index: 200;
+  &Enter:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+  &Enter {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.14);
+  }
   &Expand {
-    width: 250px;
+    width: 400px;
+    max-width: 60vw;
+    max-height: 80vh;
     height: 80vh;
     border-radius: 5px;
     cursor: auto;
     opacity: 1;
   }
-
-}
-.chat {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  border-radius: 50%;
-  transition: all 250ms ease-out;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  &Enter {
-    opacity: 1;
-    border-radius: 0;
-    margin: 10px;
-    width: auto;
-    height: auto;
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 3pt 2pt rgba(#0EC879, 0.3);
   }
-  &Header {
-    flex-shrink: 0;
-    padding-bottom: 10px;
-    display: flex;
+  &Close {
     background: transparent;
-    &Button {
-      background: transparent;
-      border: 0;
-      color: white;
-      text-transform: uppercase;
-      border-radius: 3px;
-      cursor: pointer;
+    border: 0;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  &Chat {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    transition: all 250ms ease-out;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    &Enter {
+      opacity: 1;
+      border-radius: 0;
+      margin: 10px;
+      width: auto;
+      height: auto;
     }
-    &Title {
+    &Header {
+      flex-shrink: 0;
+      display: flex;
+      &Button {
+        flex-shrink: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+    }
+    &Messages {
+      padding: 10px;
+      margin: 0;
+      list-style: none;
+      overflow-y: scroll;
+      overflow-x: hidden;
       flex-grow: 1;
-      flex-shrink: 1;
-      padding: 0 5px;
+      border-radius: 4px;
+      &Item {
+        position: relative;
+        clear: both;
+        display: inline-block;
+        padding: 14px;
+        margin: 0 0 20px 0;
+        border-radius: 10px;
+        background-color: @chat-thread-bgd-color;
+        word-wrap: break-word;
+        max-width: 81%;
+        &:before {
+          position: absolute;
+          top: 0;
+          width: @chat-thread-avatar-size;
+          height: @chat-thread-avatar-size;
+          border-radius: @chat-thread-avatar-size;
+          content: '';
+          background-size: cover;
+        }
+        &:after {
+          position: absolute;
+          top: @chat-thread-msg-arrow-size;
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: @chat-thread-msg-arrow-size solid @chat-thread-bgd-color;
+        }
+      }
+      &Item{
+        &Self{
+          animation: show-chat-odd 0.15s 1 ease-in;
+          -moz-animation: show-chat-odd 0.15s 1 ease-in;
+          -webkit-animation: show-chat-odd 0.15s 1 ease-in;
+          float: right;
+          margin-right: @chat-thread-offset;
+          color: #0AD5C1;
+          &:before {
+            right: -@chat-thread-offset;
+          }
+          &:after {
+            border-right: @chat-thread-msg-arrow-size solid transparent;
+            right: -@chat-thread-msg-arrow-size;
+          }
+        }
+      }
+      &Item{
+        &Assistant {
+          animation: show-chat-even 0.15s 1 ease-in;
+          -moz-animation: show-chat-even 0.15s 1 ease-in;
+          -webkit-animation: show-chat-even 0.15s 1 ease-in;
+          float: left;
+          margin-left: @chat-thread-offset;
+          color: #0EC879;
+          &:before {
+            left: -@chat-thread-offset;
+          }
+          &:after {
+            border-left: @chat-thread-msg-arrow-size solid transparent;
+            left: -@chat-thread-msg-arrow-size;
+          }
+        }
+      }
     }
-  }
-  &Message {
-    padding: 10px;
-    margin: 0;
-    list-style: none;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    flex-grow: 1;
-    border-radius: 4px;
-    background: transparent;
-    &Item {
-      position: relative;
-      clear: both;
-      display: inline-block;
-      padding: 14px;
-      margin: 0 0 20px 0;
-      font-size: 12px;
-      border-radius: 10px;
-      background-color: rgba(25, 147, 147, 0.2);
-      word-wrap: break-word;
-      max-width: 100%;
-    }
-    &Other {
-      float: right;
-      margin-right: 45px;
-      color: #0AD5C1;
-      animation:show-chat-odd .15s 1 ease-in-out ;
-    }
-    &Self {
-      float: left;
-      margin-left: 45px;
-      color: #0EC879;
-      animation:show-chat-even .15s 1 ease-in ;
-    }
-  }
-  &Footer{
-    flex-shrink: 0;
-    display: flex;
-    padding-top: 10px;
-    max-height: 90px;
-    background: transparent;
-    &Button {
+    &Footer {
+      flex-shrink: 0;
+      display: flex;
+      padding-top: 10px;
       background: transparent;
-      border: 0;
-      color: white;
-      text-transform: uppercase;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    &TextBox {
-      border-radius: 3px;
-      background: rgba(25, 147, 147, 0.2);
-      min-height: 100%;
-      width: 100%;
-      margin-right: 5px;
-      color: #0EC879;
-      overflow-y: auto;
-      padding: 2px 5px;
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      &TextBox {
+        border-radius: 3px;
+        min-height: 100%;
+        margin-right: 5px;
+        overflow-y: auto;
+        padding: 2px 5px;
+        flex: 1;
+      }
     }
   }
 }

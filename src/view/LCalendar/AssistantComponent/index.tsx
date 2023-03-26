@@ -4,6 +4,7 @@ import style from './style.module.less'
 import classnames from 'classnames'
 import dayStyle from '../components/day.module.less'
 import SvgIcon from '../../../components/SvgIcon'
+import { stopDefaultEvent } from '../utils/events'
 interface IMessage {
   role: 'self'|'assistant'
   content: string
@@ -45,42 +46,43 @@ export function AssistantComponent() {
     handleAddMessage()
   }
   return (
-    <div className={classnames({
+    <div onClick={showChatPopover} className={classnames({
       [style.floatingChat]: true,
+      [style.floatingChatEnter]: true,
       [style.floatingChatExpand]: show,
     })}>
-      <span onClick={showChatPopover} style={{ display: show ? 'none' : '', }} >
+      <span  style={{ display: show ? 'none' : '', }} >
         <SvgIcon iconName='popover_message-circle' />
       </span>
       <div className={classnames({
-        [style.chat]: true,
-        [style.chatEnter]: show,
+        [style.floatingChatChat]: true,
+        [style.floatingChatChatEnter]: show,
       })}>
-        <div className={style.chatHeader}>
-          <span className={style.chatHeaderTitle}>
-                你想问什么？
-          </span>
-          <span onClick={closeChatPopover} className={style.chatHeaderButton}>
+        <div className={style.floatingChatChatHeader}>
+          <span onClick={(event) => {
+            stopDefaultEvent(event)
+            closeChatPopover()
+          }} className={style.floatingChatChatHeaderButton}>
             <SvgIcon iconName='popover_x' />
           </span>
         </div>
         <ul className={classnames({
           [dayStyle.scrollContainer]: true,
-          [style.chatMessage]: true,
+          [style.floatingChatChatMessages]: true,
         })}>
           {messages.map((message, index) => (
             <li key={index} className={classnames({
-              [style.chatMessageItem]: true,
-              [style.chatMessageSelf]: message.role === 'self',
-              [style.chatMessageOther]: message.role === 'assistant',
+              [style.floatingChatChatMessagesItem]: true,
+              [style.floatingChatChatMessagesItemAssistant]: message.role === 'assistant',
+              [style.floatingChatChatMessagesItemSelf]: message.role === 'self',
             })}>
               {message.content}
             </li>
           ))}
         </ul>
-        <div className={style.chatFooter}>
+        <div className={style.floatingChatChatFooter}>
           <input
-            className={style.chatFooterTextBox}
+            className={style.floatingChatChatFooterTextBox}
             value={value} onChange={onChange} />
           <button
             className={style.chatFooterButton}
