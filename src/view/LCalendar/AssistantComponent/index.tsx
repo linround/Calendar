@@ -83,6 +83,11 @@ export function AssistantComponent() {
         <div className={style.floatingChatChatFooter}>
           <input
             className={style.floatingChatChatFooterTextBox}
+            onKeyDown={async (event) => {
+              if (event.keyCode === 13) {
+                await handleSendMessage()
+              }
+            }}
             value={value} onChange={onChange} />
           <button
             className={style.chatFooterButton}
