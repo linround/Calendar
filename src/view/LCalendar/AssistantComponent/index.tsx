@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import style from './style.module.less'
 import classnames from 'classnames'
 import dayStyle from '../components/day.module.less'
+import SvgIcon from '../../../components/SvgIcon'
 interface IMessage {
   role: 'self'|'assistant'
   content: string
@@ -10,6 +11,7 @@ interface IMessage {
 const allMessage:IMessage[] = []
 
 export function AssistantComponent() {
+  const [show, setShow] = useState(false)
   const [value, setInput] = useState<string>('')
   const [messages, setMessages] = useState<IMessage[]>(allMessage)
   const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +23,12 @@ export function AssistantComponent() {
   }
   const handleAddMessage = () => {
     setMessages([...allMessage])
+  }
+  const showChatPopover = () => {
+    setShow(true)
+  }
+  const closeChatPopover = () => {
+    setShow(false)
   }
   const handleSendMessage = async () => {
     allMessage.push({
@@ -39,16 +47,22 @@ export function AssistantComponent() {
   return (
     <div className={classnames({
       [style.floatingChat]: true,
-      [style.expand]: true,
+      [style.floatingChatExpand]: show,
     })}>
-      <div className={style.chat}>
+      <span onClick={showChatPopover} style={{ display: show ? 'none' : '', }} >
+        <SvgIcon iconName='popover_message-circle' />
+      </span>
+      <div className={classnames({
+        [style.chat]: true,
+        [style.chatEnter]: show,
+      })}>
         <div className={style.chatHeader}>
           <span className={style.chatHeaderTitle}>
                 你想问什么？
           </span>
-          <button className={style.chatHeaderButton}>
-            X
-          </button>
+          <span onClick={closeChatPopover} className={style.chatHeaderButton}>
+            <SvgIcon iconName='popover_x' />
+          </span>
         </div>
         <ul className={classnames({
           [dayStyle.scrollContainer]: true,
@@ -70,7 +84,9 @@ export function AssistantComponent() {
             value={value} onChange={onChange} />
           <button
             className={style.chatFooterButton}
-            onClick={handleSendMessage}>send</button>
+            onClick={handleSendMessage}>
+            <SvgIcon iconName='popover_message_send' />
+          </button>
         </div>
       </div>
     </div>
