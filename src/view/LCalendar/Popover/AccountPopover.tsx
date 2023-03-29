@@ -17,7 +17,7 @@ export const AccountPopover = () => {
   const { accountRef, } = useContext(CalendarContext)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser).user
   const [right] = useState(10)
   const [top, setTop] = useState(0)
 

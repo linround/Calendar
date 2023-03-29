@@ -51,7 +51,6 @@ import { updateEvent } from '../../api/event'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
-import { AssistantComponent } from './AssistantComponent'
 
 
 const globalCache:IGlobalCache = {
@@ -292,7 +291,6 @@ export default function () {
   return (
     <>
 
-      <AssistantComponent />
       <PopoverComponents />
       <div
         className={styles.mainContainer}
