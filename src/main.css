@@ -16,7 +16,6 @@ a {
     text-decoration: none;
 }
 #root {
-    display: flex;
     width: 100%;
     height: 100%;
 }
