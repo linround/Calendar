@@ -13,7 +13,7 @@ import { selectUser } from '../../../store/features/user/userSlice'
 
 export default function (props:IHeaderEvent) {
   const { setAccountRef, accountRef, } = useContext(CalendarContext)
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser).user
   const showAccountPopover = (event:React.MouseEvent) => {
     if (accountRef) {
       return
