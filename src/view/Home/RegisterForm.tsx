@@ -59,6 +59,11 @@ export function RegisterForm(props:IProps) {
     }
     return true
   }
+  const onKeyDown = async (event:React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      await onRegister()
+    }
+  }
   const onRegister = async () => {
     if (!validate()) {
       setMessageStatus('info')
@@ -101,12 +106,14 @@ export function RegisterForm(props:IProps) {
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'userAccount') } />
           <TextField
             defaultValue={password}
+            onKeyDown={onKeyDown}
             className={styles.containerFormItem}
             placeholder='密码' variant='outlined'
             type='password'
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'password') } />
           <TextField
             defaultValue={repeat}
+            onKeyDown={onKeyDown}
             className={styles.containerFormItem}
             placeholder='确认密码' variant='outlined'
             type='password'

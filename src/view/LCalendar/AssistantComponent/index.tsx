@@ -19,11 +19,15 @@ export function AssistantComponent() {
     setInput(e.currentTarget.value)
   }
   const clear = () => {
-    console.log('清空输入')
     setInput('')
   }
   const handleAddMessage = () => {
     setMessages([...allMessage])
+  }
+  const onKeyDown = async (event:React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      await handleSendMessage()
+    }
   }
   const showChatPopover = () => {
     setShow(true)
@@ -83,11 +87,7 @@ export function AssistantComponent() {
         <div className={style.floatingChatChatFooter}>
           <input
             className={style.floatingChatChatFooterTextBox}
-            onKeyDown={async (event) => {
-              if (event.keyCode === 13) {
-                await handleSendMessage()
-              }
-            }}
+            onKeyDown={onKeyDown}
             value={value} onChange={onChange} />
           <button
             className={style.chatFooterButton}

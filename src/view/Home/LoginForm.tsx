@@ -36,6 +36,12 @@ export function LoginForm(props:IProps) {
     }
     return true
   }
+
+  const onKeyDown = async (event:React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      await onLogin()
+    }
+  }
   const onchange = (event:React.ChangeEvent<HTMLInputElement>, type:string) => {
     const value = event.target.value
     switch (type) {
@@ -89,11 +95,13 @@ export function LoginForm(props:IProps) {
         <div className={styles.containerForm}>
           <TextField
             defaultValue={userAccount}
+            onKeyDown={onKeyDown}
             className={styles.containerFormItem}
             placeholder='邮箱或手机号' variant='outlined'
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => onchange(e, 'userAccount') } />
           <TextField
             defaultValue={password}
+            onKeyDown={onKeyDown}
             className={styles.containerFormItem}
             placeholder='密码' variant='outlined'
             type='password'
