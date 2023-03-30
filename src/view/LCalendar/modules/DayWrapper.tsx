@@ -15,6 +15,7 @@ import {
 } from '../utils/timesStamp'
 import { IDayWrapper } from './options'
 import { createTimeEvent } from '../utils/events'
+import moment from 'moment/moment'
 
 
 export const DayWrapper = React.forwardRef((props:IDayWrapper, ref) =>  {

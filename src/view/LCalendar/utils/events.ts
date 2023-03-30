@@ -139,7 +139,6 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
 export function createTimeEvent(
   start:VTimestampInput, end:VTimestampInput, group:calendarGroup
 ):CalendarEvent {
-  console.log(group)
   return {
     eventName: '',
     eventLocation: '',
