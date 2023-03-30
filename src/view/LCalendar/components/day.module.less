@@ -90,15 +90,22 @@
       text-align: center;
       border-bottom: 1px solid @borderColor;
       border-right: 1px solid  @borderColor;
+      &Value {
+        min-width: 25px !important;
+        width: 25px !important;
+        height: 25px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+      }
       &Label{
         display: flex;
         justify-content: center;
         align-items: center;
         height: 30px;
-        width: 30px;
         cursor: pointer;
-        background-color: #9f6e6e;
-        color: #ffffff;
+        font-weight: 600;
+        font-size: 12px;
+        color: #0e0d0d;
       }
     }
   }

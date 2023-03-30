@@ -3,7 +3,7 @@ import {
   mouseEvent,
   mouseDayTime
 } from './type'
-import { Button } from 'antd'
+import Button from '@mui/material/Button'
 import dayStyle from './day.module.less'
 import { IDayProps } from './dayPropsType'
 import {
@@ -184,13 +184,11 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
         <div className={dayStyle.dayHeaderIntervals} style={{ width: intervalWidth, }}></div>
         {days.map((day) => (
           <div className={dayStyle.dayHeaderDay} key={day.date} >
-            <div>
+            <div className={dayStyle.dayHeaderDayLabel}>
               {weekdayFormatter(day)}
             </div>
-            <div>
-              <Button
-                type='primary'
-                shape='circle'>
+            <div >
+              <Button className={dayStyle.dayHeaderDayValue} variant="contained">
                 {day.day}
               </Button>
             </div>
