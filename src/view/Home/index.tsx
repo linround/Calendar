@@ -6,6 +6,7 @@ import { selectUser } from '../../store/features/user/userSlice'
 import { Navigate } from 'react-router-dom'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import { CommonMessage } from '../LCalendar/commonMessage/message'
 
 
 
@@ -15,6 +16,7 @@ export function HomePage () {
   return (
     <>
       {user && <Navigate to='calendar'/>}
+      <CommonMessage />
       <div className={styles.containerWrapper}>
         <div className={styles.container}>
           <SvgIcon iconName='UCalendar'></SvgIcon>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styles from './style.module.less'
 import Button from '@mui/material/Button'
-import { AlertColor } from '@mui/material/Alert'
 import TextField from '@mui/material/TextField'
 import { handleRegisterUser } from '../../api/user'
-import { CommonMessage } from '../LCalendar/commonMessage/message'
 import { SUCCESS_CODE } from '../../request'
+import {
+  setMessage, setOpen, setSeverity
+} from '../../store/features/PromptBox/promptBoxSlice'
+import { useAppDispatch } from '../../store/hooks'
 
 interface IProps {
   setState:(s:string)=>void
@@ -16,9 +18,7 @@ export function RegisterForm(props:IProps) {
   const [userAccount, setUserAccount] = useState('')
   const [password, setPassword] = useState('')
   const [repeat, setRepeat] = useState('')
-  const [showMessage, setShowMessage] = useState(false)
-  const [message, setMessage] = useState<string>('注册成功')
-  const [messageStatus, setMessageStatus] = useState<AlertColor>('success')
+  const dispatch = useAppDispatch()
   const onchange = (event:React.ChangeEvent<HTMLInputElement>, type:string) => {
     const value = event.target.value
     switch (type) {
@@ -42,22 +42,33 @@ export function RegisterForm(props:IProps) {
 
   function validate() {
     if (!userAccount) {
-      setMessage('请输入账户')
-      return false
+      return {
+        message: '请输入账户',
+        illegal: true,
+      }
     }
     if (!password) {
-      setMessage('请输入密码')
-      return false
+      return {
+        message: '请输入密码',
+        illegal: true,
+      }
     }
     if (!repeat) {
-      setMessage('请确认密码')
-      return false
+      return {
+        message: '请确认密码',
+        illegal: true,
+      }
     }
     if (repeat !== password) {
-      setMessage('密码不一致')
-      return false
+      return {
+        message: '密码不一致',
+        illegal: true,
+      }
     }
-    return true
+    return {
+      message: '密码不一致',
+      illegal: false,
+    }
   }
   const onKeyDown = async (event:React.KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === 13) {
@@ -65,9 +76,11 @@ export function RegisterForm(props:IProps) {
     }
   }
   const onRegister = async () => {
-    if (!validate()) {
-      setMessageStatus('info')
-      setShowMessage(true)
+    const { illegal, message, } = validate()
+    if (illegal) {
+      dispatch(setMessage({ message, }))
+      dispatch(setSeverity({ severity: 'info', }))
+      dispatch(setOpen({ open: true, }))
       return
     }
 
@@ -80,23 +93,20 @@ export function RegisterForm(props:IProps) {
       userEmail: '',
     }
     const { code, msg, } = await handleRegisterUser(params)
+
     if (code === SUCCESS_CODE) {
-      setMessageStatus('success')
-      setMessage('注册成功')
-      setShowMessage(true)
+      dispatch(setSeverity({ severity: 'success', }))
+      dispatch(setMessage({ message: '注册成功', }))
+      dispatch(setOpen({ open: true, }))
+      setState('login')
       return
     }
-    setMessageStatus('error')
-    setMessage(msg)
-    setShowMessage(true)
+    dispatch(setSeverity({ severity: 'error', }))
+    dispatch(setMessage({ message: msg, }))
+    dispatch(setOpen({ open: true, }))
   }
   return (
     <>
-      <CommonMessage
-        severity={messageStatus}
-        setOpen={setShowMessage}
-        open={showMessage} >
-        {message}</CommonMessage>
       <div className={styles.containerFormContainer}>
         <div className={styles.containerForm}>
           <TextField

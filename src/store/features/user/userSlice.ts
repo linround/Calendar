@@ -34,5 +34,5 @@ export const userSlice = createSlice({
 })
 
 export const { setUser, removerUser, } = userSlice.actions
-export default userSlice.reducer
 export const selectUser = () =>  JSON.parse(getItem('user') as string)
+export default userSlice.reducer

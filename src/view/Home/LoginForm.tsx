@@ -5,10 +5,12 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { setUser } from '../../store/features/user/userSlice'
-import { AlertColor } from '@mui/material/Alert'
 import { CommonMessage } from '../LCalendar/commonMessage/message'
 import { handleLogin } from '../../api/user'
 import { SUCCESS_CODE } from '../../request'
+import {
+  setMessage, setOpen, setSeverity
+} from '../../store/features/PromptBox/promptBoxSlice'
 
 interface IProps {
   setState:(s:string)=>void
@@ -21,17 +23,14 @@ export function LoginForm(props:IProps) {
   const [userAccount, setUserAccount] = useState('')
   const [password, setPassword] = useState('')
 
-  const [showMessage, setShowMessage] = useState(false)
-  const [message, setMessage] = useState<string>('注册成功')
-  const [messageStatus, setMessageStatus] = useState<AlertColor>('success')
 
   function validate() {
     if (!userAccount) {
-      setMessage('请输入账户')
+      dispatch(setMessage({ message: '请输入账户', }))
       return false
     }
     if (!password) {
-      setMessage('请输入密码')
+      dispatch(setMessage({ message: '请输入密码', }))
       return false
     }
     return true
@@ -63,8 +62,8 @@ export function LoginForm(props:IProps) {
   }
   const onLogin = async () => {
     if (!validate()) {
-      setMessageStatus('info')
-      setShowMessage(true)
+      dispatch(setSeverity({ severity: 'info', }))
+      dispatch(setOpen({ open: true, }))
       return
     }
     const params = {
@@ -80,17 +79,13 @@ export function LoginForm(props:IProps) {
       navigate('/calendar')
       return
     }
-    setMessage(msg)
-    setMessageStatus('error')
-    setShowMessage(true)
+    dispatch(setMessage({ message: msg, }))
+    dispatch(setSeverity({ severity: 'error', }))
+    dispatch(setOpen({ open: true, }))
   }
   return (
     <>
-      <CommonMessage
-        severity={messageStatus}
-        setOpen={setShowMessage}
-        open={showMessage} >
-        {message}</CommonMessage>
+      <CommonMessage />
       <div className={styles.containerFormContainer}>
         <div className={styles.containerForm}>
           <TextField

@@ -7,9 +7,11 @@ import classnames from 'classnames'
 import { CalendarContext } from '../props/propsContext'
 import SvgIcon from '../../../components/SvgIcon'
 import { CreateCalendar, IArg } from './CreateCalendar'
-import { CommonMessage } from '../commonMessage/message'
 import { handleCreateGroup } from '../../../api'
 import { SUCCESS_CODE } from '../../../request'
+import {
+  setOpen, setMessage, setSeverity
+} from '../../../store/features/PromptBox/promptBoxSlice'
 
 export  const AddCalendarPopover = () => {
   const { addCalendarRef, setAddCalendarRef, updateGroupList, } = useContext(CalendarContext)
@@ -17,7 +19,6 @@ export  const AddCalendarPopover = () => {
   const [top, setTop] = useState(0)
   const [openCreateDialog, setCreateDialog] = useState(false)
   const [openSubscribeDialog, setSubscribeDialog] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
 
 
   const className = classnames({
@@ -52,7 +53,9 @@ export  const AddCalendarPopover = () => {
     }
     const { code, } = await handleCreateGroup(group)
     if (code === SUCCESS_CODE) {
-      setShowMessage(true)
+      setMessage({ message: '创建成功', })
+      setSeverity({ severity: 'success', })
+      setOpen({ open: true, })
       updateGroupList()
     }
   }
@@ -60,10 +63,6 @@ export  const AddCalendarPopover = () => {
 
   return ((
     <>
-      <CommonMessage
-        setOpen={setShowMessage}
-        severity='success'
-        open={showMessage} >创建成功</CommonMessage>
       <CreateCalendar
         open={openCreateDialog}
         onConfirm={onCreateCalendar}

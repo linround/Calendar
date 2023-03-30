@@ -15,7 +15,6 @@ service.interceptors.request.use((config) => {
   return config
 }, (err) => {
   console.log('请求错误', err)
-
 })
 
 

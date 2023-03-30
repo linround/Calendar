@@ -5,7 +5,10 @@ import React, { useState } from 'react'
 import { initDB } from '../../api/db'
 import { SUCCESS_CODE } from '../../request'
 import { CommonMessage } from '../LCalendar/commonMessage/message'
-import { AlertColor } from '@mui/material/Alert'
+import {
+  setMessage, setSeverity, setOpen
+} from '../../store/features/PromptBox/promptBoxSlice'
+import { useAppDispatch } from '../../store/hooks'
 
 function formState() {
   const [dbType, setDbType] = useState<string>('mysql')
@@ -54,10 +57,7 @@ function formState() {
 }
 
 export function DBForm() {
-
-  const [showMessage, setShowMessage] = useState(false)
-  const [message, setMessage] = useState<string>('创建成功')
-  const [messageStatus, setMessageStatus] = useState<AlertColor>('success')
+  const dispatch = useAppDispatch()
 
   const {
     dbType,
@@ -81,24 +81,19 @@ export function DBForm() {
 
 
     if (code !== SUCCESS_CODE) {
-      setMessage(msg)
-      setMessageStatus('error')
-      setShowMessage(true)
+      dispatch(setMessage({ message: msg, }))
+      dispatch(setSeverity({ severity: 'error', }))
+      dispatch(setOpen({ open: true, }))
     } else {
-      setMessage(msg)
-      setMessageStatus('success')
-      setShowMessage(true)
+      dispatch(setMessage({ message: msg, }))
+      dispatch(setSeverity({ severity: 'success', }))
+      dispatch(setOpen({ open: true, }))
     }
 
   }
   return (
     <>
-      <CommonMessage
-        setOpen={setShowMessage}
-        severity={messageStatus}
-        open={showMessage}  >
-        {message}
-      </CommonMessage>
+      <CommonMessage />
       <div className={formStyle.formWrapper}>
         <TextField
           defaultValue={dbType}
