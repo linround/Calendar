@@ -10,7 +10,7 @@ interface PromptBoxState {
 const initialState:PromptBoxState = {
   severity: 'success',
   message: '无信息',
-  open: true,
+  open: false,
 }
 export const promptBoxSlice = createSlice({
   name: 'promptBox',

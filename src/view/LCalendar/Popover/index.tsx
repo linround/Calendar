@@ -7,7 +7,6 @@ import React from 'react'
 
 export const PopoverComponents = () => (
   <>
-
     <AssistantComponent />
     <AddCalendarPopover />
     <CreatePopover />

@@ -46,7 +46,6 @@ export  const AddCalendarPopover = () => {
   const onCreateCalendar = async (arg:IArg) => {
     const { groupName, groupColor, } = arg
     const group = {
-      userId: 123456,
       groupType: 0, // 0自己的日历 1订阅的日历
       groupColor,
       groupName,
