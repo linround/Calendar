@@ -13,6 +13,7 @@ export default function MenuTypeSelector(props:IProps) {
     <ToggleButtonGroup value={type} className={style.headerRightOptions}>
       {typeOptions.map((option) => (
         <ToggleButton
+
           key={option.key}
           onClick={() => {
             selectType(option.key)
