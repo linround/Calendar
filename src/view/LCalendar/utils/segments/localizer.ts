@@ -1,6 +1,4 @@
 import moment from 'moment'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import {
   lte, neq, gt, gte
 } from 'date-arithmetic'
@@ -142,8 +140,29 @@ function sortEvents(arg:ISortEventsArg) {
   )
 }
 
+export function format(value:Date, format:string) {
+  return moment(value)
+    .format(format)
+}
+
+export function getTotalMin(start:Date, end:Date):number {
+  return diff(
+    start, end, 'minutes'
+  )
+}
+export function getSlotDate(day:Date, offset:number):Date {
+  return moment(day)
+    .startOf('day')
+    .minute(offset)
+    .toDate()
+}
+
+
 
 export interface ILocalizer{
+  getSlotDate:(day:Date, offset:number)=>Date,
+  getTotalMin:(start:Date, end:Date)=>number,
+  format:(value:Date, format:string)=>string,
   add: (date:VTimestampInput, adder:number, unit:moment.unitOfTime.DurationConstructor)=>VTimestampInput
   diff: (a:VTimestampInput, b:VTimestampInput, unit: moment.unitOfTime.DurationConstructor) => number
   max: (dateA:VTimestampInput, dateB:VTimestampInput) => Date
@@ -157,6 +176,8 @@ export interface ILocalizer{
   sortEvents: (arg:ISortEventsArg) => (number)
   eq: (a:VTimestampInput, b:VTimestampInput, unit?:moment.unitOfTime.DurationConstructor) => boolean
 }
+
+
 const localizer:ILocalizer = {
   add,
   diff,
@@ -170,5 +191,8 @@ const localizer:ILocalizer = {
   inEventRange,
   sortEvents,
   eq,
+  format,
+  getTotalMin,
+  getSlotDate,
 }
 export default localizer
