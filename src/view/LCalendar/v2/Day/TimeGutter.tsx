@@ -7,11 +7,16 @@ import { useState } from 'react'
 
 const TimeGutterWrapper = NoopWrapper
 
-const renderSlot = (value:Date, index:number):JSX.Element => (
-  <span key={index}>
-    {localizer.format(value, 'HH-mm a')}
-  </span>
-)
+const renderSlot = (value:Date, index:number):JSX.Element => {
+  if (index) {
+    return (<></>)
+  }
+  return  (
+    <span key={index}>
+      {localizer.format(value, 'HH:mm a')}
+    </span>
+  )
+}
 
 
 
