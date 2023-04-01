@@ -1,8 +1,16 @@
 .v2{
   &TimeView {
     border: 1px solid black;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
   }
   &TimeContent{
     display: flex;
+    flex: 1 0;
+    overflow-y: auto;
+    flex-flow: row nowrap;
+    width: 100%;
+    position: relative;
   }
 }

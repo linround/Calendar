@@ -2,9 +2,16 @@ import { DayColumn } from './DayColumn'
 import { TimeGridHeader } from './TimeGridHeader'
 import { TimeGutter } from './TimeGutter'
 import timeGridStyle from './style/timeGrid.module.less'
+import { CalendarEvent } from '../../utils/calendar'
 
 
-function RenderEvents() {
+interface IRenderEvents {
+  range:Date[]
+  events: CalendarEvent[]
+  now: Date
+}
+function RenderEvents(props:IRenderEvents) {
+  console.log(props)
   return (
     <DayColumn></DayColumn>
   )
