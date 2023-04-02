@@ -1,8 +1,8 @@
 export const NONE = {}
-export function resources(resources) {
+export function resources() {
   return {
     map() {
-      if (!resources) return []
+      return []
     },
   }
 }

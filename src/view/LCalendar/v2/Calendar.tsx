@@ -9,5 +9,9 @@ function View() {
 }
 
 export function Calendar() {
-  return <View />
+  return (
+    <>
+      <View />
+    </>
+  )
 }

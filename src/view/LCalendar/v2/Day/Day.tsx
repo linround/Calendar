@@ -1,11 +1,13 @@
 import { TimeGrid } from './TimeGrid'
 import localizer from '../../utils/segments/localizer'
+import { CalendarEvent } from '../../utils/calendar'
 
 interface IDayProps {
-  min: Date
-  max:Date
-  step: number
-  timeslots: number
+  min?: Date
+  max?:Date
+  step?: number
+  timeslots?: number
+  events:CalendarEvent[]
 }
 // 时间分组规则
 // 计算最大到最小的时间间距
@@ -15,8 +17,9 @@ export function Day(props:IDayProps) {
   const {
     min = localizer.startOf(new Date(), 'day'),
     max = localizer.endOf(new Date(), 'day'),
-    step = 30,
-    timeslots = 2,
+    step = 10,
+    timeslots = 6,
+    events = [],
   } = props
   return (
     <TimeGrid
@@ -24,6 +27,7 @@ export function Day(props:IDayProps) {
       max={max}
       step={step}
       timeslots={timeslots}
+      events={events}
     />
   )
 }

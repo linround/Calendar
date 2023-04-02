@@ -2,7 +2,7 @@ import React from 'react'
 
 
 interface IProps {
-  innerRef: React.ForwardedRef<HTMLDivElement>
+  innerRef: React.ForwardedRef<HTMLDivElement | null> | undefined
   className: string
   style: React.StyleHTMLAttributes<any>
 }
@@ -14,6 +14,6 @@ const Component = ({ innerRef, children, style, className, }:IComponentProps) =>
   </div>
 )
 
-export const DayColumnWrapper = React.forwardRef((props:IComponentProps, ref:React.ForwardedRef<HTMLDivElement>) => (
+export const DayColumnWrapper = React.forwardRef((props:IComponentProps, ref:React.ForwardedRef<HTMLDivElement|null>) => (
   <Component  {...props} innerRef={ref} />
 ))

@@ -6,14 +6,15 @@ import { CalendarEvent } from '../../utils/calendar'
 
 
 interface IRenderEvents {
-  range:Date[]
-  events: CalendarEvent[]
-  now: Date
+  min:Date
+  max:Date
+  timeslots: number
+  step:number
+  events:CalendarEvent[]
 }
 function RenderEvents(props:IRenderEvents) {
-  console.log(props)
   return (
-    <DayColumn></DayColumn>
+    <DayColumn {...props}></DayColumn>
   )
 }
 
@@ -24,6 +25,7 @@ interface ITimeGrid {
   max:Date
   timeslots: number
   step:number
+  events:CalendarEvent[]
 }
 export function TimeGrid(props:ITimeGrid) {
   const { min, max, timeslots, step, } = props
@@ -37,7 +39,9 @@ export function TimeGrid(props:ITimeGrid) {
           timeslots={timeslots}
           step={step}
         />
-        <RenderEvents />
+        <RenderEvents
+          {...props}
+        />
       </div>
     </div>
   )
