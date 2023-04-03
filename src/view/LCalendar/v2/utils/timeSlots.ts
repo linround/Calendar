@@ -86,7 +86,6 @@ export function getSlotMetrics(params:IGetSlotMetricsParams):ISlotMetrics {
         end: rangeEndMin,
         startDate: eventStart,
         endDate: eventEnd,
-
       }
     },
   }

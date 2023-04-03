@@ -1,6 +1,7 @@
 import { TimeGrid } from './TimeGrid'
 import localizer from '../../utils/segments/localizer'
 import { CalendarEvent } from '../../utils/calendar'
+import { createEvents } from './events'
 
 interface IDayProps {
   min?: Date
@@ -19,7 +20,7 @@ export function Day(props:IDayProps) {
     max = localizer.endOf(new Date(), 'day'),
     step = 10,
     timeslots = 6,
-    events = [],
+    events = createEvents(),
   } = props
   return (
     <TimeGrid

@@ -5,6 +5,7 @@ import { TimeSlotGroup } from './TimeSlotGroup'
 import style from './style/dayColumn.module.less'
 import { EventContainerWrapper } from './EventContainerWrapper'
 import { CalendarEvent } from '../../utils/calendar'
+import { getStyledEvents } from '../utils/dayEventLayout'
 
 interface IDayColumn{
   min: Date
@@ -14,12 +15,19 @@ interface IDayColumn{
   events: CalendarEvent[]
 }
 export function DayColumn(props:IDayColumn) {
-  const {} = props
+  const { events, step, timeslots, } = props
   const [slotMetrics] = useState<ISlotMetrics>(getSlotMetrics(props))
+
   const containerRef = createRef<HTMLDivElement>()
-  const RenderEvents = () => (
-    <>events</>
-  )
+  const RenderEvents = () => {
+    const styleEvents = getStyledEvents({
+      events,
+      slotMetrics,
+      minimumStartDifference: Math.ceil((step * timeslots) / 2),
+    })
+
+    return (<>events</>)
+  }
   return (
     <DayColumnWrapper ref={containerRef} className={style.v2DaySlot} >
       {slotMetrics.groups.map((group, index) => (
