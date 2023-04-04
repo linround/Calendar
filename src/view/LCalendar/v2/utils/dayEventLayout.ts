@@ -9,5 +9,6 @@ interface IStyledEventsParams{
 }
 
 export function getStyledEvents(params:IStyledEventsParams):IOverlapResult[] {
+
   return overlap(params)
 }

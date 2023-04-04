@@ -15,8 +15,20 @@ interface IRenderEvents {
   events:CalendarEvent[]
 }
 function RenderEvents(props:IRenderEvents) {
+  const { events,
+    min,
+    max,
+    timeslots,
+    step, } = props
+  const dayEvents = events as CalendarEvent[]
   return (
-    <DayColumn {...props}></DayColumn>
+    <DayColumn
+      max={max}
+      min={min}
+      timeslots={timeslots}
+      step={step}
+      events={dayEvents}
+    ></DayColumn>
   )
 }
 
@@ -47,7 +59,6 @@ export function TimeGrid(props:ITimeGrid) {
       }
     }
   })
-
   return (
     <div className={timeGridStyle.v2TimeView}>
       <TimeGridHeader />

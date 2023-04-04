@@ -25,6 +25,7 @@ export function DayColumn(props:IDayColumn) {
       slotMetrics,
       minimumStartDifference: Math.ceil((step * timeslots) / 2),
     })
+    console.log(styleEvents)
 
     return (<>events</>)
   }

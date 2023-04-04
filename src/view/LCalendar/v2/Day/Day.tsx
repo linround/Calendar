@@ -2,6 +2,7 @@ import { TimeGrid } from './TimeGrid'
 import localizer from '../../utils/segments/localizer'
 import { CalendarEvent } from '../../utils/calendar'
 import { createEvents } from './events'
+import { dayRange } from '../utils/day'
 
 interface IDayProps {
   min?: Date
@@ -18,10 +19,11 @@ export function Day(props:IDayProps) {
   const {
     min = localizer.startOf(new Date(), 'day'),
     max = localizer.endOf(new Date(), 'day'),
-    step = 10,
-    timeslots = 6,
+    step = 30,
+    timeslots = 2,
     events = createEvents(),
   } = props
+  const range = dayRange(new Date())
   return (
     <TimeGrid
       min={min}
@@ -29,6 +31,7 @@ export function Day(props:IDayProps) {
       step={step}
       timeslots={timeslots}
       events={events}
+      range={range}
     />
   )
 }
