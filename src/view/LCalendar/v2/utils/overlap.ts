@@ -166,6 +166,7 @@ export  function overlap(params:IOverlap):IOverlapResult[] {
       containerRows.push(event)
     }
   }
+  console.log(eventsInRenderOrder)
   return eventsInRenderOrder.map((event) => ({
     event: event.data,
     style: {

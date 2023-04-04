@@ -30,7 +30,6 @@ export function DayColumn(props:IDayColumn) {
       slotMetrics,
       minimumStartDifference: Math.ceil((step * timeslots) / 2),
     })
-
     return styleEvents.map(({ event, style, }, index) => {
       const start = accessors.start(event)
       const end = accessors.end(event)

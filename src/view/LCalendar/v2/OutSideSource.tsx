@@ -4,6 +4,7 @@ export function V2OutSideSource() {
   return (
     <div style={{
       height: 800,
+      overflowY: 'auto',
     }}>
       <WithDragAndDrop />
     </div>
