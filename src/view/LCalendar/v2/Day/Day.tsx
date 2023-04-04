@@ -9,7 +9,7 @@ interface IDayProps {
   max?:Date
   step?: number
   timeslots?: number
-  events:CalendarEvent[]
+  events?:CalendarEvent[]
 }
 // 时间分组规则
 // 计算最大到最小的时间间距
