@@ -60,23 +60,27 @@ export function TimeGrid(props:ITimeGrid) {
     }
   })
   return (
-    <div className={timeGridStyle.v2TimeView}>
-      <TimeGridHeader />
-      <div className={timeGridStyle.v2TimeContent}>
-        <TimeGutter
-          min={min}
-          max={max}
-          timeslots={timeslots}
-          step={step}
-        />
-        <RenderEvents
-          min={min}
-          max={max}
-          timeslots={timeslots}
-          step={step}
-          events={rangeEvents}
-        />
+    <>
+      <div className={timeGridStyle.v2TimeView}>
+        <TimeGridHeader />
+        <div  className={timeGridStyle.v2TimeContent}>
+          <TimeGutter
+            min={min}
+            max={max}
+            timeslots={timeslots}
+            step={step}
+          />
+          <RenderEvents
+            min={min}
+            max={max}
+            timeslots={timeslots}
+            step={step}
+            events={rangeEvents}
+          />
+        </div>
       </div>
-    </div>
+    </>
+
+
   )
 }
