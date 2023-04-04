@@ -17,8 +17,8 @@ class Event {
   public top:number
   public height:number
   public data:CalendarEvent
-  public rows: Event[]
-  public leaves: Event[]
+  public rows: Event[] | null
+  public leaves: Event[] | null
   public container: Event | null
   public row:Event|null
   constructor(data: CalendarEvent, slotMetrics:ISlotMetrics) {
@@ -37,17 +37,17 @@ class Event {
     this.top = top
     this.height = height
     this.data = data
-    this.rows = []
-    this.leaves = []
+    this.rows = null
+    this.leaves = null
     this.container = null
     this.row = null
   }
   get tWidth():number {
-    if (this.rows.length) {
-      const columns = this.rows.reduce((max, row) => Math.max(max, row.leaves.length + 1), 0)
+    if (this.rows) {
+      const columns = this.rows.reduce((max, row) => Math.max(max, (row.leaves as Event[]).length + 1), 0)
       return 100 / (columns + 1)
     }
-    if (this.leaves.length) {
+    if (this.leaves) {
       const availableWidth:number = 100 - (this.container?.tWidth || 0)
       return availableWidth / (this.leaves.length + 1)
     }
@@ -57,18 +57,21 @@ class Event {
     const noOverlap = this.tWidth
     const overlap = Math.min(100, this.tWidth * 1.7)
 
-    if (this.rows.length || this.leaves.length) {
+    if (this.rows) {
       return overlap
     }
+    if (this.leaves) {
+      return this.leaves.length > 0 ? overlap : noOverlap
+    }
     const { leaves, } = this.row as Event
-    const index = leaves.indexOf(this)
-    return index === leaves.length - 1 ? noOverlap : overlap
+    const index = (leaves as Event[]).indexOf(this)
+    return index === (leaves as Event[]).length - 1 ? noOverlap : overlap
   }
   get xOffset():number {
-    if (this.rows.length) return 0
-    if (this.leaves.length) return (this.container?.tWidth || 0)
+    if (this.rows) return 0
+    if (this.leaves) return (this.container?.tWidth || 0)
     const { leaves, xOffset, tWidth, } = this.row as Event
-    const index = leaves.indexOf(this) + 1
+    const index = (leaves as Event[]).indexOf(this) + 1
     return xOffset + (index * tWidth)
   }
 }
@@ -146,19 +149,21 @@ export  function overlap(params:IOverlap):IOverlapResult[] {
     // 找到了该事件的容器
     event.container = container
     let row = null
-    for (let j = container.rows.length - 1;!row && j >= 0;j--) {
+    for (let j = (container.rows as Event[]).length - 1;!row && j >= 0;j--) {
       if (onSameRow(
-        container.rows[j], event, minimumStartDifference
+        (container.rows as Event[])[j], event, minimumStartDifference
       )) {
-        row = container.rows[j]
+        row = (container.rows as Event[])[j]
       }
     }
 
     if (row) {
-      row.leaves.push(event)
+      (row.leaves as Event[]).push(event)
       event.row = row
     } else {
-      container.rows.push(event)
+      const containerRows = container.rows as Event[]
+      event.leaves = []
+      containerRows.push(event)
     }
   }
   return eventsInRenderOrder.map((event) => ({
