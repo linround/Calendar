@@ -112,19 +112,22 @@ function onSameRow(
   )
 }
 
+export interface IEventStyle {
+  top:number
+  height:number
+  width:number
+  xOffset:number
+}
 export interface IOverlapResult {
   event: CalendarEvent
-  style:{
-    top:number
-    height:number
-    width:number
-    xOffset:number
-  }
+  style:IEventStyle
 }
 export  function overlap(params:IOverlap):IOverlapResult[] {
   const { events, minimumStartDifference, slotMetrics, } = params
   const proxies = events.map((event) => new Event(event, slotMetrics))
+
   const eventsInRenderOrder = sortByRender(proxies)
+
   // 每个事件可能是 容器，单独的一行，叶子
   //  容器可以包含行，行可以包含多个叶子事件
   const containerEvents = [] as Event[]
@@ -143,7 +146,7 @@ export  function overlap(params:IOverlap):IOverlapResult[] {
     // 找到了该事件的容器
     event.container = container
     let row = null
-    for (let j = container.rows.length - 1;!row && j >= 0;j++) {
+    for (let j = container.rows.length - 1;!row && j >= 0;j--) {
       if (onSameRow(
         container.rows[j], event, minimumStartDifference
       )) {

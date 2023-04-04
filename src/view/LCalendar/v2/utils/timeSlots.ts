@@ -20,6 +20,8 @@ interface IEventRangeResult {
 export interface ISlotMetrics{
   groups:Date[][]
   getRange:(eventStart: Date, eventEnd:Date)=>IEventRangeResult
+  startsBeforeDay:(date:Date)=>boolean
+  startsAfterDay:(date:Date)=>boolean
 }
 export function getSlotMetrics(params:IGetSlotMetricsParams):ISlotMetrics {
   const {
@@ -88,5 +90,17 @@ export function getSlotMetrics(params:IGetSlotMetricsParams):ISlotMetrics {
         endDate: eventEnd,
       }
     },
+    // 以天为单位 在开始的前
+    startsBeforeDay(date:Date):boolean {
+      return localizer.lt(
+        date, start, 'day'
+      )
+    },
+    startsAfterDay(date:Date):boolean {
+      return localizer.gt(
+        date, end, 'day'
+      )
+    },
+
   }
 }

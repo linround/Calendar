@@ -156,10 +156,27 @@ export function getSlotDate(day:Date, offset:number):Date {
     .minute(offset)
     .toDate()
 }
-
+export function localGt(
+  a:Date, b:Date, unit:moment.unitOfTime.DurationConstructor
+):boolean {
+  const [dateA, dateB, format] = defineComparators(
+    a, b, unit
+  )
+  return (dateA as moment.Moment).isBefore(dateB as moment.Moment, format as moment.unitOfTime.DurationConstructor)
+}
+export function lt(
+  a:Date, b:Date, unit:moment.unitOfTime.DurationConstructor
+):boolean {
+  const [dateA, dateB, format] = defineComparators(
+    a, b, unit
+  )
+  return (dateA as moment.Moment).isBefore(dateB as moment.Moment, format as moment.unitOfTime.DurationConstructor)
+}
 
 
 export interface ILocalizer{
+  gt:(a:Date, b:Date, unit:moment.unitOfTime.DurationConstructor)=>boolean,
+  lt:(a:Date, b:Date, unit:moment.unitOfTime.DurationConstructor)=>boolean,
   getSlotDate:(day:Date, offset:number)=>Date,
   getTotalMin:(start:Date, end:Date)=>number,
   format:(value:Date, format:string)=>string,
@@ -194,5 +211,6 @@ const localizer:ILocalizer = {
   format,
   getTotalMin,
   getSlotDate,
+  gt: localGt, lt,
 }
 export default localizer
