@@ -33,7 +33,7 @@ export function DayColumn(props:IDayColumn) {
     return styleEvents.map(({ event, style, }, index) => {
       const start = accessors.start(event)
       const end = accessors.end(event)
-      const format = 'hh:mm'
+      const format = 'HH:mm'
       const label = `${localizer.format(start, format)}-${localizer.format(end, format)}`
       return (
         <TimeGridEvent
