@@ -5,6 +5,8 @@ import timeGridStyle from './style/timeGrid.module.less'
 import { CalendarEvent } from '../../utils/calendar'
 import { inRange } from '../utils/eventLevels'
 import { accessors } from '../../utils/segments/accessors'
+import classnames from 'classnames'
+import { timeViewContainer } from '../utils/day'
 
 
 interface IRenderEvents {
@@ -61,7 +63,10 @@ export function TimeGrid(props:ITimeGrid) {
   })
   return (
     <>
-      <div className={timeGridStyle.v2TimeView}>
+      <div className={classnames({
+        [timeGridStyle.v2TimeView]: true,
+        [timeViewContainer]: true,
+      })}>
         <TimeGridHeader />
         <div  className={timeGridStyle.v2TimeContent}>
           <TimeGutter
