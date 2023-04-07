@@ -9,20 +9,21 @@ export interface IInteractingInfo {
 }
 export type IAction = 'move'|'resize'
 export type IDirection = 'UP'|'DOWN'
-export interface IState extends Partial<IInteractingInfo>{
+export interface IContextState extends Partial<IInteractingInfo>{
   interacting?:boolean
   action?:IAction
   direction?:IDirection
+  event?:CalendarEvent
 }
 export interface IContextProps {
   onEventDrop:(data:IInteractingInfo) =>void
   onEventResize:(data:IInteractingInfo) => void
-  dragAndDropAction?:IState
+  dragAndDropAction?:IContextState
   draggableAccessor?:string
   resizableAccessor?:string
 }
 export const CalContext = (props:React.PropsWithChildren<IContextProps>):JSX.Element => {
-  const [state, setState] = useState<IState>({ interacting: true, })
+  const [state, setState] = useState<IContextState>({ interacting: true, })
   const handleInteractionStart = () => {
     if (state.interacting === false) {
       setState({ ...state, interacting: true, })
@@ -55,7 +56,7 @@ export const CalContext = (props:React.PropsWithChildren<IContextProps>):JSX.Ele
   }
 
 
-  const contextValue = {
+  const draggable =  {
     onStart: handleInteractionStart,
     onEnd: handleInteractionEnd,
     onBeginAction: handleBeginAction,
@@ -64,7 +65,9 @@ export const CalContext = (props:React.PropsWithChildren<IContextProps>):JSX.Ele
     dragAndDropAction: state,
   }
   return (
-    <CalendarContext.Provider value={contextValue}>
+    <CalendarContext.Provider value={{
+      draggable,
+    }}>
       {props.children}
     </CalendarContext.Provider>
   )
