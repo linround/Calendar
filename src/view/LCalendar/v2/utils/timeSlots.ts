@@ -1,4 +1,5 @@
 import localizer from '../../utils/segments/localizer'
+import { IBounds, IEventCoordinatesData } from './selection'
 
 
 interface IGetSlotMetricsParams {
@@ -7,7 +8,7 @@ interface IGetSlotMetricsParams {
   step: number
   timeslots: number
 }
-interface IEventRangeResult {
+export interface IEventRangeResult {
   startDate: Date
   endDate: Date
   start: number
@@ -22,6 +23,9 @@ export interface ISlotMetrics{
   getRange:(eventStart: Date, eventEnd:Date)=>IEventRangeResult
   startsBeforeDay:(date:Date)=>boolean
   startsAfterDay:(date:Date)=>boolean
+  closestSlotFromPoint:(point:IEventCoordinatesData, bounds:IBounds)=>Date
+  closestSlotToPosition:(n:number)=>Date
+  closestSlotFromDate:(date:Date, offset?:number)=> Date
 }
 export function getSlotMetrics(params:IGetSlotMetricsParams):ISlotMetrics {
   const {
@@ -67,6 +71,26 @@ export function getSlotMetrics(params:IGetSlotMetricsParams):ISlotMetrics {
   }
   return {
     groups,
+    closestSlotFromDate(date, offset = 0):Date {
+      if (localizer.lt(
+        date, start, 'minutes'
+      )) return slots[0]
+      if (localizer.gt(
+        date, end, 'minutes'
+      )) return slots[slots.length - 1]
+      const diffMinutes = localizer.diff(
+        start, date, 'minutes'
+      )
+      return slots[((diffMinutes - (diffMinutes % step)) / step) + offset]
+    },
+    closestSlotToPosition(percent:number):Date {
+      const slot = Math.min(slots.length - 1, Math.max(0, Math.floor(percent * numSlots)))
+      return slots[slot]
+    },
+    closestSlotFromPoint(point:IEventCoordinatesData, boundaryRect:IBounds):Date {
+      const range = Math.abs(boundaryRect.top - boundaryRect.bottom)
+      return this.closestSlotToPosition(range)
+    },
     getRange(eventStart: Date, eventEnd:Date):IEventRangeResult {
       // 事件的开始要在 当日结束前（不大于结束，不小于开始）
       // 事件的结束要在 当日开始前（不大于结束，不小于开始）

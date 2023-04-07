@@ -1,6 +1,8 @@
 import { IEventStyle } from '../utils/overlap'
 import { CalendarEvent } from '../../utils/calendar'
 import styles from './style/timeGridEvent.module.less'
+import classnames from 'classnames'
+import { eventItem } from '../utils/day'
 
 function stringifyPercent(v:number):string {
   return typeof v === 'string' ? v : (v + '%')
@@ -20,7 +22,10 @@ export function TimeGridEvent(props:ITimeGridEvent) {
     left: stringifyPercent(xOffset),
   }
   return (
-    <div style={eventStyle} className={styles.v2Event}>
+    <div style={eventStyle} className={classnames({
+      [styles.v2Event]: true,
+      [eventItem]: true,
+    })}>
       {label}
     </div>
   )

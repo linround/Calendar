@@ -5,3 +5,4 @@ export function dayRange(date:Date):Date[] {
 }
 
 export const timeViewContainer = 'time-view-container'
+export const eventItem = 'event-item'

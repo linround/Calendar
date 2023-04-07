@@ -1,17 +1,22 @@
 import { VIEWS } from './Views'
+import { CalendarEvent } from '../utils/calendar'
 
-function View() {
+export interface IBaseProps {
+  events: CalendarEvent[]
+}
+function View(props:IBaseProps) {
   const name = 'day'
   const CalendarView = VIEWS[name]
+
   return (
-    <CalendarView />
+    <CalendarView {...props} />
   )
 }
 
-export function Calendar() {
+export function Calendar(props:IBaseProps) {
   return (
     <>
-      <View />
+      <View {...props} />
     </>
   )
 }

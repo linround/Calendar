@@ -1,7 +1,15 @@
 import { Calendar } from './Calendar'
+import { CalContext, IContextProps } from './context'
+import { CalendarEvent } from '../utils/calendar'
 
-export function WithDragAndDrop() {
+export interface IProps extends IContextProps{
+  events: CalendarEvent[]
+
+}
+export function WithDragAndDrop(props:IProps) {
   return (
-    <Calendar />
+    <CalContext {...props}>
+      <Calendar {...props} />
+    </CalContext>
   )
 }

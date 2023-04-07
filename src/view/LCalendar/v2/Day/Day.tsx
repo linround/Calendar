@@ -9,7 +9,7 @@ interface IDayProps {
   max?:Date
   step?: number
   timeslots?: number
-  events?:CalendarEvent[]
+  events:CalendarEvent[]
 }
 // 时间分组规则
 // 计算最大到最小的时间间距
@@ -21,7 +21,7 @@ export function Day(props:IDayProps) {
     max = localizer.endOf(new Date(), 'day'),
     step = 30,
     timeslots = 2,
-    events = createEvents(),
+    events,
   } = props
   const range = dayRange(new Date())
   return (
