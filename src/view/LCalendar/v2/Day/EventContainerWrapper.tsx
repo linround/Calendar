@@ -1,5 +1,5 @@
 import React, {
-  createRef, ReactElement, useContext, useEffect, useState
+  createRef, ReactElement, useContext, useEffect, useRef, useState
 } from 'react'
 import { IEventRangeResult, ISlotMetrics } from '../utils/timeSlots'
 import { timeViewContainer } from '../utils/day'
@@ -23,12 +23,12 @@ interface IState {
 export function EventContainerWrapper(props:React.PropsWithChildren<IEventContainerWrapper>) {
 
   const { children, slotMetrics, } = props
-  const ref = createRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement|null>(null)
   const [state, setState] = useState<IState>({})
   const context = useContext(CalendarContext)
   const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false)
   const [eventOffsetTop, setEventOffsetTop] = useState<number>(0)
-  console.log(context)
+
   const handleReset = () => {
     if (state.event) {
       setState({})
@@ -48,7 +48,9 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
 
   const handleMove = (point:IEventCoordinatesData, bounds:IBounds) => {
     if (!pointInColumn(bounds, point)) return handleReset()
+
     const { event, } = context.draggable.dragAndDropAction as IContextState
+
     const newSlot = slotMetrics.closestSlotFromPoint({
       y: point.y - eventOffsetTop,
       x: point.x,
@@ -89,7 +91,9 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
       end: event?.end,
     })
   }
+
   const handleSelectable = ():void => {
+
     const wrapper = ref.current as HTMLDivElement
     const node = wrapper.children[0] as HTMLElement
     const selector = new Selection((() => wrapper.closest(`.${timeViewContainer}`) as HTMLDivElement), {})
@@ -108,6 +112,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
     })
 
     selector.on('selecting', (box:IEventCoordinatesData) => {
+
       const bounds = getBoundsForNode(node)
       const { dragAndDropAction, } = context.draggable
       if (dragAndDropAction?.action === 'move') {
@@ -155,7 +160,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
     handleSelectable()
   }, [ref])
 
-  const Content = () => {
+  const renderContent = () => {
     // 事件容器的子节点
     const events = (children as ReactElement).props.children
     return (
@@ -170,7 +175,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
   }
   return (
     <div ref={ref}>
-      <Content />
+      {renderContent()}
     </div>
   )
 }

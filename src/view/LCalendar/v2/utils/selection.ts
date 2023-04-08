@@ -279,7 +279,8 @@ export class Selection {
     case 'mousedown':{
       // 在document 添加mouseup事件
       this.removeEndListener = addEventListener('mouseup', this.handleTerminatingEvent)
-      this.removeMoveListener = addEventListener('mousemove', this.handleTerminatingEvent)
+      this.removeMoveListener = addEventListener('mousemove', this.handleMoveEvent)
+      break
     }
     }
   }
