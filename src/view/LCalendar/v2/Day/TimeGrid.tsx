@@ -30,7 +30,7 @@ function RenderEvents(props:IRenderEvents) {
       timeslots={timeslots}
       step={step}
       events={dayEvents}
-    ></DayColumn>
+    />
   )
 }
 

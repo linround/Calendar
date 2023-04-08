@@ -28,7 +28,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
   const context = useContext(CalendarContext)
   const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false)
   const [eventOffsetTop, setEventOffsetTop] = useState<number>(0)
-
+  console.log(context)
   const handleReset = () => {
     if (state.event) {
       setState({})
@@ -144,6 +144,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
         handleReset()
       }
       context.draggable.onEnd && context.draggable.onEnd(null)
+
     })
     selector.on('reset', () => {
       handleReset()

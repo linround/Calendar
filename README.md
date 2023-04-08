@@ -41,7 +41,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [react-diagrams](https://github.com/projectstorm/react-diagrams)
 - [drawFlow](https://github.com/linyuan1105/Drawflow)
 - [plyr](https://github.com/sampotts/plyr)
-
+- [excalidraw](https://github.com/linround/excalidraw)
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
 
