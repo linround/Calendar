@@ -11,6 +11,7 @@ import { IContextState, IDirection } from '../context'
 import { eventTimes, pointInColumn } from '../utils/common'
 import { CalendarEvent } from '../../utils/calendar'
 import localizer from '../../utils/segments/localizer'
+import { TimeGridEvent } from './TimeGridEvent'
 
 interface IEventContainerWrapper {
   slotMetrics:ISlotMetrics
@@ -115,6 +116,7 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
 
       const bounds = getBoundsForNode(node)
       const { dragAndDropAction, } = context.draggable
+
       if (dragAndDropAction?.action === 'move') {
         handleMove(box, bounds as IBounds)
       }
@@ -163,11 +165,19 @@ export function EventContainerWrapper(props:React.PropsWithChildren<IEventContai
   const renderContent = () => {
     // 事件容器的子节点
     const events = (children as ReactElement).props.children
+    const { event, top = 0, height = 0, } = state
     return (
       React.cloneElement(children as ReactElement, {
         children: (
           <React.Fragment>
             {events}
+            {event && (
+              <TimeGridEvent
+                event={event}
+                style={{ top, height, width: 100, xOffset: 0, }}
+                label='test'
+              />
+            ) }
           </React.Fragment>
         ),
       })
