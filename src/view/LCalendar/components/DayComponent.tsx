@@ -1,4 +1,5 @@
 import { DayBodySlot } from './DayBodySlot'
+import { V3DayHeaderComponent } from '../v3/components/day/DayHeader'
 import {
   mouseEvent,
   mouseDayTime
@@ -180,21 +181,7 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
   })
   return (
     <div className={dayStyle.dayContainer}>
-      <div className={dayStyle.dayHeader} style={{ marginRight: 10, }}>
-        <div className={dayStyle.dayHeaderIntervals} style={{ width: intervalWidth, }}></div>
-        {days.map((day) => (
-          <div className={dayStyle.dayHeaderDay} key={day.date} >
-            <div className={dayStyle.dayHeaderDayLabel}>
-              {weekdayFormatter(day)}
-            </div>
-            <div >
-              <Button className={dayStyle.dayHeaderDayValue} variant="contained">
-                {day.day}
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <V3DayHeaderComponent days={days} intervalWidth={intervalWidth} />
       <div className={dayStyle.dayBody}>
         <div
           ref={dayScrollRef}
