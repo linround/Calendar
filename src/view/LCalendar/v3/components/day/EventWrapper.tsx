@@ -10,7 +10,7 @@ interface IProps {
 }
 export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
   const { event, } = props
-  const [newV, setNewV] = useState<number|null>()
+  const [newEvent, setNewEvent] = useState<CalendarEvent|null>()
   let initCoordinates:ICoordinates
 
   const ref = createRef()
@@ -18,16 +18,18 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
 
   selector.on('beforeSelect', (data:ICoordinates) => {
     initCoordinates = data
+    setNewEvent(event)
+    console.log(event, initCoordinates)
   })
   selector.on('selecting', (data:ICoordinates) => {
-    setNewV((data.clientY - initCoordinates?.pageY))
+
   })
   selector.on('select', (data:ICoordinates) => {
-    setNewV(null)
+    setNewEvent(null)
   })
   return (
     <>
-      {newV}
+      {newEvent && newEvent.eventName}
       {
         React.cloneElement(props.children as ReactElement, {
           ref: ref,
