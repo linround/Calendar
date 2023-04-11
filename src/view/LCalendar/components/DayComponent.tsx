@@ -1,5 +1,6 @@
 import { DayBodySlot } from './DayBodySlot'
 import { V3DayHeaderComponent } from '../v3/components/day/DayHeader'
+import { V3DayIntervals } from '../v3/components/day/DayIntervals'
 import {
   mouseEvent,
   mouseDayTime
@@ -164,7 +165,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       isEventOn(event, identifier))
   }
 
-
   // 存储该scroll滚动容器
   const dayScrollRef = useRef<HTMLDivElement|null>(null)
   const { setDayScrollRef, } = useContext(MouseEventContext)
@@ -191,25 +191,15 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
             style={{ height: intervalHeight * intervalCount, }}>
             <div className={dayStyle.dayBodyDayContainer}>
               {/*左边时间值*/}
-              <div
-                className={dayStyle.dayBodyIntervalsBody}
-                style={{ width: intervalWidth, }}>
-                {
-                  intervals[0].map((interval) => (
-                    <div
-                      className={dayStyle.dayBodyInterval}
-                      style={{ height: intervalHeight, }}
-                      key={ interval.time }>
-                      <div className={dayStyle.dayBodyIntervalText}>
-                        { getTimestampLabel(interval) }
-                      </div>
-                    </div>
-                  ))
-                }
-              </div>
+              <V3DayIntervals
+                intervals={intervals}
+                intervalWidth={intervalWidth}
+                intervalHeight={intervalHeight} />
+
               {
                 // 渲染对应的周、日视图
                 days.map((day, index) => (
+
                   <div
                     className={dayStyle.dayBodyDay}
                     key={index}
