@@ -21,7 +21,7 @@ export type IEventHandler = 'selecting'|
 
 
 
-type INode = ()=>HTMLDivElement
+export type INode = ()=>HTMLDivElement
 export interface IAny {
   [prop :string]:any
 }
@@ -30,7 +30,7 @@ interface IOptions {
   longPressThreshold?: number
   validContainers?: string[]
 }
-interface ICoordinates {
+export interface ICoordinates {
   clientX: number
   clientY:number
   pageX: number
@@ -50,7 +50,7 @@ export interface ISelectRect {
   right:number
   bottom:number
 }
-function addEventListener(
+export function addEventListener(
   type:keyof HTMLElementEventMap, handler: EventHandler<any>, target = document
 ) {
   return listen<keyof HTMLElementEventMap>(
@@ -61,7 +61,7 @@ function addEventListener(
 interface ILastClickData {
   timestamp: number
 }
-function getEventCoordinates(event: React.MouseEvent):ICoordinates {
+export function getEventCoordinates(event: React.MouseEvent):ICoordinates {
   const target = event
   return {
     clientX: target.clientX,

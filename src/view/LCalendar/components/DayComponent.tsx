@@ -1,6 +1,7 @@
 import { DayBodySlot } from './DayBodySlot'
 import { V3DayHeaderComponent } from '../v3/components/day/DayHeader'
 import { V3DayIntervals } from '../v3/components/day/DayIntervals'
+import { V3DayColumnComponent } from '../v3/components/day/DayColumn'
 import {
   mouseEvent,
   mouseDayTime
@@ -71,7 +72,6 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
     intervalWidth,
     intervalMinutes,
   } = useContext(IntervalsContext)
-
 
   const categoryMode = useMemo<boolean>(() => type === 'category', [type])
   const parsedIntervalHeight: number = useMemo(() => intervalHeight, [intervalHeight])
@@ -195,7 +195,14 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
                 intervals={intervals}
                 intervalWidth={intervalWidth}
                 intervalHeight={intervalHeight} />
-
+              <V3DayColumnComponent
+                events={parsedEvents}
+                intervalHeight={intervalHeight}
+                intervalWidth={intervalWidth}
+                days={days}
+                getSlotScope={getSlotScope}
+                intervals={intervals}
+              />
               {
                 // 渲染对应的周、日视图
                 days.map((day, index) => (

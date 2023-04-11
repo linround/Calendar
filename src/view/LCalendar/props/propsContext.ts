@@ -41,6 +41,8 @@ export const DEFAULT_EVENT = {
   eventOverlapThreshold: 60,
   eventHeight: 20,
   eventMarginBottom: 1,
+  eventClass: 'calendar-event',
+  eventViewContainer: 'calendar-view',
 }
 
 

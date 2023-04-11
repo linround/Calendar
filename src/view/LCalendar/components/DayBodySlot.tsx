@@ -67,6 +67,7 @@ export const DayBodySlot = React.forwardRef((props:IProps, ref) => {
   const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
     day))
     .filter((i: any) => i !== false) as IEventsRect[]
+
   const className = classnames({
     [dayStyle.dayBodyTimedItem]: true,
     [IS_EVENT]: true,
