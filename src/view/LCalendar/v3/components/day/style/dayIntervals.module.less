@@ -1,0 +1,29 @@
+@import "../../../../variables.less";
+
+.intervals {
+  &Container{
+    border-right: 1px solid @borderColor;
+  }
+  &Item {
+    position: relative;
+    &Text {
+      font-size: 16px;
+      text-align: center;
+      position: relative;
+      top: -6px;
+    }
+    &:first-child {
+      border-top: none !important;
+    }
+    &:after {
+      width: 8px;
+      position: absolute;
+      height: 1px;
+      display: block;
+      content: '';
+      right: 0;
+      bottom: -1px;
+      border-top: 1px solid @borderColor;
+    }
+  }
+}

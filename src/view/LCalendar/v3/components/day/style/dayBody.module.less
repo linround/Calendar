@@ -1,7 +1,14 @@
+@import "../../../../variables.less";
 .day{
   &Body{
     flex: 1;
-    display: flex;
-    overflow: hidden;
+    position: relative;
+    border-right: 1px solid @borderColor;
+    &Interval {
+      border-top: 1px solid @borderColor;
+      &:first-child {
+        border-top: none !important;
+      }
+    }
   }
 }
