@@ -39,7 +39,6 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
 
   let initTime:number
   let draggedEvent:CalendarEvent
-  let clearInterVal:()=>void|undefined
   selector.on('beforeSelect', (data:ICoordinates) => {
     const timestamp = getTimeFromPoint(
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
@@ -67,8 +66,6 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
 
   })
   selector.on('select', (data:ICoordinates) => {
-    if (typeof clearInterVal === 'function') clearInterVal()
-    console.log('放开', typeof clearInterVal === 'function')
     setDraggedEvent([])
   })
   return (

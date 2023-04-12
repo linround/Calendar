@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import styles from './style/event.module.less'
-import { EventWrapperComponent } from './EventWrapper'
-import classnames from 'classnames'
-import { DEFAULT_EVENT, EventContext } from '../../../props/propsContext'
+import { getVisualsRect } from '../../utils/eventsLayout'
+import {  EventContext } from '../../../props/propsContext'
+import { EventsRect } from './EventsRect'
 import {
   CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
 } from '../../../utils/calendar'
-import { getVisualsRect } from '../../utils/eventsLayout'
+import styles from './style/event.module.less'
 
 interface IProps {
   day:CalendarTimestamp
@@ -37,27 +36,21 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   const draggedVisualsRect = getVisualsRect(
     day, parsedDraggedEvent, getSlotScope
   )
-  draggedVisualsRect.map((rect) => rect.style.zIndex = 100)
   return (
     <>
-      {[...draggedVisualsRect, ...eventVisualsRect].map((rect, index) => (
-        <EventWrapperComponent
-          key={index}
-          days={days}
-          event={rect.event}
-          firstMinute={firstMinute}
-          daysContainer={daysContainer}
-          scrollContainer={scrollContainer}
-        >
-          <div style={rect.style} className={classnames({
-            [styles.eventContainer]: true,
-            [DEFAULT_EVENT.eventClass]: true,
-          })}>
-            <div>{rect.content.title}</div>
-            <div>{rect.content.timeRange}</div>
-          </div>
-        </EventWrapperComponent>
-      ))}
+      <EventsRect
+        visualsRect={draggedVisualsRect}
+        className={styles.eventDragged}
+        firstMinute={firstMinute}
+        days={days}
+        daysContainer={daysContainer}
+        scrollContainer={scrollContainer} />
+      <EventsRect
+        visualsRect={eventVisualsRect}
+        firstMinute={firstMinute}
+        days={days}
+        daysContainer={daysContainer}
+        scrollContainer={scrollContainer} />
     </>
   )
 }
