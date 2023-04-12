@@ -32,9 +32,9 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
   const ref = createRef()
   const selector:Selector = new Selector()
   // 整个滚动区域的容器
-  const scrollRect = scrollContainer.getBoundingClientRect()
+  const scrollRect = scrollContainer?.getBoundingClientRect()
   // 日历所有天数的容器
-  const daysRect = daysContainer.getBoundingClientRect()
+  const daysRect = daysContainer?.getBoundingClientRect()
 
 
   let initTime:number
@@ -69,6 +69,7 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
   selector.on('select', (data:ICoordinates) => {
     if (typeof clearInterVal === 'function') clearInterVal()
     console.log('放开', typeof clearInterVal === 'function')
+    setDraggedEvent([])
   })
   return (
     <>

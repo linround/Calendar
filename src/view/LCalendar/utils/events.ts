@@ -80,6 +80,7 @@ interface IEventStyle {
   left:string
   width:string
   backgroundColor: string,
+  zIndex?: number
 }
 interface IEventContent {
   title: string

@@ -208,13 +208,21 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     const newEvents = events.filter((i) => !!i)
     setEvents([...newEvents])
   }
-  const parsedEvents = useMemo<CalendarEventParsed[]>(() => [...draggedEvent, ...events].map((input, index) => parseEvent(
+  const parsedEvents = useMemo<CalendarEventParsed[]>(() => events.map((input, index) => parseEvent(
     input,
     index,
     eventStart,
     eventEnd,
     (!!input[eventTimed])
-  )), [events, eventStart, eventEnd, draggedEvent])
+  )), [events, eventStart, eventEnd])
+  const parsedDraggedEvent = useMemo<CalendarEventParsed[]>(() => draggedEvent.map((input, index) => parseEvent(
+    input,
+    index,
+    eventStart,
+    eventEnd,
+    (!!input[eventTimed])
+  )), [draggedEvent, eventStart, eventEnd])
+
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
 
 
@@ -292,6 +300,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               resetEvents,
               draggedEvent,
               setDraggedEvent,
+              parsedDraggedEvent,
             }}>
               <MouseEventContext.Provider value={{
 

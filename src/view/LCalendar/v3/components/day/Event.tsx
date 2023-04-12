@@ -1,18 +1,12 @@
-import {
-  genTimedEvents, IEventsRect, isEventOn
-} from '../../../utils/events'
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styles from './style/event.module.less'
 import { EventWrapperComponent } from './EventWrapper'
 import classnames from 'classnames'
-import { DEFAULT_EVENT } from '../../../props/propsContext'
-import { getDayIdentifier } from '../../../utils/timesStamp'
-import { CalendarEventVisual } from '../../../utils/modes/common'
+import { DEFAULT_EVENT, EventContext } from '../../../props/propsContext'
 import {
-  CalendarDayBodySlotScope, CalendarEvent, CalendarEventParsed, CalendarTimestamp
+  CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
 } from '../../../utils/calendar'
-import { stack } from '../../../utils/modes/stack'
-import { DEFAULT_WEEK_DAYS } from '../../../utils/time'
+import { getVisualsRect } from '../../utils/eventsLayout'
 
 interface IProps {
   day:CalendarTimestamp
@@ -34,22 +28,19 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
     daysContainer,
     scrollContainer,
   } = props
-  const overLap = stack(
-    events, DEFAULT_WEEK_DAYS[0], DEFAULT_EVENT.eventOverlapThreshold
+  const eventVisualsRect = getVisualsRect(
+    day, events, getSlotScope
   )
-  const identifier = getDayIdentifier(day)
-  const dayEvents = events.filter((event) => !event.allDay && isEventOn(event, identifier))
-  const dayScope = getSlotScope(day)
-  const visuals = overLap(
-    dayScope, dayEvents, true, false
+  const {
+    parsedDraggedEvent,
+  } = useContext(EventContext)
+  const draggedVisualsRect = getVisualsRect(
+    day, parsedDraggedEvent, getSlotScope
   )
-  const visualsRect = visuals.map((visual: CalendarEventVisual) => genTimedEvents(visual,
-    dayScope))
-    .filter((i) => i) as IEventsRect[]
-
+  draggedVisualsRect.map((rect) => rect.style.zIndex = 100)
   return (
     <>
-      {visualsRect.map((rect, index) => (
+      {[...draggedVisualsRect, ...eventVisualsRect].map((rect, index) => (
         <EventWrapperComponent
           key={index}
           days={days}

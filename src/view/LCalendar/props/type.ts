@@ -26,6 +26,7 @@ export interface IEventContext {
   eventOverlapThreshold: number
   eventHeight: number
   eventMarginBottom: number
+  parsedDraggedEvent:CalendarEventParsed[]
   parsedEvents: CalendarEventParsed[]
   eventModeFunction: (parsedEvents: CalendarEventParsed[], parsedWeekdays:number, threshold: number)=> any
   resetEvents: (o:CalendarEvent, n:CalendarEvent | null) => void

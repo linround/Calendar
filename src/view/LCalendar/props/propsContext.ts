@@ -54,6 +54,7 @@ export const WeeksContext = createContext<IWeeksContext>({
 
 
 export const EventContext = createContext<IEventContext>({
+  parsedDraggedEvent: [],
   draggedEvent: [],
   setDraggedEvent: () => void 0,
   events: DEFAULT_EVENT.events,
