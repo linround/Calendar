@@ -42,7 +42,7 @@ export const DEFAULT_EVENT = {
   eventHeight: 20,
   eventMarginBottom: 1,
   eventClass: 'calendar-event',
-  eventViewContainer: 'calendar-view',
+  eventViewContainer: 'day-view',
 }
 
 
@@ -54,6 +54,8 @@ export const WeeksContext = createContext<IWeeksContext>({
 
 
 export const EventContext = createContext<IEventContext>({
+  draggedEvent: [],
+  setDraggedEvent: () => void 0,
   events: DEFAULT_EVENT.events,
   setEvents: () => undefined,
   eventStart: DEFAULT_EVENT.eventStart,
@@ -66,6 +68,7 @@ export const EventContext = createContext<IEventContext>({
   eventHeight: DEFAULT_EVENT.eventHeight,
   eventModeFunction: () => undefined,
   resetEvents: (a:CalendarEvent, b: CalendarEvent|null) => undefined,
+
 })
 
 export const BaseContext = createContext<IBaseContext>({

@@ -86,7 +86,9 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
       time :
       parsedFirstInterval * parsedIntervalMinutes
   }, [parsedFirstTime, parsedIntervalMinutes, parsedFirstInterval])
+
   const now = times?.now || null
+
   const intervals: CalendarTimestamp[][] = useMemo<CalendarTimestamp[][]>(() => days.map((d) => createIntervalList(
     d, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now as CalendarTimestamp
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])
@@ -189,20 +191,24 @@ export default React.forwardRef((props: IDayProps, ref) =>  {
           <div
             className={dayStyle.dayBodyPane}
             style={{ height: intervalHeight * intervalCount, }}>
-            <div className={dayStyle.dayBodyDayContainer}>
-              {/*左边时间值*/}
-              <V3DayIntervals
-                intervals={intervals}
-                intervalWidth={intervalWidth}
-                intervalHeight={intervalHeight} />
-              <V3DayColumnComponent
-                events={parsedEvents}
-                intervalHeight={intervalHeight}
-                intervalWidth={intervalWidth}
-                days={days}
-                getSlotScope={getSlotScope}
-                intervals={intervals}
-              />
+
+            {/*左边时间值*/}
+            <V3DayIntervals
+              intervals={intervals}
+              intervalWidth={intervalWidth}
+              intervalHeight={intervalHeight} />
+
+            <V3DayColumnComponent
+              firstMinute={firstMinute}
+              scrollContainer={dayScrollRef.current as HTMLDivElement}
+              intervals={intervals}
+              intervalWidth={intervalWidth}
+              intervalHeight={intervalHeight}
+              days={days}
+              events={parsedEvents}
+              getSlotScope={getSlotScope}
+            />
+            <div className={dayStyle.dayBodyDayContainer} >
               {
                 // 渲染对应的周、日视图
                 days.map((day, index) => (

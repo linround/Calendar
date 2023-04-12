@@ -12,6 +12,8 @@
     &Pane {
       overflow: hidden;
       width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
     }
     &TimedContainer {
       position: absolute;
@@ -44,6 +46,7 @@
     }
     &DayContainer {
       display: flex;
+      flex: 1;
     }
     &IntervalsBody {
       border-right: 1px solid @borderColor;

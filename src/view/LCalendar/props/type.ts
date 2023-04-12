@@ -15,6 +15,8 @@ export interface IWeeksContext {
 }
 
 export interface IEventContext {
+  setDraggedEvent:React.Dispatch<React.SetStateAction<CalendarEvent[]>>
+  draggedEvent: CalendarEvent[]
   events: CalendarEvent[]
   setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
   eventStart: string
