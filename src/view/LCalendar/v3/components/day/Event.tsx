@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useRef
+  useContext, useEffect, createRef, useRef
 } from 'react'
 import { getVisualsRect } from '../../utils/eventsLayout'
 import { EventContext, MouseEventContext } from '../../../props/propsContext'
@@ -44,21 +44,21 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   const createdVisualsRect = getVisualsRect(
     day, parsedCreatedEvent, getSlotScope
   )
-  const { setCreatePopoverRefV3,
+  const {
+    setCreatePopoverRefV3,
     setShowCreatePopoverV3,
-    setShowNormalPopover,
-    setNormalPopoverRef,
-    setNormalEvent, clearPagePopover, updateEventList, } = useContext(MouseEventContext)
+  } = useContext(MouseEventContext)
 
-  const createRef = useRef<HTMLDivElement|null>(null)
+  const ref = useRef<any>()
   useEffect(() => {
-    setCreatePopoverRefV3(createRef.current)
+    console.log(ref.current)
+    setCreatePopoverRefV3(ref.current)
     setShowCreatePopoverV3(true)
-  }, [createRef.current])
+  }, [ref.current])
   return (
     <>
       <EventsRect
-        ref={createRef}
+        ref={ref}
         eventAction={CREATED_ACTION}
         className={styles.eventDragged}
         visualsRect={createdVisualsRect}

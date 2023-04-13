@@ -31,10 +31,10 @@ export const CreatePopoverMixin = {
         <div className={styles.createEventPopoverName}>
           <Input
             fullWidth={true}
-            defaultValue={event.name}
+            defaultValue={event.eventName}
             placeholder={namePlaceholder}
             onChange={(e) => {
-              setEventKeyValue('name', e.target.value)
+              setEventKeyValue('eventName', e.target.value)
             }} />
         </div>
         <div className={styles.createEventPopoverInputItem}>
@@ -51,9 +51,9 @@ export const CreatePopoverMixin = {
           </div>
           <TextField
             fullWidth={true}
-            defaultValue={location}
+            defaultValue={event.eventLocation}
             placeholder={locationPlaceholder}
-            onChange={(e) => setEventKeyValue('location', e.target.value)}/>
+            onChange={(e) => setEventKeyValue('eventLocation', e.target.value)}/>
 
         </div>
       </div>

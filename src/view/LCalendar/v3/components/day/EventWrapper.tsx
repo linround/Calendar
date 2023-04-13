@@ -35,7 +35,7 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     intervalHeight,
     intervalMinutes,
   } = useContext(IntervalsContext)
-  const { updateEventList, } = useContext(MouseEventContext)
+  const { updateEventList, setShowCreatePopoverV3, } = useContext(MouseEventContext)
   const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
 
   const selector:Selector = new Selector()
@@ -51,7 +51,11 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     const timestamp = getTimeFromPoint(
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
     )
+    draggedEvent = {
+      ...event,
+    }
     initTime = toTime(timestamp)
+    setShowCreatePopoverV3(false)
     return false
   })
   selector.on('selecting', (data:ICoordinates) => {
@@ -84,6 +88,7 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     case CREATED_ACTION:{
       setCreatedEvent(draggedEvent)
       setDraggedEvent(null)
+      setShowCreatePopoverV3(true)
       break
     }
     }

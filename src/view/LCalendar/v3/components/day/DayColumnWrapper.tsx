@@ -7,7 +7,7 @@ import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { getTimeFromPoint } from '../../utils/point'
 import { roundTime, toTime } from '../../../utils/timesStamp'
 import {
-  CalendarContext, EventContext, IntervalsContext
+  CalendarContext, EventContext, IntervalsContext, MouseEventContext
 } from '../../../props/propsContext'
 import { createTimeEvent } from '../../../utils/events'
 
@@ -26,6 +26,8 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
   } = useContext(IntervalsContext)
   const ref = useRef<HTMLDivElement>()
   const { setCreatedEvent, } = useContext(EventContext)
+
+  const { setShowCreatePopoverV3, } = useContext(MouseEventContext)
   const { group, } = useContext(CalendarContext)
   const { daysContainer, days, firstMinute, scrollContainer, } = props
   const selector = new Selector()
@@ -70,10 +72,12 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     const createdEvent = createTimeEvent(
       startTime, endTime, group
     )
+    setShowCreatePopoverV3(false)
     setCreatedEvent(createdEvent)
   })
   selector.on('select', (data:ICoordinates) => {
     console.log(data)
+    setShowCreatePopoverV3(true)
   })
   return React.cloneElement(props.children as ReactElement, {
     ref,
