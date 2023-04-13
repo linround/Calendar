@@ -13,6 +13,7 @@ import {
   IntervalsContext,
   MouseEventContext
 } from './props/propsContext'
+import { V3PopoverComponent } from './v3/popover'
 import {
   DEFAULT_MAX_DAYS,
   DEFAULT_WEEK_DAYS
@@ -290,7 +291,7 @@ export default function () {
 
   return (
     <>
-
+      <V3PopoverComponent />
       <PopoverComponents />
       <div
         className={styles.mainContainer}

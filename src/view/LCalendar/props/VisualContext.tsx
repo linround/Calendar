@@ -54,8 +54,11 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
    * todo
    * 这里和createPopover有关的变量
    * */
+
+  const [createPopoverRefV3, setCreatePopoverRefV3] = useState<Element | null>(null)
   const [createPopoverRef, setCreatePopoverRef] = useState<Element | null>(null)
   const [showCreatePopover, setShowCreatePopover] = useState<boolean>(true)
+  const [showCreatePopoverV3, setShowCreatePopoverV3] = useState<boolean>(true)
   const [normalEvent, setNormalEvent] = useState<CalendarEvent|null>(null)
 
 
@@ -149,8 +152,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
   const [events, setEvents] = useState<CalendarEvent[]>([])
-  const [createdEvent, setCreatedEvent] = useState<CalendarEvent[]>([])
-  const [draggedEvent, setDraggedEvent] = useState<CalendarEvent[]>([])
+  const [createdEvent, setCreatedEvent] = useState<CalendarEvent|null>(null)
+  const [draggedEvent, setDraggedEvent] = useState<CalendarEvent|null>(null)
   const [eventStart] = useState(DEFAULT_EVENT.eventStart)
   const [eventEnd] = useState(DEFAULT_EVENT.eventEnd)
   const [eventTimed] = useState(DEFAULT_EVENT.eventTimed)
@@ -216,20 +219,29 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     eventEnd,
     (!!input[eventTimed])
   )), [events, eventStart, eventEnd])
-  const parsedDraggedEvent = useMemo<CalendarEventParsed[]>(() => draggedEvent.map((input, index) => parseEvent(
-    input,
-    index,
-    eventStart,
-    eventEnd,
-    (!!input[eventTimed])
-  )), [draggedEvent, eventStart, eventEnd])
-  const parsedCreatedEvent = useMemo<CalendarEventParsed[]>(() => createdEvent.map((input, index) => parseEvent(
-    input,
-    index,
-    eventStart,
-    eventEnd,
-    (!!input[eventTimed])
-  )), [createdEvent, eventStart, eventEnd])
+  const parsedDraggedEvent = useMemo<CalendarEventParsed[]>(() => {
+    const filterEvents = [draggedEvent].filter((e) => e) as CalendarEvent[]
+    return filterEvents
+      .map((input, index) => parseEvent(
+        input,
+        index,
+        eventStart,
+        eventEnd,
+        (!!input[eventTimed])
+      ))
+  }, [draggedEvent, eventStart, eventEnd])
+
+  const parsedCreatedEvent = useMemo<CalendarEventParsed[]>(() => {
+    const filterEvents = [createdEvent].filter((e) => e) as CalendarEvent[]
+    return filterEvents
+      .map((input, index) => parseEvent(
+        input,
+        index,
+        eventStart,
+        eventEnd,
+        (!!input[eventTimed])
+      ))
+  }, [createdEvent, eventStart, eventEnd])
 
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
 
@@ -314,7 +326,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               parsedCreatedEvent,
             }}>
               <MouseEventContext.Provider value={{
-
+                createPopoverRefV3, setCreatePopoverRefV3,
+                showCreatePopoverV3, setShowCreatePopoverV3,
                 createPopoverRef,
                 setCreatePopoverRef,
                 showCreatePopover,

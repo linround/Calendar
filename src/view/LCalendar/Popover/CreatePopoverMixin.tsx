@@ -23,28 +23,27 @@ export const CreatePopoverMixin = {
     )
   },
   renderBody(props:IMixinPopoverBody):JSX.Element {
+    const { event, setEventKeyValue, } = props
     const namePlaceholder = '输入标题'
     const locationPlaceholder = '输入地点'
-    const { name, setName, location, setLocation,
-      start, setStart, end, setEnd, } = props
     return (
       <div className={styles.createEventPopoverBody}>
         <div className={styles.createEventPopoverName}>
           <Input
             fullWidth={true}
-            defaultValue={name}
+            defaultValue={event.name}
             placeholder={namePlaceholder}
             onChange={(e) => {
-              setName(e.target.value)
+              setEventKeyValue('name', e.target.value)
             }} />
         </div>
         <div className={styles.createEventPopoverInputItem}>
           <div className={styles.createEventPopoverInputIcon}>
             <SvgIcon iconName='popover-clock' />
           </div>
-          <TimePicker time={start} />
+          <TimePicker time={event.start} />
           ~
-          <TimePicker  time={end} />
+          <TimePicker  time={event.end} />
         </div>
         <div className={styles.createEventPopoverInputItem}>
           <div className={styles.createEventPopoverInputIcon}>
@@ -54,7 +53,7 @@ export const CreatePopoverMixin = {
             fullWidth={true}
             defaultValue={location}
             placeholder={locationPlaceholder}
-            onChange={(e) => setLocation(e.target.value)}/>
+            onChange={(e) => setEventKeyValue('location', e.target.value)}/>
 
         </div>
       </div>

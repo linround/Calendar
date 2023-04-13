@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
+import React, {
+  useContext, useEffect, useRef
+} from 'react'
 import { getVisualsRect } from '../../utils/eventsLayout'
-import {  EventContext } from '../../../props/propsContext'
+import { EventContext, MouseEventContext } from '../../../props/propsContext'
 import { EventsRect } from './EventsRect'
 import {
   CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
@@ -42,9 +44,21 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   const createdVisualsRect = getVisualsRect(
     day, parsedCreatedEvent, getSlotScope
   )
+  const { setCreatePopoverRefV3,
+    setShowCreatePopoverV3,
+    setShowNormalPopover,
+    setNormalPopoverRef,
+    setNormalEvent, clearPagePopover, updateEventList, } = useContext(MouseEventContext)
+
+  const createRef = useRef<HTMLDivElement|null>(null)
+  useEffect(() => {
+    setCreatePopoverRefV3(createRef.current)
+    setShowCreatePopoverV3(true)
+  }, [createRef.current])
   return (
     <>
       <EventsRect
+        ref={createRef}
         eventAction={CREATED_ACTION}
         className={styles.eventDragged}
         visualsRect={createdVisualsRect}

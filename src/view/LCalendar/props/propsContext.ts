@@ -54,11 +54,11 @@ export const WeeksContext = createContext<IWeeksContext>({
 
 
 export const EventContext = createContext<IEventContext>({
-  createdEvent: [],
+  createdEvent: null,
   parsedCreatedEvent: [],
   setCreatedEvent: () => void 0,
   parsedDraggedEvent: [],
-  draggedEvent: [],
+  draggedEvent: null,
   setDraggedEvent: () => void 0,
   events: DEFAULT_EVENT.events,
   setEvents: () => undefined,
@@ -125,6 +125,10 @@ export const MouseEventContext = createContext<IMouseEventContext>({
   setShowCreatePopover: () => void 0,
 
 
+  createPopoverRefV3: null,
+  setCreatePopoverRefV3: () => void 0,
+  showCreatePopoverV3: false,
+  setShowCreatePopoverV3: () => void 0,
 
 
   /***

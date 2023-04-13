@@ -36,8 +36,6 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
 
   let initTime:number
   selector.on('beforeSelect', (data:ICoordinates) => {
-    console.log(scrollContainer)
-    console.log(daysContainer)
     // 只有当选中的不是事件节点时才会组织添加监听mousemove,mouseup事件
     const stop = !!getEventNodeFromPoint(daysContainer, data)
     const timestamp = getTimeFromPoint(
@@ -72,7 +70,7 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     const createdEvent = createTimeEvent(
       startTime, endTime, group
     )
-    setCreatedEvent([createdEvent])
+    setCreatedEvent(createdEvent)
   })
   selector.on('select', (data:ICoordinates) => {
     console.log(data)

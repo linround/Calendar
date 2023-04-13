@@ -7,7 +7,9 @@ import classnames from 'classnames'
 import { SUCCESS_CODE } from '../../../request'
 import styles from './createEventPopover.module.less'
 import { handleCreateEvent } from '../../../api/event'
-import {  calcPosition, IDefaultValue } from './helpers'
+import {
+  calcPosition, IDefaultValue, IEventKeyValue
+} from './helpers'
 import { CreatePopoverContent } from './CreatePopoverContent'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
 import { EventContext, MouseEventContext } from '../props/propsContext'
@@ -32,6 +34,7 @@ export function CreatePopover() {
       const { left, top, } = calcPosition(
         createPopoverRef, dayScrollRef as Element, eventRef.current
       )
+      console.log(createPopoverRef)
       popoverCache.ref = createPopoverRef
       // 这里无法在全局处理
       setLeft(Math.max(0, left))
@@ -121,6 +124,10 @@ export function CreatePopover() {
     [styles.createEventPopoverContainer]: true,
     [commonPopoverStyle.popover]: true,
   })
+
+  function setEventKeyValue (k:string, v:IEventKeyValue) {
+    createEvent[k] = v
+  }
   return (
     <>
       {
@@ -130,16 +137,10 @@ export function CreatePopover() {
           ref={eventRef as React.ForwardedRef<HTMLDivElement>}
           style={{ left, top, }}>
           <CreatePopoverContent
+            setEventKeyValue={setEventKeyValue}
+            event={createEvent}
             onClose={onClose}
             onConfirm={onConfirm}
-            name={name}
-            setName={setName}
-            location={location}
-            setLocation={setLocation}
-            start={start}
-            setStart={setStart}
-            end={end}
-            setEnd={setEnd}
           />
         </div>
 

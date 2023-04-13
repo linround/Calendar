@@ -15,11 +15,11 @@ export interface IWeeksContext {
 }
 
 export interface IEventContext {
-  createdEvent:CalendarEvent[]
+  createdEvent:CalendarEvent|null
   parsedCreatedEvent:CalendarEventParsed[]
-  setCreatedEvent: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
-  setDraggedEvent:React.Dispatch<React.SetStateAction<CalendarEvent[]>>
-  draggedEvent: CalendarEvent[]
+  setCreatedEvent: React.Dispatch<React.SetStateAction<CalendarEvent|null>>
+  setDraggedEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>
+  draggedEvent: CalendarEvent|null
   parsedDraggedEvent:CalendarEventParsed[]
   events: CalendarEvent[]
   setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
@@ -102,10 +102,14 @@ export interface IMouseEventContext {
    * todo
    * 这里和createPopover有关的变量
    * */
+  showCreatePopoverV3: boolean,
+  setShowCreatePopoverV3: React.Dispatch<React.SetStateAction<boolean>>,
   showCreatePopover: boolean,
   setShowCreatePopover: React.Dispatch<React.SetStateAction<boolean>>,
   createPopoverRef: Element | null
   setCreatePopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
+  createPopoverRefV3: Element | null
+  setCreatePopoverRefV3: React.Dispatch<React.SetStateAction<Element | null>>
 
 
 

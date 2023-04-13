@@ -69,21 +69,21 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
       start: newStart,
       end: newEnd,
     }
-    setDraggedEvent([draggedEvent])
+    setDraggedEvent(draggedEvent)
   })
   selector.on('select', async (data:ICoordinates) => {
     switch (eventAction) {
     case NORMAL_ACTION:{
       const { code, } = await updateEvent(draggedEvent)
       if (code === SUCCESS_CODE) {
-        setDraggedEvent([])
+        setDraggedEvent(null)
         updateEventList()
       }
       break
     }
     case CREATED_ACTION:{
-      setCreatedEvent([draggedEvent])
-      setDraggedEvent([])
+      setCreatedEvent(draggedEvent)
+      setDraggedEvent(null)
       break
     }
     }
