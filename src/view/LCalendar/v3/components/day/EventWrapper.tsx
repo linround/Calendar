@@ -91,13 +91,11 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
   })
   return (
     <>
-      {
-        React.cloneElement(props.children as ReactElement, {
-          onMouseDown(e:React.MouseEvent) {
-            selector.handleInitialEvent(e)
-          },
-        })
-      }
+      {React.cloneElement(props.children as ReactElement, {
+        onMouseDown(e:React.MouseEvent) {
+          selector.handleInitialEvent(e)
+        },
+      })}
     </>
   )
 }
