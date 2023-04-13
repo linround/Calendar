@@ -75,7 +75,6 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     setCreatedEvent([createdEvent])
   })
   selector.on('select', (data:ICoordinates) => {
-    setCreatedEvent([])
     console.log(data)
   })
   return React.cloneElement(props.children as ReactElement, {

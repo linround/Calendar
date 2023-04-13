@@ -9,6 +9,9 @@ import {
 } from '../../../props/propsContext'
 import { updateEvent } from '../../../../../api'
 import { SUCCESS_CODE } from '../../../../../request'
+import {
+  CREATED_ACTION, DRAGGED_ACTION, IEventAction, NORMAL_ACTION
+} from '../../utils'
 
 interface IProps {
   event:CalendarEvent
@@ -16,6 +19,8 @@ interface IProps {
   firstMinute:number
   daysContainer:HTMLDivElement
   scrollContainer: HTMLDivElement
+  eventAction:IEventAction
+
 }
 export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -24,13 +29,14 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     firstMinute,
     daysContainer,
     scrollContainer,
+    eventAction,
   } = props
   const {
     intervalHeight,
     intervalMinutes,
   } = useContext(IntervalsContext)
   const { updateEventList, } = useContext(MouseEventContext)
-  const { setDraggedEvent, } = useContext(EventContext)
+  const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
 
   const selector:Selector = new Selector()
   // 整个滚动区域的容器
@@ -66,11 +72,22 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     setDraggedEvent([draggedEvent])
   })
   selector.on('select', async (data:ICoordinates) => {
-    const { code, } = await updateEvent(draggedEvent)
-    if (code === SUCCESS_CODE) {
-      setDraggedEvent([])
-      updateEventList()
+    switch (eventAction) {
+    case NORMAL_ACTION:{
+      const { code, } = await updateEvent(draggedEvent)
+      if (code === SUCCESS_CODE) {
+        setDraggedEvent([])
+        updateEventList()
+      }
+      break
     }
+    case CREATED_ACTION:{
+      setCreatedEvent([draggedEvent])
+      setDraggedEvent([])
+      break
+    }
+    }
+
   })
   return (
     <>

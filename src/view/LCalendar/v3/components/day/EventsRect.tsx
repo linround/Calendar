@@ -5,6 +5,7 @@ import { EventWrapperComponent } from './EventWrapper'
 import classnames from 'classnames'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { CalendarTimestamp } from '../../../utils/calendar'
+import { IEventAction } from '../../utils'
 
 interface IProps {
   visualsRect:IEventsRect[]
@@ -13,6 +14,7 @@ interface IProps {
   days:CalendarTimestamp[]
   daysContainer:HTMLDivElement
   scrollContainer: HTMLDivElement
+  eventAction:IEventAction
 }
 export function EventsRect(props:React.PropsWithChildren<IProps>) {
   const {
@@ -22,6 +24,7 @@ export function EventsRect(props:React.PropsWithChildren<IProps>) {
     daysContainer,
     scrollContainer,
     className = '',
+    eventAction,
   } = props
   return (
     <>
@@ -29,6 +32,7 @@ export function EventsRect(props:React.PropsWithChildren<IProps>) {
         <EventWrapperComponent
           key={index}
           days={days}
+          eventAction={eventAction}
           event={rect.event}
           firstMinute={firstMinute}
           daysContainer={daysContainer}

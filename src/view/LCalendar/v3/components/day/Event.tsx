@@ -6,6 +6,9 @@ import {
   CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
 } from '../../../utils/calendar'
 import styles from './style/event.module.less'
+import {
+  CREATED_ACTION, DRAGGED_ACTION, NORMAL_ACTION
+} from '../../utils'
 
 interface IProps {
   day:CalendarTimestamp
@@ -42,6 +45,7 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   return (
     <>
       <EventsRect
+        eventAction={CREATED_ACTION}
         className={styles.eventDragged}
         visualsRect={createdVisualsRect}
         firstMinute={firstMinute}
@@ -49,6 +53,7 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
         daysContainer={daysContainer}
         scrollContainer={scrollContainer} />
       <EventsRect
+        eventAction={DRAGGED_ACTION}
         visualsRect={draggedVisualsRect}
         className={styles.eventDragged}
         firstMinute={firstMinute}
@@ -56,6 +61,7 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
         daysContainer={daysContainer}
         scrollContainer={scrollContainer} />
       <EventsRect
+        eventAction={NORMAL_ACTION}
         visualsRect={eventVisualsRect}
         firstMinute={firstMinute}
         days={days}
