@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, createRef, useRef
+  useContext, useEffect, createRef, useRef, useLayoutEffect
 } from 'react'
 import { getVisualsRect } from '../../utils/eventsLayout'
 import { EventContext, MouseEventContext } from '../../../props/propsContext'
@@ -50,11 +50,12 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   } = useContext(MouseEventContext)
 
   const ref = useRef<any>()
-  useEffect(() => {
-    console.log(ref.current)
+  useLayoutEffect(() => {
     setCreatePopoverRefV3(ref.current)
     setShowCreatePopoverV3(true)
+    console.log(ref.current)
   }, [ref.current])
+
   return (
     <>
       <EventsRect

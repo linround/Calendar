@@ -22,7 +22,7 @@ interface IProps {
   eventAction:IEventAction
 
 }
-export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
+export const  EventWrapperComponent = function(props:React.PropsWithChildren<IProps>) {
   const {
     event,
     days,

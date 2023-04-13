@@ -5,7 +5,7 @@ import { EventWrapperComponent } from './EventWrapper'
 import classnames from 'classnames'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { CalendarTimestamp } from '../../../utils/calendar'
-import { IEventAction } from '../../utils'
+import { CREATED_ACTION, IEventAction } from '../../utils'
 
 interface IProps {
   visualsRect:IEventsRect[]
