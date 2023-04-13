@@ -15,8 +15,12 @@ export interface IWeeksContext {
 }
 
 export interface IEventContext {
+  createdEvent:CalendarEvent[]
+  parsedCreatedEvent:CalendarEventParsed[]
+  setCreatedEvent: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
   setDraggedEvent:React.Dispatch<React.SetStateAction<CalendarEvent[]>>
   draggedEvent: CalendarEvent[]
+  parsedDraggedEvent:CalendarEventParsed[]
   events: CalendarEvent[]
   setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
   eventStart: string
@@ -26,7 +30,6 @@ export interface IEventContext {
   eventOverlapThreshold: number
   eventHeight: number
   eventMarginBottom: number
-  parsedDraggedEvent:CalendarEventParsed[]
   parsedEvents: CalendarEventParsed[]
   eventModeFunction: (parsedEvents: CalendarEventParsed[], parsedWeekdays:number, threshold: number)=> any
   resetEvents: (o:CalendarEvent, n:CalendarEvent | null) => void

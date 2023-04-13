@@ -1,8 +1,8 @@
 import React from 'react'
+import styles from './style/event.module.less'
 import { IEventsRect } from '../../../utils/events'
 import { EventWrapperComponent } from './EventWrapper'
 import classnames from 'classnames'
-import styles from './style/event.module.less'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { CalendarTimestamp } from '../../../utils/calendar'
 

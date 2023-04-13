@@ -43,8 +43,8 @@ export class Selector {
   }
   handleInitialEvent(e:React.MouseEvent) {
     const initCoordinates = getEventCoordinates(e)
-    const result = this.emit('beforeSelect', initCoordinates)
-    console.log(result, '====result')
+    const stop = this.emit('beforeSelect', initCoordinates)
+    if (stop) return
     switch (e.type) {
     case 'mousedown':{
       this.removeMoveListener = addDocEventListener('mousemove', (e:React.MouseEvent) => {

@@ -39,14 +39,17 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
     <div className={style.dayContainer} ref={daysContainer}>
       {days.map((day, idx) => (
         <V3DayColumnWrapperComponent
+          days={days}
           key={idx}
+          firstMinute={firstMinute}
           scrollContainer={scrollContainer}
           daysContainer={daysContainer.current as HTMLDivElement}
         >
-          <div className={classnames({
-            [style.dayBody]: true,
-            [DEFAULT_EVENT.eventViewContainer]: true,
-          })}>
+          <div
+            className={classnames({
+              [style.dayBody]: true,
+              [DEFAULT_EVENT.eventViewContainer]: true,
+            })}>
             {dayInterval.map((interval, index) => (
               <div className={style.dayBodyInterval}
                 style={{ height: intervalHeight, }}
@@ -57,15 +60,16 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
                 firstMinute={firstMinute}
                 scrollContainer={scrollContainer}
                 daysContainer={daysContainer.current as HTMLDivElement}
-
                 days={days}
                 events={events}
                 day={day}
                 getSlotScope={getSlotScope}  />
             </div>
           </div>
-        </V3DayColumnWrapperComponent>))}
+        </V3DayColumnWrapperComponent>
+      ))}
     </div>
+
 
   )
 }

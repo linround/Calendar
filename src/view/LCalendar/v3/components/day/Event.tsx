@@ -31,13 +31,23 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
     day, events, getSlotScope
   )
   const {
-    parsedDraggedEvent,
+    parsedDraggedEvent, parsedCreatedEvent,
   } = useContext(EventContext)
   const draggedVisualsRect = getVisualsRect(
     day, parsedDraggedEvent, getSlotScope
   )
+  const createdVisualsRect = getVisualsRect(
+    day, parsedCreatedEvent, getSlotScope
+  )
   return (
     <>
+      <EventsRect
+        className={styles.eventDragged}
+        visualsRect={createdVisualsRect}
+        firstMinute={firstMinute}
+        days={days}
+        daysContainer={daysContainer}
+        scrollContainer={scrollContainer} />
       <EventsRect
         visualsRect={draggedVisualsRect}
         className={styles.eventDragged}

@@ -1,12 +1,14 @@
-import React, {
-  createRef, ReactElement, useContext
-} from 'react'
+import React, { ReactElement, useContext } from 'react'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { ICoordinates } from '../../../v2/utils/selection'
 import { Selector } from '../../utils/selector'
 import { getTimeFromPoint } from '../../utils/point'
 import { roundTime, toTime } from '../../../utils/timesStamp'
-import { EventContext, IntervalsContext } from '../../../props/propsContext'
+import {
+  EventContext, IntervalsContext, MouseEventContext
+} from '../../../props/propsContext'
+import { updateEvent } from '../../../../../api'
+import { SUCCESS_CODE } from '../../../../../request'
 
 interface IProps {
   event:CalendarEvent
@@ -27,9 +29,9 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
     intervalHeight,
     intervalMinutes,
   } = useContext(IntervalsContext)
+  const { updateEventList, } = useContext(MouseEventContext)
   const { setDraggedEvent, } = useContext(EventContext)
 
-  const ref = createRef()
   const selector:Selector = new Selector()
   // 整个滚动区域的容器
   const scrollRect = scrollContainer?.getBoundingClientRect()
@@ -44,6 +46,7 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
     )
     initTime = toTime(timestamp)
+    return false
   })
   selector.on('selecting', (data:ICoordinates) => {
     const timestamp = getTimeFromPoint(
@@ -61,18 +64,18 @@ export function EventWrapperComponent(props:React.PropsWithChildren<IProps>) {
       end: newEnd,
     }
     setDraggedEvent([draggedEvent])
-
-
-
   })
-  selector.on('select', (data:ICoordinates) => {
-    setDraggedEvent([])
+  selector.on('select', async (data:ICoordinates) => {
+    const { code, } = await updateEvent(draggedEvent)
+    if (code === SUCCESS_CODE) {
+      setDraggedEvent([])
+      updateEventList()
+    }
   })
   return (
     <>
       {
         React.cloneElement(props.children as ReactElement, {
-          ref: ref,
           onMouseDown(e:React.MouseEvent) {
             selector.handleInitialEvent(e)
           },

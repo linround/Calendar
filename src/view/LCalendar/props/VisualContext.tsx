@@ -149,6 +149,7 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
 
 
   const [events, setEvents] = useState<CalendarEvent[]>([])
+  const [createdEvent, setCreatedEvent] = useState<CalendarEvent[]>([])
   const [draggedEvent, setDraggedEvent] = useState<CalendarEvent[]>([])
   const [eventStart] = useState(DEFAULT_EVENT.eventStart)
   const [eventEnd] = useState(DEFAULT_EVENT.eventEnd)
@@ -158,18 +159,18 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
   const [eventHeight] = useState(DEFAULT_EVENT.eventHeight)
   const [eventMarginBottom] = useState(DEFAULT_EVENT.eventMarginBottom)
 
-  const updateEventList = useCallback(async function () {
+  const updateEventList = async function () {
     const { data, } = await getEventList({
       start: Date.now(),
       end: Date.now(),
     })
     setEvents(data.list)
     return
-
-  }, [])
+  }
   useEffect(() => {
-    updateEventList()
-      .then((res) => console.log(res))
+    (async function () {
+      await updateEventList()
+    })()
   }, [value])
 
 
@@ -222,6 +223,13 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
     eventEnd,
     (!!input[eventTimed])
   )), [draggedEvent, eventStart, eventEnd])
+  const parsedCreatedEvent = useMemo<CalendarEventParsed[]>(() => createdEvent.map((input, index) => parseEvent(
+    input,
+    index,
+    eventStart,
+    eventEnd,
+    (!!input[eventTimed])
+  )), [createdEvent, eventStart, eventEnd])
 
   const eventModeFunction = useMemo<CalendarEventOverlapMode>(() => CalendarEventOverlapModes[eventOverlapMode], [eventOverlapMode])
 
@@ -301,6 +309,9 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               draggedEvent,
               setDraggedEvent,
               parsedDraggedEvent,
+              createdEvent,
+              setCreatedEvent,
+              parsedCreatedEvent,
             }}>
               <MouseEventContext.Provider value={{
 

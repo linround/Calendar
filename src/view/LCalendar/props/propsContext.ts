@@ -41,7 +41,7 @@ export const DEFAULT_EVENT = {
   eventOverlapThreshold: 60,
   eventHeight: 20,
   eventMarginBottom: 1,
-  eventClass: 'calendar-event',
+  eventClass: 'event-item',
   eventViewContainer: 'day-view',
 }
 
@@ -54,6 +54,9 @@ export const WeeksContext = createContext<IWeeksContext>({
 
 
 export const EventContext = createContext<IEventContext>({
+  createdEvent: [],
+  parsedCreatedEvent: [],
+  setCreatedEvent: () => void 0,
   parsedDraggedEvent: [],
   draggedEvent: [],
   setDraggedEvent: () => void 0,

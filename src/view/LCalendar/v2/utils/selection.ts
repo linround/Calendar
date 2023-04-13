@@ -81,7 +81,11 @@ function pageOffset(dir:'left'|'top'):number {
   if (dir === 'top') return window.pageYOffset || document.body.scrollTop || 0
   return 0
 }
-export function getEventNodeFromPoint(node:HTMLElement, point:IEventCoordinatesData) {
+export interface IClientPoint {
+  clientX:number
+  clientY: number
+}
+export function getEventNodeFromPoint(node:HTMLElement, point:IClientPoint) {
   const target = document.elementFromPoint(point.clientX, point.clientY)
   return closest(
     target as Element, `.${eventItem}`, node

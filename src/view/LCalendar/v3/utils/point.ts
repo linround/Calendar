@@ -107,11 +107,20 @@ export function getTimeFromPoint(
   days:CalendarTimestamp[],
   firstMinute:number,
   intervalHeight:number,
-  intervalMinutes:number
+  intervalMinutes:number,
+  createBounds?:DOMRect
 ):CalendarTimestamp {
-  const point = correctCoordinates(
-    scrollRect, daysRect, data
-  )
+  let point :ICoordinates
+  // 正对create事件，需要处理成对应的create边界
+  if (createBounds) {
+    point = correctCoordinates(
+      scrollRect, createBounds, data
+    )
+  } else {
+    point = correctCoordinates(
+      scrollRect, daysRect, data
+    )
+  }
   const day = getDaySlotFromPoint(
     daysRect, point, days
   )
