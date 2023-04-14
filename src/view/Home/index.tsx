@@ -28,7 +28,11 @@ export function HomePage () {
         </div>
         <div className={styles.containerCopyright}>
           <div>ucalendar@2023</div>
-          <div>yuanlincuc@gmail.com</div>
+          <div>
+            <a href='https://beian.miit.gov.cn/' target='_blank'>
+              湘ICP备2023007031号-1
+            </a>
+          </div>
         </div>
       </div>
     </>
