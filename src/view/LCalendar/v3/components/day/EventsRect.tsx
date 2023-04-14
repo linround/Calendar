@@ -16,7 +16,7 @@ interface IProps {
   scrollContainer: HTMLDivElement
   eventAction:IEventAction
 }
-export const EventsRect = React.forwardRef(function(props:React.PropsWithChildren<IProps>) {
+export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
   const {
     visualsRect,
     firstMinute,
@@ -52,4 +52,4 @@ export const EventsRect = React.forwardRef(function(props:React.PropsWithChildre
       ))}
     </>
   )
-})
+}
