@@ -1,7 +1,7 @@
 import { ICoordinates } from '../../v2/utils/selection'
 import { CalendarTimestamp } from '../../utils/calendar'
-import { DOM } from '@fortawesome/fontawesome-svg-core'
 import { copyTimestamp, updateMinutes } from '../../utils/timesStamp'
+import { IMonth } from '../../components/type'
 
 // 判断某个点是否在边界多边形内部
 export function inBounds(bounds:DOMRect, point:ICoordinates):boolean {
@@ -97,6 +97,29 @@ export function getDaySlotFromPoint(
   return days[slot]
 }
 
+
+
+
+export function getDayTimeFromPoint(
+  monthRect:DOMRect,
+  month:IMonth,
+  data:ICoordinates
+):CalendarTimestamp {
+  const point = correctCoordinates(
+    monthRect, monthRect, data
+  )
+  const row = month.length
+  const column = month[0].length
+  const monthWidth = monthRect.right - monthRect.left
+  const monthHeight = monthRect.bottom - monthRect.top
+  const rowWidth = monthWidth / column
+  const columnHeight = monthHeight / row
+  // 得到点坐标属于哪一列（某个周里面的某个日）
+  const x = Math.floor((point.clientX - monthRect.left) / rowWidth)
+  // 得到点坐标属于哪一行(某个月里面的某个周)
+  const y = Math.floor((point.clientY - monthRect.top) / columnHeight)
+  return month[y][x].day
+}
 
 //
 

@@ -30,10 +30,11 @@ import {
 } from '../../../utils/segments/eventSegments'
 import { accessors } from '../../../utils/segments/accessors'
 import localizer from '../../../utils/segments/localizer'
+import { MonthWrapper } from './MonthWrapper'
 
 export function V3MonthComponent() {
   // 还需要处理maxRows和minRows的来源
-  const maxRows = 3
+  const maxRows = 2
   const minRows = 0
 
   const {
@@ -137,17 +138,21 @@ export function V3MonthComponent() {
     }
   }, [containerRef])
   return (
-    <div ref={containerRef} className={style.monthContainer}>
+    <div className={style.monthContainer}>
       <CommonMonthHeader parsedStart={parsedStart} parsedEnd={parsedEnd} />
-      <div className={style.monthBody}>
-        {month.map((weekDays, index) => (
-          <V3WeekComponent
-            key={index}
-            weekDays={weekDays}
-            weekSegments={monthSegments[index]}
-          />
-        ))}
-      </div>
+      <MonthWrapper
+        month={month}
+        container={containerRef.current as HTMLDivElement}>
+        <div className={style.monthBody} ref={containerRef} >
+          {month.map((weekDays, index) => (
+            <V3WeekComponent
+              key={index}
+              weekDays={weekDays}
+              weekSegments={monthSegments[index]}
+            />
+          ))}
+        </div>
+      </MonthWrapper>
     </div>
   )
 }
