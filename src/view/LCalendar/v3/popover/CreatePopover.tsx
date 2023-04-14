@@ -1,6 +1,5 @@
 import {
-  createRef,
-  useContext, useLayoutEffect, useMemo, useState
+  createRef, useContext, useLayoutEffect, useState
 } from 'react'
 import style from './style/createPopover.module.less'
 import { EventContext, MouseEventContext } from '../../props/propsContext'

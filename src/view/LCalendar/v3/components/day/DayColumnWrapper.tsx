@@ -10,6 +10,8 @@ import {
   CalendarContext, EventContext, IntervalsContext, MouseEventContext
 } from '../../../props/propsContext'
 import { createTimeEvent } from '../../../utils/events'
+import { mousedownController } from '../../utils/mouseDown'
+import { CREATE_ACTION } from '../../utils'
 
 interface IProps {
   daysContainer:HTMLDivElement
@@ -61,9 +63,10 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
   selector.on('beforeSelect', (data:ICoordinates) => {
     // 只有当选中的不是事件节点时才会组织添加监听mousemove,mouseup事件
     const stop = !!getEventNodeFromPoint(daysContainer, data)
+    // 如果不是来源于所点击的事件节点
     if (!stop) {
+      mousedownController.setState(CREATE_ACTION)
       clearNormal()
-
       clearCreatedEvent()
     }
     const timestamp = getTimeFromPoint(
@@ -103,6 +106,7 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     setCreatedEvent(createdEvent)
   })
   selector.on('select', (data:ICoordinates) => {
+    mousedownController.clearState()
     setShowCreatePopoverV3(true)
   })
   return React.cloneElement(props.children as ReactElement, {

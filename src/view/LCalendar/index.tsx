@@ -33,6 +33,7 @@ import MenuHeader from './modules/MenuHeader'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
+import { CalendarContainer } from './v3/wrapper/CalendarContainer'
 
 
 const globalCache:IGlobalCache = {
@@ -199,46 +200,49 @@ export default function () {
     <>
       <V3PopoverComponent />
       <PopoverComponents />
-      <div
-        className={styles.mainContainer}>
-        <div className={styles.mainLeft}>
-          <SideComponent
-            setCreateEvent={setCreateEvent}
-            prev={(amount) => move(amount, 'month')}
-            next={(amount) => move(amount, 'month')} />
+      <CalendarContainer>
+        <div
+          className={styles.mainContainer}>
+          <div className={styles.mainLeft}>
+            <SideComponent
+              setCreateEvent={setCreateEvent}
+              prev={(amount) => move(amount, 'month')}
+              next={(amount) => move(amount, 'month')} />
+          </div>
+          <div className={styles.mainCenter}>
+            <MenuHeader
+              value={value}
+              type={type}
+              setToday={setValue}
+              setType={setType}
+              prev={(amount) => move(amount, type)}
+              next={(amount) => move(amount, type)} />
+            {
+              type === 'month' ?
+                <MonthWrapper
+                  dragEvent={dragEvent}
+                  setDragEvent={setDragEvent}
+                  createEvent={createEvent}
+                  setCreateEvent={setCreateEvent}
+                  dragTime={dragTime}
+                  setDragTime={setDragTime}
+                  mousedownTime={mousedownTime}
+                  setMousedownTime={setMousedownTime}
+                  mousemoveTime={mousemoveTime}
+                  setMousemoveTime={setMousemoveTime}
+                  createStart={createStart}
+                  setCreateStart={setCreateStart}
+                  setGlobalCacheValue={setGlobalCacheValue}
+                  globalCache={globalCache}
+                  clearCreateEvent={clearCreateEvent}
+                  ref={ref}
+                /> :
+                <DayWrapper />
+            }
+          </div>
         </div>
-        <div className={styles.mainCenter}>
-          <MenuHeader
-            value={value}
-            type={type}
-            setToday={setValue}
-            setType={setType}
-            prev={(amount) => move(amount, type)}
-            next={(amount) => move(amount, type)} />
-          {
-            type === 'month' ?
-              <MonthWrapper
-                dragEvent={dragEvent}
-                setDragEvent={setDragEvent}
-                createEvent={createEvent}
-                setCreateEvent={setCreateEvent}
-                dragTime={dragTime}
-                setDragTime={setDragTime}
-                mousedownTime={mousedownTime}
-                setMousedownTime={setMousedownTime}
-                mousemoveTime={mousemoveTime}
-                setMousemoveTime={setMousemoveTime}
-                createStart={createStart}
-                setCreateStart={setCreateStart}
-                setGlobalCacheValue={setGlobalCacheValue}
-                globalCache={globalCache}
-                clearCreateEvent={clearCreateEvent}
-                ref={ref}
-              /> :
-              <DayWrapper />
-          }
-        </div>
-      </div>
+      </CalendarContainer>
+
     </>
 
   )

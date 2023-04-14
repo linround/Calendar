@@ -1,20 +1,22 @@
 import React, {
-  createRef,
-  ReactElement, useContext, useEffect, useLayoutEffect, useRef
+  ReactElement, useContext, useLayoutEffect, useRef, useState
 } from 'react'
+import style from './style/eventWrapper.module.less'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { ICoordinates } from '../../../v2/utils/selection'
 import { Selector } from '../../utils/selector'
 import { getTimeFromPoint } from '../../utils/point'
 import { roundTime, toTime } from '../../../utils/timesStamp'
+import { mousedownController } from '../../utils/mouseDown'
 import {
   EventContext, IntervalsContext, MouseEventContext
 } from '../../../props/propsContext'
 import { updateEvent } from '../../../../../api'
 import { SUCCESS_CODE } from '../../../../../request'
 import {
-  CREATED_ACTION, DRAGGED_ACTION, IEventAction, NORMAL_ACTION
+  CREATED_ACTION, IEventAction, NORMAL_ACTION
 } from '../../utils'
+import classnames from 'classnames'
 
 interface IProps {
   event:CalendarEvent
@@ -34,6 +36,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     scrollContainer,
     eventAction,
   } = props
+  const [moving, setMoving] = useState<boolean>(false)
   const {
     intervalHeight,
     intervalMinutes,
@@ -60,8 +63,19 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     }
   }, [ref.current])
 
-
-
+  function clearCreated() {
+    setCreatedEvent(null)
+    setCreatePopoverRefV3(null)
+    setShowCreatePopoverV3(false)
+  }
+  function clearNormal() {
+    setNormalEvent(null)
+    setNormalPopoverRef(null)
+    setShowNormalPopover(false)
+  }
+  function hideCreate() {
+    setShowCreatePopoverV3(false)
+  }
 
 
   const selector:Selector = new Selector()
@@ -72,9 +86,20 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
 
 
   let initTime:number
+  // 用于判断在 事件上的mousedown 事件是否是点击事件
+  // 如果发生moving，那么就是拖拽事件
+  // 如果是点击事件，针对normalEvent
+  // 需要设置显示详情信息
   let isClick:boolean
   let draggedEvent:CalendarEvent
   selector.on('beforeSelect', (data:ICoordinates) => {
+    // 记录mousedown事件发生时的状态信息
+    mousedownController.setState(eventAction)
+
+    // 如果点击的是普通的事件，
+    // 需要清除创建事件相关的数据
+    eventAction === NORMAL_ACTION && clearCreated()
+
     const timestamp = getTimeFromPoint(
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
     )
@@ -82,7 +107,6 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       ...event,
     }
     initTime = toTime(timestamp)
-    setShowCreatePopoverV3(false)
     isClick = true
     return false
   })
@@ -102,17 +126,29 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       end: newEnd,
     }
     isClick = false
+    setMoving(true)
+
+    // 对于普通的事件的拖拽过程中需要清空normal相关的popover数据
+    switch (eventAction) {
+    case NORMAL_ACTION:{
+      clearNormal()
+      break
+    }
+    }
+
+    hideCreate()
     setDraggedEvent(draggedEvent)
   })
   selector.on('select', async (data:ICoordinates) => {
 
-    if (isClick) {
-      setNormalEvent(event)
-      setNormalPopoverRef(normalRef.current)
-      setShowNormalPopover(true)
-    }
+
     switch (eventAction) {
     case NORMAL_ACTION:{
+      if (isClick) {
+        setNormalEvent(event)
+        setNormalPopoverRef(normalRef.current)
+        setShowNormalPopover(true)
+      }
       const { code, } = await updateEvent(draggedEvent)
       if (code === SUCCESS_CODE) {
         setDraggedEvent(null)
@@ -127,13 +163,18 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       break
     }
     }
-
+    setMoving(false)
+    mousedownController.clearState()
+  })
+  const className = classnames({
+    [(props.children as ReactElement)?.props.className]: true,
+    [style.moving]: moving,
   })
   return (
     <>
       {React.cloneElement(props.children as ReactElement, {
-
         ref: eventAction === CREATED_ACTION ? ref : normalRef,
+        className: className,
         onMouseDown(e:React.MouseEvent) {
           selector.handleInitialEvent(e)
         },
