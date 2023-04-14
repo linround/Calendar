@@ -1,19 +1,11 @@
 import {
-  IMonth,
-  IMonthEvents,
-  IMonthSegments
+  IMonth, IMonthEvents, IMonthSegments
 } from './type'
 import React, {
-  useRef,
-  useMemo,
-  useEffect,
-  useContext
+  useContext, useEffect, useMemo, useRef, useState
 } from 'react'
 import {
-  BaseContext,
-  EventContext,
-  MouseEventContext,
-  WeeksContext
+  BaseContext, EventContext, MouseEventContext, WeeksContext
 } from '../props/propsContext'
 import {
   createDayList,
@@ -25,11 +17,7 @@ import {
   timestampToDate
 } from '../utils/timesStamp'
 import {
-  sortEvents,
-  eventLevels,
-  eventSegments,
-  eventsForWeek,
-  isSegmentInSlot
+  eventLevels, eventSegments, eventsForWeek, isSegmentInSlot, sortEvents
 } from '../utils/segments/eventSegments'
 import moment from 'moment'
 import { IMonthProps } from './dayPropsType'
@@ -41,14 +29,12 @@ import { accessors } from '../utils/segments/accessors'
 import { CommonMonthHeader } from './CommonMonthHeader'
 
 
-
-
-
 export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IMonthProps>, ref) => {
 
   // 还需要处理maxRows和minRows的来源
-  const maxRows = 3
-  const minRows = 0
+  const [maxRows] = useState(3)
+
+  const minRows = useState(0)
 
   const { start, end, parsedWeekdays, times, weekdaySkips, } = useContext(BaseContext)
   const {  events, } = useContext(EventContext)
@@ -142,16 +128,22 @@ export const MonthComponent = React.forwardRef((props:React.PropsWithChildren<IM
       <CommonMonthHeader
         parsedEnd={parsedEnd}
         parsedStart={parsedStart} />
-      {
-        month.map((weekDays, index) => (
-          <WeekComponent
-            ref={ref}
-            {...props}
-            key={index}
-            weekDays={weekDays}
-            weekSegments={monthSegments[index]}/>
-        ))
-      }
+      <div style={{
+        display: 'flex',
+        flex: 1,
+        flexFlow: 'column',
+      }}>
+        {
+          month.map((weekDays, index) => (
+            <WeekComponent
+              ref={ref}
+              {...props}
+              key={index}
+              weekDays={weekDays}
+              weekSegments={monthSegments[index]}/>
+          ))
+        }
+      </div>
     </div>
   )
 })

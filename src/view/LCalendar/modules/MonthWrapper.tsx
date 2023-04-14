@@ -1,6 +1,5 @@
 import React, {
-  useCallback,
-  useContext, useEffect, useMemo, useState
+  useCallback, useContext, useEffect, useState
 } from 'react'
 import { MonthComponent } from '../components/MonthComponent'
 import {
@@ -14,6 +13,7 @@ import { isTruth, roundTime } from '../utils/timesStamp'
 import { ISlots } from '../components/type'
 import { IMonthWrapper } from './options'
 import { createTimeEvent } from '../utils/events'
+import { V3MonthComponent } from '../v3/components/month/Month'
 
 export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   const { globalCache, setGlobalCacheValue,
@@ -198,18 +198,22 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   }, [globalCache.isDragging])
 
   return (
-    <MonthComponent
-      ref={ref}
-      onShowMore={onShowMore}
-      onClickEvent={onClickEvent}
-      onMousedownEvent={onMousedownEvent}
-      onMouseupEvent={onMouseupEvent}
+    <>
+      <V3MonthComponent />
+      <MonthComponent
+        ref={ref}
+        onShowMore={onShowMore}
+        onClickEvent={onClickEvent}
+        onMousedownEvent={onMousedownEvent}
+        onMouseupEvent={onMouseupEvent}
 
 
-      onTimeContainerClick={onTimeContainerClick}
-      onTimeContainerMouseup={onTimeContainerMouseup}
-      onTimeContainerMousemove={onTimeContainerMousemove}
-      onTimeContainerMousedown={onTimeContainerMousedown}
-    />
+        onTimeContainerClick={onTimeContainerClick}
+        onTimeContainerMouseup={onTimeContainerMouseup}
+        onTimeContainerMousemove={onTimeContainerMousemove}
+        onTimeContainerMousedown={onTimeContainerMousedown}
+      />
+    </>
+
   )
 })

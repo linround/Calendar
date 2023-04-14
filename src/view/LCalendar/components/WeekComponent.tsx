@@ -1,17 +1,13 @@
-import React  from 'react'
+import React from 'react'
 import {
-  defaultShowMore,
   IMonthDay, IMonthWeek, ISlots, IWeekSegments, mouseDayTime, mouseEvent
 } from './type'
 import { GenSingleDay } from './GenSingleDay'
 import monthStyle from './month.module.less'
 import { EventRow } from './EventRow'
 import { EventRowEnd } from './EventRowEnd'
-import {  IMonthProps } from './dayPropsType'
-import {
-  CalendarEvent,
-  IMonthMouseTime, IMouseEvent, IMouseTime
-} from '../utils/calendar'
+import { IMonthProps } from './dayPropsType'
+import { IMonthMouseTime, IMouseEvent } from '../utils/calendar'
 
 interface IWeekComponent extends IMonthProps{
   weekSegments: IWeekSegments
