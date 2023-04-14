@@ -1,9 +1,9 @@
 import React, {
-  createRef, ReactElement, useContext, useRef
+  ReactElement, useContext, useRef
 } from 'react'
 import { Selector } from '../../utils/selector'
 import { getEventNodeFromPoint, ICoordinates } from '../../../v2/utils/selection'
-import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
+import { CalendarTimestamp } from '../../../utils/calendar'
 import { getTimeFromPoint } from '../../utils/point'
 import { roundTime, toTime } from '../../../utils/timesStamp'
 import {
@@ -25,9 +25,30 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     intervalMinutes,
   } = useContext(IntervalsContext)
   const ref = useRef<HTMLDivElement>()
-  const { setCreatedEvent, } = useContext(EventContext)
+  const {
+    setCreatedEvent,
 
-  const { setShowCreatePopoverV3, } = useContext(MouseEventContext)
+  } = useContext(EventContext)
+
+  const {
+    setShowCreatePopoverV3,
+    setCreatePopoverRefV3,
+
+    setShowNormalPopover,
+    setNormalEvent,
+    setNormalPopoverRef,
+  } = useContext(MouseEventContext)
+
+  function clearCreatedEvent() {
+    setCreatedEvent(null)
+    setCreatePopoverRefV3(null)
+    setShowCreatePopoverV3(false)
+  }
+  function clearNormal() {
+    setNormalEvent(null)
+    setNormalPopoverRef(null)
+    setShowNormalPopover(false)
+  }
   const { group, } = useContext(CalendarContext)
   const { daysContainer, days, firstMinute, scrollContainer, } = props
   const selector = new Selector()
@@ -40,6 +61,10 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
   selector.on('beforeSelect', (data:ICoordinates) => {
     // 只有当选中的不是事件节点时才会组织添加监听mousemove,mouseup事件
     const stop = !!getEventNodeFromPoint(daysContainer, data)
+    if (!stop) {
+      clearNormal()
+    }
+    clearCreatedEvent()
     const timestamp = getTimeFromPoint(
       scrollRect,
       daysRect,
@@ -50,6 +75,7 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
       intervalMinutes
     )
     initTime = toTime(timestamp)
+
     return stop
   })
   selector.on('selecting', (data:ICoordinates) => {

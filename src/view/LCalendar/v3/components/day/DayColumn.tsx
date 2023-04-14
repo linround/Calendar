@@ -1,16 +1,13 @@
-import React, {
-  createRef, useEffect, useRef, useState
-} from 'react'
+import React, { useRef } from 'react'
 import {
-  CalendarDayBodySlotScope,
-  CalendarEventParsed,
-  CalendarTimestamp
+  CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
 } from '../../../utils/calendar'
 import classnames from 'classnames'
 import { EventComponent } from './Event'
 import style from './style/dayColumn.module.less'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { V3DayColumnWrapperComponent } from './DayColumnWrapper'
+
 interface IProps {
   intervals:CalendarTimestamp[][]
   intervalWidth:number

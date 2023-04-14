@@ -1,49 +1,40 @@
-
 import {
   BaseContext,
-  EventContext,
-  WeeksContext,
-  DEFAULT_WEEKS,
-  DEFAULT_EVENT,
   CalendarContext,
+  DEFAULT_EVENT,
   DEFAULT_INTERVALS,
+  DEFAULT_WEEKS,
+  EventContext,
   IntervalsContext,
-  MouseEventContext
+  MouseEventContext,
+  WeeksContext
 } from './propsContext'
-import React,
-{
-  useCallback,
-  useEffect, useLayoutEffect,
-  useMemo,
-  useState
+import React, {
+  useCallback, useEffect, useLayoutEffect, useMemo, useState
 } from 'react'
 import {
-  DEFAULT_TYPE,
-  DEFAULT_VALUE,
-  DEFAULT_MAX_DAYS,
-  DEFAULT_WEEK_DAYS, DEFAULT_CALENDAR_GROUPS
+  DEFAULT_CALENDAR_GROUPS, DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_VALUE, DEFAULT_WEEK_DAYS
 } from '../utils/time'
 import {
   createDayList,
-  parseTimeStamp,
+  getTimestampIdentifier,
   getWeekdaySkips,
-  validateTimestamp,
-  getTimestampIdentifier
+  parseTimeStamp,
+  validateTimestamp
 } from '../utils/timesStamp'
 import {
-  IValue,
   CalendarEvent,
-  CalendarTimestamp,
+  CalendarEventOverlapMode,
   CalendarEventParsed,
-  CalendarEventOverlapMode, CalendarUser
+  CalendarTimestamp,
+  IValue
 } from '../utils/calendar'
 import { ITimes } from './type'
-import {  parseEvent } from '../utils/events'
+import { parseEvent } from '../utils/events'
 import { CalendarEventOverlapModes } from '../utils/modes'
 import { getEventList, getGroupList } from '../../../api'
 
-import { calendarGroup, createCalendarGroup } from '../SideComponent/utils'
-
+import { calendarGroup } from '../SideComponent/utils'
 
 
 export function VisualContext(props:React.ProviderProps<any>):React.ReactElement {

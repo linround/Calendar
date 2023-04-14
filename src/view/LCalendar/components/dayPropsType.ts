@@ -1,10 +1,5 @@
-import {
-  IMonthMouseTime, IMouseEvent, IMouseTime
-} from '../utils/calendar'
+import { IMonthMouseTime, IMouseEvent } from '../utils/calendar'
 import { ISlots } from './type'
-
-
-
 
 
 export interface ICalendarHandleEvent<E> {
@@ -26,7 +21,7 @@ interface IHandleEvent<E, T> {
 
 
 
-export interface IDayProps extends IHandleEvent<IMouseEvent, IMouseTime>{
+export interface IDayProps {
   firstTime?: number|string|object
 }
 

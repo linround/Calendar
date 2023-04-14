@@ -1,54 +1,35 @@
 import React, {
-  useState,
-  useEffect,
-  useContext,
-  createRef,
-  useCallback,
-  useLayoutEffect
+  createRef, useContext, useEffect, useLayoutEffect, useState
 } from 'react'
 import {
-  BaseContext,
-  EventContext,
-  CalendarContext,
-  IntervalsContext,
-  MouseEventContext
+  BaseContext, CalendarContext, EventContext, IntervalsContext, MouseEventContext
 } from './props/propsContext'
 import { V3PopoverComponent } from './v3/popover'
+import { DEFAULT_MAX_DAYS, DEFAULT_WEEK_DAYS } from './utils/time'
+import { IGlobalCache, ITimes } from './props/type'
 import {
-  DEFAULT_MAX_DAYS,
-  DEFAULT_WEEK_DAYS
-} from './utils/time'
-import {
-  ITimes,
-  IGlobalCache
-} from './props/type'
-import {
-  CalendarEvent,
-  VTimestampInput,
-  CalendarTimestamp
+  CalendarEvent, CalendarTimestamp, VTimestampInput
 } from './utils/calendar'
 import {
+  copyTimestamp,
+  DAY_MIN,
+  DAYS_IN_MONTH_MAX,
+  DAYS_IN_WEEK,
+  getEndOfMonth,
+  getEndOfWeek,
+  getStartOfMonth,
+  getStartOfWeek,
   nextDay,
   prevDay,
-  DAY_MIN,
   relativeDays,
-  DAYS_IN_WEEK,
-  getEndOfWeek,
-  copyTimestamp,
-  getEndOfMonth,
-  updateWeekday,
-  getStartOfWeek,
-  updateRelative,
   timestampToDate,
   updateFormatted,
-  getStartOfMonth,
-  DAYS_IN_MONTH_MAX
+  updateRelative,
+  updateWeekday
 } from './utils/timesStamp'
 import styles from './style.module.less'
-import { SUCCESS_CODE } from '../../request'
 import { PopoverComponents } from './Popover'
 import MenuHeader from './modules/MenuHeader'
-import { updateEvent } from '../../api/event'
 import { SideComponent } from './SideComponent'
 import { DayWrapper } from './modules/DayWrapper'
 import { MonthWrapper } from './modules/MonthWrapper'
@@ -74,13 +55,9 @@ export default function () {
     times,
     parsedValue, } = useContext(BaseContext)
   const { events, setEvents, } = useContext(EventContext)
-  const { type, value, setValue, setType, setAccountRef, } = useContext(CalendarContext)
+  const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
-  const { setCreatePopoverRef,
-    setShowCreatePopover,
-    setShowNormalPopover,
-    setNormalPopoverRef,
-    setNormalEvent, clearPagePopover, updateEventList, } = useContext(MouseEventContext)
+  const { setCreatePopoverRef, } = useContext(MouseEventContext)
 
 
 
@@ -199,84 +176,13 @@ export default function () {
     globalCache[key] = val
   }
 
-  function clearGlobal() {
-    setGlobalCacheValue('currentMousedownEvent', null)
-    setGlobalCacheValue('currentMousedownRef', null)
-    setGlobalCacheValue('currentCreateEvent', null)
-    setGlobalCacheValue('isDragging', false)
-    setGlobalCacheValue('isCreate', false)
-    setGlobalCacheValue('draggingEvent', null)
-    setGlobalCacheValue('dragSource', null)
-  }
 
-  function clear() {
-    setMousedownTime(null)
-    setMousemoveTime(null)
-    setCreateEvent(null)
-    setCreateStart(null)
-    setDragEvent(null)
-  }
 
   function clearCreateEvent() {
     setEvents(events.filter((e) => !e.isCreate))
   }
 
-  const handleUpdateEvent = useCallback(async (event:CalendarEvent) => {
-    const { code, } = await updateEvent(event)
-    if (code === SUCCESS_CODE) {
-      updateEventList()
-    }
-  }, [])
 
-  const containerMousedown = () => {
-    if (!globalCache.currentMousedownEvent) {
-      clearPagePopover()
-      // 目前无法做到，创建事件。
-      // 放下后定位布局，此时点击查看别的事件。
-      // 由于去掉了新建事件，发生重绘。
-      // 导致了点击出的元素发生变化，从而导致的定位问题
-
-      // 目前的解决方案就是 新建占据大屏
-      clearCreateEvent()
-    }
-    setAccountRef(null)
-  }
-  const containerMouseup = () => {
-    const normalEvent = events.filter((e) => e.isCreate || !e.isDragging)
-    // 如果点击在事件上
-    if (globalCache.currentMousedownEvent) {
-      if (globalCache.currentMousedownEvent.isCreate) {
-        // 如果点击在create时间上结束的
-        // 显示createPopover
-        setShowCreatePopover(true)
-      } else {
-        // 如果点击事件是在 normal 事件上结束
-        if (!globalCache.isDragging) {
-          // 对normal事件执行的是不是拖拽操作功能
-          // 显示normalPopover
-          setNormalEvent(globalCache.currentMousedownEvent)
-          setNormalPopoverRef(globalCache.currentMousedownRef)
-          setShowNormalPopover(true)
-        } else {
-          if (dragEvent) {
-            // 这里使用dragSource记录，
-            // 主要是为了区分createEvent时间上的拖拽
-            if (globalCache.dragSource) { // 这
-              handleUpdateEvent(dragEvent)
-                .then((r) => r)
-            }
-          }
-
-        }
-
-      }
-    }
-    // 创建事件结束
-    setShowCreatePopover(true)
-    setEvents(normalEvent)
-    clear()
-    clearGlobal()
-  }
 
   const ref = createRef<Element>()
 
@@ -294,9 +200,7 @@ export default function () {
       <V3PopoverComponent />
       <PopoverComponents />
       <div
-        className={styles.mainContainer}
-        onMouseDown={containerMousedown}
-        onMouseUp={containerMouseup}>
+        className={styles.mainContainer}>
         <div className={styles.mainLeft}>
           <SideComponent
             setCreateEvent={setCreateEvent}
@@ -331,24 +235,7 @@ export default function () {
                 clearCreateEvent={clearCreateEvent}
                 ref={ref}
               /> :
-              <DayWrapper
-                dragEvent={dragEvent}
-                setDragEvent={setDragEvent}
-                createEvent={createEvent}
-                setCreateEvent={setCreateEvent}
-                dragTime={dragTime}
-                setDragTime={setDragTime}
-                mousedownTime={mousedownTime}
-                setMousedownTime={setMousedownTime}
-                mousemoveTime={mousemoveTime}
-                setMousemoveTime={setMousemoveTime}
-                createStart={createStart}
-                setCreateStart={setCreateStart}
-                clearCreateEvent={clearCreateEvent}
-                globalCache={globalCache}
-                setGlobalCacheValue={setGlobalCacheValue}
-                ref={ref}
-              />
+              <DayWrapper />
           }
         </div>
       </div>

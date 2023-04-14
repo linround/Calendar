@@ -47,7 +47,7 @@ export function CreatePopover() {
 
   function setEventKeyValue (key:string, v:IEventKeyValue) {
     (createdEvent as CalendarEvent)[key] = v
-    setCreatedEvent(createdEvent)
+    setCreatedEvent({ ...createdEvent, })
   }
   function clear() {
     setCreatedEvent(null)
@@ -78,7 +78,6 @@ export function CreatePopover() {
               event={createdEvent as CalendarEvent}
               onClose={onClose}
               onConfirm={onConfirm}
-
             />
           </div>
         )

@@ -1,4 +1,5 @@
 import React, {
+  createRef,
   ReactElement, useContext, useEffect, useLayoutEffect, useRef
 } from 'react'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
@@ -37,9 +38,16 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     intervalHeight,
     intervalMinutes,
   } = useContext(IntervalsContext)
-  const { updateEventList, setShowCreatePopoverV3, setCreatePopoverRefV3, } = useContext(MouseEventContext)
+  const {
+    updateEventList,
+    setShowCreatePopoverV3,
+    setCreatePopoverRefV3,
+    setShowNormalPopover,
+    setNormalEvent,
+    setNormalPopoverRef,
+  } = useContext(MouseEventContext)
   const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
-
+  const normalRef = useRef<Element|null>(null)
 
 
 
@@ -64,6 +72,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
 
 
   let initTime:number
+  let isClick:boolean
   let draggedEvent:CalendarEvent
   selector.on('beforeSelect', (data:ICoordinates) => {
     const timestamp = getTimeFromPoint(
@@ -74,6 +83,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     }
     initTime = toTime(timestamp)
     setShowCreatePopoverV3(false)
+    isClick = true
     return false
   })
   selector.on('selecting', (data:ICoordinates) => {
@@ -91,9 +101,16 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       start: newStart,
       end: newEnd,
     }
+    isClick = false
     setDraggedEvent(draggedEvent)
   })
   selector.on('select', async (data:ICoordinates) => {
+
+    if (isClick) {
+      setNormalEvent(event)
+      setNormalPopoverRef(normalRef.current)
+      setShowNormalPopover(true)
+    }
     switch (eventAction) {
     case NORMAL_ACTION:{
       const { code, } = await updateEvent(draggedEvent)
@@ -116,7 +133,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     <>
       {React.cloneElement(props.children as ReactElement, {
 
-        ref: eventAction === CREATED_ACTION ? ref : null,
+        ref: eventAction === CREATED_ACTION ? ref : normalRef,
         onMouseDown(e:React.MouseEvent) {
           selector.handleInitialEvent(e)
         },

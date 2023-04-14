@@ -50,7 +50,6 @@ export function NormalPopover() {
   async function handleDeleteEvent(e:CalendarEvent) {
     const { code, } = await deleteEvent(e)
     if (code === SUCCESS_CODE) {
-      console.log('删除成功')
       clearPagePopover()
       updateEventList()
     }
