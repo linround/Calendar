@@ -1,4 +1,6 @@
-import React, { ReactElement, useContext } from 'react'
+import React, {
+  ReactElement, useContext, useEffect, useLayoutEffect, useRef
+} from 'react'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { ICoordinates } from '../../../v2/utils/selection'
 import { Selector } from '../../utils/selector'
@@ -35,8 +37,24 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     intervalHeight,
     intervalMinutes,
   } = useContext(IntervalsContext)
-  const { updateEventList, setShowCreatePopoverV3, } = useContext(MouseEventContext)
+  const { updateEventList, setShowCreatePopoverV3, setCreatePopoverRefV3, } = useContext(MouseEventContext)
   const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
+
+
+
+
+
+  const ref = useRef<HTMLDivElement>()
+  useLayoutEffect(() => {
+    if (ref.current) {
+      setCreatePopoverRefV3(ref.current)
+      setShowCreatePopoverV3(true)
+    }
+  }, [ref.current])
+
+
+
+
 
   const selector:Selector = new Selector()
   // 整个滚动区域的容器
@@ -97,6 +115,8 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
   return (
     <>
       {React.cloneElement(props.children as ReactElement, {
+
+        ref: eventAction === CREATED_ACTION ? ref : null,
         onMouseDown(e:React.MouseEvent) {
           selector.handleInitialEvent(e)
         },

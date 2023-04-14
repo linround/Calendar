@@ -44,22 +44,10 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
   const createdVisualsRect = getVisualsRect(
     day, parsedCreatedEvent, getSlotScope
   )
-  const {
-    setCreatePopoverRefV3,
-    setShowCreatePopoverV3,
-  } = useContext(MouseEventContext)
-
-  const ref = useRef<any>()
-  useLayoutEffect(() => {
-    setCreatePopoverRefV3(ref.current)
-    setShowCreatePopoverV3(true)
-    console.log(ref.current)
-  }, [ref.current])
 
   return (
     <>
       <EventsRect
-        ref={ref}
         eventAction={CREATED_ACTION}
         className={styles.eventDragged}
         visualsRect={createdVisualsRect}
