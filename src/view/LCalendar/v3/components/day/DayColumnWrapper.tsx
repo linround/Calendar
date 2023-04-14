@@ -63,8 +63,9 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     const stop = !!getEventNodeFromPoint(daysContainer, data)
     if (!stop) {
       clearNormal()
+
+      clearCreatedEvent()
     }
-    clearCreatedEvent()
     const timestamp = getTimeFromPoint(
       scrollRect,
       daysRect,
