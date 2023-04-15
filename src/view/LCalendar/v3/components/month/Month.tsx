@@ -36,18 +36,10 @@ export function V3MonthComponent() {
   const {  events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
 
-
-
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
   const parsedEnd = useMemo(() => getEndOfMonth(parseTimeStamp(end, true)),
     [end])
-
-
-
-
-
-
 
   const days = useMemo(() => {
     const minDays = minWeeks * parsedWeekdays.length

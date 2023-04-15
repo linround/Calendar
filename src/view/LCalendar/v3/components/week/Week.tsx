@@ -32,9 +32,11 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     accessors,
     localizer
   )
+  // 对这周的事件进行排序
   weekEvents.sort((a, b) => sortEvents(
     a, b, accessors, localizer
   ))
+  // 处理这周事件的布局
   const segments = weekEvents.map((event) => eventSegments(
     event,
     weekDays.map((day) => day.value), accessors, localizer
