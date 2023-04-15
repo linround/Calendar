@@ -1,7 +1,7 @@
 import { V3WeekComponent } from '../week/Week'
 import { CommonMonthHeader } from '../../../components/CommonMonthHeader'
 import {
-  useContext, useEffect, useMemo, useRef
+  useContext, useEffect, useMemo, useRef, useState
 } from 'react'
 import {
   BaseContext, EventContext, MouseEventContext, WeeksContext
@@ -17,25 +17,14 @@ import {
 } from '../../../utils/timesStamp'
 import style from './style/month.module.less'
 import { CalendarTimestamp } from '../../../utils/calendar'
-import {
-  IMonth, IMonthEvents, IMonthSegments
-} from '../../../components/type'
+import { IMonth } from '../../../components/type'
 import moment from 'moment/moment'
-import {
-  eventLevels,
-  eventSegments,
-  eventsForWeek,
-  isSegmentInSlot,
-  sortEvents
-} from '../../../utils/segments/eventSegments'
-import { accessors } from '../../../utils/segments/accessors'
-import localizer from '../../../utils/segments/localizer'
 import { MonthWrapper } from './MonthWrapper'
 
 export function V3MonthComponent() {
   // 还需要处理maxRows和minRows的来源
-  const maxRows = 2
-  const minRows = 0
+  const [maxRows] = useState(3)
+  const [minRows] = useState(0)
 
   const {
     start,
@@ -90,43 +79,7 @@ export function V3MonthComponent() {
       day,
     })))
   }
-  // 获取本月的事件
-  const monthEvents:IMonthEvents = month.map((week) => {
-    const weekEvents = eventsForWeek(
-      [...events],
-      week[0].value,
-      week[week.length - 1].value,
-      accessors,
-      localizer
-    )
-    return weekEvents.sort((a, b) => sortEvents(
-      a, b, accessors, localizer
-    ))
-  })
 
-  // 这个月的事件分布
-  const monthSegments:IMonthSegments = monthEvents.map((weekEvents, index) => {
-    // 某个周的事件分布
-    const segments = weekEvents.map((event) => eventSegments(
-      event, month[index].map((w) => w.value), accessors, localizer
-    ))
-    // 这里将创建日历部分提取到最上层
-    const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
-    const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
-    const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRows - 1, 1))
-
-    return {
-      levels,
-      extra,
-      range: month[index],
-      slots: month[index].length,
-      getEventsForSlot(slot:number) {
-        return segments
-          .filter((seg) => isSegmentInSlot(seg, slot))
-          .map((seg) => seg.event)
-      },
-    }
-  })
 
 
   // 存储该scroll滚动容器
@@ -147,8 +100,10 @@ export function V3MonthComponent() {
           {month.map((weekDays, index) => (
             <V3WeekComponent
               key={index}
+              events={events}
               weekDays={weekDays}
-              weekSegments={monthSegments[index]}
+              maxRows={maxRows}
+              minRows={minRows}
             />
           ))}
         </div>

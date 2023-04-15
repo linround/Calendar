@@ -1,20 +1,54 @@
-import { IMonthWeek, IWeekSegments } from '../../../components/type'
+import { IMonthWeek } from '../../../components/type'
 import React from 'react'
 import style from './style/week.module.less'
 import monthStyle from '../../../components/month.module.less'
 import { GenSingleDay } from '../../../components/GenSingleDay'
 import { EventRow } from '../../../components/EventRow'
 import { EventRowEnd } from '../../../components/EventRowEnd'
+import { CalendarEvent } from '../../../utils/calendar'
+import {
+  eventLevels,
+  eventSegments,
+  eventsForWeek,
+  isSegmentInSlot,
+  sortEvents
+} from '../../../utils/segments/eventSegments'
+import { accessors } from '../../../utils/segments/accessors'
+import localizer from '../../../utils/segments/localizer'
 
 interface IProps {
-  weekSegments: IWeekSegments
   weekDays:IMonthWeek
+  events:CalendarEvent[]
+  maxRows:number,
+  minRows:number
 }
 export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
-  const { weekSegments, weekDays, } = props
-  const { levels, extra, slots, range, } = weekSegments
+  const {  weekDays, events, maxRows, minRows, } = props
+  // 获取一周的事件
+  const weekEvents = eventsForWeek(
+    events,
+    weekDays[0].value,
+    weekDays[weekDays.length - 1].value,
+    accessors,
+    localizer
+  )
+  weekEvents.sort((a, b) => sortEvents(
+    a, b, accessors, localizer
+  ))
+  const segments = weekEvents.map((event) => eventSegments(
+    event,
+    weekDays.map((day) => day.value), accessors, localizer
+  ))
+  // 这里将创建日历部分提取到最上层
+  const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
+  const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
+  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRows - 1, 1))
+  const slots = weekDays.length
+
   const handleShowMore = (slot:number, nativeEvent:React.MouseEvent) => {
-    const events = weekSegments.getEventsForSlot(slot)
+    const events = segments
+      .filter((seg) => isSegmentInSlot(seg, slot))
+      .map((seg) => seg.event)
     console.log(events, nativeEvent)
   }
   return (
@@ -30,13 +64,13 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
       <div className={style.weekEvents}>
         {
           levels.map((segs, index) => (
-            <EventRow key={index} segments={segs}  slots={slots as number} />))
+            <EventRow key={index} segments={segs}  slots={slots} />))
         }
         {!!extra.length && (
           <EventRowEnd
             slots={slots}
             segments={extra}
-            showMore={(slot:number, e:React.MouseEvent) => handleShowMore(slot, e)}  />)}
+            showMore={handleShowMore}  />)}
       </div>
     </div>
   )
