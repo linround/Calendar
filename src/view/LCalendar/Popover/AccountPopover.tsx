@@ -1,7 +1,5 @@
 import React, {
-  useState,
-  useContext,
-  useLayoutEffect
+  useContext, useLayoutEffect, useState
 } from 'react'
 import classnames from 'classnames'
 import style from './accountPopover.module.less'
@@ -60,8 +58,8 @@ export const AccountPopover = () => {
                 }
               </div>
               <div className={style.containerUserInfo}>
-                <div className={style.containerUserInfoName}>{user?.userName}</div>
-                <div className={style.containerUserInfoEmail}>{user?.userEmail}</div>
+                <div className={style.containerUserInfoName}>{user?.userName || '用户名'}</div>
+                <div className={style.containerUserInfoEmail}>{user?.userEmail || '邮箱'}</div>
               </div>
             </div>
             <div className={style.containerUserCenter}>
