@@ -1,20 +1,15 @@
-import
-{ createContext }
-  from 'react'
+import { createContext } from 'react'
 import {
-  DEFAULT_TYPE,
-  DEFAULT_MAX_DAYS,
-  DEFAULT_WEEK_DAYS,
-  DEFAULT_WEEK_SKIPS
+  DEFAULT_MAX_DAYS, DEFAULT_TYPE, DEFAULT_WEEK_DAYS, DEFAULT_WEEK_SKIPS
 } from '../utils/time'
 import { parseDate } from '../utils/timesStamp'
 import {
   IBaseContext,
-  IEventContext,
-  IWeeksContext,
   ICalendarContext,
+  IEventContext,
   IIntervalsContext,
-  IMouseEventContext
+  IMouseEventContext,
+  IWeeksContext
 } from './type'
 import { CalendarEvent } from '../utils/calendar'
 import { calendarGroup } from '../SideComponent/utils'
@@ -28,8 +23,8 @@ export const DEFAULT_INTERVALS = {
 }
 
 export const DEFAULT_WEEKS = {
-  minWeeks: 1,
-  maxWeeks: 6,
+  minWeeks: 1, // 在月视图中显示至少一个周
+  maxWeeks: 6, // 在月视图中最多显示六个周
 }
 
 export const DEFAULT_EVENT = {
