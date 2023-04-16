@@ -37,10 +37,12 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     accessors,
     localizer
   )
+
   // 对这周的事件进行排序
   weekEvents.sort((a, b) => sortEvents(
     a, b, accessors, localizer
   ))
+
   // 处理这周事件的布局
   const segments = weekEvents.map((event) => eventSegments(
     event,
@@ -48,10 +50,14 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     accessors,
     localizer
   ))
+
+
   // 这里将创建日历部分提取到最上层
   const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
   const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
-  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRows - 1, 1))
+
+  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments],
+    Math.max(maxRows - 1, 1))
   const slots = weekDays.length
 
   const handleShowMore = (slot:number, nativeEvent:React.MouseEvent) => {

@@ -6,7 +6,7 @@ import { eventsInSlot, ISegments } from '../utils/segments/eventSegments'
 import {
   defaultShowMore, IS_EVENT, mouseEvent
 } from './type'
-import React  from 'react'
+import React from 'react'
 
 export const EventRowMixin = {
   renderSpan(slots:number,
@@ -39,6 +39,7 @@ export const EventRowMixin = {
       [eventMixinStyle.eventMixinContainer]: true,
       [eventMixinStyle.isEvent]: true,
       [IS_EVENT]: true,
+      [styles.isCreate]: isCreate,
       [styles.isDragged]: isDragged, // 被拖拽的事件
       [styles.boxShadow]: isDragging, // 拖拽中的事件
     })

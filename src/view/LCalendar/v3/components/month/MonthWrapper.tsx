@@ -43,6 +43,7 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
     const event = createTimeEvent(
       startTime, endTime, group
     )
+    event.isCreate = true
     setCreatedEvent(event)
   })
   selector.on('select', (data:ICoordinates) => {
