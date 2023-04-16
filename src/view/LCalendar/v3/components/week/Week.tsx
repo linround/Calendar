@@ -70,23 +70,17 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     <div className={style.weekContainer}>
       <div className={style.weekModal}>
         {weekDays.map((d, index) => (
-          <div className={monthStyle.monthModalItem}
-            key={index} />))}
+          <div className={monthStyle.monthModalItem} key={index} />))}
       </div>
       <div className={style.weekHead}>
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
       <div>
         <div className={style.weekEvents}>
-          {
-            levels.map((segs, index) => (
-              <EventRow key={index} segments={segs}  slots={slots} />))
-          }
+          {levels.map((segs, index) => (
+            <EventRow key={index} segments={segs}  slots={slots} />))}
           {!!extra.length && (
-            <EventRowEnd
-              slots={slots}
-              segments={extra}
-              showMore={handleShowMore}  />)}
+            <EventRowEnd slots={slots} segments={extra} showMore={handleShowMore}  />)}
         </div>
       </div>
     </div>
