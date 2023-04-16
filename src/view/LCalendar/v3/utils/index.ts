@@ -16,6 +16,6 @@ export function adjustTime(aTime:number, bTime:number) {
   const endTime = aTime < bTime ? localizer.endOf(bTime, 'day') : localizer.endOf(aTime, 'day')
   return {
     startTime,
-    endTime,
+    endTime: endTime.valueOf(),
   }
 }

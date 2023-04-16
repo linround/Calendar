@@ -1,9 +1,12 @@
 import { ISegments } from '../utils/segments/eventSegments'
-import React, { Fragment } from 'react'
+import React, {
+  Fragment, useContext, useEffect, useRef
+} from 'react'
 import { EventRowMixin } from './EventRowMixin'
 import eventRowStyle from './eventRow.module.less'
 import { IMouseEvent } from '../utils/calendar'
 import { NO_NAME_EVENT_VALUE } from '../utils/time'
+import { EventContext, MouseEventContext } from '../props/propsContext'
 
 interface IEventRow{
   segments: ISegments[]
@@ -11,9 +14,30 @@ interface IEventRow{
   onMousedownEvent: (event:IMouseEvent) => IMouseEvent
   onClickEvent: (event:IMouseEvent) =>IMouseEvent
 }
-export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRow>, ref) => {
+export const EventRow = React.forwardRef((props:React.PropsWithChildren<IEventRow>) => {
   const { segments, slots, onMousedownEvent, onClickEvent, } = props
   let lastEnd = 1
+  const ref = useRef<HTMLDivElement>(null)
+  const {
+    setCreatedEvent,
+
+  } = useContext(EventContext)
+
+  const {
+    setShowCreatePopoverV3,
+    setCreatePopoverRefV3,
+
+    setShowNormalPopover,
+    setNormalEvent,
+    setNormalPopoverRef,
+  } = useContext(MouseEventContext)
+
+  useEffect(() => {
+    if (ref.current) {
+      setCreatePopoverRefV3(ref.current)
+    }
+  }, [ref.current])
+
   return (
     <div className={eventRowStyle.eventRowContainer}>
       {

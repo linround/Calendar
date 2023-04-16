@@ -4,7 +4,9 @@ import { ICoordinates } from '../../../v2/utils/selection'
 import { IMonth } from '../../../components/type'
 import { getDayTimeFromPoint } from '../../utils/point'
 import { toTime } from '../../../utils/timesStamp'
-import { CalendarContext, EventContext } from '../../../props/propsContext'
+import {
+  CalendarContext, EventContext, MouseEventContext
+} from '../../../props/propsContext'
 import { createTimeEvent } from '../../../utils/events'
 import { adjustTime } from '../../utils'
 
@@ -20,6 +22,9 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
     month,
   } = props
 
+  const {
+    setShowCreatePopoverV3,
+  } = useContext(MouseEventContext)
   const {
     setCreatedEvent,
   } = useContext(EventContext)
@@ -44,10 +49,11 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
       startTime, endTime, group
     )
     event.isCreate = true
+    setShowCreatePopoverV3(false)
     setCreatedEvent(event)
   })
   selector.on('select', (data:ICoordinates) => {
-
+    setShowCreatePopoverV3(true)
   })
 
   return React.cloneElement(children as React.ReactElement, {
