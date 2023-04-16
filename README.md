@@ -42,6 +42,8 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [drawFlow](https://github.com/linyuan1105/Drawflow)
 - [plyr](https://github.com/sampotts/plyr)
 - [excalidraw](https://github.com/linround/excalidraw)
+#### 3D
+- [Domenicobrz](https://github.com/Domenicobrz)
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
 
