@@ -16,10 +16,11 @@ import {
   timestampToDate
 } from '../../../utils/timesStamp'
 import style from './style/month.module.less'
-import { CalendarTimestamp } from '../../../utils/calendar'
+import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { IMonth } from '../../../components/type'
 import moment from 'moment/moment'
 import { MonthWrapper } from './MonthWrapper'
+import { filterEvents } from '../../utils'
 
 export function V3MonthComponent() {
   // 还需要处理maxRows和minRows的来源
@@ -35,6 +36,7 @@ export function V3MonthComponent() {
   } = useContext(BaseContext)
   const {  events, } = useContext(EventContext)
   const { minWeeks, } = useContext(WeeksContext)
+
 
   const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
     [start])
@@ -82,6 +84,11 @@ export function V3MonthComponent() {
       setDayScrollRef(containerRef.current)
     }
   }, [containerRef])
+
+  const {
+    draggedEvent,
+    createdEvent,
+  } = useContext(EventContext)
   return (
     <div className={style.monthContainer}>
       <CommonMonthHeader parsedStart={parsedStart} parsedEnd={parsedEnd} />
@@ -92,7 +99,7 @@ export function V3MonthComponent() {
           {month.map((weekDays, index) => (
             <V3WeekComponent
               key={index}
-              events={events}
+              events={filterEvents([...events, createdEvent, draggedEvent]  as CalendarEvent[])}
               weekDays={weekDays}
               maxRows={maxRows}
               minRows={minRows}

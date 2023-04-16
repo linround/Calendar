@@ -23,7 +23,12 @@ interface IProps {
   minRows:number
 }
 export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
-  const {  weekDays, events, maxRows, minRows, } = props
+  const {
+    weekDays,
+    events,
+    maxRows,
+    minRows,
+  } = props
   // 获取一周的事件
   const weekEvents = eventsForWeek(
     events,
@@ -39,7 +44,9 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
   // 处理这周事件的布局
   const segments = weekEvents.map((event) => eventSegments(
     event,
-    weekDays.map((day) => day.value), accessors, localizer
+    weekDays.map((day) => day.value),
+    accessors,
+    localizer
   ))
   // 这里将创建日历部分提取到最上层
   const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
@@ -63,16 +70,18 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
       <div className={style.weekHead}>
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
-      <div className={style.weekEvents}>
-        {
-          levels.map((segs, index) => (
-            <EventRow key={index} segments={segs}  slots={slots} />))
-        }
-        {!!extra.length && (
-          <EventRowEnd
-            slots={slots}
-            segments={extra}
-            showMore={handleShowMore}  />)}
+      <div>
+        <div className={style.weekEvents}>
+          {
+            levels.map((segs, index) => (
+              <EventRow key={index} segments={segs}  slots={slots} />))
+          }
+          {!!extra.length && (
+            <EventRowEnd
+              slots={slots}
+              segments={extra}
+              showMore={handleShowMore}  />)}
+        </div>
       </div>
     </div>
   )

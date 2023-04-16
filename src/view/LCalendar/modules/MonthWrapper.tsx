@@ -1,7 +1,6 @@
 import React, {
   useCallback, useContext, useEffect, useState
 } from 'react'
-import { MonthComponent } from '../components/MonthComponent'
 import {
   CalendarContext, EventContext, MouseEventContext
 } from '../props/propsContext'
@@ -200,19 +199,19 @@ export const MonthWrapper = React.forwardRef((props:IMonthWrapper, ref) => {
   return (
     <>
       <V3MonthComponent />
-      <MonthComponent
-        ref={ref}
-        onShowMore={onShowMore}
-        onClickEvent={onClickEvent}
-        onMousedownEvent={onMousedownEvent}
-        onMouseupEvent={onMouseupEvent}
+      {/*<MonthComponent*/}
+      {/*  ref={ref}*/}
+      {/*  onShowMore={onShowMore}*/}
+      {/*  onClickEvent={onClickEvent}*/}
+      {/*  onMousedownEvent={onMousedownEvent}*/}
+      {/*  onMouseupEvent={onMouseupEvent}*/}
 
 
-        onTimeContainerClick={onTimeContainerClick}
-        onTimeContainerMouseup={onTimeContainerMouseup}
-        onTimeContainerMousemove={onTimeContainerMousemove}
-        onTimeContainerMousedown={onTimeContainerMousedown}
-      />
+      {/*  onTimeContainerClick={onTimeContainerClick}*/}
+      {/*  onTimeContainerMouseup={onTimeContainerMouseup}*/}
+      {/*  onTimeContainerMousemove={onTimeContainerMousemove}*/}
+      {/*  onTimeContainerMousedown={onTimeContainerMousedown}*/}
+      {/*/>*/}
     </>
 
   )

@@ -32,10 +32,10 @@ export function correctCoordinates(
   }
   // 暂未处理滚动相关
   if (verticalPosition === 'bottom') {
-    point.clientY = scrollBounds.bottom
+    point.clientY = scrollBounds.bottom - 1
   }
   if (verticalPosition === 'top') {
-    point.clientY = scrollBounds.top
+    point.clientY = scrollBounds.top + 1
   }
   return point
 }
@@ -112,12 +112,12 @@ export function getDayTimeFromPoint(
   const column = month[0].length
   const monthWidth = monthRect.right - monthRect.left
   const monthHeight = monthRect.bottom - monthRect.top
-  const rowWidth = monthWidth / column
-  const columnHeight = monthHeight / row
+  const cellWidth = (monthWidth / column)
+  const cellHeight = (monthHeight / row)
   // 得到点坐标属于哪一列（某个周里面的某个日）
-  const x = Math.floor((point.clientX - monthRect.left) / rowWidth)
+  const x = Math.floor((point.clientX - monthRect.left) / cellWidth)
   // 得到点坐标属于哪一行(某个月里面的某个周)
-  const y = Math.floor((point.clientY - monthRect.top) / columnHeight)
+  const y = Math.floor((point.clientY - monthRect.top) / cellHeight)
   return month[y][x].day
 }
 

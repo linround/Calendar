@@ -1,4 +1,3 @@
-
 import { CalendarEvent, VTimestampInput } from '../calendar'
 import { endOfRange } from './helper'
 import { ILocalizer } from './localizer'
@@ -31,7 +30,10 @@ export interface ISegments {
   right:number
 }
 export function eventSegments (
-  event: CalendarEvent, range:VTimestampInput[], accessors:IAccessors, localizer:ILocalizer
+  event: CalendarEvent,
+  range:VTimestampInput[],
+  accessors:IAccessors,
+  localizer:ILocalizer
 ):ISegments {
   const { first, last, } = endOfRange({ dateRange: range, localizer, })
   const slots = localizer.diff(
