@@ -7,6 +7,7 @@ import style from './style/rowExtra.module.less'
 import { RowSpan } from './RowSpan'
 import { RowEvent } from './RowEvent'
 import { RowMore } from './RowMore'
+import { ROW_EVENT_HEIGHT } from '../../../utils/time'
 
 interface IProps {
   segments:ISegments[]
@@ -48,7 +49,11 @@ export function RowExtra(props:IProps) {
     lastEnd = current
   }
   return (
-    <div className={style.rowExtra}>
+    <div
+      style={{
+        height: ROW_EVENT_HEIGHT,
+      }}
+      className={style.rowExtra}>
       {row}
     </div>
   )

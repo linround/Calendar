@@ -3,6 +3,7 @@ import { RowSpan } from './RowSpan'
 import { RowEvent } from './RowEvent'
 import { Fragment } from 'react'
 import style from './style/eventRow.module.less'
+import { ROW_EVENT_HEIGHT } from '../../../utils/time'
 
 interface IProps {
   segments:ISegments[]
@@ -12,7 +13,9 @@ export function EventRow(props:IProps) {
   const { segments, slots, } = props
   let lastEnd = 1
   return (
-    <div className={style.eventRow}>
+    <div
+      style={{ height: ROW_EVENT_HEIGHT, }}
+      className={style.eventRow}>
       {segments.map((seg, index) => {
         const { event, left, right, span, } = seg
         const gap = left - lastEnd

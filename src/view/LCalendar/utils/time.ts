@@ -11,6 +11,7 @@ export const DEFAULT_CALENDAR_GROUPS = []
 
 export const CALENDAR_EVENT_MIN_DURATION = 10
 export const NO_NAME_EVENT_VALUE = '无标题'
+export const ROW_EVENT_HEIGHT = 24
 
 
 export function getDayNowTime(day:VTimestampInput):VTimestampInput {
