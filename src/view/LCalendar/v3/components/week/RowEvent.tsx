@@ -23,7 +23,6 @@ export function RowEvent(props:IProps) {
   useEffect(() => {
     if (ref.current) {
       setCreatePopoverRefV3(ref.current)
-      console.log(ref)
     }
   }, [ref])
   return (
