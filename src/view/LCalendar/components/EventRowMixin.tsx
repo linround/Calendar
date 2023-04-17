@@ -69,7 +69,9 @@ export const EventRowMixin = {
     )
   },
   renderMoreContent(
-    segments:ISegments[], slot:number, showMore = defaultShowMore
+    segments:ISegments[],
+    slot:number,
+    showMore = defaultShowMore
   ) {
     const count = eventsInSlot(segments, slot)
     return (

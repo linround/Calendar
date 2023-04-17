@@ -3,8 +3,6 @@ import React from 'react'
 import style from './style/week.module.less'
 import monthStyle from '../../../components/month.module.less'
 import { GenSingleDay } from '../../../components/GenSingleDay'
-import { EventRow } from '../../../components/EventRow'
-import { EventRowEnd } from '../../../components/EventRowEnd'
 import { CalendarEvent } from '../../../utils/calendar'
 import {
   eventLevels,
@@ -15,6 +13,7 @@ import {
 } from '../../../utils/segments/eventSegments'
 import { accessors } from '../../../utils/segments/accessors'
 import localizer from '../../../utils/segments/localizer'
+import { EventRows } from './EventRows'
 
 interface IProps {
   weekDays:IMonthWeek
@@ -75,14 +74,16 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
       <div className={style.weekHead}>
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
-      <div>
-        <div className={style.weekEvents}>
-          {levels.map((segs, index) => (
-            <EventRow key={index} segments={segs}  slots={slots} />))}
-          {!!extra.length && (
-            <EventRowEnd slots={slots} segments={extra} showMore={handleShowMore}  />)}
-        </div>
-      </div>
+
+      <EventRows levels={levels} extra={extra} slots={slots} />
+      {/*<div>*/}
+      {/*  <div className={style.weekEvents}>*/}
+      {/*    {levels.map((segs, index) => (*/}
+      {/*      <EventRow key={index} segments={segs}  slots={slots} />))}*/}
+      {/*    {!!extra.length && (*/}
+      {/*      <EventRowEnd slots={slots} segments={extra} showMore={handleShowMore}  />)}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   )
 }

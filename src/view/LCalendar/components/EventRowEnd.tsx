@@ -32,6 +32,7 @@ export function EventRowEnd(props:React.PropsWithChildren<IEventRow>) {
         const count = eventsInSlot(segments, s)
         return count === 1
       })
+    console.log(canRenderSlotEvent, 'canRenderSlotEvent')
     if (canRenderSlotEvent) {
       const content =  event.eventName || NO_NAME_EVENT_VALUE
       if (gap) {
