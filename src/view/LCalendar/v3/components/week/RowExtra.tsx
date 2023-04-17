@@ -8,13 +8,21 @@ import { RowSpan } from './RowSpan'
 import { RowEvent } from './RowEvent'
 import { RowMore } from './RowMore'
 import { ROW_EVENT_HEIGHT } from '../../../utils/time'
+import { IMonth } from '../../../components/type'
 
 interface IProps {
   segments:ISegments[]
   slots:number
+  container:HTMLDivElement
+  month:IMonth
 }
 export function RowExtra(props:IProps) {
-  const { segments, slots, } = props
+  const {
+    segments,
+    slots,
+    container,
+    month,
+  } = props
   let current = 1
   let lastEnd = 1
   const row = []
@@ -40,7 +48,14 @@ export function RowExtra(props:IProps) {
       row.push(<RowSpan key={`${key}_gap`} slots={slots} gap={gap} />)
     }
     if (canRenderSlotEvent) {
-      row.push(<RowEvent key={key} slots={slots} span={span} event={event} />)
+      row.push(<RowEvent
+        key={key}
+        slots={slots}
+        span={span}
+        event={event}
+        month={month}
+        container={container}
+      />)
       current = right + 1
     } else {
       row.push(<RowMore key={key} slots={slots} segments={segments} slot={current} />)

@@ -30,7 +30,11 @@ export function EventRows(props:IProps) {
             month={month}
             container={container} />))}
         {!!extra.length && (
-          <RowExtra slots={slots} segments={extra} />
+          <RowExtra
+            slots={slots}
+            segments={extra}
+            month={month}
+            container={container} />
         )}
       </div>
     </div>
