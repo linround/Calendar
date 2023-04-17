@@ -12,6 +12,8 @@ import { getDayTimeFromPoint } from '../../utils/point'
 import { toTime } from '../../../utils/timesStamp'
 import classnames from 'classnames'
 import style from '../day/style/eventWrapper.module.less'
+import { updateEvent } from '../../../../../api'
+import { SUCCESS_CODE } from '../../../../../request'
 
 interface IProps {
   event:CalendarEvent
@@ -23,10 +25,16 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
   const isCreate = event.isCreate
   const ref = createRef<HTMLDivElement>()
   const {
+    updateEventList,
+    setShowCreatePopoverV3,
     setCreatePopoverRefV3,
+    setShowNormalPopover,
+    setNormalEvent,
+    setNormalPopoverRef,
   } = useContext(MouseEventContext)
   const {
     setDraggedEvent,
+    setCreatedEvent,
   } = useContext(EventContext)
   useEffect(() => {
     if (ref.current) {
@@ -74,8 +82,18 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     setMoving(true)
     setDraggedEvent(draggedEvent)
   })
-  selector.on('select', (data:ICoordinates) => {
-    console.log(data)
+  selector.on('select',  async (data:ICoordinates) => {
+    if (!isCreate) {
+      const { code, } = await updateEvent(draggedEvent)
+      if (code === SUCCESS_CODE) {
+        setDraggedEvent(null)
+        updateEventList()
+      }
+    } else {
+      setCreatedEvent(draggedEvent)
+      setDraggedEvent(null)
+      setShowCreatePopoverV3(true)
+    }
     setMoving(false)
     mousedownController.clearState()
   })
