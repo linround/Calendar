@@ -22,7 +22,6 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
     container,
     month,
   } = props
-
   const {
     setShowCreatePopoverV3,
   } = useContext(MouseEventContext)

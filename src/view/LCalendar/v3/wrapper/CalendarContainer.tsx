@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { mousedownController } from '../utils/mouseDown'
-import { EventContext, MouseEventContext } from '../../props/propsContext'
+import {
+  CalendarContext, EventContext, MouseEventContext
+} from '../../props/propsContext'
 
 export function CalendarContainer(props:React.PropsWithChildren) {
   const {
@@ -12,6 +14,7 @@ export function CalendarContainer(props:React.PropsWithChildren) {
   } = useContext(MouseEventContext)
   const { setCreatedEvent, } = useContext(EventContext)
 
+  const { setAccountRef, setAddCalendarRef, } = useContext(CalendarContext)
   function clearCreatePopover() {
     setCreatePopoverRefV3(null)
     setCreatedEvent(null)
@@ -22,13 +25,20 @@ export function CalendarContainer(props:React.PropsWithChildren) {
     setNormalPopoverRef(null)
     setShowNormalPopover(false)
   }
-
+  function clearAccountRef() {
+    setAccountRef(null)
+  }
+  function clearAddCalendarRef() {
+    setAddCalendarRef(null)
+  }
   return React.cloneElement(props.children as React.ReactElement, {
     onMouseDown() {
       if (mousedownController.action === '') {
         clearCreatePopover()
         clearNormalPopover()
       }
+      clearAccountRef()
+      clearAddCalendarRef()
     },
   })
 }

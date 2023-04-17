@@ -12,7 +12,12 @@ import { CalendarContext } from '../props/propsContext'
 interface IProps extends ISideAdd, ISimpleControllerProps {}
 
 export function SideComponent(props:IProps) {
-  const { groups, setChecks, checks, setGroups, } = useContext(CalendarContext)
+  const {
+    groups,
+    setChecks,
+    checks,
+    setGroups,
+  } = useContext(CalendarContext)
 
   return (
     <>

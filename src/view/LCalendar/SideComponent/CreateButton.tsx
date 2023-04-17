@@ -8,13 +8,15 @@ import {
 import { getDayNowTime } from '../utils/time'
 import { ROUND_TIME, roundTime } from '../utils/timesStamp'
 import { createTimeEvent } from '../utils/events'
-import { ISideAdd } from '../modules/options'
 
-export function CreateButton(props:ISideAdd) {
+export function CreateButton() {
   const { value, group, } = useContext(CalendarContext)
-  const { setShowCreatePopover, } = useContext(MouseEventContext)
-  const { resetEvents, } = useContext(EventContext)
-  const { setCreateEvent, } = props
+  const {
+    setShowCreatePopoverV3,
+  } = useContext(MouseEventContext)
+  const {
+    setCreatedEvent,
+  } = useContext(EventContext)
 
   const onCreateClick = () => {
     const dayTime = getDayNowTime(value)
@@ -23,9 +25,9 @@ export function CreateButton(props:ISideAdd) {
     const createEvent = createTimeEvent(
       startTime, endTime, group
     )
-    setCreateEvent(createEvent)
-    setShowCreatePopover(true)
-    resetEvents(createEvent, createEvent)
+    createEvent.isCreate = true
+    setCreatedEvent(createEvent)
+    setShowCreatePopoverV3(true)
   }
   return (
     <div className={styles.sideCreate}>
