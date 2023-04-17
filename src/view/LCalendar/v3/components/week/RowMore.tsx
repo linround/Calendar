@@ -1,4 +1,5 @@
 import { eventsInSlot, ISegments } from '../../../utils/segments/eventSegments'
+import style from './style/rowMore.module.less'
 
 interface IProps {
   slots:number
@@ -11,12 +12,14 @@ export function RowMore(props:IProps) {
   const count = eventsInSlot(segments, slot)
   return (
     <div
+      className={style.rowMore}
       style={{
         flexBasis: width,
         maxWidth: width,
       }}>
-      <div>
-        + {count} more
+      <div
+        className={style.rowMoreContent}>
+        +{count}更多
       </div>
     </div>
   )
