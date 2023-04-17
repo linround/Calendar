@@ -1,5 +1,5 @@
 import React, {
-  createRef, ReactElement, useContext, useLayoutEffect, useState
+  createRef, ReactElement, useContext, useLayoutEffect, useRef, useState
 } from 'react'
 import { Selector } from '../../utils/selector'
 import { ICoordinates } from '../../../v2/utils/selection'
@@ -24,6 +24,7 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
   const { children, event, container, month, } = props
   const isCreate = event.isCreate
   const ref = createRef<HTMLDivElement>()
+  const normalRef = useRef<Element|null>(null)
   const {
     updateEventList,
     setShowCreatePopoverV3,
@@ -44,6 +45,16 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
   function hideCreate() {
     setShowCreatePopoverV3(false)
   }
+  function clearCreated() {
+    setCreatedEvent(null)
+    setCreatePopoverRefV3(null)
+    setShowCreatePopoverV3(false)
+  }
+  function clearNormal() {
+    setNormalEvent(null)
+    setNormalPopoverRef(null)
+    setShowNormalPopover(false)
+  }
 
 
   const [moving, setMoving] = useState(false)
@@ -55,6 +66,7 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
 
   selector.on('beforeSelect', (data:ICoordinates) => {
     mousedownController.setState(NORMAL_ACTION)
+    !isCreate && clearCreated()
     const timestamp = getDayTimeFromPoint(
       containerRect, month, data
     )
@@ -82,11 +94,19 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     }
     isClick = false
     setMoving(true)
+    if (!isCreate) {
+      clearNormal()
+    }
     hideCreate()
     setDraggedEvent(draggedEvent)
   })
   selector.on('select',  async (data:ICoordinates) => {
     if (!isCreate) {
+      if (isClick) {
+        setNormalEvent(event)
+        setNormalPopoverRef(normalRef.current)
+        setShowNormalPopover(true)
+      }
       const { code, } = await updateEvent(draggedEvent)
       if (code === SUCCESS_CODE) {
         setDraggedEvent(null)
@@ -105,7 +125,7 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     [style.moving]: moving,
   })
   return React.cloneElement(children as ReactElement, {
-    ref: isCreate ? ref : null,
+    ref: isCreate ? ref : normalRef,
     className: className,
     onMouseDown(e:React.MouseEvent) {
       selector.handleInitialEvent(e)
