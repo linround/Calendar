@@ -1,4 +1,4 @@
-import { IMonthWeek } from '../../../components/type'
+import { IMonth, IMonthWeek } from '../../../components/type'
 import React from 'react'
 import style from './style/week.module.less'
 import monthStyle from '../../../components/month.module.less'
@@ -18,8 +18,10 @@ import { EventRows } from './EventRows'
 interface IProps {
   weekDays:IMonthWeek
   events:CalendarEvent[]
-  maxRows:number,
+  maxRows:number
   minRows:number
+  container:HTMLDivElement
+  month:IMonth
 }
 export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -27,6 +29,8 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     events,
     maxRows,
     minRows,
+    container,
+    month,
   } = props
   // 获取一周的事件
   const weekEvents = eventsForWeek(
@@ -75,7 +79,13 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
 
-      <EventRows levels={levels} extra={extra} slots={slots} />
+      <EventRows
+        month={month}
+        container={container}
+        levels={levels}
+        extra={extra}
+        slots={slots}
+      />
       {/*<div>*/}
       {/*  <div className={style.weekEvents}>*/}
       {/*    {levels.map((segs, index) => (*/}

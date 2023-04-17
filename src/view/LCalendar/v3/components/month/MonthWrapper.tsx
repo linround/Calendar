@@ -8,7 +8,8 @@ import {
   CalendarContext, EventContext, MouseEventContext
 } from '../../../props/propsContext'
 import { createTimeEvent } from '../../../utils/events'
-import { adjustTime } from '../../utils'
+import { adjustTime, NORMAL_ACTION } from '../../utils'
+import { mousedownController } from '../../utils/mouseDown'
 
 interface IProps {
   container:HTMLDivElement
@@ -38,6 +39,9 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
       containerRect, month, data
     )
     initTime = toTime(timestamp)
+    // 在mouthWrapper内 点击在普通事件上的
+    // 不再由外部处理相关的mousedown和mouseup 事件
+    return mousedownController.action === NORMAL_ACTION
   })
   selector.on('selecting', (data:ICoordinates) => {
     const timestamp = getDayTimeFromPoint(

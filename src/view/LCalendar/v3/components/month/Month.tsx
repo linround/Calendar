@@ -99,6 +99,8 @@ export function V3MonthComponent() {
           {month.map((weekDays, index) => (
             <V3WeekComponent
               key={index}
+              container={containerRef.current as HTMLDivElement}
+              month={month}
               events={filterEvents([...events, createdEvent, draggedEvent]  as CalendarEvent[])}
               weekDays={weekDays}
               maxRows={maxRows}

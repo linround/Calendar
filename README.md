@@ -42,6 +42,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [drawFlow](https://github.com/linyuan1105/Drawflow)
 - [plyr](https://github.com/sampotts/plyr)
 - [excalidraw](https://github.com/linround/excalidraw)
+- [svgdotjs](https://github.com/svgdotjs/svg.js)
 #### 3D
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
 ## 多媒体
