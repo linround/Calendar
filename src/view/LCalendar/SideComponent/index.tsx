@@ -1,7 +1,6 @@
 import styles from './style.module.less'
 import React, { useContext } from 'react'
 import { CreateButton } from './CreateButton'
-import { ISideAdd } from '../modules/options'
 import { SimpleCalendar } from './SimpleCalendar'
 import { SimpleController } from './SimpleController'
 import { ISimpleControllerProps } from './utils'
@@ -9,7 +8,7 @@ import { SearchComponent } from './SearchComponent'
 import { CalendarGroups } from './CalendarGroups'
 import { CalendarContext } from '../props/propsContext'
 
-interface IProps extends ISideAdd, ISimpleControllerProps {}
+type IProps = ISimpleControllerProps
 
 export function SideComponent(props:IProps) {
   const {
@@ -24,7 +23,7 @@ export function SideComponent(props:IProps) {
       <div className={styles.sideTitle}>
         U C a l e n d a r
       </div>
-      <CreateButton {...props} />
+      <CreateButton  />
       <SimpleController {...props} />
       <SimpleCalendar />
       <SearchComponent />

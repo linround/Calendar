@@ -1,15 +1,13 @@
 import React, {
-  createRef, useContext, useEffect, useLayoutEffect, useState
+  createRef, useContext, useEffect, useLayoutEffect
 } from 'react'
 import {
   BaseContext, CalendarContext, EventContext, IntervalsContext, MouseEventContext
 } from './props/propsContext'
 import { V3PopoverComponent } from './v3/popover'
 import { DEFAULT_MAX_DAYS, DEFAULT_WEEK_DAYS } from './utils/time'
-import { IGlobalCache, ITimes } from './props/type'
-import {
-  CalendarEvent, CalendarTimestamp, VTimestampInput
-} from './utils/calendar'
+import { ITimes } from './props/type'
+import { CalendarTimestamp } from './utils/calendar'
 import {
   copyTimestamp,
   DAY_MIN,
@@ -36,18 +34,6 @@ import { MonthWrapper } from './modules/MonthWrapper'
 import { CalendarContainer } from './v3/wrapper/CalendarContainer'
 
 
-const globalCache:IGlobalCache = {
-  isCreate: false,
-  dragSource: null,
-  isDragging: false,
-  draggingEvent: null,
-  currentCreateEvent: null,
-  currentMousedownRef: null,
-  currentMousedownEvent: null,
-}
-
-
-
 export default function () {
   const { setEnd,
     setStart,
@@ -55,19 +41,10 @@ export default function () {
     setWeekDays,
     times,
     parsedValue, } = useContext(BaseContext)
-  const { events, setEvents, } = useContext(EventContext)
+  const { events, } = useContext(EventContext)
   const { type, value, setValue, setType, } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
   const { setCreatePopoverRef, } = useContext(MouseEventContext)
-
-
-
-  const [dragEvent, setDragEvent] = useState<CalendarEvent | null>(null)
-  const [createEvent, setCreateEvent] = useState<CalendarEvent | null>(null)
-  const [dragTime, setDragTime] = useState<VTimestampInput|null>(null)
-  const [mousedownTime, setMousedownTime] = useState<VTimestampInput|null>(null)
-  const [mousemoveTime, setMousemoveTime] = useState<VTimestampInput|null>(null)
-  const [createStart, setCreateStart] = useState<VTimestampInput| null>(null)
 
 
 
@@ -173,15 +150,6 @@ export default function () {
     }
   }
 
-  const setGlobalCacheValue = (key: keyof IGlobalCache, val:any):void => {
-    globalCache[key] = val
-  }
-
-
-
-  function clearCreateEvent() {
-    setEvents(events.filter((e) => !e.isCreate))
-  }
 
 
 
@@ -205,7 +173,6 @@ export default function () {
           className={styles.mainContainer}>
           <div className={styles.mainLeft}>
             <SideComponent
-              setCreateEvent={setCreateEvent}
               prev={(amount) => move(amount, 'month')}
               next={(amount) => move(amount, 'month')} />
           </div>
@@ -219,24 +186,7 @@ export default function () {
               next={(amount) => move(amount, type)} />
             {
               type === 'month' ?
-                <MonthWrapper
-                  dragEvent={dragEvent}
-                  setDragEvent={setDragEvent}
-                  createEvent={createEvent}
-                  setCreateEvent={setCreateEvent}
-                  dragTime={dragTime}
-                  setDragTime={setDragTime}
-                  mousedownTime={mousedownTime}
-                  setMousedownTime={setMousedownTime}
-                  mousemoveTime={mousemoveTime}
-                  setMousemoveTime={setMousemoveTime}
-                  createStart={createStart}
-                  setCreateStart={setCreateStart}
-                  setGlobalCacheValue={setGlobalCacheValue}
-                  globalCache={globalCache}
-                  clearCreateEvent={clearCreateEvent}
-                  ref={ref}
-                /> :
+                <MonthWrapper /> :
                 <DayWrapper />
             }
           </div>

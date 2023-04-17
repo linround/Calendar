@@ -55,7 +55,4 @@ export interface IMonthWrapper {
   clearCreateEvent:()=>void,
 }
 
-export interface ISideAdd {
-  setCreateEvent:React.Dispatch<React.SetStateAction<CalendarEvent|null>>,
-}
 
