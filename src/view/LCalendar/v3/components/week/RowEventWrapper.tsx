@@ -1,5 +1,5 @@
 import React, {
-  createRef, ReactElement, useContext, useEffect, useState
+  createRef, ReactElement, useContext, useLayoutEffect, useState
 } from 'react'
 import { Selector } from '../../utils/selector'
 import { ICoordinates } from '../../../v2/utils/selection'
@@ -36,12 +36,14 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     setDraggedEvent,
     setCreatedEvent,
   } = useContext(EventContext)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current) {
       setCreatePopoverRefV3(ref.current)
     }
   }, [ref])
-
+  function hideCreate() {
+    setShowCreatePopoverV3(false)
+  }
 
 
   const [moving, setMoving] = useState(false)
@@ -80,6 +82,7 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     }
     isClick = false
     setMoving(true)
+    hideCreate()
     setDraggedEvent(draggedEvent)
   })
   selector.on('select',  async (data:ICoordinates) => {
