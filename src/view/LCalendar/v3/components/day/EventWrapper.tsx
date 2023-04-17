@@ -59,7 +59,6 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
   useLayoutEffect(() => {
     if (ref.current) {
       setCreatePopoverRefV3(ref.current)
-      setShowCreatePopoverV3(true)
     }
   }, [ref.current])
 
