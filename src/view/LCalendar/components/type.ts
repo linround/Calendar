@@ -7,8 +7,6 @@ import React from 'react'
 export interface IWeekHeadColumn {
   day: CalendarTimestamp
   index:number
-  parsedStart: CalendarTimestamp,
-  parsedEnd:CalendarTimestamp
 }
 
 export const IS_EVENT = 'is-event'

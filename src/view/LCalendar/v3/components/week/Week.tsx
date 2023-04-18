@@ -86,14 +86,6 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
         extra={extra}
         slots={slots}
       />
-      {/*<div>*/}
-      {/*  <div className={style.weekEvents}>*/}
-      {/*    {levels.map((segs, index) => (*/}
-      {/*      <EventRow key={index} segments={segs}  slots={slots} />))}*/}
-      {/*    {!!extra.length && (*/}
-      {/*      <EventRowEnd slots={slots} segments={extra} showMore={handleShowMore}  />)}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   )
 }

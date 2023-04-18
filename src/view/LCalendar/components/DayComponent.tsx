@@ -14,6 +14,7 @@ import {
   BaseContext, EventContext, IntervalsContext, MouseEventContext
 } from '../props/propsContext'
 import classnames from 'classnames'
+import { eventClassification } from '../v3/utils'
 
 export default function (props: IDayProps)  {
   const {
@@ -52,7 +53,6 @@ export default function (props: IDayProps)  {
   const intervals: CalendarTimestamp[][] = useMemo<CalendarTimestamp[][]>(() => days.map((d) => createIntervalList(
     d, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now as CalendarTimestamp
   )), [days, firstMinute, parsedIntervalMinutes, parsedIntervalCount, now])
-
 
 
   const timeDelta = (time: VTime): number | false => {
@@ -109,9 +109,18 @@ export default function (props: IDayProps)  {
     [dayStyle.dayBodyScrollArea]: true,
     [dayStyle.scrollContainer]: true,
   })
+
+
+  const classifiedEvents = useMemo(() => eventClassification(parsedEvents), [parsedEvents])
   return (
     <div className={dayStyle.dayContainer}>
-      <V3DayHeaderComponent days={days} intervalWidth={intervalWidth} />
+      <V3DayHeaderComponent
+        days={days}
+        events={[
+          ...classifiedEvents.crossDaysEvents,
+          ...classifiedEvents.allDayEvents
+        ]}
+        intervalWidth={intervalWidth} />
       <div className={dayStyle.dayBody}>
         <div
           ref={dayScrollRef}
@@ -133,7 +142,7 @@ export default function (props: IDayProps)  {
               intervalWidth={intervalWidth}
               intervalHeight={intervalHeight}
               days={days}
-              events={parsedEvents}
+              events={classifiedEvents.normalEvents}
               getSlotScope={getSlotScope}
             />
           </div>

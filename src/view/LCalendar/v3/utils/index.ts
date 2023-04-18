@@ -1,4 +1,4 @@
-import { CalendarEvent } from '../../utils/calendar'
+import { CalendarEvent, CalendarEventParsed } from '../../utils/calendar'
 import localizer from '../../utils/segments/localizer'
 
 export type IEventAction = 'normal'|'created'|'dragged'|'create'
@@ -19,3 +19,31 @@ export function adjustTime(aTime:number, bTime:number) {
     endTime: endTime.valueOf(),
   }
 }
+
+
+export interface IEventClassification {
+  crossDaysEvents:CalendarEventParsed[] // 跨天事件
+  allDayEvents:CalendarEventParsed[] // 全天事件
+  normalEvents:CalendarEventParsed[] // 普通的事件
+}
+
+export function eventClassification(events:CalendarEventParsed[]):IEventClassification {
+  const crossDaysEvents:CalendarEventParsed[] = []
+  const allDayEvents:CalendarEventParsed[] = []
+  const normalEvents:CalendarEventParsed[] = []
+  events.map((event) => {
+    if (event.allDay) {
+      allDayEvents.push(event)
+    } else if (event.startIdentifier !== event.endIdentifier) {
+      crossDaysEvents.push(event)
+    } else {
+      normalEvents.push(event)
+    }
+  })
+  return {
+    normalEvents,
+    allDayEvents,
+    crossDaysEvents,
+  }
+}
+

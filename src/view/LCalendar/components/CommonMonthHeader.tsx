@@ -9,12 +9,7 @@ import { BaseContext } from '../props/propsContext'
 import { DEFAULT_WEEK_DAYS } from '../utils/time'
 
 
-interface IProps {
-  parsedStart: CalendarTimestamp,
-  parsedEnd:CalendarTimestamp
-}
-export function CommonMonthHeader(props: IProps) {
-  const {  parsedStart, parsedEnd, } = props
+export function CommonMonthHeader() {
   const {  times, } = useContext(BaseContext)
   const weekdaySkips = getWeekdaySkips(DEFAULT_WEEK_DAYS)
   const todayWeek = useMemo(() => {
@@ -33,21 +28,16 @@ export function CommonMonthHeader(props: IProps) {
       DEFAULT_WEEK_DAYS.length,
       DEFAULT_WEEK_DAYS.length
     )
-  }, [times, DEFAULT_WEEK_DAYS, weekdaySkips])
+  }, [weekdaySkips])
   return (
-
     <div className={monthStyle.monthHeader}>
-      {
-        todayWeek.map((day, index) => (
-          <div  key={day.date} className={monthStyle.monthHeaderColumn}>
-            <CommonWeekHeadColumn
-              day={day}
-              index={index}
-              parsedEnd={parsedEnd}
-              parsedStart={parsedStart} />
-          </div>
-        ))
-      }
+      {todayWeek.map((day, index) => (
+        <div  key={day.date} className={monthStyle.monthHeaderColumn}>
+          <CommonWeekHeadColumn
+            day={day}
+            index={index} />
+        </div>
+      ))}
     </div>
   )
 }

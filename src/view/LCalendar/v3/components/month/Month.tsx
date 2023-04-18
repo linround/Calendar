@@ -91,7 +91,7 @@ export function V3MonthComponent() {
   } = useContext(EventContext)
   return (
     <div className={style.monthContainer}>
-      <CommonMonthHeader parsedStart={parsedStart} parsedEnd={parsedEnd} />
+      <CommonMonthHeader />
       <MonthWrapper
         month={month}
         container={containerRef.current as HTMLDivElement}>
