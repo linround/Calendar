@@ -11,8 +11,7 @@ import {
   isSegmentInSlot,
   sortEvents
 } from '../../../utils/segments/eventSegments'
-import { accessors } from '../../../utils/segments/accessors'
-import localizer, { endOf, startOf } from '../../../utils/segments/localizer'
+import { endOf, startOf } from '../../../utils/segments/localizer'
 import { EventRows } from './EventRows'
 
 interface IProps {
@@ -42,17 +41,11 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
   )
 
   // 对这周的事件进行排序
-  weekEvents.sort((a, b) => sortEvents(
-    a, b, accessors, localizer
-  ))
+  weekEvents.sort((a, b) => sortEvents(a, b))
 
   // 处理这周事件的布局
-  const segments = weekEvents.map((event) => eventSegments(
-    event,
-    weekDays.map((day) => day.value),
-    accessors,
-    localizer
-  ))
+  const segments = weekEvents.map((event) => eventSegments(event,
+    weekDays.map((day) => day.value)))
 
 
   // 这里将创建日历部分提取到最上层

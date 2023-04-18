@@ -36,6 +36,8 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
         height={100}
         days={days}
         events={events}
+        maxRow={3}
+        minRow={0}
         intervalWidth={intervalWidth} />
     </>
   )

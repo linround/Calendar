@@ -37,12 +37,8 @@ export interface ISegments {
   left:number
   right:number
 }
-export function eventSegments (
-  event: CalendarEvent,
-  range:VTimestampInput[],
-  accessors:IAccessors,
-  localizer:ILocalizer
-):ISegments {
+export function eventSegments (event: CalendarEvent,
+  range:VTimestampInput[]):ISegments {
   const { first, last, } = endOfRange({ dateRange: range, localizer, })
   const slots = localizer.diff(
     first, last, 'day'
@@ -98,9 +94,7 @@ export function eventsInSlot(segments:ISegments[], slot:number):number {
 export function isSegmentInSlot(seg:ISegments, slot:number):boolean {
   return seg.left <= slot && seg.right >= slot
 }
-export function sortEvents(
-  eventA:CalendarEvent, eventB:CalendarEvent, accessors:IAccessors, localizer:ILocalizer
-):number {
+export function sortEvents(eventA:CalendarEvent, eventB:CalendarEvent):number {
   const evtA = {
     start: accessors.start(eventA),
     end: accessors.end(eventA),
