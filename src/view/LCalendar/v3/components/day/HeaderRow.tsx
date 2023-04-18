@@ -23,7 +23,11 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
             segments={segs}
             days={days}/>))}
         {!!extra.length && (
-          <HeaderRowExtra />
+          <HeaderRowExtra
+            slots={slots}
+            segments={extra}
+            days={days}
+          />
         )}
       </div>
     </div>

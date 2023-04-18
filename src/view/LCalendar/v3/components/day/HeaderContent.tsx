@@ -52,7 +52,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
       </div>
       <div className={style.headerDays}>
         {days.map((day) => (
-          <div className={style.headerItem} key={day.date}>{day.date}</div>
+          <div className={style.headerItem} key={day.date}/>
         ))}
         <HeaderRow
           slots={slots}
