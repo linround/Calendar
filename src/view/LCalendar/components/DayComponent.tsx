@@ -143,8 +143,6 @@ export default function (props: IDayProps)  {
               intervalHeight={intervalHeight}
               days={days}
               events={[
-                ...classifiedEvents.crossDaysEvents,
-                ...classifiedEvents.allDayEvents,
                 ...classifiedEvents.normalEvents
               ]}
               getSlotScope={getSlotScope}

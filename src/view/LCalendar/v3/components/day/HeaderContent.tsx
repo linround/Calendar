@@ -31,8 +31,11 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     inputEvents, startTime, endTime
   )
   rangeEvent.sort((a, b) => sortEvents(a, b))
+
+
+
   // 处理这周事件的布局
-  const segments = inputEvents.map((event) => eventSegments(event,
+  const segments = rangeEvent.map((event) => eventSegments(event,
     days.map((day) => toTime(day))))
 
   // 这里将创建日历部分提取到最上层
@@ -41,7 +44,6 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRow - 1, 1))
   const slots = days.length
 
-  console.log(levels, rangeEvent)
 
   return (
     <div className={style.headerContent} style={{ marginRight: 10, }}>
