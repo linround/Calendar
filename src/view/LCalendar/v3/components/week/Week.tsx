@@ -7,12 +7,12 @@ import { CalendarEvent } from '../../../utils/calendar'
 import {
   eventLevels,
   eventSegments,
-  eventsForWeek,
+  eventsForRange,
   isSegmentInSlot,
   sortEvents
 } from '../../../utils/segments/eventSegments'
 import { accessors } from '../../../utils/segments/accessors'
-import localizer from '../../../utils/segments/localizer'
+import localizer, { endOf, startOf } from '../../../utils/segments/localizer'
 import { EventRows } from './EventRows'
 
 interface IProps {
@@ -33,12 +33,12 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     month,
   } = props
   // 获取一周的事件
-  const weekEvents = eventsForWeek(
+  const weekEvents = eventsForRange(
     events,
-    weekDays[0].value,
-    weekDays[weekDays.length - 1].value,
-    accessors,
-    localizer
+    startOf(weekDays[0].value, 'day')
+      .valueOf(),
+    endOf(weekDays[weekDays.length - 1].value, 'day')
+      .valueOf()
   )
 
   // 对这周的事件进行排序

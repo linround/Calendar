@@ -11,7 +11,11 @@ interface IProps {
   events:CalendarEventParsed[]
 }
 export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
-  const { intervalWidth, days, } = props
+  const {
+    intervalWidth,
+    events,
+    days,
+  } = props
   return (
     <>
       <div className={style.dayHeader} style={{ marginRight: 10, }}>
@@ -31,6 +35,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
       <HeaderContent
         height={100}
         days={days}
+        events={events}
         intervalWidth={intervalWidth} />
     </>
   )

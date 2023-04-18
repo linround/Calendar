@@ -1,6 +1,6 @@
 import moment from 'moment'
 import {
-  lte, neq, gt, gte
+  gt, gte, lte, neq
 } from 'date-arithmetic'
 import { CalendarEvent, VTimestampInput } from '../calendar'
 
@@ -38,7 +38,7 @@ export function endOf(date:VTimestampInput|null = null, unit:moment.unitOfTime.D
     .toDate()
 }
 
-function startOf(date:(VTimestampInput | null) = null, unit:moment.unitOfTime.DurationConstructor) {
+export function startOf(date:(VTimestampInput | null) = null, unit:moment.unitOfTime.DurationConstructor) {
   if (unit) {
     return moment(date)
       .startOf(unit)

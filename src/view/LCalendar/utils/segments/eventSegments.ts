@@ -1,7 +1,7 @@
 import { CalendarEvent, VTimestampInput } from '../calendar'
 import { endOfRange } from './helper'
-import { ILocalizer } from './localizer'
-import { IAccessors } from './accessors'
+import localizer, { ILocalizer } from './localizer'
+import { accessors, IAccessors } from './accessors'
 
 
 export function inRange(
@@ -14,6 +14,14 @@ export function inRange(
   }
   const range = { start, end, }
   return localizer.inEventRange({ event, range, })
+}
+
+export function eventsForRange(
+  events:CalendarEvent[], start:VTimestampInput, end:VTimestampInput
+):CalendarEvent[] {
+  return events.filter((event) => inRange(
+    event, start, end, accessors, localizer
+  ))
 }
 export function eventsForWeek(
   events:CalendarEvent[], start:VTimestampInput, end:VTimestampInput,
