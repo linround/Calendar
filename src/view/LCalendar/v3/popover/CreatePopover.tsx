@@ -17,7 +17,6 @@ export function CreatePopover() {
     setCreatePopoverRefV3,
     showCreatePopoverV3,
     setShowCreatePopoverV3,
-    dayScrollRef,
     updateEventList,
   } = useContext(MouseEventContext)
 
@@ -28,7 +27,7 @@ export function CreatePopover() {
   useLayoutEffect(() => {
     if (createPopoverRefV3 && eventRef.current) {
       const { left, top, } = calcPosition(
-        createPopoverRefV3, dayScrollRef as Element, eventRef.current
+        createPopoverRefV3, document.body, eventRef.current
       )
       // 这里无法在全局处理
       setLeft(Math.max(0, left))

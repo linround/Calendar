@@ -47,3 +47,9 @@ export function eventClassification(events:CalendarEvent[]):IEventClassification
   }
 }
 
+
+export function elementScrollIntoView(ele:Element) {
+  ele &&  ele.scrollIntoView({
+    behavior: 'smooth',
+  })
+}
