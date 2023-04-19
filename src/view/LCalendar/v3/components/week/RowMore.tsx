@@ -30,10 +30,10 @@ export function RowMore(props:IProps) {
       }}>
       <div
         className={style.rowMoreContent}>
+        +
         <span className={style.rowMoreNumber}>
-          ＋{count}
+          {count} 更多
         </span>
-        更多
       </div>
     </div>
   )
