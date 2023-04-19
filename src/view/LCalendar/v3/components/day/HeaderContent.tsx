@@ -69,6 +69,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
           ))}
         </div>
         <HeaderRow
+          setFold={setFold}
           fold={fold}
           slots={slots}
           levels={levels}

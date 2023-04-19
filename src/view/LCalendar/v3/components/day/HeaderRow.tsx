@@ -13,6 +13,7 @@ interface IProps {
   slots:number
   days:CalendarTimestamp[]
   fold:boolean
+  setFold:React.Dispatch<React.SetStateAction<boolean>>
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const {
@@ -20,6 +21,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     slots,
     extra,
     days,
+    setFold,
   } = props
   const className = classnames({
     [style.headerRows]: true,
@@ -41,6 +43,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
             days={days}/>))}
         {!!extra.length && (
           <HeaderRowExtra
+            setFold={setFold}
             slots={slots}
             segments={extra}
             days={days}
