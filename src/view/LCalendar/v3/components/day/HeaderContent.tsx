@@ -7,6 +7,7 @@ import {
 import { toTime } from '../../../utils/timesStamp'
 import { endOf, startOf } from '../../../utils/segments/localizer'
 import { HeaderRow } from './HeaderRow'
+import { HeaderIntervals } from './HeaderIntervals'
 
 interface IProps {
   intervalWidth: number
@@ -46,14 +47,14 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
 
 
   return (
-    <div className={style.headerContent} style={{ marginRight: 10, }}>
+    <div className={style.headerContent} >
+      <HeaderIntervals
+        intervalWidth={intervalWidth} />
       <div
-        className={style.headerInterVals}
-        style={{ width: intervalWidth, }} >
-        GMT +08
-      </div>
-      <div className={style.headerBody} >
-        <div className={style.headerDays}>
+        className={style.headerBody} >
+        <div
+          style={{ paddingRight: 10, }}
+          className={style.headerDays}>
           {days.map((day) => (
             <div className={style.headerItem} key={day.date}/>
           ))}
