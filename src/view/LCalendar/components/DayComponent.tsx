@@ -114,6 +114,7 @@ export default function (props: IDayProps)  {
   const classifiedEvents = useMemo(() => eventClassification(parsedEvents), [parsedEvents])
   return (
     <div className={dayStyle.dayContainer}>
+
       <V3DayHeaderComponent
         days={days}
         events={[
@@ -121,6 +122,7 @@ export default function (props: IDayProps)  {
           ...classifiedEvents.allDayEvents
         ]}
         intervalWidth={intervalWidth} />
+
       <div className={dayStyle.dayBody}>
         <div
           ref={dayScrollRef}

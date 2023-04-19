@@ -42,7 +42,12 @@ export default function () {
     times,
     parsedValue, } = useContext(BaseContext)
   const { events, } = useContext(EventContext)
-  const { type, value, setValue, setType, } = useContext(CalendarContext)
+  const {
+    type,
+    value,
+    setValue,
+    setType,
+  } = useContext(CalendarContext)
   const {  setMaxDays, } = useContext(IntervalsContext)
   const { setCreatePopoverRef, } = useContext(MouseEventContext)
 

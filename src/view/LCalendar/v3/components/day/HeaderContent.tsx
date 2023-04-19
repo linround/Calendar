@@ -10,7 +10,7 @@ import { HeaderRow } from './HeaderRow'
 
 interface IProps {
   intervalWidth: number
-  height:number
+  maxHeight:number
   days:CalendarTimestamp[]
   events:CalendarEventParsed[]
   maxRow:number
@@ -19,7 +19,7 @@ interface IProps {
 export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const {
     intervalWidth,
-    height,
+    maxHeight,
     days,
     events,
     maxRow,
@@ -41,19 +41,23 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   // 这里将创建日历部分提取到最上层
   const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
   const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
-  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(maxRow - 1, 1))
+  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(99 - 1, 1))
   const slots = days.length
 
 
   return (
     <div className={style.headerContent} style={{ marginRight: 10, }}>
-      <div className={style.headerInterVals} style={{ width: intervalWidth, height, }} >
-        全天
+      <div
+        className={style.headerInterVals}
+        style={{ width: intervalWidth, }} >
+        GMT +08
       </div>
-      <div className={style.headerDays}>
-        {days.map((day) => (
-          <div className={style.headerItem} key={day.date}/>
-        ))}
+      <div className={style.headerBody} >
+        <div className={style.headerDays}>
+          {days.map((day) => (
+            <div className={style.headerItem} key={day.date}/>
+          ))}
+        </div>
         <HeaderRow
           slots={slots}
           levels={levels}
