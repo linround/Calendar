@@ -59,7 +59,7 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
     } else {
       row.push(<RowMore
         key={key}
-        setFold={setFold}
+        onMore={setFold}
         slots={slots}
         segments={segments}
         slot={current}/>)

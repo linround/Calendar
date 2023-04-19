@@ -6,19 +6,19 @@ interface IProps {
   slots:number
   segments:ISegments[]
   slot:number
-  setFold:React.Dispatch<React.SetStateAction<boolean>>
+  onMore:React.Dispatch<React.SetStateAction<boolean>>
 }
 export function RowMore(props:IProps) {
   const {
     segments,
     slot,
     slots,
-    setFold,
+    onMore,
   } = props
   const width = ((1 / slots) * 100) + '%'
   const count = eventsInSlot(segments, slot)
   const onClick = () => {
-    setFold(true)
+    onMore(true)
   }
   return (
     <div
