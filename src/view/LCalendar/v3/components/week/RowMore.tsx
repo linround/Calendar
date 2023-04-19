@@ -6,7 +6,7 @@ interface IProps {
   slots:number
   segments:ISegments[]
   slot:number
-  onMore:()=>void
+  onMore?:()=>void
 }
 export function RowMore(props:IProps) {
   const {
