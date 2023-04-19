@@ -70,10 +70,9 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
             style={{ paddingRight: 10, }}
             className={style.headerDays}>
             {days.map((day) => (
-              <div className={style.headerItem} key={day.date}/>
+              <div className={style.headerItem} key={day.date} />
             ))}
           </div>
-
           <HeaderRow
             onMore={onMore}
             fold={fold}
@@ -83,7 +82,6 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
             extra={extra} />
         </div>
       </HeaderBodyWrapper>
-
     </div>
   )
 }
