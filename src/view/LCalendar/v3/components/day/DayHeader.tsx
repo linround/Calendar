@@ -18,7 +18,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
   const [
     fold,
     setFold
-  ] = useState<boolean>(true)
+  ] = useState<boolean>(false)
   const onMore = () => {
     setFold(!fold)
   }

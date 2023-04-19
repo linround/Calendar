@@ -23,7 +23,6 @@ export default function (props: IDayProps)  {
     firstTime,
   } = props
   const {
-    parsedEvents,
     events,
     createdEvent,
     draggedEvent,
