@@ -33,7 +33,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
           </div>))}
       </div>
       <HeaderContent
-        height={100}
+        maxHeight={100}
         days={days}
         events={events}
         maxRow={3}

@@ -2,8 +2,13 @@
 .header {
   &Days{
     display: flex;
-    flex: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  &Body{
     position: relative;
+    flex: 1;
   }
   &Content{
     display: flex;
@@ -11,9 +16,9 @@
   &InterVals{
     border-bottom: 1px solid @borderColor;
     border-right: 1px solid @borderColor;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: bottom;
   }
   &Item{
     flex: 1;

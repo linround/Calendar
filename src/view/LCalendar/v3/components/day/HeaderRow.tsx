@@ -14,7 +14,12 @@ interface IProps {
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const { levels, slots, extra, days, } = props
   return (
-    <div className={style.headerRows}>
+    <div
+      style={{
+        maxHeight: 180,
+        overflowY: 'auto',
+      }}
+      className={style.headerRows}>
       <div>
         {levels.map((segs, index) => (
           <HeaderEventRow
