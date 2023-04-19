@@ -16,6 +16,8 @@ interface IProps {
   events:CalendarEventParsed[]
   maxRow:number
   minRow:number
+  fold:boolean
+  setFold:React.Dispatch<React.SetStateAction<boolean>>
 }
 export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -24,6 +26,8 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     days,
     events,
     maxRow,
+    fold,
+    setFold,
   } = props
   const inputEvents = events.map((e) => e.input)
   const startTime = startOf(toTime(days[0]), 'day')
@@ -42,13 +46,18 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   // 这里将创建日历部分提取到最上层
   const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
   const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
-  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments], Math.max(99 - 1, 1))
+  const { levels, extra, } = eventLevels([
+    ...createSegments,
+    ...normalSegments
+  ], Math.max((fold ? Infinity : maxRow) - 1, 1))
   const slots = days.length
 
 
   return (
     <div className={style.headerContent} >
       <HeaderIntervals
+        fold={fold}
+        setFold={setFold}
         intervalWidth={intervalWidth} />
       <div
         className={style.headerBody} >
@@ -60,6 +69,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
           ))}
         </div>
         <HeaderRow
+          fold={fold}
           slots={slots}
           levels={levels}
           days={days}

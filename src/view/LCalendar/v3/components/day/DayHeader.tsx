@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './style/dayHeader.module.less'
 import { CalendarEventParsed, CalendarTimestamp } from '../../../utils/calendar'
 import { weekdayFormatter } from '../../../utils/timesStamp'
@@ -16,6 +16,10 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
     events,
     days,
   } = props
+  const [
+    fold,
+    setFold
+  ] = useState<boolean>(true)
   return (
     <>
       <div className={style.dayHeader} style={{ marginRight: 10, }}>
@@ -33,6 +37,8 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
           </div>))}
       </div>
       <HeaderContent
+        fold={fold}
+        setFold={setFold}
         maxHeight={100}
         days={days}
         events={events}

@@ -12,9 +12,15 @@ interface IProps {
   extra:ISegments[]
   slots:number
   days:CalendarTimestamp[]
+  fold:boolean
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
-  const { levels, slots, extra, days, } = props
+  const {
+    levels,
+    slots,
+    extra,
+    days,
+  } = props
   const className = classnames({
     [style.headerRows]: true,
     [dayStyle.scrollContainer]: true,
@@ -23,7 +29,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     <div
       style={{
         maxHeight: 240,
-        overflowY: 'auto',
+        overflowY: 'scroll',
       }}
       className={className}>
       <div>
