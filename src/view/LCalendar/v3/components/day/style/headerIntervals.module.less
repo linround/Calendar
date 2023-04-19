@@ -4,11 +4,13 @@
     border-bottom: 1px solid @borderColor;
     border-right: 1px solid @borderColor;
     font-size: 12px;
+    color: #70757a;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    padding: 4px 0;
     &Icon {
       display: flex;
       align-items: center;
@@ -16,6 +18,13 @@
       border-radius: 50%;
       padding: 5px;
       transition: background-color .2s ease-in-out;
+      border: 1px solid @IconHoverBgColor;
+      &:active{
+        background-color: @IconActiveColor;
+      }
+      &:focus{
+        background-color: @IconHoverBgColor;
+      }
       &:hover{
         background-color: @IconHoverBgColor;
       }
