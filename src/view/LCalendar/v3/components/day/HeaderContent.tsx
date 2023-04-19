@@ -63,8 +63,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
       <HeaderBodyWrapper
         container={container.current as HTMLDivElement}
         days={days}>
-        <div
-          className={style.headerBody} >
+        <div className={style.headerBody} >
           <div
             ref={container}
             style={{ paddingRight: 10, }}

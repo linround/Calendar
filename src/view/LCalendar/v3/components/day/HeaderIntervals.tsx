@@ -17,7 +17,7 @@ export function HeaderIntervals(props:React.PropsWithChildren<IProps>) {
       className={style.headerIntervals}
       onClick={handleChangeOpen}
       style={{ width: intervalWidth, }} >
-      <span>GMT +08</span>
+      <span>GMT+08</span>
       <span className={style.headerIntervalsIcon}>
         {fold ? <SvgIcon iconName='side-chevron-up'/> :
           <SvgIcon iconName='side-chevron-down' />
