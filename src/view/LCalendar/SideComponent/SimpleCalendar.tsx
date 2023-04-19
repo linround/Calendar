@@ -1,20 +1,14 @@
-import React, {
-  useMemo,
-  useContext
-} from 'react'
+import React, { useContext, useMemo } from 'react'
+import { BaseContext, WeeksContext } from '../props/propsContext'
 import {
-  BaseContext,
-  WeeksContext
-} from '../props/propsContext'
-import {
-  getEndOfWeek,
   createDayList,
   getEndOfMonth,
-  getStartOfWeek,
-  parseTimeStamp,
-  timestampToDate,
+  getEndOfWeek,
   getStartOfMonth,
-  getWeekdaySkips
+  getStartOfWeek,
+  getWeekdaySkips,
+  parseTimeStamp,
+  timestampToDate
 } from '../utils/timesStamp'
 import moment from 'moment/moment'
 import { IMonth } from '../components/type'
@@ -70,9 +64,7 @@ export function SimpleCalendar() {
     <>
 
       <div className={simpleStyles.container}>
-        <CommonMonthHeader
-          parsedStart={parsedStart}
-          parsedEnd={parsedEnd} />
+        <CommonMonthHeader />
         <SimpleMonthBody month={month} />
       </div>
     </>
