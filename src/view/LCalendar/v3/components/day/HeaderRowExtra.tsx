@@ -15,6 +15,7 @@ interface IProps {
   slots:number
   days:CalendarTimestamp[]
   onMore:()=>void
+  container:HTMLDivElement
 }
 export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
   const {
@@ -22,6 +23,7 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
     slots,
     days,
     onMore,
+    container,
   } = props
   let current = 1
   let lastEnd = 1
@@ -49,6 +51,7 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
     }
     if (canRenderSlotEvent) {
       row.push(<HeaderRowEvent
+        container={container}
         key={key}
         slots={slots}
         event={event}

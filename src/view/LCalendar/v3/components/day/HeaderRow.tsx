@@ -47,6 +47,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
             days={days}/>))}
         {!!extra.length && (
           <HeaderRowExtra
+            container={container}
             onMore={onMore}
             slots={slots}
             segments={extra}
