@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import style from './style/dayHeader.module.less'
 import { CalendarEventParsed, CalendarTimestamp } from '../../../utils/calendar'
-import { weekdayFormatter } from '../../../utils/timesStamp'
-import Button from '@mui/material/Button'
 import { HeaderContent } from './HeaderContent'
+import { HeaderDate } from './HeaderDate'
 
 interface IProps {
   intervalWidth:number
@@ -24,17 +23,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
     <>
       <div className={style.dayHeader} style={{ marginRight: 10, }}>
         <div className={style.dayHeaderInterVals} style={{ width: intervalWidth, }} />
-        {days.map((day) => (
-          <div className={style.dayHeaderItem} key={day.date}>
-            <div className={style.dayHeaderItemLabel}>
-              {weekdayFormatter(day)}
-            </div>
-            <div>
-              <Button variant='contained' className={style.dayHeaderItemValue}>
-                {day.day}
-              </Button>
-            </div>
-          </div>))}
+        <HeaderDate days={days} />
       </div>
       <HeaderContent
         fold={fold}
