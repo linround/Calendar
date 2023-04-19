@@ -6,6 +6,7 @@ import { CalendarTimestamp } from '../../../utils/calendar'
 import dayStyle from '../../../components/day.module.less'
 import classnames from 'classnames'
 import style from './style/headerRow.module.less'
+import { HeaderBodyWrapper } from './HeaderBodyWrapper'
 
 interface IProps {
   levels:ISegments[][]
@@ -13,7 +14,7 @@ interface IProps {
   slots:number
   days:CalendarTimestamp[]
   fold:boolean
-  setFold:React.Dispatch<React.SetStateAction<boolean>>
+  omMore:()=>void
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const {
@@ -21,7 +22,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     slots,
     extra,
     days,
-    setFold,
+    omMore,
   } = props
   const className = classnames({
     [style.headerRows]: true,
@@ -34,22 +35,24 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
         overflowY: 'scroll',
       }}
       className={className}>
-      <div>
-        {levels.map((segs, index) => (
-          <HeaderEventRow
-            key={index}
-            slots={slots}
-            segments={segs}
-            days={days}/>))}
-        {!!extra.length && (
-          <HeaderRowExtra
-            setFold={setFold}
-            slots={slots}
-            segments={extra}
-            days={days}
-          />
-        )}
-      </div>
+      <HeaderBodyWrapper>
+        <div>
+          {levels.map((segs, index) => (
+            <HeaderEventRow
+              key={index}
+              slots={slots}
+              segments={segs}
+              days={days}/>))}
+          {!!extra.length && (
+            <HeaderRowExtra
+              omMore={omMore}
+              slots={slots}
+              segments={extra}
+              days={days}
+            />
+          )}
+        </div>
+      </HeaderBodyWrapper>
     </div>
   )
 }

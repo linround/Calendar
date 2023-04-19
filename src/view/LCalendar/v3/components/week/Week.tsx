@@ -71,7 +71,6 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
       <div className={style.weekHead}>
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
-
       <EventRows
         month={month}
         container={container}

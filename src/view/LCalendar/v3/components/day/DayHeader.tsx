@@ -19,6 +19,9 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
     fold,
     setFold
   ] = useState<boolean>(true)
+  const omMore = () => {
+    setFold(!fold)
+  }
   return (
     <>
       <div className={style.dayHeader} style={{ marginRight: 10, }}>
@@ -27,7 +30,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
       </div>
       <HeaderContent
         fold={fold}
-        setFold={setFold}
+        omMore={omMore}
         maxHeight={100}
         days={days}
         events={events}

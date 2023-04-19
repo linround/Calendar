@@ -17,7 +17,7 @@ interface IProps {
   maxRow:number
   minRow:number
   fold:boolean
-  setFold:React.Dispatch<React.SetStateAction<boolean>>
+  omMore:()=>void
 }
 export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -27,7 +27,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     events,
     maxRow,
     fold,
-    setFold,
+    omMore,
   } = props
   const inputEvents = events.map((e) => e.input)
   const startTime = startOf(toTime(days[0]), 'day')
@@ -57,7 +57,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     <div className={style.headerContent} >
       <HeaderIntervals
         fold={fold}
-        setFold={setFold}
+        omMore={omMore}
         intervalWidth={intervalWidth} />
       <div
         className={style.headerBody} >
@@ -69,7 +69,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
           ))}
         </div>
         <HeaderRow
-          setFold={setFold}
+          omMore={omMore}
           fold={fold}
           slots={slots}
           levels={levels}
