@@ -49,7 +49,7 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
     const timPoint = toTime(timestamp)
     const { startTime, endTime, } = adjustTime(initTime, timPoint)
     const event = createTimeEvent(
-      startTime, endTime, group
+      startTime, endTime, group, true
     )
     event.isCreate = true
     setShowCreatePopoverV3(false)
