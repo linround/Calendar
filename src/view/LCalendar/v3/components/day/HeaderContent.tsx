@@ -73,6 +73,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
             ))}
           </div>
           <HeaderRow
+            container={container.current as HTMLDivElement}
             onMore={onMore}
             fold={fold}
             slots={slots}

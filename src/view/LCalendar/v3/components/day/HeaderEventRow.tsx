@@ -10,9 +10,15 @@ interface IProps {
   segments:ISegments[]
   slots:number
   days:CalendarTimestamp[]
+  container:HTMLDivElement
 }
 export function HeaderEventRow(props:React.PropsWithChildren<IProps>) {
-  const { segments, slots, days, } = props
+  const {
+    segments,
+    slots,
+    days,
+    container,
+  } = props
   let lastEnd = 1
   return (
     <div
@@ -28,6 +34,7 @@ export function HeaderEventRow(props:React.PropsWithChildren<IProps>) {
             slots={slots}
             span={span}
             event={event}
+            container={container}
             days={days} />
         </Fragment>
         )

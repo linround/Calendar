@@ -14,6 +14,7 @@ interface IProps {
   days:CalendarTimestamp[]
   fold:boolean
   onMore:()=>void
+  container:HTMLDivElement
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const {
@@ -22,6 +23,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     extra,
     days,
     onMore,
+    container,
   } = props
   const className = classnames({
     [style.headerRows]: true,
@@ -41,6 +43,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
             key={index}
             slots={slots}
             segments={segs}
+            container={container}
             days={days}/>))}
         {!!extra.length && (
           <HeaderRowExtra
