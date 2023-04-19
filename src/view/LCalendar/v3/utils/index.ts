@@ -1,4 +1,4 @@
-import { CalendarEvent, CalendarEventParsed } from '../../utils/calendar'
+import { CalendarEvent } from '../../utils/calendar'
 import localizer from '../../utils/segments/localizer'
 
 export type IEventAction = 'normal'|'created'|'dragged'|'create'
@@ -8,7 +8,7 @@ export const CREATED_ACTION = 'created' // 点击的是新建的事件
 export const DRAGGED_ACTION = 'dragged'// 被创建的拖拽事件的副本
 export const NORMAL_ACTION = 'normal' // 普通的已经创建的事件
 
-export function filterEvents(events:(CalendarEvent) []):CalendarEvent[] {
+export function filterEvents(events:CalendarEvent []):CalendarEvent[] {
   return events.filter((e) => !!e)
 }
 export function adjustTime(aTime:number, bTime:number) {
@@ -22,19 +22,19 @@ export function adjustTime(aTime:number, bTime:number) {
 
 
 export interface IEventClassification {
-  crossDaysEvents:CalendarEventParsed[] // 跨天事件
-  allDayEvents:CalendarEventParsed[] // 全天事件
-  normalEvents:CalendarEventParsed[] // 普通的事件
+  crossDaysEvents:CalendarEvent[] // 跨天事件
+  allDayEvents:CalendarEvent[] // 全天事件
+  normalEvents:CalendarEvent[] // 普通的事件
 }
 
-export function eventClassification(events:CalendarEventParsed[]):IEventClassification {
-  const crossDaysEvents:CalendarEventParsed[] = []
-  const allDayEvents:CalendarEventParsed[] = []
-  const normalEvents:CalendarEventParsed[] = []
+export function eventClassification(events:CalendarEvent[]):IEventClassification {
+  const crossDaysEvents:CalendarEvent[] = []
+  const allDayEvents:CalendarEvent[] = []
+  const normalEvents:CalendarEvent[] = []
   events.map((event) => {
     if (event.allDay) {
       allDayEvents.push(event)
-    } else if (event.startIdentifier !== event.endIdentifier) {
+    } else if (!localizer.isSameDate(event.start, event.end)) {
       crossDaysEvents.push(event)
     } else {
       normalEvents.push(event)

@@ -5,12 +5,12 @@ import React from 'react'
 interface IProps {
   intervalWidth:number
   fold:boolean
-  omMore:()=>void
+  onMore:()=>void
 }
 export function HeaderIntervals(props:React.PropsWithChildren<IProps>) {
-  const { intervalWidth, fold, omMore, } = props
+  const { intervalWidth, fold, onMore, } = props
   const handleChangeOpen = () => {
-    omMore()
+    onMore()
   }
   return (
     <div

@@ -1,19 +1,20 @@
 import React, { useRef } from 'react'
 import {
-  CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
+  CalendarDayBodySlotScope, CalendarEvent, CalendarTimestamp
 } from '../../../utils/calendar'
 import classnames from 'classnames'
 import { EventComponent } from './Event'
 import style from './style/dayColumn.module.less'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { V3DayColumnWrapperComponent } from './DayColumnWrapper'
+import { parseEvent } from '../../../utils/events'
 
 interface IProps {
   intervals:CalendarTimestamp[][]
   intervalWidth:number
   intervalHeight:number
   days:CalendarTimestamp[]
-  events:CalendarEventParsed[]
+  events:CalendarEvent[]
   getSlotScope: (timestamp: CalendarTimestamp)=> CalendarDayBodySlotScope
   scrollContainer: HTMLDivElement
   firstMinute:number
@@ -28,7 +29,13 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
     getSlotScope,
     scrollContainer,
   } = props
-
+  const parsedEvents = events.map((input, index) => parseEvent(
+    input,
+    index,
+    DEFAULT_EVENT.eventStart,
+    DEFAULT_EVENT.eventEnd,
+    !!input[DEFAULT_EVENT.eventTimed]
+  ))
   const dayInterval = intervals[0] || []
 
   const daysContainer = useRef<HTMLDivElement|null>(null)
@@ -58,7 +65,7 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
                 scrollContainer={scrollContainer}
                 daysContainer={daysContainer.current as HTMLDivElement}
                 days={days}
-                events={events}
+                events={parsedEvents}
                 day={day}
                 getSlotScope={getSlotScope}  />
             </div>

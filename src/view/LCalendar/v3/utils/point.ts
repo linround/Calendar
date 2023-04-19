@@ -99,7 +99,23 @@ export function getDaySlotFromPoint(
 
 
 
+export function getDayTimeFromDaysPoint(
+  daysRect:DOMRect,
+  days:CalendarTimestamp[],
+  data:ICoordinates
+):CalendarTimestamp {
+  const point = correctCoordinates(
+    daysRect, daysRect, data
+  )
+  const column = days.length
+  const daysWidth = daysRect.right - daysRect.left
+  const cellWidth = (daysWidth / column)
+  const x = Math.floor((point.clientX - daysRect.left) / cellWidth)
+  return days[x]
+}
 
+
+// 从坐标点得到月视图中的日期
 export function getDayTimeFromPoint(
   monthRect:DOMRect,
   month:IMonth,

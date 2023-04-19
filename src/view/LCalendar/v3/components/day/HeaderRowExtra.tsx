@@ -14,14 +14,14 @@ interface IProps {
   segments:ISegments[]
   slots:number
   days:CalendarTimestamp[]
-  omMore:()=>void
+  onMore:()=>void
 }
 export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
   const {
     segments,
     slots,
     days,
-    omMore,
+    onMore,
   } = props
   let current = 1
   let lastEnd = 1
@@ -59,7 +59,7 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
     } else {
       row.push(<RowMore
         key={key}
-        onMore={omMore}
+        onMore={onMore}
         slots={slots}
         segments={segments}
         slot={current}/>)

@@ -9,12 +9,14 @@ import {
 import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
-import { CalendarDayBodySlotScope, CalendarTimestamp } from '../utils/calendar'
+import {
+  CalendarDayBodySlotScope, CalendarEvent, CalendarTimestamp
+} from '../utils/calendar'
 import {
   BaseContext, EventContext, IntervalsContext, MouseEventContext
 } from '../props/propsContext'
 import classnames from 'classnames'
-import { eventClassification } from '../v3/utils'
+import { eventClassification, filterEvents } from '../v3/utils'
 
 export default function (props: IDayProps)  {
   const {
@@ -22,6 +24,9 @@ export default function (props: IDayProps)  {
   } = props
   const {
     parsedEvents,
+    events,
+    createdEvent,
+    draggedEvent,
   } = useContext(EventContext)
   const {
     times,
@@ -111,7 +116,8 @@ export default function (props: IDayProps)  {
   })
 
 
-  const classifiedEvents = useMemo(() => eventClassification(parsedEvents), [parsedEvents])
+  const classifiedEvents = useMemo(() => eventClassification(filterEvents([...events, createdEvent, draggedEvent] as CalendarEvent[])),
+    [events, createdEvent, draggedEvent])
   return (
     <div className={dayStyle.dayContainer}>
 

@@ -1,10 +1,17 @@
 import {
   CalendarDayBodySlotScope,
-  CalendarEvent, CalendarEventParsed, CalendarTimestamp, VTimestampInput
+  CalendarEvent,
+  CalendarEventParsed,
+  CalendarTimestamp,
+  VTimestampInput
 } from './calendar'
 import {
-  isTimedLess, parseTimeStamp, updateHasTime,
-  getDayIdentifier, getTimestampIdentifier, MINUTES_IN_DAY
+  getDayIdentifier,
+  getTimestampIdentifier,
+  isTimedLess,
+  MINUTES_IN_DAY,
+  parseTimeStamp,
+  updateHasTime
 } from './timesStamp'
 import { CalendarEventVisual } from './modes/common'
 import React from 'react'
@@ -44,7 +51,7 @@ export function parseEvent(
   const endOffset: number = start.hasTime ? 0 : 2359
   const endTimestampIdentifier: number = getTimestampIdentifier(end) + endOffset
 
-  const allDay = !start.hasTime
+  const allDay = input.allDay
   return {
     input,
     start,
@@ -139,7 +146,10 @@ export function genTimedEvents({ event, left, width, }:CalendarEventVisual, day:
 
 
 export function createTimeEvent(
-  start:VTimestampInput, end:VTimestampInput, group:calendarGroup
+  start:VTimestampInput,
+  end:VTimestampInput,
+  group:calendarGroup,
+  allDay?:boolean
 ):CalendarEvent {
   return {
     eventName: '',
@@ -149,7 +159,7 @@ export function createTimeEvent(
     start,
     end,
     eventTimed: true,
-    allDay: false,
+    allDay: allDay,
     isCreate: true,
     isDragging: true,
     userName: '作者',

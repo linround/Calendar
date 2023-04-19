@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import style from './style/dayHeader.module.less'
-import { CalendarEventParsed, CalendarTimestamp } from '../../../utils/calendar'
+import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { HeaderContent } from './HeaderContent'
 import { HeaderDate } from './HeaderDate'
 
 interface IProps {
   intervalWidth:number
   days: CalendarTimestamp[]
-  events:CalendarEventParsed[]
+  events:CalendarEvent[]
 }
 export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -19,7 +19,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
     fold,
     setFold
   ] = useState<boolean>(true)
-  const omMore = () => {
+  const onMore = () => {
     setFold(!fold)
   }
   return (
@@ -30,7 +30,7 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
       </div>
       <HeaderContent
         fold={fold}
-        omMore={omMore}
+        onMore={onMore}
         maxHeight={100}
         days={days}
         events={events}

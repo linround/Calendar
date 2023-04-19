@@ -1,6 +1,6 @@
 import style from './style/headerContent.module.less'
 import React from 'react'
-import { CalendarEventParsed, CalendarTimestamp } from '../../../utils/calendar'
+import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import {
   eventLevels, eventSegments, eventsForRange, sortEvents
 } from '../../../utils/segments/eventSegments'
@@ -13,11 +13,11 @@ interface IProps {
   intervalWidth: number
   maxHeight:number
   days:CalendarTimestamp[]
-  events:CalendarEventParsed[]
+  events:CalendarEvent[]
   maxRow:number
   minRow:number
   fold:boolean
-  omMore:()=>void
+  onMore:()=>void
 }
 export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const {
@@ -27,13 +27,12 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     events,
     maxRow,
     fold,
-    omMore,
+    onMore,
   } = props
-  const inputEvents = events.map((e) => e.input)
   const startTime = startOf(toTime(days[0]), 'day')
   const endTime = endOf(toTime(days[days.length - 1]), 'day')
   const rangeEvent = eventsForRange(
-    inputEvents, startTime, endTime
+    events, startTime, endTime
   )
   rangeEvent.sort((a, b) => sortEvents(a, b))
 
@@ -57,7 +56,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
     <div className={style.headerContent} >
       <HeaderIntervals
         fold={fold}
-        omMore={omMore}
+        onMore={onMore}
         intervalWidth={intervalWidth} />
       <div
         className={style.headerBody} >
@@ -69,7 +68,7 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
           ))}
         </div>
         <HeaderRow
-          omMore={omMore}
+          onMore={onMore}
           fold={fold}
           slots={slots}
           levels={levels}

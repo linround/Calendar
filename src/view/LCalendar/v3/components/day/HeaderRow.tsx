@@ -1,5 +1,5 @@
 import { ISegments } from '../../../utils/segments/eventSegments'
-import React from 'react'
+import React, { useRef } from 'react'
 import { HeaderEventRow } from './HeaderEventRow'
 import { HeaderRowExtra } from './HeaderRowExtra'
 import { CalendarTimestamp } from '../../../utils/calendar'
@@ -14,7 +14,7 @@ interface IProps {
   slots:number
   days:CalendarTimestamp[]
   fold:boolean
-  omMore:()=>void
+  onMore:()=>void
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const {
@@ -22,20 +22,24 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     slots,
     extra,
     days,
-    omMore,
+    onMore,
   } = props
   const className = classnames({
     [style.headerRows]: true,
     [dayStyle.scrollContainer]: true,
   })
+  const container = useRef<HTMLDivElement>(null)
   return (
     <div
       style={{
         maxHeight: 240,
         overflowY: 'scroll',
       }}
+      ref={container}
       className={className}>
-      <HeaderBodyWrapper>
+      <HeaderBodyWrapper
+        days={days}
+        container={container.current as HTMLDivElement}>
         <div>
           {levels.map((segs, index) => (
             <HeaderEventRow
@@ -45,7 +49,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
               days={days}/>))}
           {!!extra.length && (
             <HeaderRowExtra
-              omMore={omMore}
+              onMore={onMore}
               slots={slots}
               segments={extra}
               days={days}
