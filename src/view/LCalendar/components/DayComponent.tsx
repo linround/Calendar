@@ -117,11 +117,10 @@ export default function (props: IDayProps)  {
 
       <V3DayHeaderComponent
         days={days}
+        intervalWidth={intervalWidth}
         events={[
           ...classifiedEvents.crossDaysEvents,
-          ...classifiedEvents.allDayEvents
-        ]}
-        intervalWidth={intervalWidth} />
+          ...classifiedEvents.allDayEvents]} />
 
       <div className={dayStyle.dayBody}>
         <div

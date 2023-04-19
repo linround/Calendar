@@ -1,9 +1,11 @@
 import { ISegments } from '../../../utils/segments/eventSegments'
 import React from 'react'
-import style from './style/headerRow.module.less'
 import { HeaderEventRow } from './HeaderEventRow'
 import { HeaderRowExtra } from './HeaderRowExtra'
 import { CalendarTimestamp } from '../../../utils/calendar'
+import dayStyle from '../../../components/day.module.less'
+import classnames from 'classnames'
+import style from './style/headerRow.module.less'
 
 interface IProps {
   levels:ISegments[][]
@@ -13,13 +15,17 @@ interface IProps {
 }
 export function HeaderRow(props:React.PropsWithChildren<IProps>) {
   const { levels, slots, extra, days, } = props
+  const className = classnames({
+    [style.headerRows]: true,
+    [dayStyle.scrollContainer]: true,
+  })
   return (
     <div
       style={{
-        maxHeight: 180,
+        maxHeight: 240,
         overflowY: 'auto',
       }}
-      className={style.headerRows}>
+      className={className}>
       <div>
         {levels.map((segs, index) => (
           <HeaderEventRow
