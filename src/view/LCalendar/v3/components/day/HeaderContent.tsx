@@ -1,5 +1,5 @@
 import style from './style/headerContent.module.less'
-import React from 'react'
+import React, { useRef } from 'react'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import {
   eventLevels, eventSegments, eventsForRange, sortEvents
@@ -8,6 +8,7 @@ import { toTime } from '../../../utils/timesStamp'
 import { endOf, startOf } from '../../../utils/segments/localizer'
 import { HeaderRow } from './HeaderRow'
 import { HeaderIntervals } from './HeaderIntervals'
+import { HeaderBodyWrapper } from './HeaderBodyWrapper'
 
 interface IProps {
   intervalWidth: number
@@ -52,29 +53,36 @@ export function HeaderContent(props:React.PropsWithChildren<IProps>) {
   const slots = days.length
 
 
+  const container = useRef<HTMLDivElement>(null)
   return (
     <div className={style.headerContent} >
       <HeaderIntervals
         fold={fold}
         onMore={onMore}
         intervalWidth={intervalWidth} />
-      <div
-        className={style.headerBody} >
+      <HeaderBodyWrapper
+        container={container.current as HTMLDivElement}
+        days={days}>
         <div
-          style={{ paddingRight: 10, }}
-          className={style.headerDays}>
-          {days.map((day) => (
-            <div className={style.headerItem} key={day.date}/>
-          ))}
+          className={style.headerBody} >
+          <div
+            ref={container}
+            style={{ paddingRight: 10, }}
+            className={style.headerDays}>
+            {days.map((day) => (
+              <div className={style.headerItem} key={day.date}/>
+            ))}
+          </div>
+
+          <HeaderRow
+            onMore={onMore}
+            fold={fold}
+            slots={slots}
+            levels={levels}
+            days={days}
+            extra={extra} />
         </div>
-        <HeaderRow
-          onMore={onMore}
-          fold={fold}
-          slots={slots}
-          levels={levels}
-          days={days}
-          extra={extra} />
-      </div>
+      </HeaderBodyWrapper>
 
     </div>
   )
