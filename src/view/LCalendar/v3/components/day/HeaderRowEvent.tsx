@@ -2,7 +2,8 @@ import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import React from 'react'
 import { NO_NAME_EVENT_VALUE } from '../../../utils/time'
 import style from '../week/style/rowEvent.module.less'
-import { HeaderRowEventWrapper } from './HeaderRowEventWrapper'
+import { CommonRowEventWrapper } from '../common/CommonRowEventWrapper'
+import { getDayTimeFromDaysPoint } from '../../utils/point'
 
 interface IProps {
   slots:number
@@ -22,9 +23,10 @@ export function HeaderRowEvent(props:React.PropsWithChildren<IProps>) {
   const width = ((Math.abs(span) / slots) * 100) + '%'
   const bgColor = event.eventColor
   return (
-    <HeaderRowEventWrapper
+    <CommonRowEventWrapper
       event={event}
-      days={days}
+      dates={days}
+      getDateFromPoint={getDayTimeFromDaysPoint}
       container={container}>
       <div
         className={style.rowEvent}
@@ -35,6 +37,6 @@ export function HeaderRowEvent(props:React.PropsWithChildren<IProps>) {
         }}>
         {event.eventName || NO_NAME_EVENT_VALUE}
       </div>
-    </HeaderRowEventWrapper>
+    </CommonRowEventWrapper>
   )
 }

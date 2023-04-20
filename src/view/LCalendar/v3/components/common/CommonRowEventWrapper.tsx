@@ -1,27 +1,32 @@
+import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import React, {
   createRef, ReactElement, useContext, useLayoutEffect, useRef, useState
 } from 'react'
+import { EventContext, MouseEventContext } from '../../../props/propsContext'
 import { Selector } from '../../utils/selector'
 import { ICoordinates } from '../../../v2/utils/selection'
-import { EventContext, MouseEventContext } from '../../../props/propsContext'
-import { CalendarEvent } from '../../../utils/calendar'
 import { mousedownController } from '../../utils/mouseDown'
 import { NORMAL_ACTION } from '../../utils'
-import { IMonth } from '../../../components/type'
-import { getDayTimeFromPoint } from '../../utils/point'
 import { toTime } from '../../../utils/timesStamp'
-import classnames from 'classnames'
-import style from '../day/style/eventWrapper.module.less'
 import { updateEvent } from '../../../../../api'
 import { SUCCESS_CODE } from '../../../../../request'
+import classnames from 'classnames'
+import style from '../day/style/eventWrapper.module.less'
 
 interface IProps {
   event:CalendarEvent
   container:HTMLDivElement
-  month:IMonth
+  dates:any[]
+  getDateFromPoint:(...arg:any[])=>CalendarTimestamp
 }
-export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
-  const { children, event, container, month, } = props
+export function CommonRowEventWrapper(props:React.PropsWithChildren<IProps>) {
+  const {
+    event,
+    dates,
+    container,
+    children,
+    getDateFromPoint,
+  } = props
   const isCreate = event.isCreate
   const ref = createRef<HTMLDivElement>()
   const normalRef = useRef<Element|null>(null)
@@ -37,11 +42,7 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     setDraggedEvent,
     setCreatedEvent,
   } = useContext(EventContext)
-  useLayoutEffect(() => {
-    if (ref.current) {
-      setCreatePopoverRefV3(ref.current)
-    }
-  }, [ref])
+
   function hideCreate() {
     setShowCreatePopoverV3(false)
   }
@@ -57,30 +58,31 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
   }
 
 
-  const [moving, setMoving] = useState(false)
-  const containerRect = container?.getBoundingClientRect()
-  const selector = new Selector()
   let initTime:number
   let isClick:boolean
   let draggedEvent:CalendarEvent
+  const [moving, setMoving] = useState(false)
+  const containerRect = container?.getBoundingClientRect()
+  const selector = new Selector()
 
-  selector.on('beforeSelect', (data:ICoordinates) => {
+  selector.on('beforeSelect', (coordinates:ICoordinates) => {
     mousedownController.setState(NORMAL_ACTION)
     !isCreate && clearCreated()
-    const timestamp = getDayTimeFromPoint(
-      containerRect, month, data
+    const timestamp = getDateFromPoint(
+      containerRect, dates, coordinates
     )
     draggedEvent = {
       ...event,
     }
-
     initTime = toTime(timestamp)
     isClick = true
+
+    //  false表示不阻止添加mousemove 和mouseup相关事件
     return false
   })
-  selector.on('selecting', (data:ICoordinates) => {
-    const timestamp = getDayTimeFromPoint(
-      containerRect, month, data
+  selector.on('selecting', (coordinates:ICoordinates) => {
+    const timestamp = getDateFromPoint(
+      containerRect, dates, coordinates
     )
     const time = toTime(timestamp)
     const duration = event.end - event.start
@@ -94,13 +96,11 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     }
     isClick = false
     setMoving(true)
-    if (!isCreate) {
-      clearNormal()
-    }
+    if (!isCreate) clearNormal()
     hideCreate()
     setDraggedEvent(draggedEvent)
   })
-  selector.on('select',  async (data:ICoordinates) => {
+  selector.on('select', async (coordinates:ICoordinates) => {
     if (!isCreate) {
       if (isClick) {
         setNormalEvent(event)
@@ -121,14 +121,24 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
     }
     setMoving(false)
     mousedownController.clearState()
+
+
   })
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      setCreatePopoverRefV3(ref.current)
+    }
+  }, [ref])
+
+
   const className = classnames({
     [(props.children as ReactElement)?.props.className]: true,
     [style.moving]: moving,
   })
   return React.cloneElement(children as ReactElement, {
     ref: isCreate ? ref : normalRef,
-    className: className,
+    className,
     onMouseDown(e:React.MouseEvent) {
       selector.handleInitialEvent(e)
     },
