@@ -7,10 +7,8 @@ import {
   getStartOfMonth,
   getStartOfWeek,
   getWeekdaySkips,
-  parseTimeStamp,
-  timestampToDate
+  parseTimeStamp
 } from '../utils/timesStamp'
-import moment from 'moment/moment'
 import { IMonth } from '../components/type'
 import { DEFAULT_WEEK_DAYS } from '../utils/time'
 import { SimpleMonthBody } from './SimpleMonthBody'
@@ -50,12 +48,7 @@ export function SimpleCalendar() {
     const weekDays = DEFAULT_WEEK_DAYS.length
     for (let i = 0; i < days.length;i += weekDays) {
       const week = days.slice(i, i + weekDays)
-      weeks.push(week.map((day) => ({
-        value: moment(timestampToDate(day))
-          .startOf('day')
-          .valueOf(),
-        day,
-      })))
+      weeks.push(week)
     }
     return weeks
   }, [days])

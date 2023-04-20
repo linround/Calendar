@@ -23,13 +23,13 @@ export function SimpleMonthBody(props:React.PropsWithChildren<IProps>) {
             {week.map((day, dayIndex) => (
               <div
                 key={dayIndex}
-                onClick={() => setValue(timestampToDate(day.day))}
+                onClick={() => setValue(timestampToDate(day))}
                 className={classnames({
                   [simpleStyles.containerDay]: true,
                   [simpleStyles.containerDayNormal]: !isActiveDay(day, parsedValue as CalendarTimestamp),
                   [simpleStyles.containerDayActive]: isActiveDay(day, parsedValue as CalendarTimestamp),
                 })}>
-                {day.day.day}
+                {day.day}
               </div>
             ))}
           </div>
