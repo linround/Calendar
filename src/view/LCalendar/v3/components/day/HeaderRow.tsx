@@ -34,7 +34,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     <div
       style={{
         maxHeight: 240,
-        overflowY: 'auto',
+        overflowY: 'scroll',
       }}
       className={className}>
       <div>
