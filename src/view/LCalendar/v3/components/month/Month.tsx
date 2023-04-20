@@ -1,77 +1,41 @@
 import { V3WeekComponent } from '../week/Week'
 import { CommonMonthHeader } from '../../../components/CommonMonthHeader'
 import {
-  useContext, useEffect, useMemo, useRef, useState
+  useContext, useEffect, useRef, useState
 } from 'react'
 import {
-  BaseContext, EventContext, MouseEventContext, WeeksContext
+  BaseContext, EventContext, MouseEventContext
 } from '../../../props/propsContext'
-import {
-  createDayList,
-  getEndOfMonth,
-  getEndOfWeek,
-  getStartOfMonth,
-  getStartOfWeek,
-  parseTimeStamp,
-  timestampToDate
-} from '../../../utils/timesStamp'
 import style from './style/month.module.less'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { IMonth } from '../../../components/type'
-import moment from 'moment/moment'
 import { MonthWrapper } from './MonthWrapper'
 import { filterEvents } from '../../utils'
 
-export function V3MonthComponent() {
+interface IProps {
+  days:CalendarTimestamp[]
+  events:CalendarEvent[]
+}
+export function V3MonthComponent(props:IProps) {
+  const { days, events, } = props
   // 还需要处理maxRows和minRows的来源
   const [maxRows] = useState(3)
   const [minRows] = useState(0)
 
   const {
-    start,
-    end,
     parsedWeekdays,
-    times,
-    weekdaySkips,
   } = useContext(BaseContext)
-  const {  events, } = useContext(EventContext)
-  const { minWeeks, } = useContext(WeeksContext)
 
 
-  const parsedStart = useMemo(() => getStartOfMonth(parseTimeStamp(start, true)),
-    [start])
-  const parsedEnd = useMemo(() => getEndOfMonth(parseTimeStamp(end, true)),
-    [end])
 
-  const days = useMemo(() => {
-    const minDays = minWeeks * parsedWeekdays.length
-    const newStart = getStartOfWeek(
-      parsedStart, parsedWeekdays, times?.today
-    )
-    const newEnd = getEndOfWeek(
-      parsedEnd, parsedWeekdays, times?.today
-    )
-    return createDayList(
-      newStart,
-      newEnd,
-      times?.today as CalendarTimestamp,
-      weekdaySkips,
-      Number.MAX_SAFE_INTEGER,
-      minDays
-    )
-  }, [minWeeks, parsedWeekdays, parsedStart, parsedEnd,  times])
+
 
 
   const weekDays = parsedWeekdays.length
   const month: IMonth = []
   for (let i = 0; i < days.length;i += weekDays) {
     const week = days.slice(i, i + weekDays)
-    month.push(week.map((day) => ({
-      value: moment(timestampToDate(day))
-        .startOf('day')
-        .valueOf(),
-      day,
-    })))
+    month.push(week)
   }
 
 

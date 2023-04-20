@@ -13,6 +13,7 @@ import {
 } from '../../../utils/segments/eventSegments'
 import { endOf, startOf } from '../../../utils/segments/localizer'
 import { EventRows } from './EventRows'
+import { toTime } from '../../../utils/timesStamp'
 
 interface IProps {
   weekDays:IMonthWeek
@@ -31,13 +32,13 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     container,
     month,
   } = props
+  const weekStart = startOf(toTime(weekDays[0]), 'day')
+  const weekEnd = endOf(toTime(weekDays[weekDays.length - 1]), 'day')
   // 获取一周的事件
   const weekEvents = eventsForRange(
     events,
-    startOf(weekDays[0].value, 'day')
-      .valueOf(),
-    endOf(weekDays[weekDays.length - 1].value, 'day')
-      .valueOf()
+    weekStart,
+    weekEnd
   )
 
   // 对这周的事件进行排序
@@ -45,7 +46,7 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
 
   // 处理这周事件的布局
   const segments = weekEvents.map((event) => eventSegments(event,
-    weekDays.map((day) => day.value)))
+    weekDays.map((day) => startOf(toTime(day), 'day'))))
 
 
   // 这里将创建日历部分提取到最上层

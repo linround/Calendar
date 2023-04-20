@@ -134,7 +134,7 @@ export function getDayTimeFromPoint(
   const x = Math.floor((point.clientX - monthRect.left) / cellWidth)
   // 得到点坐标属于哪一行(某个月里面的某个周)
   const y = Math.floor((point.clientY - monthRect.top) / cellHeight)
-  return month[y][x].day
+  return month[y][x]
 }
 
 //
