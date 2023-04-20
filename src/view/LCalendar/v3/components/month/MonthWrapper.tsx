@@ -51,7 +51,6 @@ export function MonthWrapper(props:React.PropsWithChildren<IProps>) {
     const event = createTimeEvent(
       startTime, endTime, group, true
     )
-    event.isCreate = true
     setShowCreatePopoverV3(false)
     setCreatedEvent(event)
   })

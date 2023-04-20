@@ -1,5 +1,5 @@
 import { IMonth, IMonthWeek } from '../../../components/type'
-import React from 'react'
+import React, { useContext } from 'react'
 import style from './style/week.module.less'
 import monthStyle from '../../../components/month.module.less'
 import { GenSingleDay } from '../../../components/GenSingleDay'
@@ -14,6 +14,7 @@ import {
 import { endOf, startOf } from '../../../utils/segments/localizer'
 import { EventRows } from './EventRows'
 import { toTime } from '../../../utils/timesStamp'
+import { EventContext } from '../../../props/propsContext'
 
 interface IProps {
   weekDays:IMonthWeek
@@ -32,6 +33,7 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     container,
     month,
   } = props
+  const { createdEvent, draggedEvent, } = useContext(EventContext)
   const weekStart = startOf(toTime(weekDays[0]), 'day')
   const weekEnd = endOf(toTime(weekDays[weekDays.length - 1]), 'day')
   // 获取一周的事件
@@ -40,7 +42,6 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     weekStart,
     weekEnd
   )
-
   // 对这周的事件进行排序
   weekEvents.sort((a, b) => sortEvents(a, b))
 
@@ -50,10 +51,11 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
 
 
   // 这里将创建日历部分提取到最上层
-  const normalSegments = segments.filter((segment) => !segment.event.isCreate && !segment.event.isDragging)
-  const createSegments = segments.filter((segment) => segment.event.isCreate || segment.event.isDragging)
+  const draggingSegments = segments.filter((segment) =>  segment.event === draggedEvent)
+  const createSegments = segments.filter((segment) => segment.event === createdEvent)
+  const normalSegments = segments.filter((segment) => segment.event !== draggedEvent && segment.event !== createdEvent)
 
-  const { levels, extra, } = eventLevels([...createSegments, ...normalSegments],
+  const { levels, extra, } = eventLevels([...draggingSegments, ...createSegments, ...normalSegments],
     Math.max(maxRows - 1, 1))
   const slots = weekDays.length
 

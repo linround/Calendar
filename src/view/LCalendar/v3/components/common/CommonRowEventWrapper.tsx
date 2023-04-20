@@ -41,6 +41,7 @@ export function CommonRowEventWrapper(props:React.PropsWithChildren<IProps>) {
   const {
     setDraggedEvent,
     setCreatedEvent,
+    createdEvent,
   } = useContext(EventContext)
 
   function hideCreate() {
@@ -92,7 +93,6 @@ export function CommonRowEventWrapper(props:React.PropsWithChildren<IProps>) {
       ...event,
       start: newStart,
       end: newEnd,
-      isDragging: true,
     }
     isClick = false
     setMoving(true)
@@ -137,7 +137,7 @@ export function CommonRowEventWrapper(props:React.PropsWithChildren<IProps>) {
     [style.moving]: moving,
   })
   return React.cloneElement(children as ReactElement, {
-    ref: isCreate ? ref : normalRef,
+    ref: event === createdEvent ? ref : normalRef,
     className,
     onMouseDown(e:React.MouseEvent) {
       selector.handleInitialEvent(e)
