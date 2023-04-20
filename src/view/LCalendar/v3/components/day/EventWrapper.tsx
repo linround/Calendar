@@ -14,7 +14,7 @@ import {
 import { updateEvent } from '../../../../../api'
 import { SUCCESS_CODE } from '../../../../../request'
 import {
-  CREATED_ACTION, elementScrollIntoView, IEventAction, NORMAL_ACTION
+  CREATED_ACTION, IEventAction, NORMAL_ACTION
 } from '../../utils'
 import classnames from 'classnames'
 
@@ -59,7 +59,6 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
   useLayoutEffect(() => {
     if (ref.current) {
       setCreatePopoverRefV3(ref.current)
-      elementScrollIntoView(ref.current)
     }
   }, [ref.current])
 

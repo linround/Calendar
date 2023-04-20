@@ -72,9 +72,7 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
   }
   return (
     <div
-      style={{
-        height: ROW_EVENT_HEIGHT,
-      }}
+      style={{ height: ROW_EVENT_HEIGHT, }}
       className={style.rowExtra}>
       {row}
     </div>

@@ -106,12 +106,14 @@ export function RowEventWrapper(props:React.PropsWithChildren<IProps>) {
         setNormalEvent(event)
         setNormalPopoverRef(normalRef.current)
         setShowNormalPopover(true)
+      } else {
+        const { code, } = await updateEvent(draggedEvent)
+        if (code === SUCCESS_CODE) {
+          setDraggedEvent(null)
+          updateEventList()
+        }
       }
-      const { code, } = await updateEvent(draggedEvent)
-      if (code === SUCCESS_CODE) {
-        setDraggedEvent(null)
-        updateEventList()
-      }
+
     } else {
       setCreatedEvent(draggedEvent)
       setDraggedEvent(null)

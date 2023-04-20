@@ -7,6 +7,12 @@ import { ICoordinates } from '../../../v2/utils/selection'
 import { mousedownController } from '../../utils/mouseDown'
 import { NORMAL_ACTION } from '../../utils'
 import { EventContext, MouseEventContext } from '../../../props/propsContext'
+import { getDayTimeFromDaysPoint } from '../../utils/point'
+import { toTime } from '../../../utils/timesStamp'
+import { updateEvent } from '../../../../../api'
+import { SUCCESS_CODE } from '../../../../../request'
+import classnames from 'classnames'
+import style from './style/eventWrapper.module.less'
 
 interface IProps {
   event:CalendarEvent
@@ -59,11 +65,62 @@ export function HeaderRowEventWrapper(props:React.PropsWithChildren<IProps>) {
   const selector = new Selector()
   selector.on('beforeSelect', (coordinates:ICoordinates) => {
     mousedownController.setState(NORMAL_ACTION)
-  })
-  selector.on('selecting', (coordinates:ICoordinates) => {})
-  selector.on('select', (coordinates:ICoordinates) => {
-    mousedownController.clearState()
     !isCreate && clearCreated()
+    const timestamp = getDayTimeFromDaysPoint(
+      containerRect, days, coordinates
+    )
+    draggedEvent = {
+      ...event,
+    }
+    initTime = toTime(timestamp)
+    isClick = true
+
+    //  false表示不阻止添加mousemove 和mouseup相关事件
+    return false
+  })
+  selector.on('selecting', (coordinates:ICoordinates) => {
+    const timestamp = getDayTimeFromDaysPoint(
+      containerRect, days, coordinates
+    )
+    const time = toTime(timestamp)
+    const duration = event.end - event.start
+    const newStart = time - initTime + event.start
+    const newEnd = newStart + duration
+    draggedEvent = {
+      ...event,
+      start: newStart,
+      end: newEnd,
+      isDragging: true,
+    }
+    isClick = false
+    setMoving(true)
+    if (!isCreate) clearNormal()
+    hideCreate()
+    setDraggedEvent(draggedEvent)
+  })
+  selector.on('select', async (coordinates:ICoordinates) => {
+    if (!isCreate) {
+      if (isClick) {
+        setNormalEvent(event)
+        setNormalPopoverRef(normalRef.current)
+        setShowNormalPopover(true)
+      } else {
+        const { code, } = await updateEvent(draggedEvent)
+        if (code === SUCCESS_CODE) {
+          setDraggedEvent(null)
+          updateEventList()
+        }
+      }
+
+    } else {
+      setCreatedEvent(draggedEvent)
+      setDraggedEvent(null)
+      setShowCreatePopoverV3(true)
+    }
+    setMoving(false)
+    mousedownController.clearState()
+
+
   })
 
   useLayoutEffect(() => {
@@ -71,8 +128,15 @@ export function HeaderRowEventWrapper(props:React.PropsWithChildren<IProps>) {
       setCreatePopoverRefV3(ref.current)
     }
   }, [ref])
+
+
+  const className = classnames({
+    [(props.children as ReactElement)?.props.className]: true,
+    [style.moving]: moving,
+  })
   return React.cloneElement(children as ReactElement, {
     ref: isCreate ? ref : normalRef,
+    className,
     onMouseDown(e:React.MouseEvent) {
       selector.handleInitialEvent(e)
     },
