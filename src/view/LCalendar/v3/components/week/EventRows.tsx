@@ -10,6 +10,7 @@ interface IProps{
   slots:number
   container:HTMLDivElement
   month:IMonth
+  onMore:(...arg:any[])=>void
 }
 export function EventRows(props:IProps) {
   const {
@@ -18,6 +19,7 @@ export function EventRows(props:IProps) {
     extra,
     month,
     container,
+    onMore,
   } = props
   return (
     <div>
@@ -31,6 +33,7 @@ export function EventRows(props:IProps) {
             container={container} />))}
         {!!extra.length && (
           <RowExtra
+            onMore={onMore}
             slots={slots}
             segments={extra}
             month={month}

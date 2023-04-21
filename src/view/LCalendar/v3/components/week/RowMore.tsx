@@ -6,7 +6,7 @@ interface IProps {
   slots:number
   segments:ISegments[]
   slot:number
-  onMore?:()=>void
+  onMore:(slot?:number)=>void
 }
 export function RowMore(props:IProps) {
   const {
@@ -18,12 +18,12 @@ export function RowMore(props:IProps) {
   const width = ((1 / slots) * 100) + '%'
   const count = eventsInSlot(segments, slot)
   const onClick = () => {
-    onMore && onMore()
+    onMore && onMore(slot)
   }
   return (
     <div
       className={style.rowMore}
-      onClick={onClick}
+      onMouseDown={onClick}
       style={{
         flexBasis: width,
         maxWidth: width,

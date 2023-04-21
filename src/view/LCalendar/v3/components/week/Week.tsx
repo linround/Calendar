@@ -59,11 +59,11 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     Math.max(maxRows - 1, 1))
   const slots = weekDays.length
 
-  const handleShowMore = (slot:number, nativeEvent:React.MouseEvent) => {
+  const onMore = (slot:number) => {
     const events = segments
       .filter((seg) => isSegmentInSlot(seg, slot))
       .map((seg) => seg.event)
-    console.log(events, nativeEvent)
+    console.log(events)
   }
   return (
     <div className={style.weekContainer}>
@@ -75,6 +75,7 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
       <EventRows
+        onMore={onMore}
         month={month}
         container={container}
         levels={levels}

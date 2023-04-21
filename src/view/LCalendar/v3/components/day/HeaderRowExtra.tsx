@@ -51,12 +51,12 @@ export function HeaderRowExtra(props:React.PropsWithChildren<IProps>) {
     }
     if (canRenderSlotEvent) {
       row.push(<HeaderRowEvent
-        container={container}
         key={key}
         slots={slots}
+        span={span}
         event={event}
         days={days}
-        span={span}
+        container={container}
       />)
       current = right + 1
     } else {
