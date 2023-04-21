@@ -1,10 +1,15 @@
-import React, { useContext } from 'react'
+import React, {
+  useCallback, useContext, useRef
+} from 'react'
 import { mousedownController } from '../utils/mouseDown'
 import {
   CalendarContext, EventContext, MouseEventContext
 } from '../../props/propsContext'
 
-export function CalendarContainer(props:React.PropsWithChildren) {
+
+// 使用优化React.memo,避免props变化造成的重复渲染
+
+export const CalendarContainer = React.memo((props: React.PropsWithChildren) => {
   const {
     setShowCreatePopoverV3,
     setNormalPopoverRef,
@@ -13,25 +18,32 @@ export function CalendarContainer(props:React.PropsWithChildren) {
     setShowNormalPopover,
   } = useContext(MouseEventContext)
   const { setCreatedEvent, } = useContext(EventContext)
-
   const { setAccountRef, setAddCalendarRef, } = useContext(CalendarContext)
-  function clearCreatePopover() {
+
+  const clearCreatePopover = useCallback(() => {
     setCreatePopoverRefV3(null)
     setCreatedEvent(null)
     setShowCreatePopoverV3(false)
-  }
-  function clearNormalPopover() {
+  }, [setCreatePopoverRefV3, setCreatedEvent, setShowCreatePopoverV3])
+
+  const clearNormalPopover = useCallback(() => {
     setNormalEvent(null)
     setNormalPopoverRef(null)
     setShowNormalPopover(false)
-  }
-  function clearAccountRef() {
+  }, [setNormalEvent, setNormalPopoverRef, setShowNormalPopover])
+
+  const clearAccountRef = useCallback(() => {
     setAccountRef(null)
-  }
-  function clearAddCalendarRef() {
+  }, [setAccountRef])
+
+  const clearAddCalendarRef = useCallback(() => {
     setAddCalendarRef(null)
-  }
+  }, [setAddCalendarRef])
+
+  const childrenRef = useRef<React.ReactElement>()
+
   return React.cloneElement(props.children as React.ReactElement, {
+    ref: childrenRef,
     onMouseDown() {
       if (mousedownController.action === '') {
         clearCreatePopover()
@@ -41,4 +53,4 @@ export function CalendarContainer(props:React.PropsWithChildren) {
       clearAddCalendarRef()
     },
   })
-}
+})
