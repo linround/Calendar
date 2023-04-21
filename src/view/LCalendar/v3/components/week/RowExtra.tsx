@@ -13,9 +13,9 @@ import { IMonth } from '../../../components/type'
 interface IProps {
   segments:ISegments[]
   slots:number
-  onMore:(slot?:number)=>void
   month:IMonth
   container:HTMLDivElement
+  rowSegments:ISegments[]
 }
 export function RowExtra(props:IProps) {
   const {
@@ -23,7 +23,7 @@ export function RowExtra(props:IProps) {
     slots,
     container,
     month,
-    onMore,
+    rowSegments,
   } = props
   let current = 1
   let lastEnd = 1
@@ -61,8 +61,8 @@ export function RowExtra(props:IProps) {
       current = right + 1
     } else {
       row.push(<RowMore
+        rowSegments={rowSegments}
         key={key}
-        onMore={onMore}
         slots={slots}
         segments={segments}
         slot={current} />)

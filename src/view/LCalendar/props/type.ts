@@ -1,5 +1,5 @@
 import {
-  CalendarEvent, CalendarEventParsed, CalendarTimestamp, CalendarUser, IValue
+  CalendarEvent, CalendarEventParsed, CalendarTimestamp, IValue
 } from '../utils/calendar'
 import React from 'react'
 import { calendarGroup } from '../SideComponent/utils'
@@ -102,10 +102,14 @@ export interface IMouseEventContext {
    * todo
    * 这里和createPopover有关的变量
    * */
+  setMoreEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>,
+  moreEvents:CalendarEvent[],
   showCreatePopoverV3: boolean,
   setShowCreatePopoverV3: React.Dispatch<React.SetStateAction<boolean>>,
   showCreatePopover: boolean,
   setShowCreatePopover: React.Dispatch<React.SetStateAction<boolean>>,
+  morePopoverRef:Element|null
+  setMorePopoverRef:React.Dispatch<React.SetStateAction<Element | null>>
   createPopoverRef: Element | null
   setCreatePopoverRef: React.Dispatch<React.SetStateAction<Element | null>>
   createPopoverRefV3: Element | null

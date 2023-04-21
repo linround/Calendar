@@ -5,11 +5,7 @@ import monthStyle from '../../../components/month.module.less'
 import { GenSingleDay } from '../../../components/GenSingleDay'
 import { CalendarEvent } from '../../../utils/calendar'
 import {
-  eventLevels,
-  eventSegments,
-  eventsForRange,
-  isSegmentInSlot,
-  sortEvents
+  eventLevels, eventSegments, eventsForRange, sortEvents
 } from '../../../utils/segments/eventSegments'
 import { endOf, startOf } from '../../../utils/segments/localizer'
 import { EventRows } from './EventRows'
@@ -59,12 +55,6 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
     Math.max(maxRows - 1, 1))
   const slots = weekDays.length
 
-  const onMore = (slot:number) => {
-    const events = segments
-      .filter((seg) => isSegmentInSlot(seg, slot))
-      .map((seg) => seg.event)
-    console.log(events)
-  }
   return (
     <div className={style.weekContainer}>
       <div className={style.weekModal}>
@@ -75,7 +65,7 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
       <EventRows
-        onMore={onMore}
+        rowSegments={segments}
         month={month}
         container={container}
         levels={levels}

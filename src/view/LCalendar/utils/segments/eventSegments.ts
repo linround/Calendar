@@ -94,6 +94,13 @@ export function eventsInSlot(segments:ISegments[], slot:number):number {
 export function isSegmentInSlot(seg:ISegments, slot:number):boolean {
   return seg.left <= slot && seg.right >= slot
 }
+
+export function getEventsInSot(slot:number, segments:ISegments[]) {
+  return segments
+    .filter((seg) => isSegmentInSlot(seg, slot))
+    .map((seg) => seg.event)
+}
+
 export function sortEvents(eventA:CalendarEvent, eventB:CalendarEvent):number {
   const evtA = {
     start: accessors.start(eventA),

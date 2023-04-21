@@ -7,10 +7,10 @@ import { IMonth } from '../../../components/type'
 interface IProps{
   levels:ISegments[][]
   extra:ISegments[]
+  rowSegments:ISegments[]
   slots:number
   container:HTMLDivElement
   month:IMonth
-  onMore:(...arg:any[])=>void
 }
 export function EventRows(props:IProps) {
   const {
@@ -19,7 +19,7 @@ export function EventRows(props:IProps) {
     extra,
     month,
     container,
-    onMore,
+    rowSegments,
   } = props
   return (
     <div>
@@ -33,7 +33,7 @@ export function EventRows(props:IProps) {
             container={container} />))}
         {!!extra.length && (
           <RowExtra
-            onMore={onMore}
+            rowSegments={rowSegments}
             slots={slots}
             segments={extra}
             month={month}

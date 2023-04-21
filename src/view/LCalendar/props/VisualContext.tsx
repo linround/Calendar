@@ -45,7 +45,8 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
    * todo
    * 这里和createPopover有关的变量
    * */
-
+  const [moreEvents, setMoreEvents] = useState<CalendarEvent[]>([])
+  const [morePopoverRef, setMorePopoverRef] = useState<Element | null>(null)
   const [createPopoverRefV3, setCreatePopoverRefV3] = useState<Element | null>(null)
   const [createPopoverRef, setCreatePopoverRef] = useState<Element | null>(null)
   const [showCreatePopover, setShowCreatePopover] = useState<boolean>(true)
@@ -317,6 +318,10 @@ export function VisualContext(props:React.ProviderProps<any>):React.ReactElement
               parsedCreatedEvent,
             }}>
               <MouseEventContext.Provider value={{
+                moreEvents,
+                setMoreEvents,
+                morePopoverRef,
+                setMorePopoverRef,
                 createPopoverRefV3, setCreatePopoverRefV3,
                 showCreatePopoverV3, setShowCreatePopoverV3,
                 createPopoverRef,

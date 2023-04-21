@@ -114,6 +114,10 @@ export const MouseEventContext = createContext<IMouseEventContext>({
    * todo
    * 这里和createPopover有关的变量
    * */
+  setMoreEvents: () => void 0,
+  moreEvents: [],
+  morePopoverRef: null,
+  setMorePopoverRef: () => void 0,
   createPopoverRef: null,
   setCreatePopoverRef: () => void 0,
   showCreatePopover: false,
