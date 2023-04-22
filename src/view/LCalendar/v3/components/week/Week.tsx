@@ -65,6 +65,7 @@ export function V3WeekComponent(props:React.PropsWithChildren<IProps>) {
         {weekDays.map((day, index) => (<GenSingleDay day={day} key={index} />))}
       </div>
       <EventRows
+        dates={weekDays}
         rowSegments={segments}
         month={month}
         container={container}

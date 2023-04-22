@@ -9,6 +9,7 @@ import { RowEvent } from './RowEvent'
 import { RowMore } from './RowMore'
 import { ROW_EVENT_HEIGHT } from '../../../utils/time'
 import { IMonth } from '../../../components/type'
+import { CalendarTimestamp } from '../../../utils/calendar'
 
 interface IProps {
   segments:ISegments[]
@@ -16,6 +17,7 @@ interface IProps {
   month:IMonth
   container:HTMLDivElement
   rowSegments:ISegments[]
+  dates?:CalendarTimestamp[]
 }
 export function RowExtra(props:IProps) {
   const {
@@ -24,6 +26,7 @@ export function RowExtra(props:IProps) {
     container,
     month,
     rowSegments,
+    dates,
   } = props
   let current = 1
   let lastEnd = 1
@@ -61,6 +64,7 @@ export function RowExtra(props:IProps) {
       current = right + 1
     } else {
       row.push(<RowMore
+        dates={dates}
         rowSegments={rowSegments}
         key={key}
         slots={slots}

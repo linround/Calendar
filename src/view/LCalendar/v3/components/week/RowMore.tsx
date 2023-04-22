@@ -5,6 +5,7 @@ import style from './style/rowMore.module.less'
 import React, { useContext, useRef } from 'react'
 import { RowMoreWrapper } from './RowMoreWrapper'
 import { MouseEventContext } from '../../../props/propsContext'
+import { CalendarTimestamp } from '../../../utils/calendar'
 
 interface IProps {
   slots:number
@@ -12,6 +13,7 @@ interface IProps {
   slot:number
   rowSegments?:ISegments[]
   onMore?:(slot?:number)=>void
+  dates?:CalendarTimestamp[]
   ClickWrapper?: React.Component
 }
 export function RowMore(props:IProps) {
@@ -21,12 +23,14 @@ export function RowMore(props:IProps) {
     slots, //一周共有七天
     onMore,
     rowSegments,
+    dates,
   } = props
   const width = ((1 / slots) * 100) + '%'
   const count = eventsInSlot(segments, slot)
   const {
     setMorePopoverRef,
     setMoreEvents,
+    setMoreDate,
   } = useContext(MouseEventContext)
   const moreRef = useRef<HTMLDivElement>(null)
   const onClick = () => {
@@ -37,9 +41,10 @@ export function RowMore(props:IProps) {
       const events = getEventsInSot(slot, rowSegments as ISegments[])
       setMorePopoverRef(moreRef.current)
       setMoreEvents(events)
-      console.log(
-        slot, slots, segments, rowSegments
-      )
+      const times = dates as CalendarTimestamp[]
+      const day = times[slot - 1]
+      setMoreDate(day)
+
     }
   }
   return (

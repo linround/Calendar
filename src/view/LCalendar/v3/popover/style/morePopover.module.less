@@ -1,3 +1,4 @@
+@import "../../../variables.less";
 .popover{
   &Container {
     display: flex;
@@ -5,7 +6,42 @@
     border-radius: 6px;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+    padding: 4px;
+
+  }
+  &Date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &Text {
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all .2s ease-in-out;
+      border-radius: 50%;
+      padding: 10px;
+      &:hover{
+        background-color: @IconHoverBgColor;
+      }
+    }
+  }
+  &Events{
     max-height: 200px;
     overflow-y: auto;
+    overflow-x:hidden ;
+  }
+  &Event{
+    margin: 2px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: opacity .2s ease-in-out;
+    &:hover{
+      opacity: 0.6 !important;
+    }
   }
 }

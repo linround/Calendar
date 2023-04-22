@@ -102,6 +102,9 @@ export interface IMouseEventContext {
    * todo
    * 这里和createPopover有关的变量
    * */
+
+  setMoreDate: React.Dispatch<React.SetStateAction<CalendarTimestamp|null>>,
+  moreDate:CalendarTimestamp|null
   setMoreEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>,
   moreEvents:CalendarEvent[],
   showCreatePopoverV3: boolean,

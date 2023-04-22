@@ -3,6 +3,7 @@ import { RowExtra } from './RowExtra'
 import { EventRow } from './EventRow'
 import style from './style/week.module.less'
 import { IMonth } from '../../../components/type'
+import { CalendarTimestamp } from '../../../utils/calendar'
 
 interface IProps{
   levels:ISegments[][]
@@ -11,6 +12,7 @@ interface IProps{
   slots:number
   container:HTMLDivElement
   month:IMonth
+  dates?:CalendarTimestamp[]
 }
 export function EventRows(props:IProps) {
   const {
@@ -20,6 +22,7 @@ export function EventRows(props:IProps) {
     month,
     container,
     rowSegments,
+    dates,
   } = props
   return (
     <div>
@@ -33,6 +36,7 @@ export function EventRows(props:IProps) {
             container={container} />))}
         {!!extra.length && (
           <RowExtra
+            dates={dates}
             rowSegments={rowSegments}
             slots={slots}
             segments={extra}
