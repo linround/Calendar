@@ -1,5 +1,5 @@
 import {
-  createRef, useContext, useLayoutEffect, useState
+  useContext, useLayoutEffect, useRef, useState
 } from 'react'
 import style from './style/createPopover.module.less'
 import { EventContext, MouseEventContext } from '../../props/propsContext'
@@ -20,7 +20,7 @@ export function CreatePopover() {
     updateEventList,
   } = useContext(MouseEventContext)
 
-  const eventRef = createRef<any>()
+  const eventRef = useRef<HTMLDivElement>(null)
   const [left, setLeft] = useState(0)
   const [top, setTop] = useState(0)
   // 此处使用 useLayoutEffect 来优化页面抖动的问题
@@ -34,7 +34,7 @@ export function CreatePopover() {
       setTop(Math.max(0, top))
       return
     }
-  }, [createPopoverRefV3?.getBoundingClientRect(), createPopoverRefV3, eventRef.current])
+  }, [createPopoverRefV3?.getBoundingClientRect(), eventRef.current])
 
   const className = classnames({
     [commonStyle.popover]: true,

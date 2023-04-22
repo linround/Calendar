@@ -45,6 +45,7 @@ export const CalendarContainer = React.memo((props: React.PropsWithChildren) => 
   return React.cloneElement(props.children as React.ReactElement, {
     ref: childrenRef,
     onMouseDown() {
+      console.log(mousedownController)
       if (mousedownController.action === '') {
         clearCreatePopover()
         clearNormalPopover()
