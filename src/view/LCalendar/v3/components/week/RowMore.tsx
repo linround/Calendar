@@ -17,8 +17,8 @@ interface IProps {
 export function RowMore(props:IProps) {
   const {
     segments,
-    slot,
-    slots,
+    slot, // 这周的第几天
+    slots, //一周共有七天
     onMore,
     rowSegments,
   } = props
@@ -37,6 +37,9 @@ export function RowMore(props:IProps) {
       const events = getEventsInSot(slot, rowSegments as ISegments[])
       setMorePopoverRef(moreRef.current)
       setMoreEvents(events)
+      console.log(
+        slot, slots, segments, rowSegments
+      )
     }
   }
   return (

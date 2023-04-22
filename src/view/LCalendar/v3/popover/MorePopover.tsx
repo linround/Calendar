@@ -24,7 +24,7 @@ export function MorePopover() {
   const [width, setWidth] = useState(0)
   useEffect(() => {
     if (morePopoverRef && eventRef.current) {
-      const { left, top, width, } = calcMoreContainer(morePopoverRef)
+      const { left, width, top, } = calcMoreContainer(morePopoverRef)
       setLeft(Math.max(0, left))
       setTop(Math.max(0, top))
       setWidth(width)
