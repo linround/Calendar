@@ -1,16 +1,16 @@
 import styles from './normalEventPopover.module.less'
 import React, {
-  createRef,
-  useContext, useEffect, useLayoutEffect, useState
+  createRef, useContext, useEffect, useState
 } from 'react'
-import {  MouseEventContext } from '../props/propsContext'
+import { MouseEventContext } from '../props/propsContext'
 import { PopoverContent } from './PopoverContent'
-import { IS_HIGH_LEVEL, calcPosition } from './helpers'
+import { calcPosition, IS_HIGH_LEVEL } from './helpers'
 import { CalendarEvent } from '../utils/calendar'
 import { deleteEvent } from '../../../api/event'
 import { SUCCESS_CODE } from '../../../request'
 import classnames from 'classnames'
 import commonPopoverStyle from '../commonStyle/popover.module.less'
+
 const popoverCache:{ref:Element|null} = {
   ref: null,
 }

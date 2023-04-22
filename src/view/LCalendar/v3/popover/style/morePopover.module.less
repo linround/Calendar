@@ -1,10 +1,11 @@
 .popover{
   &Container {
-    max-height: 600px;
-    width: 400px;
     display: flex;
     flex-direction: column;
     border-radius: 6px;
     overflow: hidden;
+    transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+    max-height: 200px;
+    overflow-y: auto;
   }
 }

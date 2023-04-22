@@ -2,9 +2,6 @@ import { CalendarEvent, VTimestampInput } from '../utils/calendar'
 import localizer from '../utils/segments/localizer'
 import { WEEK_DAYS_TEXT } from '../utils/time'
 import { padNumber } from '../utils/timesStamp'
-import React, { HTMLAttributes, InputHTMLAttributes } from 'react'
-
-
 
 
 export const POPOVER_WIDTH_DEF = 400
@@ -33,8 +30,21 @@ export interface INormalPopoverContentProps {
   deleteEvent: (e:CalendarEvent)=>void
 }
 
+export interface IMorePosition{
+  width:number
+  top:number
+  left:number
+}
+export function calcMoreContainer(eventElement:Element):IMorePosition {
+  const eventRect = eventElement.getBoundingClientRect()
+  const width = eventRect.right - eventRect.left
+  const top = eventRect.top
+  const left = eventRect.left
+  return {
+    top, left, width,
+  }
 
-
+}
 
 
 
