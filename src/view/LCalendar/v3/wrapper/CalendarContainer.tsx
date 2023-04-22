@@ -16,10 +16,20 @@ export const CalendarContainer = React.memo((props: React.PropsWithChildren) => 
     setNormalEvent,
     setCreatePopoverRefV3,
     setShowNormalPopover,
+    setMoreDate,
+    setMoreEvents,
+    setMorePopoverRef,
   } = useContext(MouseEventContext)
   const { setCreatedEvent, } = useContext(EventContext)
   const { setAccountRef, setAddCalendarRef, } = useContext(CalendarContext)
 
+
+
+  const clearMorePopover = useCallback(() => {
+    setMoreEvents([])
+    setMoreDate(null)
+    setMorePopoverRef(null)
+  }, [])
   const clearCreatePopover = useCallback(() => {
     setCreatePopoverRefV3(null)
     setCreatedEvent(null)
@@ -48,6 +58,7 @@ export const CalendarContainer = React.memo((props: React.PropsWithChildren) => 
       if (mousedownController.action === '') {
         clearCreatePopover()
         clearNormalPopover()
+        clearMorePopover()
       }
       clearAccountRef()
       clearAddCalendarRef()
