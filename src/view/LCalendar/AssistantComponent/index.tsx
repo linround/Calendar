@@ -5,6 +5,8 @@ import classnames from 'classnames'
 import dayStyle from '../components/day.module.less'
 import SvgIcon from '../../../components/SvgIcon'
 import { stopDefaultEvent } from '../utils/events'
+import { SUCCESS_CODE } from '../../../request'
+
 interface IMessage {
   role: 'self'|'assistant'
   content: string
@@ -42,11 +44,14 @@ export function AssistantComponent() {
     })
     clear()
     handleAddMessage()
-    const { choices, } = await handleSendChatMessage(value)
-    allMessage.push({
-      role: 'assistant',
-      content: choices[0].message.content,
-    })
+    const { data, code, } = await handleSendChatMessage(value)
+    if (code === SUCCESS_CODE) {
+      allMessage.push({
+        role: 'assistant',
+        content: data,
+      })
+    }
+
     handleAddMessage()
   }
   return (

@@ -8,9 +8,10 @@ const createOpenaiRequest = function (url:string) {
   return function (input:any) {
     return  request<any, any>({
       url: api,
-      method: 'GET',
-      params: input,
+      method: 'POST',
+      data: input,
       headers: {
+        'Accept': '*/*',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6STFOaUo5LmV5SjBkQ0k2TkN3aVlYVmtJam9pWXpnMFpEVmpaVEkzTXpGaU5ESTVNamhtTXprME16YzROMkl6TWpjMU9Ea2lMQ0pzZFNJNklteHBibkp2ZFc1a0lpd2laWGh3SWpveE5qZzFOVFE0TnprNUxDSjFjaUk2TWl3aWFuUnBJam9pUVZCSlgxUlBTMFZPWDJNNE5HUTFZMlV5TnpNeFlqUXlPVEk0WmpNNU5ETTNPRGRpTXpJM05UZzVMVFFpZlEuZkNYM2NOMUo0U3JpT1dHZlRPVGxZdmNWSlNxczhrRkJ1alkzZGtEMnNvRQ==',
       },

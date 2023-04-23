@@ -4,5 +4,7 @@ export function generateChatMessage(input:string) {
     // temperature: 0.6,
     // messages: [{ role: 'user', 'content': input, }],
     question: input,
+    prompt: '你是一个日历机器人',
+    stream: false,
   }
 }
