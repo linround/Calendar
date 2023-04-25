@@ -1,8 +1,6 @@
 import request from '../request'
 import { CalendarGroup } from '../view/LCalendar/utils/calendar'
-import { IResponse, IData } from './common'
-
-
+import { IData, IResponse } from './common'
 
 
 export function getGroupList() {

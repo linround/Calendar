@@ -4,18 +4,57 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpg" href="/img/UCalendar.jfif" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>
         UCalendar、日历、日程、你的日历
     </title>
     <meta name="description" content="作者：林Round;UCalendar,让生活更简单，让工作更轻松;行程安排、出行计划、工作总结的好帮手">
-    <script type="application/ld+json">
-        {
-            "@context": "https://ucalendar.cn/",
-            "@type": "日历",
-            "url": "https://ucalendar.cn/",
-            "logo": "https://ucalendar.cn/img/UCalendar.png"
-        }
-    </script>
+      <script type="application/ld+json">
+          {
+              "@context": "https://schema.org",
+              "@type": "Event",
+              "name": "日历事件名称",
+              "startDate": "2025-07-21T19:00-05:00",
+              "endDate": "2025-07-21T23:00-05:00",
+              "eventAttendanceMode": "全天",
+              "eventStatus": "事件状态",
+              "location": {
+                  "@type": "Place",
+                  "name": "会议室202",
+                  "address": {
+                      "@type": "PostalAddress",
+                      "streetAddress": "广州市",
+                      "addressLocality": "中国",
+                      "postalCode": "19019",
+                      "addressRegion": "PA",
+                      "addressCountry": "CN"
+                  }
+              },
+              "image": [
+                  "https://ucalendar.cn/img/UCalendar.png",
+                  "https://ucalendar.cn/img/UCalendar.png",
+                  "https://ucalendar.cn/img/UCalendar.png"
+              ],
+              "description": "今天去会议室讨论下周的工作计划",
+              "offers": {
+                  "@type": "Offer",
+                  "url": "https://ucalendar.cn",
+                  "price": "30",
+                  "priceCurrency": "",
+                  "availability": "",
+                  "validFrom": "2024-05-21T12:00"
+              },
+              "performer": {
+                  "@type": "PerformingGroup",
+                  "name": "张三和李四"
+              },
+              "organizer": {
+                  "@type": "Organization",
+                  "name": "组织者名称",
+                  "url": "https://ucalendar.cn"
+              }
+          }
+      </script>
     <link rel="canonical" href="https://ucalendar.cn/" />
   </head>
   <body>
