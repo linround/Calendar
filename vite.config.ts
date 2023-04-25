@@ -14,6 +14,7 @@ export default defineConfig({
     },
   },
   server: {
+    host: '0.0.0.0',
     open: true,
     port: 5000,
     proxy: {
@@ -22,7 +23,6 @@ export default defineConfig({
         target: 'http://127.0.0.1:8888/', // 本地服务
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-
       },
 
     },
