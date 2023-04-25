@@ -83,8 +83,18 @@ export const CalendarContainer = React.memo((props: React.PropsWithChildren) => 
     onPointerUp() {
       // console.log('onPointerUp')
     },
+    onTouchMove() {
+      // console.log('onTouchMove')
+    },
     onPointerMove() {
-      console.log('onPointerMove')
+      // onPointerMove和onTouchMove
+      // onTouchMove在移动端执行正常
+      // onPointerMove在移动端执行不正常
+      // 除了以上的move事件暂未发现其他区别
+      // console.log('onPointerMove')
+    },
+    onMouseEnter() {
+      // console.log('onMouseEnter')
     },
     onMouseOver() {
       // console.log('onMouseOver')
