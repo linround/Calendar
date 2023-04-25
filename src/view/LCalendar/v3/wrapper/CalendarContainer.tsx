@@ -54,7 +54,46 @@ export const CalendarContainer = React.memo((props: React.PropsWithChildren) => 
 
   return React.cloneElement(props.children as React.ReactElement, {
     ref: childrenRef,
+    onLostPointerCapture() {
+      console.log('onLostPointerCapture')
+    },
+    onGotPointerCapture() {
+      console.log('onGotPointerCapture')
+    },
+    onPointerLeave() {
+      console.log('onPointerLeave')
+    },
+    onPointerOut() {
+      console.log('onPointerOut')
+    },
+    onPointerOver() {
+      // 定点进入某个元素时就会触发
+      // 进入不同的子元素就会触发
+      console.log('onPointerOver')
+    },
+    onPointerEnter() {
+      console.log('onPointerEnter')
+    },
+    onPointerDown() {
+      console.log('onPointerDown')
+    },
+    onPointerCancel() {
+      console.log('onPointerCancel')
+    },
+    onPointerUp() {
+      console.log('onPointerUp')
+    },
+    onPointerMove() {
+      console.log('onPointerMove')
+    },
+    onMouseOver() {
+      console.log('onMouseOver')
+    },
+    onMouseLeave() {
+      console.log('onMouseLeave')
+    },
     onMouseDown() {
+      console.log('onMouseDown')
       if (mousedownController.action === '') {
         clearCreatePopover()
         clearNormalPopover()
