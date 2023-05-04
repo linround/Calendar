@@ -4,7 +4,6 @@ export function SetStateFunction() {
   const [name, setName] = useState<string|null>()
   const onMouseDown = () => {
     setName('setState')
-    console.log('onMouseDown', name)
   }
   const onMouseMove = () => {
     console.log(name)
