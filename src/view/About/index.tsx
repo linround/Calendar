@@ -30,9 +30,34 @@ function canvasClip(context:CanvasRenderingContext2D) {
   context.beginPath()
   context.fillStyle = 'blue'
   context.arc(
-    cx + 100, cy, cr, 0, -Math.PI * 2, true
+    cx + 100, cy, cr, 0, -Math.PI * 2, false
   )
   context.fill()
+
+
+
+
+  // 关于非零环绕元组的尝试
+  context.beginPath()
+  context.strokeStyle = 'blue'
+  context.fillStyle = 'yellow'
+  // 逆时针画个小圆弧
+  context.arc(
+    800, 100, 40, 0, Math.PI * 2, true
+  )
+  // 顺时针画个大圆弧
+  context.arc(
+    800, 100, 80, 0, Math.PI * 2, false
+  )
+  // 当不给 fill() 方法传入参数时，默认参数是'nonZero'，即使用非零环绕规则来填充路径
+  context.stroke()
+  context.fill()
+
+
+
+
+
+
 
 
   // 绘制第三个圆形
@@ -50,6 +75,8 @@ function canvasClip(context:CanvasRenderingContext2D) {
   // clip 将当前创建的路径设置位当前裁剪路径
   // 这个算法会裁剪掉路径外的值，只保留路径内的可操作区域
   // 默认使用    非零缠绕原则  来确定给定点是否落在封闭曲线内
+
+
   context.clip()
 
   // 绘制第四个圆
@@ -58,12 +85,14 @@ function canvasClip(context:CanvasRenderingContext2D) {
   context.fillStyle = 'black'
   context.lineWidth = 10
   context.arc(
-    cx, cy, cr + 30, 0, Math.PI * 2, false
+    cx, cy, cr + 30, 0, Math.PI * 2, true
   )
   // stroke是画出图形路径
   context.fill()
   context.stroke()
   context.restore()
+
+
 }
 export class About extends React.Component<AppProps, AppState> {
   constructor(props:AppProps) {
