@@ -6,6 +6,7 @@ import { ErrorPage } from '../view/ErrorPage'
 import { Init } from '../view/Init/Init'
 import { V2OutSideSource } from '../view/LCalendar/v2/OutSideSource'
 import { SetState } from '../view/beta/SetState'
+import { About } from '../view/About'
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +17,8 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage />, },
       { path: 'calendar',  element: <CalendarPage />, },
       { path: 'v2Calendar', element: <V2OutSideSource />, },
-      { path: 'SetState', element: <SetState />, }
+      { path: 'SetState', element: <SetState />, },
+      { path: 'About', element: <About />, }
     ],
   },
   {
