@@ -7,6 +7,51 @@ interface AppState {
   width:number
   height:number
 }
+
+function canvasClip(context:CanvasRenderingContext2D) {
+  context.save()
+  const cx = 500
+  const cy = 500
+  const cr = 100
+  context.setTransform(
+    1, 0, 0, 1, 0, 0
+  )
+  context.beginPath()
+  context.fillStyle = 'red'
+  context.arc(
+    cx, cy, cr, 0, Math.PI * 2, false
+  )
+  context.fill()
+
+
+  // 绘制第二个圆
+  // 通过清空子路径列表开始一个新路径
+  // 例如：如果不调用 beginPath fillStyle就不会被重新设置
+  context.beginPath()
+  context.fillStyle = 'blue'
+  context.arc(
+    cx + 100, cy, cr, 0, -Math.PI * 2, true
+  )
+  context.fill()
+
+
+  // 绘制第三个圆形
+  context.beginPath()
+  context.fillStyle = 'yellow'
+  context.arc(
+    cx, cy + 100, cr, 0, -Math.PI * 2, true
+  )
+  context.fill()
+  // 绘制第四个圆
+  context.beginPath()
+  context.strokeStyle = '#ccc'
+  context.lineWidth = 10
+  context.arc(
+    cx, cy, cr, 0, Math.PI * 2, false
+  )
+  context.stroke()
+  context.restore()
+}
 export class About extends React.Component<AppProps, AppState> {
   constructor(props:AppProps) {
     super(props)
@@ -38,7 +83,12 @@ export class About extends React.Component<AppProps, AppState> {
       2, 0.2, 0.8, 2, 0, 0
     )
     context.fillStyle = 'blue'
-    // save
+    // save 将绘制状态保存到栈中
+    // 绘制状态的组成:
+    // 当前的变换矩阵
+    // 当前的剪切区域
+    canvasClip(context)
+    // 当前的虚线列表
     context.save()
     context.setTransform(
       1, 0, 0, 1, 0, 0
