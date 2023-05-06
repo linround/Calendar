@@ -41,14 +41,27 @@ function canvasClip(context:CanvasRenderingContext2D) {
   context.arc(
     cx, cy + 100, cr, 0, -Math.PI * 2, true
   )
+  // fill是对图像内部进行填充
   context.fill()
+  // clip 用于从canvas中裁剪任意形状和尺寸
+  // 一旦裁剪了某个区域，所有之后的绘制都会被限制在被裁减区内，不能访问画布上的其他区域。
+  // 可以通过在使用clip方法之前通过使用save方法对当前画布进行保存，并在以后的任意时间通过restore方法进行恢复
+
+  // clip 将当前创建的路径设置位当前裁剪路径
+  // 这个算法会裁剪掉路径外的值，只保留路径内的可操作区域
+  // 默认使用    非零缠绕原则  来确定给定点是否落在封闭曲线内
+  context.clip()
+
   // 绘制第四个圆
   context.beginPath()
   context.strokeStyle = '#ccc'
+  context.fillStyle = 'black'
   context.lineWidth = 10
   context.arc(
-    cx, cy, cr, 0, Math.PI * 2, false
+    cx, cy, cr + 30, 0, Math.PI * 2, false
   )
+  // stroke是画出图形路径
+  context.fill()
   context.stroke()
   context.restore()
 }
