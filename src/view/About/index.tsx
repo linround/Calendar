@@ -26,9 +26,6 @@ export class About extends React.Component<AppProps, AppState> {
     // b 垂直倾斜 d 垂直缩放 f 垂直移动
     //     1        1        0
 
-    context.setTransform(
-      1, 0, 0, 1, 0, 0
-    )
     // context.fillStyle = '#FFA500'
     // context.fillRect(
     //   0, 0, 280, 220
@@ -37,18 +34,28 @@ export class About extends React.Component<AppProps, AppState> {
     // context.fillRect(
     //   0, 0, 100, 100
     // // )
-    // context.setTransform(
-    //   2, 0.2, 0.8, 2, 0, 0
-    // )
+    context.setTransform(
+      2, 0.2, 0.8, 2, 0, 0
+    )
+    context.fillStyle = 'blue'
+    // save
+    context.save()
+    context.setTransform(
+      1, 0, 0, 1, 0, 0
+    )
     // x轴方向 width = 100*2+100*0.8=280
     // y轴方向 height = 100*2 + 100*0.2=220
     // 在垂直方向发生倾斜，即y周坐标发生变化  注意倾斜和平移的是有区别的，坐标零点发生倾斜，还是坐标零点；
     // 但是普通坐标点发生倾斜，坐标点就会发生变化
-    context.fillStyle = 'black'
+    context.fillStyle = 'green'
     context.fillRect(
       0, 0, 100, 100
     )
-
+    // restore 将canvas恢复到最近的保存状态
+    context.restore()
+    context.fillRect(
+      150, 40, 100, 100
+    )
   }
   render() {
     const { width, height, } = this.state
