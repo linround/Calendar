@@ -49,17 +49,11 @@ function canvasClip(context:CanvasRenderingContext2D) {
   context.moveTo(880, 100)
   // 顺时针画个大圆弧
   context.arc(
-    800, 100, 80, 0, Math.PI * 2, false
+    880, 100, 80, 0, Math.PI * 2, false
   )
   // 当不给 fill() 方法传入参数时，默认参数是'nonZero'，即使用非零环绕规则来填充路径
   context.stroke()
-  // context.fill()
-
-
-
-
-
-
+  context.fill()
 
 
   // 绘制第三个圆形
