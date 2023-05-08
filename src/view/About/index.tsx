@@ -175,6 +175,24 @@ function canvasSave(ctx:CanvasRenderingContext2D) {
     100, 100, 100, 100
   )
 }
+function canvasRenderElements(context:CanvasRenderingContext2D) {
+  context.save()
+  // 在绘制之前进行平移变换
+  context.translate(100, 100)
+  // 和下面的平移变换等同
+  // context.setTransform(
+  //   1, 0, 0, 1, 100, 100
+  // )
+  context.fillStyle = 'blue'
+  context.fillRect(
+    0, 0, 100, 200
+  )
+  context.restore()
+  // context.fillRect(
+  //   100, 100, 100, 200
+  // )
+
+}
 export class About extends React.Component<AppProps, AppState> {
   constructor(props:AppProps) {
     super(props)
@@ -191,7 +209,8 @@ export class About extends React.Component<AppProps, AppState> {
     // canvasClip(context)
     // 当前的虚线列表
     // canvasScale(context)
-    canvasSave(context)
+    // canvasSave(context)
+    canvasRenderElements(context)
   }
   render() {
     const { width, height, } = this.state
