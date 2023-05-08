@@ -1,4 +1,5 @@
 import React from 'react'
+import { SVG } from './SVG'
 
 interface AppProps {
   [prop:string] :any
@@ -205,22 +206,20 @@ export class About extends React.Component<AppProps, AppState> {
   canvasRef(canvas:HTMLCanvasElement) {
     if (!canvas) return
     const context = canvas.getContext('2d')!
-    // canvasSetTransform(context)
-    // canvasClip(context)
-    // 当前的虚线列表
-    // canvasScale(context)
-    // canvasSave(context)
     canvasRenderElements(context)
   }
   render() {
     const { width, height, } = this.state
     return (
-      <canvas
-        width={width}
-        height={height}
-        ref={this.canvasRef}>
-        canvas
-      </canvas>
+      <>
+        <SVG />
+        <canvas
+          width={width}
+          height={height}
+          ref={this.canvasRef}>
+          canvas
+        </canvas>
+      </>
     )
   }
 }
