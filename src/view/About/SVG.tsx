@@ -53,20 +53,25 @@ function Path() {
       {/*     L 315 10" stroke="black" fill="green" strokeWidth="2" fillOpacity="0.5"/>*/}
       {/*<ellipse cx={150} cy={50} rx={100} ry={30} stroke={'black'} fill={'blue'} fillOpacity="0.6" strokeOpacity={0.5} ></ellipse>*/}
       <svg width="325" height="325" xmlns="http://www.w3.org/2000/svg">
+
         {/*
          // rx ry 长短轴
          // 沿着X方向旋转的角度
          // large-arc-flag 0小角弧度 1大角弧度 ;
          // sweep-flag 0 起点到终点逆时针画 1起点到终点顺时针画
          // 终点
+         //
          */}
-        <path d="M 80 80
-           A 450 450,
-           0,
-           0,
-           1,
-           125 125
-           L 125 80 80 80" fill="none" stroke={'black'} strokeWidth={2}/>
+        {/*
+          起始点 0 50 ；终点 50 0；
+          半径都是50
+           1表示取大角
+           0表示起点到终点逆时针（一个是形成大弧的逆时针，一个是形成小弧的逆时针）
+
+        */}
+        <path d="M 0 50
+           A 50 50, 0, 1, 0, 50 0
+           " fill="green"/>
         <path d="M 230 80
            A 45 45, 0, 1, 0, 275 125
            L 275 80 Z" fill="red"/>
