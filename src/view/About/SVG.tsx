@@ -21,6 +21,10 @@ function Path() {
   // v 100 垂直向下移动80
   // v -100 垂直向上移动80
   // z 回到初起点
+  // path 元素中只存在两种贝塞尔曲线：三次贝塞尔曲线C，二次贝塞尔曲线Q
+  // 使用C x1 y1, x2 y2, x y 命令创建三次贝塞尔曲线
+  // (or)
+  // c dx1 dy1, dx2 dy2, dx dy
   return (
 
     <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
@@ -31,11 +35,35 @@ function Path() {
           向左移 100
           向上移 100
           */}
-      <path d="M300 300"/>
-      <circle cx="300" cy="300" r="2" fill="red"/>
-      <path d="M 10 10 h 200 m 10 90 h 200"  stroke={'black'}/>
-      <path d="m 0,0 Q100,100 50,230 T90,230" fill="none" stroke="blue" strokeWidth="1"/>
-      <path d="M 0 0 h 100 v 100 h -100 v -100" stroke='black' fill='transparent'></path>
+      {/*<path d="M300 300"/>*/}
+      {/*<circle cx="300" cy="300" r="2" fill="red"/>*/}
+      {/*<path d="M 10 10 h 200 m 10 90 h 200"  stroke={'black'}/>*/}
+      {/*<path d="m 0,0 Q100,100 50,230 T90,230" fill="none" stroke="blue" strokeWidth="1"/>*/}
+      {/*<path d="M 0 0 h 100 v 100 h -100 v -100" stroke='black' fill='transparent'></path>*/}
+
+
+      {/*<path d="M 10 10 H 90 V 90 H 10 L 10 10 "></path>*/}
+      {/*<circle cx={10} cy={10} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={90} cy={10} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={90} cy={90} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={10} cy={90} r={10} fill={'blue'}  />*/}
+
+
+      {/*<path d="M 10 10 C 50 100, 150 100, 200 10" strokeWidth={5} stroke="yellow" fill="transparent"/>*/}
+      {/*<circle cx={10} cy={10} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={200} cy={10} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={150} cy={100} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={50} cy={100} r={10} fill={'blue'}  />*/}
+
+
+      {/*使用S创建与之前类似的二次贝塞尔曲线
+        如果S命令跟在一个C或S命令后面，则它的第一个控制点会被假设成前一个命令曲线的第二个控制点的中心对称点，如果S命令单独使用，前面没有C或S命令，那当前点将作为第一个控制点
+      */}
+
+      <path d="M 10 10 S 110 100, 200 10" strokeWidth={5} stroke="yellow" fill="transparent"/>
+      <circle cx={10} cy={10} r={10} fill={'blue'}  />
+      <circle cx={110} cy={100} r={10} fill={'blue'}  />
+      <circle cx={200} cy={10} r={10} fill={'blue'}  />
     </svg>
   )
 }
