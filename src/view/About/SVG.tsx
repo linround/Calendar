@@ -28,6 +28,83 @@ function Path() {
   return (
 
     <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+
+
+
+      {/*todo 关于弧形A命令*/}
+      {/*弧形A可创建SVG曲线，弧形基本上可以视为圆形或椭圆形的一部分
+      已知椭圆形的长轴半径和短轴半径，并且已知两个点在椭圆上，根据半径和两点，可以画出两个椭圆，在每个椭圆上根据两点都可以画出两段弧形。
+      所以，根据半径和两点，可以画出四种弧形
+      // rx ry 长短轴
+      // x-axis-rotation 沿着x方向的旋转
+      // large-arc-flag 角度大小 0表示小角弧度 1表示大角弧度
+      // sweep-flag 表示弧线方向 0 表示起点到终点的逆时针画弧度 1 表示起点到终点的顺时针画弧
+      // x y 终点
+      A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+      a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
+      弧形命令的前两个参数是X轴半径和Y轴半径
+
+      */}
+      {/*<path d="M 10 315*/}
+      {/*     L 110 215*/}
+      {/*     A 30 50 0 0 1 162.55 162.45*/}
+      {/*     L 172.55 152.45*/}
+      {/*     A 30 50 -95 0 1 215.1 109.9*/}
+      {/*     L 315 10" stroke="black" fill="green" strokeWidth="2" fillOpacity="0.5"/>*/}
+      {/*<ellipse cx={150} cy={50} rx={100} ry={30} stroke={'black'} fill={'blue'} fillOpacity="0.6" strokeOpacity={0.5} ></ellipse>*/}
+      <svg width="325" height="325" xmlns="http://www.w3.org/2000/svg">
+        {/*
+         // rx ry 长短轴
+         // 沿着X方向旋转的角度
+         // large-arc-flag 0小角弧度 1大角弧度 ;
+         // sweep-flag 0 起点到终点逆时针画 1起点到终点顺时针画
+         // 终点
+         */}
+        <path d="M 80 80
+           A 450 450,
+           0,
+           0,
+           1,
+           125 125
+           L 125 80 80 80" fill="none" stroke={'black'} strokeWidth={2}/>
+        <path d="M 230 80
+           A 45 45, 0, 1, 0, 275 125
+           L 275 80 Z" fill="red"/>
+        <path d="M 80 230
+           A 45 45, 0, 0, 1, 125 275
+           L 125 230 Z" fill="purple"/>
+        <path d="M 230 230
+           A 45 45, 0, 1, 1, 275 275
+           L 275 230 Z" fill="blue"/>
+      </svg>
+
+
+      <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320">
+        {/*<path d="M 10 315*/}
+        {/*   L 110 215*/}
+        {/*   A 36 60 0 0 1 150.71 170.29*/}
+        {/*   L 172.55 152.45*/}
+        {/*   A 30 50 -45 0 1 215.1 109.9*/}
+        {/*   L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>*/}
+        {/*<circle cx="150.71" cy="170.29" r="2" fill="red"/>*/}
+        {/*<circle cx="110" cy="215" r="2" fill="red"/>*/}
+        {/*<ellipse cx="144.931" cy="229.512" rx="36" ry="60" fill="transparent" stroke="blue"/>*/}
+        {/*<ellipse cx="115.779" cy="155.778" rx="36" ry="60" fill="transparent" stroke="blue"/>*/}
+
+
+
+      </svg>
+
+
+
+
+
+
+
+
+
+
+
       {/*创建一个矩形
           起始点 100 100
           向右移 100
@@ -125,15 +202,15 @@ function Path() {
       {/*<path d="M 10 100 Q 50 10, 80 100 T 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
       {/*<path d="M 10 100 Q 50 10, 80 100 Q 110 190 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
       {/*<path d="M 10 100 Q 50 10, 80 100 M 80 100 Q 110 190 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
-      <path d="M 10 100 Q 50 10, 80 100" strokeWidth={5} stroke="black" fill="transparent"/>
-      <path d="M 80 100 Q 110 190, 150 100" strokeWidth={5} stroke="black" fill="transparent"/>
-      <circle cx={10} cy={100} r={10} fill={'blue'}  />
-      <circle cx={50} cy={10} r={10} fill={'blue'}  />
-      <circle cx={80} cy={100} r={10} fill={'blue'}  />
+      {/*<path d="M 10 100 Q 50 10, 80 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      {/*<path d="M 80 100 Q 110 190, 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      {/*<circle cx={10} cy={100} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={50} cy={10} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={80} cy={100} r={10} fill={'blue'}  />*/}
 
 
-      <circle cx={150} cy={100} r={10} fill={'blue'}  />
-      <circle cx={110} cy={190} r={10} fill={'blue'}  />
+      {/*<circle cx={150} cy={100} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={110} cy={190} r={10} fill={'blue'}  />*/}
 
     </svg>
   )
