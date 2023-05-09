@@ -2,34 +2,43 @@ import React from 'react'
 
 export function SVG() {
 
+  return (
+    <>
+      {/*<StartSVG />*/}
+      {/*<PositionSvg />*/}
+      <BasicShapes />
+      <Path />
+    </>
+  )
+}
+
+function Path() {
   // 关于path中的值
-  // M 100 100 移动到坐标 100 100
+  // d 一个点数集以及如何绘制路径的信息
+  // M 100 100 移动到坐标 100 100  大写代表绝对定位；小写代表相对定位，例如：从上一个点开始，向上移动10px，向左移动7px
   // h 100 水平向右移动100
   // h -100 水平向左移动100
   // v 100 垂直向下移动80
   // v -100 垂直向上移动80
   // z 回到初起点
   return (
-    <>
-      {/*<StartSVG />*/}
-      {/*<PositionSvg />*/}
-      <BasicShapes />
-      <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
-        {/*创建一个矩形
+
+    <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+      {/*创建一个矩形
           起始点 100 100
           向右移 100
           向下移 100
           向左移 100
           向上移 100
           */}
-        <path d="M 100 100 h 100 v 100 h -100 v -100" stroke='black' fill='transparent'></path>
-        <path d="M 70 110 C 70 140, 110 140, 110 110" stroke="black" fill="transparent"/>
-        <path d="M 130 110 C 120 140, 180 140, 170 110" stroke="black" fill="transparent"/>
-      </svg>
-    </>
+      <path d="M300 300"/>
+      <circle cx="300" cy="300" r="2" fill="red"/>
+      <path d="M 10 10 h 200 m 10 90 h 200"  stroke={'black'}/>
+      <path d="m 0,0 Q100,100 50,230 T90,230" fill="none" stroke="blue" strokeWidth="1"/>
+      <path d="M 0 0 h 100 v 100 h -100 v -100" stroke='black' fill='transparent'></path>
+    </svg>
   )
 }
-
 
 function BasicShapes() {
   // rect 矩形 起始点 (50,50) 宽100，高150(宽高不包含strokeWidth) ；stroke:描边； rx=50 ry=20 设置边角； fill： 填充内容
@@ -40,6 +49,7 @@ function BasicShapes() {
   // polygon 多边形 和折现类型，不过最终会自动连接结束点和起始点
   return (
     <svg width="400" height="400"  xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0,0 Q40,205 50,230 T90,230" fill="none" stroke="blue" strokeWidth="5"/>
       <rect x={50} y={50} width={100} height={150} stroke={'red'} strokeWidth={10}  rx={50} ry={20} fill={'blue'} ></rect>
       <circle cx={150} cy={50} r={50} stroke={'green'} strokeWidth={5} fill={'yellow'} ></circle>
       <ellipse cx={150} cy={50} rx={100} ry={30} stroke={'black'} fill={'transparent'}></ellipse>
