@@ -103,20 +103,37 @@ function Path() {
        因为Q创建的是二次贝塞尔曲线啊
       */}
 
-      <path d="M 20 150 Q 50 50, 80 150" strokeWidth={5} stroke="black" fill="transparent"/>
-      <path d="M 20 150 C 35 100, 65 100, 80 150" strokeWidth={5} stroke="red" fill="transparent"/>
-      <circle cx={20} cy={150} r={10} fill={'blue'}  />
-      <circle cx={35} cy={100} r={10} fill={'blue'}  />
-      <circle cx={65} cy={100} r={10} fill={'blue'}  />
-      <circle cx={80} cy={150} r={10} fill={'blue'}  />
+      {/*<path d="M 20 150 Q 50 50, 80 150" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      {/*<path d="M 20 150 C 35 100, 65 100, 80 150" strokeWidth={5} stroke="red" fill="transparent"/>*/}
+      {/*<circle cx={20} cy={150} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={35} cy={100} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={65} cy={100} r={10} fill={'blue'}  />*/}
+      {/*<circle cx={80} cy={150} r={10} fill={'blue'}  />*/}
 
-      <circle cx={50} cy={50} r={10} fill={'blue'}  />
-
-
+      {/*<circle cx={50} cy={50} r={10} fill={'blue'}  />*/}
 
 
 
+      {/*在Q命令后使用T命令来延长二阶贝塞尔曲线
+        第一种：接T命令以上一个贝塞尔的控制顶以结束点的中心对称点为第二个贝塞尔的控制点，第二个贝塞尔的起始点就是上一个的结束点
+        第二种：在画完第一个贝塞尔曲线之后，继续画第二个；默认使用第一个个的结尾作为开始
+        第三种：是第二种的变体
+        第四种：以上的具体实现
+      */}
 
+
+      {/*<path d="M 10 100 Q 50 10, 80 100 T 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      {/*<path d="M 10 100 Q 50 10, 80 100 Q 110 190 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      {/*<path d="M 10 100 Q 50 10, 80 100 M 80 100 Q 110 190 150 100" strokeWidth={5} stroke="black" fill="transparent"/>*/}
+      <path d="M 10 100 Q 50 10, 80 100" strokeWidth={5} stroke="black" fill="transparent"/>
+      <path d="M 80 100 Q 110 190, 150 100" strokeWidth={5} stroke="black" fill="transparent"/>
+      <circle cx={10} cy={100} r={10} fill={'blue'}  />
+      <circle cx={50} cy={10} r={10} fill={'blue'}  />
+      <circle cx={80} cy={100} r={10} fill={'blue'}  />
+
+
+      <circle cx={150} cy={100} r={10} fill={'blue'}  />
+      <circle cx={110} cy={190} r={10} fill={'blue'}  />
 
     </svg>
   )
