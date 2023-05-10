@@ -22,9 +22,48 @@ export function SVG() {
 function Text() {
   return (
     <>
-      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <text x="10" y="10">Hello World!</text>
+      <svg width="600" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect x={0} y={0} height={200} width={600} stroke={'red'} strokeWidth={5} fill={'none'}></rect>
+        <circle cx={100} cy={100} r={5} fill={'black'}></circle>
+        {/*
+        text-anchor
+            start 坐标点 (100,100)作为文字的起始点
+            middle 坐标点 (100,100)作为文字的中点
+            end 坐标点 (100,100)作为文字的结束点
+            inherit
+        */}
+        <text x="100" y="100"
+          fontSize={16} fontWeight={600} letterSpacing={5} wordSpacing={10}
+          fill={'red'} stroke={'blue'}
+          strokeWidth={1} textAnchor={'inherit'}>
+          Hello World!</text>
 
+
+        <circle cx={200} cy={50} r={5} fill={'black'}></circle>
+        <circle cx={300} cy={30} r={5} fill={'black'}></circle>
+        <text x={200} y={50}>
+          {/*
+            x,y为容器重新设置相关坐标
+            dx dy 将文字从当前位置进行平移
+            rotate 对文字进行旋转
+            textLength
+          */}
+          <tspan
+            x={300} y={30}
+            rotate={0}
+            textLength={150}
+            dx={-100}
+            dy={20}>
+            This is an example text.
+          </tspan>
+        </text>
+
+        <path id="my_path" d="M 100,200 C 250,150 400,150 500,200" stroke={'black'} strokeWidth={30} fill="transparent" />
+        <text fill={'white'}>
+          <textPath  href="#my_path">
+            This text follows a curve.This text follows a curve.This text follows a curve.
+          </textPath>
+        </text>
       </svg>
     </>
   )
