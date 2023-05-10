@@ -1,4 +1,5 @@
 import React from 'react'
+import style from './svg.module.less'
 
 export function SVG() {
 
@@ -6,12 +7,125 @@ export function SVG() {
     <>
       {/*<StartSVG />*/}
       {/*<PositionSvg />*/}
-      <BasicShapes />
-      <Path />
+      {/*<BasicShapes />*/}
+      {/*<Path />*/}
+      {/*<Strokes />*/}
+      <Gradient />
     </>
   )
 }
 
+
+function Gradient() {
+  return (
+    <>
+      <svg width="500" height="500" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          {/*
+           使用offset(偏移属性)和stop-color(颜色中值)属性说明渐变在特定位置上应该是什么颜色
+          */}
+          <linearGradient id="Gradient1">
+            <stop className={style.stop1} offset="0%"/>
+            <stop className={style.stop2} offset="30%"/>
+            <stop className={style.stop3} offset="60%"/>
+            <stop className={style.stop4} offset="100%"/>
+          </linearGradient>
+          <linearGradient id="Gradient2" x1="0" y1="0"  x2="0"  y2="1">
+            <stop offset="0%" stopColor="red"/>
+            <stop offset="50%" stopColor="yellow" />
+            <stop offset="100%" stopColor="blue"/>
+          </linearGradient>
+        </defs>
+        <line x1={0} y1={0} x2={500} y2={500} strokeWidth={5} stroke={'url(#Gradient1)'}></line>
+        <rect  x="200" y="10" rx="15" ry="15" width="100" height="100" fill="none" strokeWidth={5} stroke={'url(#Gradient1)'}/>
+        <rect  x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#Gradient1)" />
+        <rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#Gradient2)"/>
+
+      </svg>
+
+    </>
+  )
+}
+
+function Strokes() {
+
+  return (
+    <>
+
+      <>
+        <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="Gradient1">
+              <stop className="stop1" offset="0%"/>
+              <stop className="stop2" offset="50%"/>
+              <stop className="stop3" offset="100%"/>
+            </linearGradient>
+            <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="red"/>
+              <stop offset="50%" stopColor="black" stopOpacity="0"/>
+              <stop offset="100%" stopColor="blue"/>
+            </linearGradient>
+
+          </defs>
+
+          <rect id="rect1" x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#Gradient2)"/>
+          <rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#Gradient2)"/>
+
+        </svg>
+
+      </>
+      <>
+        <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="RadialGradient1">
+              <stop offset="0%" stopColor="red"/>
+              <stop offset="100%" stopColor="blue"/>
+            </radialGradient>
+            <radialGradient id="RadialGradient2" cx="0.25" cy="0.25" r="0.25">
+              <stop offset="0%" stopColor="red"/>
+              <stop offset="100%" stopColor="blue"/>
+            </radialGradient>
+          </defs>
+
+          <rect x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient1)"/>
+          <rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient2)"/>
+
+        </svg>
+
+      </>
+      <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+
+        <rect x="10" height="180" y="10" width="180" id="MyRect"/>
+        {/*
+          strokeLinecap控制边框终点的形状
+        */}
+        {/*<rect x={10} y={10} height={100} width={100}*/}
+        {/*  stroke={'blue'} strokeWidth={15} fill={'red'} strokeLinecap={'round'} fillOpacity={0.9} strokeOpacity={0.8}></rect>*/}
+        {/*<line x1="40" x2="120" y1="150" y2="150" stroke="black" strokeWidth="20"  />*/}
+        {/*<line x1="40" x2="120" y1="20" y2="20" stroke="black" strokeWidth="20" strokeLinecap="butt"/>*/}
+        {/*<line x1="40" x2="120" y1="60" y2="60" stroke="black" stroke-width="20" stroke-linecap="square"/>*/}
+        {/*<line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round"/>*/}
+        {/*
+        stroke-linecap 直线断点处的样式
+        stroke-linejoin 折线转角处的转角样式
+        */}
+        {/*<polyline points="40 60 120 60 80 20 " stroke="black" stroke-width="20"*/}
+        {/*  strokeLinecap="butt" fill="none" strokeLinejoin="miter"/>*/}
+
+        {/*<polyline points="40 140 80 100 120 140" stroke="black" stroke-width="20"*/}
+        {/*  strokeLinecap="round" fill="none" strokeLinejoin="round"/>*/}
+
+        {/*<polyline points="40 220 80 180 120 220" stroke="black" stroke-width="20"*/}
+        {/*  strokeLinecap="square" fill="none" strokeLinejoin="bevel"/>*/}
+
+        {/*<path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black"*/}
+        {/*  strokeLinecap="round" strokeWidth={10} stroke-dasharray="15,15,50"  fill="none"/>*/}
+        {/*<path d="M 10 75 L 190 75" stroke="red"*/}
+        {/*  stroke-linecap="round" stroke-width="1" stroke-dasharray="5,10, 5" fill="none"/>*/}
+      </svg>
+    </>
+  )
+}
 function Path() {
   // 关于path中的值
   // d 一个点数集以及如何绘制路径的信息
