@@ -35,7 +35,9 @@ function Gradient() {
             <stop offset="50%" stopColor="yellow" />
             <stop offset="100%" stopColor="blue"/>
           </linearGradient>
+          <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1" href="#Gradient1"/>
         </defs>
+        <rect x="120" y="120" rx="15" ry="15" width="100" height="100" fill="url(#Gradient3)"/>
         <line x1={0} y1={0} x2={500} y2={500} strokeWidth={5} stroke={'url(#Gradient1)'}></line>
         <rect  x="200" y="10" rx="15" ry="15" width="100" height="100" fill="none" strokeWidth={5} stroke={'url(#Gradient1)'}/>
         <rect  x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#Gradient1)" />
