@@ -12,7 +12,20 @@ export function SVG() {
       {/*<Strokes />*/}
       {/*<Gradient />*/}
       {/*<RadialGradient />*/}
-      <Patterns/>
+      {/*<Patterns/>*/}
+      <Text />
+    </>
+  )
+}
+
+
+function Text() {
+  return (
+    <>
+      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <text x="10" y="10">Hello World!</text>
+
+      </svg>
     </>
   )
 }
