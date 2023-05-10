@@ -11,7 +11,47 @@ export function SVG() {
       {/*<Path />*/}
       {/*<Strokes />*/}
       {/*<Gradient />*/}
-      <RadialGradient />
+      {/*<RadialGradient />*/}
+      <Patterns/>
+    </>
+  )
+}
+
+function Patterns() {
+  return (
+    <>
+      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+          <radialGradient id="Gradient1">
+            <stop offset="5%" stopColor="white"/>
+            <stop offset="95%" stopColor="blue"/>
+          </radialGradient>
+          <linearGradient id="Gradient2" x1="0" y1="0"  x2="0"  y2="1">
+            <stop offset="5%" stopColor="red"/>
+            <stop offset="95%" stopColor="orange"/>
+          </linearGradient>
+          {/*
+          pattern属性：
+            patternUnits（用于定义自身与外部容器的关系）
+                userSpaceOnUse 指明具体位置信息
+                objectBoundingBox 只需要指明百分比即可 （默认值）
+            patternContentUnits (用于定义内部元素与外部容器的关系)
+                userSpaceOnUse 指明具体位置信息（默认值）
+                objectBoundingBox 只需要指明百分比即可
+          */}
+
+          <pattern id="Pattern" x="0" y="0" width=".25" height=".25" patternContentUnits="userSpaceOnUse" patternUnits={'objectBoundingBox'}>
+            <rect x="0" y="0" width="50" height="50" fill="skyblue"/>
+            <rect x="0" y="0" width="25" height="25" fill="url(#Gradient2)"/>
+            <circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fillOpacity="0.5"/>
+            <circle cx={25} cy={24} r={25} stroke={'black'} strokeWidth={1} fill={'none'}></circle>
+          </pattern>
+
+        </defs>
+
+        <rect fill="url(#Pattern)" stroke="black" x="0" y="0" width="200" height="200"/>
+      </svg>
+
     </>
   )
 }
@@ -30,8 +70,8 @@ function RadialGradient() {
         repeat会一直重复 1 2 3 1 2 3 1 2 3···直到整个填充
 
         gradientUnits 具有 userSpaceOnUse和objectBoundingBox两个值
-        userSpaceOnUse 是需要指明具体为渐变位置信息
-        objectBoundingBox 只需要指明百分比即可
+          userSpaceOnUse 是需要指明具体为渐变位置信息
+          objectBoundingBox 只需要指明百分比即可 (默认值)
         */}
         <defs>
 
