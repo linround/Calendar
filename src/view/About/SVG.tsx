@@ -10,11 +10,66 @@ export function SVG() {
       {/*<BasicShapes />*/}
       {/*<Path />*/}
       {/*<Strokes />*/}
-      <Gradient />
+      {/*<Gradient />*/}
+      <RadialGradient />
     </>
   )
 }
 
+function RadialGradient() {
+  return (
+    <>
+      <svg width="120" height="120" version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
+        {/*
+        为什么需要焦点呢？
+        cx cy r 确定了径向渐变所影响的范围 如果不指定焦点位置，默认焦点就是中心坐标即cx cy
+        指定焦点即可指明对应的"光源"坐标点，从而更改相关的渐变效果
+        */}
+        <defs>
+          <radialGradient id="Gradient"
+            cx="0.4" cy="0.4" r="0.3" fx="0.24" fy="0.4" >
+            <stop offset="0%" stopColor="white"/>
+            <stop offset="100%" stopColor="#2c2d07"/>
+          </radialGradient>
+        </defs>
+
+        <rect x="0" y="0" rx="15" ry="15" width="100" height="100"
+          fill="url(#Gradient)" stroke="black" strokeWidth="2"/>
+
+        <circle cx="40" cy="40" r="30" fill="transparent" stroke="white" strokeWidth="2"/>
+        <circle cx="50" cy="50" r="50" fill="transparent" stroke="white" strokeWidth="2"/>
+        <circle cx="35" cy="35" r="2" fill="white" stroke="white"/>
+        <circle cx="60" cy="60" r="2" fill="white" stroke="white"/>
+        <text x="38" y="40" fill="white" fontFamily="sans-serif" fontSize="10pt">(fx,fy)</text>
+        <text x="60" y="60" fill="white" fontFamily="sans-serif" fontSize="10pt">(cx,cy)</text>
+
+      </svg>
+      <svg width="120" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        {/*<defs>*/}
+        {/*  <radialGradient id="RadialGradient1">*/}
+        {/*    <stop offset="0%" stopColor="red"/>*/}
+        {/*    <stop offset="100%" stopColor="blue"/>*/}
+        {/*  </radialGradient>*/}
+        {/*  /!**/}
+        {/*  cx cy 属性定义了中心点的相对坐标 值都属于0-1*/}
+        {/*  r 属性定义了发散的相对径向半径,即会被发散影响到的范围 值属于0-1*/}
+        {/*  stopColor是最开始的颜色*/}
+        {/*  *!/*/}
+        {/*  <radialGradient id="RadialGradient2" cx="0.5" cy="0.5" r="0.5">*/}
+        {/*    <stop offset="0%" stopColor="white"/>*/}
+        {/*    <stop offset="50%" stopColor="blue"/>*/}
+        {/*    <stop offset="80%" stopColor="green"/>*/}
+        {/*    <stop offset="100%" stopColor="orange"/>*/}
+        {/*  </radialGradient>*/}
+        {/*</defs>*/}
+        {/*<rect x="10" y="10" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient1)"/>*/}
+        {/*<rect x="10" y="120" rx="15" ry="15" width="100" height="100" fill="url(#RadialGradient2)"/>*/}
+
+      </svg>
+    </>
+  )
+}
 
 function Gradient() {
   return (
@@ -22,10 +77,11 @@ function Gradient() {
       <svg width="500" height="500" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <defs>
           {/*
-           使用offset(偏移属性)和stop-color(颜色中值)属性说明渐变在特定位置上应该是什么颜色
+          linearGradient 线性渐变 沿着某个方向到什么位置截止
+           使用offset(偏移属性)和stop-color(颜色中值)属性说明渐变在特定位置上应该是什么颜色 offset属于0-1
           */}
           <linearGradient id="Gradient1">
-            <stop className={style.stop1} offset="0%"/>
+            <stop className={style.stop1} offset="0.3"/>
             <stop className={style.stop2} offset="30%"/>
             <stop className={style.stop3} offset="60%"/>
             <stop className={style.stop4} offset="100%"/>
@@ -35,7 +91,7 @@ function Gradient() {
             <stop offset="50%" stopColor="yellow" />
             <stop offset="100%" stopColor="blue"/>
           </linearGradient>
-          <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1" href="#Gradient1"/>
+          <linearGradient id="Gradient3" x1="0" x2="0" y1="0" y2="1" href="#Gradient1" />
         </defs>
         <rect x="120" y="120" rx="15" ry="15" width="100" height="100" fill="url(#Gradient3)"/>
         <line x1={0} y1={0} x2={500} y2={500} strokeWidth={5} stroke={'url(#Gradient1)'}></line>
@@ -62,7 +118,10 @@ function Strokes() {
               <stop className="stop2" offset="50%"/>
               <stop className="stop3" offset="100%"/>
             </linearGradient>
-            <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+            {/*
+            linearGradient 中stopColor是最终的颜色
+            */}
+            <linearGradient id="Gradient2" x1="0" y1="0"  x2="0" y2="1">
               <stop offset="0%" stopColor="red"/>
               <stop offset="50%" stopColor="black" stopOpacity="0"/>
               <stop offset="100%" stopColor="blue"/>
