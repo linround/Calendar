@@ -13,12 +13,32 @@ export function SVG() {
       {/*<Gradient />*/}
       {/*<RadialGradient />*/}
       {/*<Patterns/>*/}
-      <Text />
+      {/*<Text />*/}
+      <Transformations />
     </>
   )
 }
 
 
+
+// 基础变形
+function Transformations() {
+  return (
+    <>
+      <svg width="600" height="600" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect x={0} y={0} height={600} width={600} stroke={'red'} strokeWidth={5} fill={'none'}></rect>
+        <g fill="red">
+          {/*
+
+          */}
+          <rect x="0" y="0" width="50" height="50"  transform="translate(200,250)"/>
+          <rect x="200" y="200" width="50" height="50" transform="rotate(-45)"  />
+        </g>
+
+      </svg>
+    </>
+  )
+}
 function Text() {
   return (
     <>
