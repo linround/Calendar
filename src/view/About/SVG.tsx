@@ -25,13 +25,28 @@ function RadialGradient() {
         为什么需要焦点呢？
         cx cy r 确定了径向渐变所影响的范围 如果不指定焦点位置，默认焦点就是中心坐标即cx cy
         指定焦点即可指明对应的"光源"坐标点，从而更改相关的渐变效果
+        spreadMethod 具有三个值： pad reflect repeat 指明第一次渐变结束后的填充行为
+        reflect 会一直反复 1 2 3 2 1 2 3 2 1···· 直到将整个填充
+        repeat会一直重复 1 2 3 1 2 3 1 2 3···直到整个填充
+
+        gradientUnits 具有 userSpaceOnUse和objectBoundingBox两个值
+        userSpaceOnUse 是需要指明具体为渐变位置信息
+        objectBoundingBox 只需要指明百分比即可
         */}
         <defs>
+
           <radialGradient id="Gradient"
-            cx="0.4" cy="0.4" r="0.3" fx="0.24" fy="0.4" >
+            cx="0.1" cy="0.1" r="0.20" fx="0.10" fy="0.10"  gradientUnits="objectBoundingBox" spreadMethod={'reflect'}>
             <stop offset="0%" stopColor="white"/>
-            <stop offset="100%" stopColor="#2c2d07"/>
+            <stop offset="50%" stopColor="blue"/>
+            <stop offset="100%" stopColor="red"/>
           </radialGradient>
+          {/*<radialGradient id="Gradient"*/}
+          {/*  cx="10" cy="10" r="20" fx="10" fy="10"  gradientUnits="userSpaceOnUse" spreadMethod={'reflect'}>*/}
+          {/*  <stop offset="0%" stopColor="white"/>*/}
+          {/*  <stop offset="50%" stopColor="blue"/>*/}
+          {/*  <stop offset="100%" stopColor="red"/>*/}
+          {/*</radialGradient>*/}
         </defs>
 
         <rect x="0" y="0" rx="15" ry="15" width="100" height="100"
