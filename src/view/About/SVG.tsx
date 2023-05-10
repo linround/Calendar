@@ -39,15 +39,57 @@ function Patterns() {
                 userSpaceOnUse 指明具体位置信息（默认值）
                 objectBoundingBox 只需要指明百分比即可
           */}
-
+          {/*pattern 会不断的在对应空间中重复*/}
           <pattern id="Pattern" x="0" y="0" width=".25" height=".25" patternContentUnits="userSpaceOnUse" patternUnits={'objectBoundingBox'}>
             <rect x="0" y="0" width="50" height="50" fill="skyblue"/>
             <rect x="25" y="25" width="20" height="20" fill="url(#Gradient2)"/>
             <circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fillOpacity="0.5"/>
-            <circle cx={25} cy={24} r={25} stroke={'black'} strokeWidth={1} fill={'none'}></circle>
+            {/*
+            以下圆圈转为百分比 都是相对于最外部容器的大小进行比例变化
+            25/200 = 0.125
+            2/200 = 0.01
+            */}
+            <circle cx={25} cy={25} r={25} stroke={'black'} strokeWidth={2} fill="transparent"></circle>
           </pattern>
-
         </defs>
+
+
+
+
+
+
+
+
+        {/*百分比形式下的pattern*/}
+
+        {/*<defs>*/}
+        {/*  <radialGradient id="Gradient1">*/}
+        {/*    <stop offset="5%" stopColor="white"/>*/}
+        {/*    <stop offset="95%" stopColor="blue"/>*/}
+        {/*  </radialGradient>*/}
+        {/*  <linearGradient id="Gradient2" x1="0" y1="0"  x2="0"  y2="1">*/}
+        {/*    <stop offset="5%" stopColor="red"/>*/}
+        {/*    <stop offset="95%" stopColor="orange"/>*/}
+        {/*  </linearGradient>*/}
+        {/*  /!**/}
+        {/*  pattern属性：*/}
+        {/*    patternUnits（用于定义自身与外部容器的关系）*/}
+        {/*        userSpaceOnUse 指明具体位置信息*/}
+        {/*        objectBoundingBox 只需要指明百分比即可 （默认值）*/}
+        {/*    patternContentUnits (用于定义内部元素与外部容器的关系)*/}
+        {/*        userSpaceOnUse 指明具体位置信息（默认值）*/}
+        {/*        objectBoundingBox 只需要指明百分比即可*/}
+        {/*  *!/*/}
+        {/*  /!*pattern 会不断的在对应空间中重复*!/*/}
+        {/*  <pattern id="Pattern" x="0" y="0" width=".25" height=".25" patternContentUnits="objectBoundingBox" patternUnits={'objectBoundingBox'}>*/}
+        {/*    /!*<rect x="0" y="0" width="50" height="50" fill="skyblue"/>*!/*/}
+        {/*    /!*<rect x="25" y="25" width="20" height="20" fill="url(#Gradient2)"/>*!/*/}
+        {/*    /!*<circle cx="25" cy="25" r="20" fill="url(#Gradient1)" fillOpacity="0.5"/>*!/*/}
+        {/*    <circle cx={0.125} cy={0.125} r={0.125} stroke={'black'} strokeWidth={0.01} fill="transparent"></circle>*/}
+        {/*  </pattern>*/}
+        {/*</defs>*/}
+
+
 
         <rect fill="url(#Pattern)" stroke="black" x="0" y="0" width="200" height="200"/>
       </svg>
