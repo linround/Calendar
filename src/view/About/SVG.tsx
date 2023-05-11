@@ -14,12 +14,94 @@ export function SVG() {
       {/*<RadialGradient />*/}
       {/*<Patterns/>*/}
       {/*<Text />*/}
-      <Transformations />
+      {/*<Transformations />*/}
       {/*<Transform />*/}
+      <Skew />
     </>
   )
 }
 
+function Skew() {
+  return (
+    <>
+      {/*<svg viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg">*/}
+      {/*  <rect x="-3" y="-3" width="6" height="6" />*/}
+
+      {/*  <rect x="-3" y="-3" width="6" height="6" fill="red"*/}
+      {/*    transform="skewY(30)" />*/}
+      {/*</svg>*/}
+      {/*
+
+
+      skewY(<a>) 变换函数指定了沿 y 轴倾斜 a° 的倾斜变换。 skewY 同理
+      */}
+      <svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        {/*
+          */}
+        <rect x="200" y="200"  width="60" height="60" fill={'none'} stroke={'black'} strokeWidth={5} />
+        <circle cx={230} cy={230} r={5} fill={'blue'} ></circle>
+
+
+        {/*
+        matrix(<a> <b> <c> <d> <e> <f>)
+        a 水平缩放 c 水平倾斜 e 水平移动
+        b 垂直倾斜 d 垂直缩放 f 垂直移动
+            1        1        0
+        */}
+        <rect x="200" y="200"
+          transform="matrix(1 0 0 1 -60 0)"
+          width="60" height="60" stroke={'green'} fill={'none'} strokeWidth={6} />
+
+        {/*
+        垂直倾斜0.6 =>skewY(30) tan30
+        垂直倾斜1 =>skewY(45)  即正切值 tan45
+        垂直倾斜1.7 =>skewY(60) tan60
+        */}
+        <rect x="200" y="200"
+          transform="matrix(1 0.59 0 1 -0 -0)"
+          width="60" height="60" stroke={'green'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform="matrix(1 1 0 1 -0 -0)"
+          width="60" height="60" stroke={'green'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform="matrix(1 1.7 0 1 -0 -0)"
+          width="60" height="60" stroke={'green'} fill={'none'} strokeWidth={6} />
+
+
+        {/*
+        旋转 未指定的话，旋转中心就是零点
+          - 默认正数是顺时针旋转
+          - 负数是逆时针旋转
+        */}
+        <rect x="200" y="200"
+          transform={'rotate(30,230,230)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+
+
+        <rect x="200" y="200"
+          transform={'skewX(30)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform={'skewX(45)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform={'skewX(60)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+
+        <rect x="200" y="200"
+          transform={'skewY(30)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform={'skewY(45)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+        <rect x="200" y="200"
+          transform={'skewY(60)'}
+          width="60" height="60" stroke={'blue'} fill={'none'} strokeWidth={6} />
+
+      </svg>
+    </>
+  )
+}
 function Transform() {
   return (
     <>
@@ -57,7 +139,8 @@ function Transformations() {
                 scale() 左边点的x,y都会（相对于0,0坐标）进行缩放，所以长度也会发生缩放
           */}
           <rect x="100" y="100" width="50" height="50"  transform="translate(100,100)"/>
-          <rect x="200" y="200" width="50" height="50"  />
+          <rect x="200" y="200"  width="60" height="60"  />
+          <circle cx={230} cy={230} r={5} fill={'blue'}></circle>
           <rect x="200" y="200" width="50" height="50" transform="rotate(-45)"  />
           {/*
             以下缩放与viewBox是一致的
