@@ -15,11 +15,29 @@ export function SVG() {
       {/*<Patterns/>*/}
       {/*<Text />*/}
       <Transformations />
+      {/*<Transform />*/}
     </>
   )
 }
 
+function Transform() {
+  return (
+    <>
+      <svg viewBox="-40 0 150 100" xmlns="http://www.w3.org/2000/svg">
+        <g fill="grey"
+          transform="rotate(-10 50 100)
+                translate(-36 45.5)
+                skewX(40)
+                scale(1 0.5)">
+          <path id="heart" d="M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z" />
+        </g>
 
+        <use href="#heart" fill="none" stroke="red"/>
+      </svg>
+
+    </>
+  )
+}
 
 // 基础变形
 function Transformations() {
@@ -29,10 +47,27 @@ function Transformations() {
         <rect x={0} y={0} height={600} width={600} stroke={'red'} strokeWidth={5} fill={'none'}></rect>
         <g fill="red">
           {/*
-
+            变形基础：
+              translate 平移 将左边顶平移对应的距离
+              rotate  旋转（默认根据中心点 0,0 旋转一定的角度）
+              倾斜、斜切
+                skewX()
+                skewY()
+              缩放
+                scale() 左边点的x,y都会（相对于0,0坐标）进行缩放，所以长度也会发生缩放
           */}
-          <rect x="0" y="0" width="50" height="50"  transform="translate(200,250)"/>
+          <rect x="100" y="100" width="50" height="50"  transform="translate(100,100)"/>
+          <rect x="200" y="200" width="50" height="50"  />
           <rect x="200" y="200" width="50" height="50" transform="rotate(-45)"  />
+          {/*
+            以下缩放与viewBox是一致的
+            实际是100*100，但是viewBox定义成了50*50,所以放在 内部的元素就相当于扩大了100/50=2倍
+          */}
+
+          {/*<rect x="0" y="0" width="50" height="50" transform="scale(2)"  />*/}
+          <svg width="100" height="100" viewBox="0 0 50 50">
+            <rect width="50" height="50" />
+          </svg>
         </g>
 
       </svg>
