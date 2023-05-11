@@ -18,13 +18,33 @@ export function SVG() {
       {/*<Transform />*/}
       {/*<Skew />*/}
       {/*<Clip />*/}
-      <Mask />
+      {/*<Mask />*/}
+      <Other />
     </>
   )
 }
 
 
+function Other() {
+  return (
+    <>
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        width="200"
+        height="200">
+        <image
+          x="90"
+          y="-65"
+          width="128"
+          height="146"
+          transform="rotate(45)"
+          href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/image/mdn_logo_only_color.png" />
+      </svg>
 
+    </>
+  )
+}
 function Mask() {
   return (
     <>
