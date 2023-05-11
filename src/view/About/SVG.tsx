@@ -19,15 +19,129 @@ export function SVG() {
       {/*<Skew />*/}
       {/*<Clip />*/}
       {/*<Mask />*/}
-      <Other />
+      {/*<Other />*/}
+      <Filter />
     </>
   )
 }
 
+function Filter() {
+  return (
+    <>
+      {/*
+        使用 width height指定了块状的绝对宽高
+        使用 viewBox 对绝对宽高进行单位划分
+        使用ViewBox之后，内部的元素就是根据ViewBox的单位进行划分
+      */}
+      <svg width="400" height={400} viewBox="0 0 400 400"
+        xmlns="http://www.w3.org/2000/svg" version="1.1">
+        {/*
+          使用Circle标识四个端点的坐标位置
+        */}
+        <circle cx={0} cy={0} r={5} stroke={'blue'} strokeWidth={30}></circle>
+        <circle cx={0} cy={400} r={5} stroke={'blue'} strokeWidth={30}></circle>
+        <circle cx={400} cy={0} r={5} stroke={'blue'} strokeWidth={30}></circle>
+        <circle cx={400} cy={400} r={5} stroke={'blue'} strokeWidth={30}></circle>
+        <defs>
+          {/*
+          filterUnits 定义x,y width height使用的坐标系系统
+              objectBoundingBox 元素的包围盒的分数或百分比。
+              userSpaceOnUse 元素在当前用户坐标系中的位置和大小
+          */}
+          <filter id="MyFilter" filterUnits="userSpaceOnUse"
+            x="0" y="0"
+            width="200" height="120">
+            {/*
+            feGaussianBlur filter参数之一  高斯模糊
+              in 定义了输入信息
+                SourceGraphic
+                SourceAlpha 只使用透明度
+                BackgroundImage
+                BackgroundAlpha 只使用透明度
+                FillPaint
+                StrokePaint
+              stdDeviation 属性定义了模糊操作的标准差  标准差越大越模糊
+              设置了模糊度为 4 以及把 result 保存在了一个名为 "blur" 的临时缓冲区中
+            */}
+            {/*
+              4. 使用 feGaussianBlur 进行高斯模糊 输入SourceAlpha 输出blur
+            */}
+            <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="5" />
+            {/*
+              5. 使用 feOffset 创建一个偏移图元  输入blur  输出offsetBlur
+            */}
+            <feOffset in="blur" dx="10"  dy="10" result="offsetBlur"/>
+            {/*
+              6. 使用feSpecularLighting生成一个光照效果
+              输入 blur 输出 specOut
+            */}
+            <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75"
+              specularExponent="20" lighting-color="#bbbbbb"
+              result="specOut">
+              <fePointLight x="-5000" y="-10000" z="20000"/>
+            </feSpecularLighting>
+            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+            <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic"
+              k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+
+            <feMerge>
+              <feMergeNode in="offsetBlur"/>
+              <feMergeNode in="litPaint"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g filter={'url(#MyFilter)'}>
+          {/*
+            1.画一个外圈
+          */}
+          <path fill="none" stroke="black" stroke-width="10"
+            d="M50,66 c-50,0 -50,-60 0,-60 h100 c50,0 50,60 0,60z " />
+
+          <circle cx={50} cy={5} r={5} stroke={'blue'} fill={'yellow'} strokeWidth={2}></circle>
+          <circle cx={50} cy={66} r={5} stroke={'blue'} fill={'yellow'} strokeWidth={2}></circle>
+          {/*
+            2.内部画一个实体
+          */}
+          <path fill="black"
+            d="M60,56 c-30,0 -30,-40 0,-40 h80 c30,0 30,40 0,40z" />
+          <circle cx={60} cy={56} r={5} stroke={'blue'} fill={'yellow'} strokeWidth={2}></circle>
+          <circle cx={60} cy={20} r={5} stroke={'blue'} fill={'yellow'} strokeWidth={2}></circle>
+          {/*
+            3.绘制文字位置
+          */}
+          <g fill="#FFFFFF" stroke="black" font-family="Verdana" >
+            <text x="52" y="42">SVG</text>
+
+            <circle cx={52} cy={52} r={5} stroke={'blue'} strokeWidth={2}></circle>
+          </g>
+        </g>
+      </svg>
+
+    </>
+  )
+}
 
 function Other() {
   return (
     <>
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="5,5 100,30 70,100 20,150" fill={'blue'} />
+        <foreignObject x="20" y="40" width="50" height={20}>
+          <div style={{
+            height: '100%',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            color: 'white', overflowY: 'auto',
+          }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed mollis mollis mi ut ultricies. Nullam magna ipsum,
+            porta vel dui convallis, rutrum imperdiet eros. Aliquam
+            erat volutpat.
+          </div>
+        </foreignObject>
+      </svg>
+
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
