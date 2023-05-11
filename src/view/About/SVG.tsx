@@ -34,12 +34,14 @@ function Other() {
         width="200"
         height="200">
         <image
-          x="90"
-          y="-65"
-          width="128"
-          height="146"
-          transform="rotate(45)"
+          x="100"
+          y="100"
+          width="50"
+          height="50"
+          transform="rotate(45,100 100)"
           href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/image/mdn_logo_only_color.png" />
+        <rect x={0} y={0} width={200} height={200} strokeWidth={5} stroke={'blue'} fill={'none'}></rect>
+        <circle cx={100} cy={100} r={5} strokeWidth={5} stroke={'blue'} fill={'none'}></circle>
       </svg>
 
     </>
