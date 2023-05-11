@@ -16,7 +16,84 @@ export function SVG() {
       {/*<Text />*/}
       {/*<Transformations />*/}
       {/*<Transform />*/}
-      <Skew />
+      {/*<Skew />*/}
+      {/*<Clip />*/}
+      <Mask />
+    </>
+  )
+}
+
+
+
+function Mask() {
+  return (
+    <>
+      <svg width={600} height={600} version="1.1" xmlns="http://www.w3.org/2000/svg" >
+        <defs>
+          <linearGradient id="Gradient">
+            <stop offset="0" stopColor="white" stopOpacity="0" />
+            <stop offset="1" stopColor="white" stopOpacity="1" />
+          </linearGradient>
+          <linearGradient id="Gradient2" x1="0" y1="0"  x2="1"  y2="0">
+            <stop offset="0%" stopColor="green"/>
+            <stop offset="100%" stopColor="red"/>
+          </linearGradient>
+          <mask id="Mask">
+            <rect x="0" y="0" width="100" height="200" fill="url(#Gradient)"  />
+          </mask>
+        </defs>
+        {/*
+          opacity={0.5} 和 fillOpacity={0.5} 是一致的
+          strokeOpacity 用来描述描边是的透明度填充
+        */}
+        <rect x="200" y="200" width="200" height="200" fill="url(#Gradient2)"   fillOpacity={0.5} />
+        <rect x="0" y="0" width="200" height="200" fill="green" />
+        {/*
+        mask
+          宽度只有一半，高度和容器等高
+          从左到右透明度线性渐变
+
+        mask使用透明度遮住了红色，从而看到从绿色到红色的过渡
+        如果没有mask就红了
+        */}
+        <rect x="0" y="0" width="200" height="200" fill="red" mask="url(#Mask)" />
+      </svg>
+      {/*
+        这里定义了 使用红色填充 半径为50的红色内容填充；边宽40，黄色不透明度为0.5描边
+        发生了两个颜色交叉
+            黄色边线向内 与红色交叉
+            黄色边线向外 与蓝色交叉
+            从而产生过渡色
+
+        同时还发现，描边的中心点圆的边缘线，宽度均匀的向两侧延申
+      */}
+      <svg  width="200" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg"  >
+        <rect x="0" y="0" width="200" height="200" fill="blue" />
+        <circle cx="100" cy="100" r="50" stroke="yellow" strokeWidth="40" strokeOpacity="0.5" fill="red" />
+        <circle cx="100" cy="100" r="70" stroke="white" strokeWidth="5"  fill="none" />
+        <circle cx="100" cy="100" r="30" stroke="white" strokeWidth="5"  fill="none" />
+      </svg>
+
+    </>
+  )
+}
+
+function Clip() {
+  return (
+    <>
+      <svg width={600} height={600} version="1.1" xmlns="http://www.w3.org/2000/svg" >
+        <defs>
+          <clipPath id="cut-off-bottom">
+            <rect x="0" y="0" width="200" height="100" />
+          </clipPath>
+        </defs>
+
+        <circle cx="100" cy="100" r="100" clip-path="url(#cut-off-bottom)" />
+
+        <circle cx="100" cy="100" r="8" fill={'red'} clip-path="url(#cut-off-bottom)"/>
+      </svg>
+
+
     </>
   )
 }
