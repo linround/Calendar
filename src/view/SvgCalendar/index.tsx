@@ -53,9 +53,36 @@ function SvgCalendarLeft() {
 }
 function SvgCalendarRight() {
   // 绘制右边区域
+  function IconComponent() {
+    const startX = 40
+    const startY = 20
+    const endY = startY
+    const endX = leftWidth - startX
+    const ctrX = leftWidth / 2
+    const ctrY = startY + 10
+    return (
+      <>
+        <defs>
+          <path id="MyPath"
+            d={`
+            M ${startX} ${startY}
+             Q ${ctrX} ${ctrY} ${endX} ${endY}
+            `} />
+        </defs>
+        <use href="#MyPath" fill="none" stroke="red"  />
+        <text font-family="Verdana" font-size="23">
+          <textPath href="#MyPath">
+            UCalendar
+          </textPath>
+        </text>
+
+      </>
+    )
+  }
   return (
     <g>
-      <rect x={leftWidth} y={centerY} width={rightWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'}></rect>
+      <rect x={leftWidth} y={centerY} width={rightWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
+      <IconComponent />
     </g>
   )
 }
