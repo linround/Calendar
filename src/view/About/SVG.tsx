@@ -68,22 +68,36 @@ function Filter() {
             */}
             <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="5" />
             {/*
-              5. 使用 feOffset 创建一个偏移图元  输入blur  输出offsetBlur
+              5. 使用 feOffset 创建一个偏移图元  输入blur  输出offsetBlur.即得到阴影图元
             */}
             <feOffset in="blur" dx="10"  dy="10" result="offsetBlur"/>
             {/*
-              6. 使用feSpecularLighting生成一个光照效果
+              6. 使用feSpecularLighting生成一个光照效果,使用alpha通道作为映射。从而使该滤镜照亮一个源图形；
               输入 blur 输出 specOut
+              surfaceScale  滤光器基元的表面高度
+              specularConstant 控制镜面照明的反射率 值越大反射越强
+              specularExponent 控制光源的焦点。值越大，光线越亮
+              result 得到最终光照效果的输出
             */}
-            <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75"
-              specularExponent="20" lighting-color="#bbbbbb"
+            <feSpecularLighting in="blur" surfaceScale="4" specularConstant=".75"
+              specularExponent="80" lighting-color="yellow"
               result="specOut">
-              <fePointLight x="-5000" y="-10000" z="20000"/>
+              {/*
+                fePointLight 定义光源位置
+              */}
+              <fePointLight x="0" y="0" z="20000"/>
             </feSpecularLighting>
-            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
-            <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic"
-              k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+            {/*
+              feComposite 滤镜执行两个输入图像的智能像素组合
+            */}
 
+            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
+            <feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic"
+              k1="0" k2="10" k3="1" k4="0" result="litPaint"/>
+            {/*
+            feMerge滤镜允许同时应用滤镜效果而不是按顺序应用滤镜效果
+            feMergeNode 元素拿另一个滤镜的结果，让它的父<feMerge>元素处理。
+            */}
             <feMerge>
               <feMergeNode in="offsetBlur"/>
               <feMergeNode in="litPaint"/>
