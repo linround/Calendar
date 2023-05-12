@@ -7,6 +7,7 @@ import { Init } from '../view/Init/Init'
 import { V2OutSideSource } from '../view/LCalendar/v2/OutSideSource'
 import { SetState } from '../view/beta/SetState'
 import { About } from '../view/About'
+import { SvgCalendar } from '../view/SvgCalendar'
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,9 @@ export const router = createBrowserRouter([
       { path: 'calendar',  element: <CalendarPage />, },
       { path: 'v2Calendar', element: <V2OutSideSource />, },
       { path: 'SetState', element: <SetState />, },
-      { path: 'About', element: <About />, }
+      { path: 'About', element: <About />, },
+      { path: 'SvgCalendar', element: <SvgCalendar />, },
+      {}
     ],
   },
   {

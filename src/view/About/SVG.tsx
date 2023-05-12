@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './svg.module.less'
+
 import './svg.css'
 
 export function SVG() {
@@ -57,7 +58,7 @@ function Line() {
 
 function SvgStyle() {
   return (
-    <svg width="600px" height="600px" viewBox="-300 -300 600 600"
+    <svg className='my-svg' width="600px" height="600px" viewBox="-300 -300 600 600"
       xmlns="http://www.w3.org/2000/svg" >
       <defs>
         <radialGradient id="fade" cx="0" cy="0" r="200"
