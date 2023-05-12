@@ -30,6 +30,8 @@ svg {
 
 /* petals */
 .segment-fill {
+  
+  transition: all .5s linear;
   fill: var(--segment-fill-fill);
   stroke: var(--segment-fill-stroke);
   stroke-width: var(--segment-fill-stroke-width);
@@ -81,7 +83,7 @@ svg {
 }
 
 #outer-petals .segment:hover > .segment-fill {
-  fill: plum;
+  fill: black;
   stroke: none;
 }
 
@@ -97,7 +99,7 @@ svg {
   --segment-edge-fill: none;
   --segment-edge-stroke: yellowgreen;
   --segment-edge-stroke-width: 9;
-  --segment-fill-fill-hover: darkseagreen;
+  --segment-fill-fill-hover: blue;
   --segment-fill-stroke-hover: none;
   --segment-edge-stroke-hover: green;
 }
@@ -119,7 +121,7 @@ svg {
 }
 
 #inner-petals .segment:hover > .segment-fill {
-  fill: darkseagreen;
+  fill: red;
   stroke: none;
 }
 

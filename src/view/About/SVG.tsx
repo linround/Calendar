@@ -24,7 +24,9 @@ export function SVG() {
       {/*<Filter />*/}
       {/*<Font/>*/}
       {/*<SvgImg />*/}
+      {/*<Line></Line>*/}
       <SvgStyle />
+
     </>
   )
 }
@@ -32,17 +34,31 @@ export function SVG() {
 
 
 
+function Line() {
+  return (
+    <>
+      <svg width="500" height="500" viewBox="0 0 1000 1000"
+        xmlns="http://www.w3.org/2000/svg" >
 
+        <path d="M 0,800
+        C50,800
+        100 700
+        150 750
+        C200 550
+         250 400
+         300 600
+
+
+        " fill="none" stroke="blue" strokeWidth="5"/>
+      </svg>
+    </>
+  )
+}
 
 function SvgStyle() {
   return (
     <svg width="600px" height="600px" viewBox="-300 -300 600 600"
       xmlns="http://www.w3.org/2000/svg" >
-
-
-      <title>SVG demonstration</title>
-      <desc>Mozilla CSS Getting Started - SVG demonstration</desc>
-
       <defs>
         <radialGradient id="fade" cx="0" cy="0" r="200"
           gradientUnits="userSpaceOnUse">
@@ -60,7 +76,7 @@ function SvgStyle() {
         <g id="outer-petals">
           <g className="quadrant">
             <g className="segment">
-              <path className="segment-fill" d="M0,0 v-200 a40,40 0 0,0 -62,10 z"/>
+              <path className="segment-fill" d="M0,0 v-200 a40,40 0 0,0 -62,10 z" fill={'blue'}/>
               <path className="segment-edge" d="M0,-200 a40,40 0 0,0 -62,10"/>
             </g>
             <g className="segment" transform="rotate(18)">
