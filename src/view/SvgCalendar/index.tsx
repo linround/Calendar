@@ -70,7 +70,7 @@ function SvgCalendarRight() {
             `} />
         </defs>
         <use href="#MyPath" fill="none" stroke="red"  />
-        <text font-family="Verdana" font-size="23">
+        <text fontSize="24">
           <textPath href="#MyPath">
             UCalendar
           </textPath>
