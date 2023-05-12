@@ -54,8 +54,8 @@ function SvgCalendarLeft() {
 function SvgCalendarRight() {
   // 绘制右边区域
   function UCalendar() {
-    const startX = 40
-    const startY = 20
+    const startX = leftWidth * 0.2
+    const startY = pageHeight * 0.02
     const endY = startY
     const endX = leftWidth - startX
     const ctrX = leftWidth / 2
