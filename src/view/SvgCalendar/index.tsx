@@ -53,7 +53,7 @@ function SvgCalendarLeft() {
 }
 function SvgCalendarRight() {
   // 绘制右边区域
-  function IconComponent() {
+  function UCalendar() {
     const startX = 40
     const startY = 20
     const endY = startY
@@ -82,7 +82,7 @@ function SvgCalendarRight() {
   return (
     <g>
       <rect x={leftWidth} y={centerY} width={rightWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
-      <IconComponent />
+      <UCalendar />
     </g>
   )
 }
