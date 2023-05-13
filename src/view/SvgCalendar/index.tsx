@@ -147,7 +147,15 @@ function SvgCalendarRight() {
           2023年05月
         </text>
         <circle cx={dateCLeftX} cy={dateCLeftY} r={dateCRadius} fill={'none'} strokeWidth={strokeWidth} stroke={dateStroke} />
+        <polyline id={'leftTriangle'}  points={
+          `${dateCLeftX + (dateCRadius / 3)} ${dateCLeftY - (dateCRadius / 2)}
+          ${dateCLeftX + (dateCRadius / 3)} ${dateCLeftY + (dateCRadius / 2)}
+          ${dateCLeftX - (dateCRadius / 1.2)} ${dateCLeftY}
+          ${dateCLeftX + (dateCRadius / 3)} ${dateCLeftY - (dateCRadius / 2)}
+          `} stroke={'black'} strokeWidth={1} fill={'black'} strokeLinejoin="bevel"/>
         <circle cx={dateCRightX} cy={dateCRightY} r={dateCRadius} fill={'none'} strokeWidth={strokeWidth} stroke={dateStroke} />
+        <use href={'#leftTriangle'}
+          transform={`matrix(1 0 0 1 ${(dateCRadius * 2) + 5} 0) rotate(180,${dateCLeftX},${dateCLeftY})`} />
       </g>
     )
   }

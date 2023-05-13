@@ -10,7 +10,7 @@ export function SVG() {
       {/*<StartSVG />*/}
       {/*<PositionSvg />*/}
       {/*<BasicShapes />*/}
-      {/*<Path />*/}
+      <Path />
       {/*<Strokes />*/}
       {/*<Gradient />*/}
       {/*<RadialGradient />*/}
