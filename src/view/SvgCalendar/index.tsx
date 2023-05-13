@@ -86,7 +86,7 @@ function SvgCalendarRight() {
   const buttonHeight = 30
   const buttonWidth = endX - startX
   const buttonFontSize = 12
-  const buttonTextY = buttonY + (buttonHeight / 2) + 3
+  const buttonTextY = buttonY + (buttonHeight / 2) + 3 // +3是因为字体自身高度的影响
   const buttonTextX = buttonX + (buttonWidth / 2) - (buttonFontSize * 2)
 
   function AddButton() {
@@ -103,8 +103,8 @@ function SvgCalendarRight() {
             </feSpecularLighting>
 
             <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
-            <feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic"
-              k1="9" k2="0.2" k3="4" k4="-0.1" result="litPaint"/>
+            <feComposite in="SourceGraphic" in2="specOut2" operator="over"
+              k1="10" k2="10" k3="1" k4="0.50" result="litPaint"/>
             <feMerge>
               <feMergeNode in="offsetBlur"/>
               <feMergeNode in="litPaint"/>
@@ -124,11 +124,41 @@ function SvgCalendarRight() {
       </g>
     )
   }
+
+  const datePadding = 10
+  const dateX = datePadding
+  const dateY = buttonY + buttonHeight + 20
+  const dateWidth = leftWidth - (datePadding * 2)
+  const dateHeight = 30
+  const dateTextX = dateX
+  const dateTextY = dateY + (dateHeight / 2) + 6 // +6是为了适应字体本身的高度
+  const dateCRadius = dateHeight / 4
+  const dateCRightX = dateX + dateWidth - dateCRadius
+  const dateCRightY = dateTextY - 6// 去掉字体对中心点的影响
+  const dateCLeftX = dateCRightX - (2 * dateCRadius) - 5 // 减5是为了隔开两个圆
+  const dateCLeftY = dateCRightY
+  const dateStroke = 'black'
+
+  function SampleDate() {
+    return (
+      <g>
+        <rect x={dateX} y={dateY} width={dateWidth} height={dateHeight} fill={'none'} stroke={'blue'} strokeWidth={strokeWidth}/>
+        <text x={dateTextX} y={dateTextY} fill={'black'} fontSize={16}>
+          2023年05月
+        </text>
+        <circle cx={dateCLeftX} cy={dateCLeftY} r={dateCRadius} fill={'none'} strokeWidth={strokeWidth} stroke={dateStroke} />
+        <circle cx={dateCRightX} cy={dateCRightY} r={dateCRadius} fill={'none'} strokeWidth={strokeWidth} stroke={dateStroke} />
+      </g>
+    )
+  }
+
+
   return (
     <g>
       <rect x={leftWidth} y={centerY} width={rightWidth}  height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
       <UCalendar />
       <AddButton />
+      <SampleDate />
     </g>
   )
 }
