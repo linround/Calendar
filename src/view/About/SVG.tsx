@@ -22,11 +22,11 @@ export function SVG() {
       {/*<Clip />*/}
       {/*<Mask />*/}
       {/*<Other />*/}
-      {/*<Filter />*/}
+      <Filter />
       {/*<Font/>*/}
       {/*<SvgImg />*/}
       {/*<Line></Line>*/}
-      <SvgStyle />
+      {/*<SvgStyle />*/}
 
     </>
   )
@@ -314,9 +314,7 @@ function Filter() {
               objectBoundingBox 元素的包围盒的分数或百分比。
               userSpaceOnUse 元素在当前用户坐标系中的位置和大小
           */}
-          <filter id="MyFilter" filterUnits="userSpaceOnUse"
-            x="0" y="0"
-            width="200" height="120">
+          <filter id="MyFilter" filterUnits="userSpaceOnUse">
             {/*
             feGaussianBlur filter参数之一  高斯模糊
               in 定义了输入信息

@@ -53,15 +53,17 @@ function SvgCalendarLeft() {
 }
 function SvgCalendarRight() {
   // 绘制右边区域
+
+  const startX = leftWidth * 0.2
+  const startY = pageHeight * 0.02
+  const endY = startY
+  const endX = leftWidth - startX
+  // 二阶贝塞尔的控制点
+  const ctrX = leftWidth / 2
+  const ctrY = startY + 10
   function UCalendar() {
-    const startX = leftWidth * 0.2
-    const startY = pageHeight * 0.02
-    const endY = startY
-    const endX = leftWidth - startX
-    const ctrX = leftWidth / 2
-    const ctrY = startY + 10
     return (
-      <>
+      <g>
         <defs>
           <path id="MyPath"
             d={`
@@ -75,14 +77,31 @@ function SvgCalendarRight() {
             UCalendar
           </textPath>
         </text>
+      </g>
+    )
+  }
+  const buttonX = startX
+  const buttonY = startY + 20
+  const buttonHeight = 30
+  const buttonWidth = endX - startX
+  const buttonFontSize = 12
+  const buttonTextY = buttonY + (buttonHeight / 2) + 3
 
-      </>
+  function AddButton() {
+    return (
+      <g>
+        <rect x={buttonX} y={buttonY} width={buttonWidth} height={buttonHeight} fill={'transparent'} stroke={'blue'} strokeWidth={strokeWidth} />
+        <text x={buttonX} y={buttonTextY} fontSize={buttonFontSize} fontWeight={600}>
+          添加日历
+        </text>
+      </g>
     )
   }
   return (
     <g>
       <rect x={leftWidth} y={centerY} width={rightWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
       <UCalendar />
+      <AddButton />
     </g>
   )
 }
