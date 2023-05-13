@@ -344,7 +344,7 @@ function Filter() {
               result 得到最终光照效果的输出
             */}
             <feSpecularLighting in="blur" surfaceScale="4" specularConstant=".75"
-              specularExponent="80" lighting-color="yellow"
+              specularExponent="80" lightingColor="yellow"
               result="specOut">
               {/*
                 fePointLight 定义光源位置

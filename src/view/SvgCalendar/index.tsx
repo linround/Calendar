@@ -1,3 +1,4 @@
+import React from 'react'
 
 const centerX = 0
 const centerY = 0
@@ -86,12 +87,38 @@ function SvgCalendarRight() {
   const buttonWidth = endX - startX
   const buttonFontSize = 12
   const buttonTextY = buttonY + (buttonHeight / 2) + 3
+  const buttonTextX = buttonX + (buttonWidth / 2) - (buttonFontSize * 2)
 
   function AddButton() {
     return (
       <g>
-        <rect x={buttonX} y={buttonY} width={buttonWidth} height={buttonHeight} fill={'transparent'} stroke={'blue'} strokeWidth={strokeWidth} />
-        <text x={buttonX} y={buttonTextY} fontSize={buttonFontSize} fontWeight={600}>
+        <defs>
+          <filter id="buttonFilter" filterUnits="userSpaceOnUse">
+            <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="5" />
+            <feOffset in="blur" dx="5"  dy="4" result="offsetBlur"/>
+            <feSpecularLighting in="blur" surfaceScale="1" specularConstant=".45"
+              specularExponent="60" lightingColor="#b7c2cb"
+              result="specOut">
+              <fePointLight x="100" y="100" z="200"/>
+            </feSpecularLighting>
+
+            <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
+            <feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic"
+              k1="9" k2="0.2" k3="4" k4="-0.1" result="litPaint"/>
+            <feMerge>
+              <feMergeNode in="offsetBlur"/>
+              <feMergeNode in="litPaint"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <rect
+          filter={'url(#buttonFilter)'}
+          x={buttonX} y={buttonY}
+          rx={strokeWidth * 2}
+          ry={strokeWidth * 2}
+          width={buttonWidth} height={buttonHeight}
+          fill={'#transparent'} stroke={'blue'} strokeWidth={strokeWidth} />
+        <text fill={'white'} x={buttonTextX} y={buttonTextY} fontSize={buttonFontSize} fontWeight={600}>
           添加日历
         </text>
       </g>
@@ -99,7 +126,7 @@ function SvgCalendarRight() {
   }
   return (
     <g>
-      <rect x={leftWidth} y={centerY} width={rightWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
+      <rect x={leftWidth} y={centerY} width={rightWidth}  height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
       <UCalendar />
       <AddButton />
     </g>
