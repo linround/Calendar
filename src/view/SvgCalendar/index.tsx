@@ -165,20 +165,21 @@ function SvgCalendarRight() {
   const monthY = dateY + dateHeight + 20 // +20是为了分隔
   const monthWidth = dateWidth
   const monthHeight = dateHeight + 100
-  const dayWidth = monthWidth / WEEK_DAYS_TEXT.length
+  const dayLabelWidth = monthWidth / WEEK_DAYS_TEXT.length
   const dayLabelStart = monthX
   const dayLabelTextY = monthY + 16
+
   function SampleMonth() {
     return (
       <g>
         <rect x={monthX} y={monthY} width={monthWidth} height={monthHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
         {WEEK_DAYS_TEXT.map((label, index) => (
-          <>
-            <rect x={dayLabelStart + (index * dayWidth)} y={monthY} width={dayWidth} height={16} fill={'none'} stroke={'blue'} strokeWidth={strokeWidth} />
-            <text x={dayLabelStart + (index * dayWidth)} y={dayLabelTextY} fill={'black'} fontSize={16}>
+          <g key={index}>
+            <rect x={dayLabelStart + (index * dayLabelWidth)} y={monthY} width={dayLabelWidth} height={16} fill={'none'} stroke={'blue'} strokeWidth={strokeWidth} />
+            <text x={dayLabelStart + (index * dayLabelWidth)} y={dayLabelTextY} fill={'black'} fontSize={16}>
               {label}
             </text>
-          </>
+          </g>
         ))}
       </g>
     )
