@@ -208,7 +208,6 @@ function SvgCalendarRight() {
       const week = days.slice(i, i + weekDays)
       weeks.push(week)
     }
-    console.log(weeks)
     return (
       <g>
         <rect x={monthX} y={monthY} width={monthWidth} height={monthHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
@@ -232,8 +231,12 @@ function SvgCalendarRight() {
                     y={datesY + (index * datesItemHeight)}
                     width={datesItemWidth}
                     height={datesItemHeight}
-                    fill={'none'} strokeWidth={'none'} stroke={'blue'} />
-                  <text x={datesX + (dayIndex * datesItemWidth)} y={datesY + (index * datesItemHeight) + 16} fill={'black'} fontSize={16}>
+                    rx={5}
+                    fill={day.present ? '#1a73e8' : 'none'} strokeWidth={'none'} stroke={'blue'} />
+                  <text
+                    x={datesX + (dayIndex * datesItemWidth)}
+                    y={datesY + (index * datesItemHeight) + 16}
+                    fill={day.present ? 'white' : 'black'} fontSize={16}>
                     {day.day}
                   </text>
                 </g>
