@@ -1,5 +1,16 @@
 import React from 'react'
-import { WEEK_DAYS_TEXT } from '../LCalendar/utils/time'
+import { DEFAULT_WEEK_DAYS, WEEK_DAYS_TEXT } from '../LCalendar/utils/time'
+import {
+  createDayList,
+  getEndOfMonth,
+  getEndOfWeek,
+  getStartOfMonth,
+  getStartOfWeek,
+  getWeekdaySkips,
+  parseTimeStamp
+} from '../LCalendar/utils/timesStamp'
+import { DEFAULT_WEEKS } from '../LCalendar/props/propsContext'
+import { IMonth } from '../LCalendar/components/type'
 
 const centerX = 0
 const centerY = 0
@@ -164,12 +175,40 @@ function SvgCalendarRight() {
   const monthX = dateX
   const monthY = dateY + dateHeight + 20 // +20是为了分隔
   const monthWidth = dateWidth
-  const monthHeight = dateHeight + 100
+  const monthHeight = 16
+
   const dayLabelWidth = monthWidth / WEEK_DAYS_TEXT.length
   const dayLabelStart = monthX
-  const dayLabelTextY = monthY + 16
+  const dayLabelTextY = monthY + monthHeight
+
+  const datesY = dayLabelTextY
+  const datesX = dayLabelStart
+  const datesItemWidth = dayLabelWidth
+  const datesItemHeight = monthHeight
 
   function SampleMonth() {
+    const now = parseTimeStamp(Date.now(), true).date
+    const weekdaySkips = getWeekdaySkips(DEFAULT_WEEK_DAYS)
+    const monthStart = getStartOfMonth(parseTimeStamp(now, true))
+    const monthEnd = getEndOfMonth(parseTimeStamp(now, true))
+    const maxDays =  DEFAULT_WEEKS.maxWeeks * DEFAULT_WEEK_DAYS.length
+    const newStart = getStartOfWeek(monthStart, DEFAULT_WEEK_DAYS)
+    const newEnd = getEndOfWeek(monthEnd, DEFAULT_WEEK_DAYS)
+    const days = createDayList(
+      newStart,
+      newEnd,
+      parseTimeStamp(Date.now(), true),
+      weekdaySkips,
+      maxDays,
+      maxDays
+    )
+    const weeks:IMonth = []
+    const weekDays = DEFAULT_WEEK_DAYS.length
+    for (let i = 0; i < days.length;i += weekDays) {
+      const week = days.slice(i, i + weekDays)
+      weeks.push(week)
+    }
+    console.log(weeks)
     return (
       <g>
         <rect x={monthX} y={monthY} width={monthWidth} height={monthHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
@@ -181,6 +220,29 @@ function SvgCalendarRight() {
             </text>
           </g>
         ))}
+
+        {
+          weeks.map((week, index) => (
+            <g key={index}>
+              <rect x={datesX} y={datesY + (index * datesItemHeight)} width={monthWidth} height={datesItemHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} />
+              { week.map((day, dayIndex) => (
+                <g key={dayIndex}>
+                  <rect
+                    x={datesX + (dayIndex * datesItemWidth)}
+                    y={datesY + (index * datesItemHeight)}
+                    width={datesItemWidth}
+                    height={datesItemHeight}
+                    fill={'none'} strokeWidth={'none'} stroke={'blue'} />
+                  <text x={datesX + (dayIndex * datesItemWidth)} y={datesY + (index * datesItemHeight) + 16} fill={'black'} fontSize={16}>
+                    {day.day}
+                  </text>
+                </g>
+              ))
+              }
+            </g>
+          ))
+        }
+
       </g>
     )
   }
