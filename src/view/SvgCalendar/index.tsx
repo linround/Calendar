@@ -50,17 +50,87 @@ export function SvgCalendar() {
         <g>
           <rect x={centerX} y={centerY} width={pageWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'blue'} ></rect>
         </g>
-        <SvgCalendarLeft />
         <SvgCalendarRight />
+        <SvgCalendarLeft />
       </svg>
     </div>
   )
 }
 function SvgCalendarLeft() {
   // 绘制左边区域
+  const headHeight = 60
+  const headX = leftWidth
+  const headY = 0
+
+  function Head() {
+    const buttonX = headX + 20
+    const buttonHeight = headHeight * 0.5
+    const buttonWidth = 50
+    const buttonY = headY + (headHeight / 2) - (buttonHeight / 2)
+    const buttonTextX = buttonX + (buttonWidth / 2) - 6 // +-6是为了文字的居中
+    const buttonTextY = buttonY + (buttonHeight / 2) + 6
+    const textDateX = buttonX + buttonHeight + 20 // +20是为了与对应按钮之间的间隔
+    const textDateMoveX = textDateX - buttonX
+
+    const optionsX = buttonX
+    const optionsY = buttonY
+    const optionsTextX = buttonTextX
+    const optionsTextY = buttonTextY
+
+    const optionText1X = 700
+    const options1MoveX =  optionText1X - buttonX//optionsX - buttonX
+    const options2MoveX =  optionText1X + buttonWidth - buttonX //optionsX - buttonX
+    const options3MoveX =  optionText1X + (buttonWidth * 2) - buttonX //optionsX - buttonX
+    return (
+      <g>
+        <rect x={headX} y={headY} width={rightWidth} height={headHeight} strokeWidth={strokeWidth} stroke={'red'} fill={'none'} />
+        <rect filter={'url(#buttonFilter)'}
+          x={buttonX} y={buttonY} width={buttonWidth}
+          height={buttonHeight} strokeWidth={strokeWidth}
+          stroke={'blue'} fill={'none'} />
+        <text x={buttonTextX} y={buttonTextY}>
+          今
+        </text>
+        <text x={buttonTextX} y={buttonTextY} transform={`matrix(1 0 0 1 ${textDateMoveX} 0)`}>
+          2023年05月
+        </text>
+        <g
+          transform={`matrix(1 0 0 1 ${options1MoveX} 0)`}>
+          <rect filter={'url(#buttonFilter)'}
+            x={optionsX} y={optionsY} width={buttonWidth}
+            height={buttonHeight} strokeWidth={strokeWidth}
+            stroke={'blue'} fill={'none'} />
+          <text x={optionsTextX} y={optionsTextY} >
+            日
+          </text>
+        </g>
+        <g
+          transform={`matrix(1 0 0 1 ${options2MoveX} 0)`}>
+          <rect filter={'url(#buttonFilter)'}
+            x={optionsX} y={optionsY} width={buttonWidth}
+            height={buttonHeight} strokeWidth={strokeWidth}
+            stroke={'blue'} fill={'none'} />
+          <text x={optionsTextX} y={optionsTextY} >
+            周
+          </text>
+        </g>
+        <g
+          transform={`matrix(1 0 0 1 ${options3MoveX} 0)`}>
+          <rect filter={'url(#buttonFilter)'}
+            x={optionsX} y={optionsY} width={buttonWidth}
+            height={buttonHeight} strokeWidth={strokeWidth}
+            stroke={'blue'} fill={'none'} />
+          <text x={optionsTextX} y={optionsTextY} >
+            月
+          </text>
+        </g>
+      </g>
+    )
+  }
   return (
     <g>
-      <rect x={centerX} y={centerY} width={leftWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'red'}></rect>
+      <rect x={centerX} y={centerY} width={leftWidth} height={pageHeight} fill={'none'} strokeWidth={strokeWidth} stroke={'red'} />
+      <Head />
     </g>
   )
 }
