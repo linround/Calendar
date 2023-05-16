@@ -25,6 +25,12 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 ##### _WeChat Public Account_：  [Web Technology](https://mp.weixin.qq.com/s/2Up1CBJERQay_cCzTZU_zg)
 ![图片](https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzIwODQyODc4NA==&mid=2247484061&idx=1&sn=e748636941f002a762bcaf94f1f1f907&send_time=)
 
+
+# 环境相关
+- window10
+- node 14.21.1
+- npm 6.14.17
+
 # 产品相关
 
 - [fullcalendar](https://github.com/fullcalendar/fullcalendar)
