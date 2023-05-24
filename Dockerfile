@@ -7,7 +7,7 @@ COPY package.json package.json
 COPY package-lock.json package-lock.json
 
 FROM base as build
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 
