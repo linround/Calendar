@@ -1,7 +1,13 @@
 # syntax=docker/dockerfile:1
+FROM node:18-alpine as base
 
-FROM node:18-alpine
-WORKDIR /app
+WORKDIR /code
+
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+
+FROM base as test
+RUN npm ci
 COPY . .
-RUN yarn install --production
-CMD ["npm", "run","build"]
+RUN npm run build
+
