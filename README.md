@@ -27,6 +27,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 
 
 # 环境相关
+
 - window10
 - node 18.12.0
 - npm 8.19.2
