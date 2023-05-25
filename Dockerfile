@@ -2,6 +2,7 @@ FROM node:18
 COPY ./ /app
 WORKDIR /app
 RUN npm install -g npm@9.6.7
+RUN npm install -g n --force
 RUN npm install && npm run build
 
 FROM nginx
