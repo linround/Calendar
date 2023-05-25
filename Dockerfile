@@ -1,7 +1,7 @@
 FROM node:18
 COPY ./ /app
 WORKDIR /app
-RUN npm install && npm run build
+RUN npm install esbuild && npm run build
 
 FROM nginx
 RUN mkdir /app
