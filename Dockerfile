@@ -13,4 +13,4 @@ COPY --from=0 /app/dist /usr/local/nginx/html
 # 因为我是在linux服务器上配置了nginx，然后使用命令将docker中的nginx配置项，映射到了外部来处理；
 # 所以不需要从我的前端项目中去处理
 # COPY nginx.conf /etc/nginx/nginx.conf
-LABEL maintainer = "usha.mandya@docker.com"
+LABEL maintainer = "yuanlincuc@gmail.com"
