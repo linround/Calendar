@@ -9,8 +9,8 @@ on:
     #    对main做push行为(由于目前都往master分支push，怕太频繁的出发工作流，所以建议使用tag)
     branches: 'main'
     #    对tag做push行为
-#    tags:
-#      - 'v*'
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main ]
 
