@@ -28,6 +28,12 @@ export function UploadImg(prop:IProps) {
     setUrl(url)
     setName(name)
     setSize(byteToKb(size))
+    console.log(url)
+  }
+  const onDelete = () => {
+    URL.revokeObjectURL(url)
+    setUrl('')
+    ref.current!.value = ''
   }
   return (
     <Dialog open={open} className={style.dialog}>
@@ -35,13 +41,13 @@ export function UploadImg(prop:IProps) {
         <div onClick={handleSelectFile}>
           点击上传
         </div>
-        <div className={style.imgContainer}>
+        <div className={style.imgContainer} style={url ? {} : { display: 'none', }}>
           <div className={style.imgInfo}>
             <div className={style.imgInfoLeft}>
               <div className={style.imgName}>{imgName}</div>
               <div className={style.imgSize}>{imgSize} KB</div>
             </div>
-            <div className={style.imgInfoRight}>
+            <div className={style.imgInfoRight} onClick={onDelete}>
               <SvgIcon iconName='popover_x' />
             </div>
           </div>
