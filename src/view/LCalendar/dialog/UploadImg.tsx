@@ -36,10 +36,10 @@ export function UploadImg(prop:IProps) {
     ref.current!.value = ''
   }
   return (
-    <Dialog open={open} className={style.dialog}>
+    <Dialog open={open} className={style.dialog} onClose={() => setOpen(false)}>
       <div className={style.container}>
-        <div onClick={handleSelectFile}>
-          点击上传
+        <div onClick={handleSelectFile} className={style.button} title={'选择图片'}>
+          <SvgIcon iconName='image' /> 点击上传图片
         </div>
         <div className={style.imgContainer} style={url ? {} : { display: 'none', }}>
           <div className={style.imgInfo}>
@@ -47,7 +47,7 @@ export function UploadImg(prop:IProps) {
               <div className={style.imgName}>{imgName}</div>
               <div className={style.imgSize}>{imgSize} KB</div>
             </div>
-            <div className={style.imgInfoRight} onClick={onDelete}>
+            <div className={style.imgInfoRight} onClick={onDelete} title={'删除照片'}>
               <SvgIcon iconName='popover_x' />
             </div>
           </div>

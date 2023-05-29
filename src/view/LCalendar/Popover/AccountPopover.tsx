@@ -23,6 +23,7 @@ export const AccountPopover = () => {
   const handleSetImg = () => {
     setOpen(true)
     setAccountRef(null)
+    setMask(false)
   }
   const [open, setOpen] = useState(false)
 
