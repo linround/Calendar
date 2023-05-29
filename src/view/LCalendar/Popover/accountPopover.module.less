@@ -10,7 +10,24 @@
     background-color: white;
     border-radius: 10px;
     padding: 10px;
+    &Mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #1b242f;
+      font-size: 15px;
+      color: #fff;
+      overflow: hidden;
+      transition: opacity .3s ease-in-out;
+      font-weight: bold;
+      user-select: none;
+    }
     &Img {
+      position: relative;
       border-radius: 50%;
       overflow: hidden;
       cursor: pointer;

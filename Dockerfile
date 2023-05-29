@@ -1,7 +1,4 @@
-FROM node:18
-COPY ./ /app
-WORKDIR /app
-RUN npm install -f && npm run build
+
 
 FROM nginx
 RUN mkdir /app

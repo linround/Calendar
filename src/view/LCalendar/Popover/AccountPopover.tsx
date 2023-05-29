@@ -9,15 +9,22 @@ import { CalendarContext } from '../props/propsContext'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import { removerUser, selectUser } from '../../../store/features/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { UploadImg } from '../dialog/UploadImg'
 
 
 export const AccountPopover = () => {
-  const { accountRef, } = useContext(CalendarContext)
+  const { accountRef, setAccountRef, } = useContext(CalendarContext)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const user = useAppSelector(selectUser).user
   const [right] = useState(10)
   const [top, setTop] = useState(0)
+  const [showMask, setMask] = useState(false)
+  const handleSetImg = () => {
+    setOpen(true)
+    setAccountRef(null)
+  }
+  const [open, setOpen] = useState(false)
 
   useLayoutEffect(() => {
     if (accountRef) {
@@ -37,6 +44,7 @@ export const AccountPopover = () => {
   }
   return (
     <>
+      <UploadImg open={open} setOpen={setOpen} />
       {
         accountRef &&
         <div className={className}
@@ -44,6 +52,9 @@ export const AccountPopover = () => {
           <div className={style.containerUser}>
             <div className={style.containerUserContainer}>
               <div
+                onClick={handleSetImg}
+                onMouseEnter={() => setMask(true)}
+                onMouseLeave={() => setMask(false)}
                 style={{ minHeight: 86,
                   minWidth: 86, }}
                 className={style.containerUserImg}>
@@ -56,6 +67,11 @@ export const AccountPopover = () => {
                     /> :
                     <SvgIcon iconName='user' />
                 }
+                <div className={style.containerUserMask} style={showMask ? {
+                  opacity: 0.8,
+                } : { opacity: 0, }} >
+                  修改头像
+                </div>
               </div>
               <div className={style.containerUserInfo}>
                 <div className={style.containerUserInfoName}>{user?.userName || '用户名'}</div>
