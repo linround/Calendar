@@ -63,6 +63,8 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [柔软的物体](https://github.com/kripken/ammo.js/)
 - [性能相关的处理](https://github.com/gkjohnson/three-mesh-bvh)
 - [光纤追踪示例](https://github.com/gkjohnson/three-gpu-pathtracer)
+- [部分系统](https://github.com/creativelifeform/three-nebula)
+- [与声音的融合](https://threejs.org/examples/#webgl_materials_video)
 
 
 
