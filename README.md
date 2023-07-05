@@ -60,6 +60,9 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [水波纹](https://enable3d.io/examples/water.html)
 - [第三人称视角](https://enable3d.io/examples/3rd-person-camera.html)
 - [svgTo3D](https://enable3d.io/examples/create-3d-geometry-from-svg-file.html)
+- [柔软的物体](https://github.com/kripken/ammo.js/)
+- [性能相关的处理](https://github.com/gkjohnson/three-mesh-bvh)
+- [光纤追踪示例](https://github.com/gkjohnson/three-gpu-pathtracer)
 
 
 
