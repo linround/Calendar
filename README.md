@@ -54,8 +54,12 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
+## 3d相关
 - [threeDCalendar](https://threejs.org/examples/#css3d_periodictable)
+- [模拟衣物](https://enable3d.io/examples/softbody-cloth.html)
 - [水波纹](https://enable3d.io/examples/water.html)
+- [第三人称视角](https://enable3d.io/examples/3rd-person-camera.html)
+- [svgTo3D](https://enable3d.io/examples/create-3d-geometry-from-svg-file.html)
 
 
 
