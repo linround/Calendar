@@ -54,8 +54,14 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
 - [运动学](https://github.com/lo-th/fullik)
 - [水](https://github.com/yomboprime/GPGPU-threejs-demos/blob/gh-pages/webgl_gpgpu_water.html)
+- [ocean](https://github.com/jbouny/ocean)
 - [litegl](https://github.com/jagenjo/litegl.js) 
 - [图片处理](https://github.com/evanw/glfx.js)
+- [一些demo](https://madebyevan.com/)
+- [流体粒子](https://github.com/dli/fluid)
+- [waves](https://github.com/dli/waves)
+- [timeliner](https://github.com/zz85/timeliner)
+
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
 ## 3d相关
