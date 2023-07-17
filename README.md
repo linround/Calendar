@@ -53,6 +53,9 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 #### 3D
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
 - [运动学](https://github.com/lo-th/fullik)
+- [水](https://github.com/yomboprime/GPGPU-threejs-demos/blob/gh-pages/webgl_gpgpu_water.html)
+- [litegl](https://github.com/jagenjo/litegl.js) 
+- [图片处理](https://github.com/evanw/glfx.js)
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
 ## 3d相关
