@@ -52,6 +52,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [svgdotjs](https://github.com/svgdotjs/svg.js)
 #### 3D
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
+- [运动学](https://github.com/lo-th/fullik)
 ## 多媒体
 - [vime](https://github.com/linyuan1105/vime)
 ## 3d相关
