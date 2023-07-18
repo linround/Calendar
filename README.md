@@ -50,6 +50,7 @@ If you use this project for commercial purposes, please abide by the GPL-3.0 agr
 - [plyr](https://github.com/sampotts/plyr)
 - [excalidraw](https://github.com/linround/excalidraw)
 - [svgdotjs](https://github.com/svgdotjs/svg.js)
+- [响应式编程库rxjs](https://github.com/ReactiveX/rxjs)
 #### 3D
 - [Domenicobrz](https://domenicobrz.github.io/webgl/index.html)
 - [运动学](https://github.com/lo-th/fullik)
