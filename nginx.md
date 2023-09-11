@@ -86,23 +86,3 @@ listen       443 ssl http2;
 nginx -s reload
 ```
 
-
-# 阿里云相关
-## 短信服务
-```text
-AccessKey ID:
-LTAI5t9DYP6t5KbC1jDF23pK
-
-AccessKey Secret:
-jMt34PEcv1bBRkNbC9LZdc1TEGOekR
-
-```
-### AccessKey
-```text
-AccessKey ID:
-LTAI5tCiU4oaKpDUekTFr1h7
-
-
-AccessKey Secret:
-AutoyaEBxs5o1ni0OE6GmGnz4xuwx0
-```
