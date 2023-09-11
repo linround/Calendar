@@ -43,7 +43,7 @@ export default function (props:IHeaderEvent) {
           <span
             onClick={() => prev(-1)}>
             <SvgIcon iconName='header_arrow-left-circle'
-              className={mainStyles.iconHover}/>4444444444
+              className={mainStyles.iconHover}/>
           </span>
           <span
             onClick={() => next(1)}>
