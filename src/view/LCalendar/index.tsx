@@ -182,7 +182,6 @@ export default function () {
               next={(amount) => move(amount, 'month')} />
           </div>
           <div className={styles.mainCenter}>
-            88888888888
             <MenuHeader
               value={value}
               type={type}

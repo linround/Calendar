@@ -6,7 +6,7 @@ import { SvgIcon } from '../../../components'
 import { IHeaderEvent } from '../utils/calendar'
 import MenuTypeSelector from './MenuTypeSelector'
 import { getValueFormat } from '../utils/time'
-import {  CalendarContext } from '../props/propsContext'
+import { CalendarContext } from '../props/propsContext'
 import { useAppSelector } from '../../../store/hooks'
 import { selectUser } from '../../../store/features/user/userSlice'
 

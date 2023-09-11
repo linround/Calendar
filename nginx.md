@@ -25,7 +25,7 @@ openssl=/root/openssl-1.1.0f
 ## 网站相关
 ```text
 # me.ucalendar.cn
-# 资源路径：/usr/local/bright_moon
+# 资源路径：/usr/local/me
 # three.ucalendar.cn
 # 资源路径：/usr/local/threejs
 ```
