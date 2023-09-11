@@ -25,7 +25,6 @@
     "babel-plugin-macros": "^3.1.0",
     "date-arithmetic": "^4.1.0",
     "dom-helpers": "^5.2.1",
-    "esbuild-windows-64": "^0.15.18",
     "loadsh": "0.0.4",
     "lodash": "^4.17.21",
     "lodash.sortby": "^4.7.0",
