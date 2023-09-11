@@ -1,69 +1,51 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI to Docker Hub
-
-# Controls when the workflow will run
+# action的名称
+name: three.ucalendar.cn
+# 运行器 的名称
+run-name: three.ucalendar.cn
+# 监听指定分支的push和pull_request事件
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    #    对main做push行为(由于目前都往master分支push，怕太频繁的出发工作流，所以建议使用tag)
-    branches: 'main'
-    #    对tag做push行为
     tags:
-      - 'v*'
-  pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+      - v1.*
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  #  运行的任务 build_test_deploy
+  test:
+    runs-on: ubuntu-latest # 任务运行在最新的操作平台
+    strategy:
+      matrix:
+        node-version: [ 18.x ] # 通过指定多个版本，从而对多个版本都进行测试
     steps:
-      - uses: actions/checkout@v3
-      #      - name: Use Node.js
-      #        uses: actions/setup-node@v3
-      #        with:
-      #          node-version: '16.x'
-      #      - run: npm install
-      #      - run: npm run build
-
-      - name: Check Out Repo
-        uses: actions/checkout@v2
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
+      - uses: actions/checkout@v3 # checkout的妙用 https://github.com/actions/checkout
+      - uses: actions/setup-node@v3 # 使用 setup-node v3 版本来安装指定的nodejs
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+          node-version: ${{ matrix.node-version }} # 这里可以指定特定版本，也可以引用变量
+      - run: npm install # 执行命令
+      - run: npm run test # 执行命令
+  #  运行的任务 build_test_deploy
+  build_deploy:
+    runs-on: ubuntu-latest # 任务运行在最新的操作平台
+    strategy:
+      matrix:
+        node-version: [ 18.x ] # 通过指定多个版本，从而对多个版本都进行测试
+    steps:
+      - uses: actions/checkout@v3 # checkout的妙用 https://github.com/actions/checkout
+      - uses: actions/setup-node@v3 # 使用 setup-node v3 版本来安装指定的nodejs
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
+          node-version: ${{ matrix.node-version }} # 这里可以指定特定版本，也可以引用变量
+      - run: npm install # 执行命令
+      - run: npm run build # 执行命令
+        name: '部署'
+      - uses: cross-the-world/scp-pipeline@master
+        env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
         with:
-          context: ./
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ucalendar:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          host: ${{ secrets.USER_HOST }}
+          user: ${{ secrets.USER_NAME }}
+          pass: ${{ secrets.USER_PASS }}
+          connect_timeout: 10s
+          local: './dist/*'
+          remote: usr/local/nginx/html
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+
+
