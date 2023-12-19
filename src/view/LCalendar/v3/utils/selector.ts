@@ -1,8 +1,9 @@
 import {
-  getEventCoordinates,
-  IAny, IEventHandler
+  getEventCoordinates, IAny, IEventHandler
 } from '../../v2/utils/selection'
 import React from 'react'
+
+
 function addDocEventListener(type:string, fn:(arg:any)=>any) {
   document.addEventListener(type, fn)
   return () => {

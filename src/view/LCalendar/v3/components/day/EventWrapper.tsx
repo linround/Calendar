@@ -110,9 +110,15 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     return false
   })
   selector.on('selecting', (data:ICoordinates) => {
+    console.log('selecting', scrollContainer)
     const timestamp = getTimeFromPoint(
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
     )
+    if (scrollContainer) {
+      setTimeout(() => {
+        scrollContainer.scrollTop = scrollContainer.scrollTop + 10
+      }, 200)
+    }
     const time = toTime(timestamp)
 
     // 计算原本事件的时长

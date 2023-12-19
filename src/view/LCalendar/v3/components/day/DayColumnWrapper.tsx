@@ -90,7 +90,14 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
     // 防止跨天的时间计算
     // 如果不传（dayRect），会计算跨天的时间
     const timestamp = getTimeFromPoint(
-      scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes, dayRect
+      scrollRect,
+      daysRect,
+      data,
+      days,
+      firstMinute,
+      intervalHeight,
+      intervalMinutes,
+      dayRect
     )
     const currentTime = toTime(timestamp)
     const moveTime = roundTime(currentTime)
