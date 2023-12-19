@@ -5,6 +5,7 @@ import {
 import { EventHandler } from 'dom-helpers/addEventListener'
 import { stopDefaultEvent } from '../../utils/events'
 import { eventItem } from './day'
+
 const clickTolerance = 5
 const clickInterval = 250
 
@@ -64,8 +65,8 @@ interface ILastClickData {
 export function getEventCoordinates(event: React.MouseEvent):ICoordinates {
   const target = event
   return {
-    clientX: target.clientX,
-    clientY: target.clientY,
+    clientX: target.clientX, // 相对视口左上角的坐标
+    clientY: target.clientY, // 相对视口左上角的坐标
     pageX: target.pageX,
     pageY: target.pageY,
   }

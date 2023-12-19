@@ -4,6 +4,10 @@ import {
 import React from 'react'
 
 
+export function updateParentScroll(scroll) {
+
+}
+
 function addDocEventListener(type:string, fn:(arg:any)=>any) {
   document.addEventListener(type, fn)
   return () => {
@@ -58,6 +62,9 @@ export class Selector {
     }
   }
   handleMoveEvent(e:React.MouseEvent) {
+    console.log(
+      e.pageY, e.clientY, 'y'
+    )
     const selectingCoordinates = getEventCoordinates(e)
     this.emit('selecting', selectingCoordinates)
   }
