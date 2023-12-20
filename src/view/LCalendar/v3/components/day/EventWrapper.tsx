@@ -119,11 +119,11 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       intervalHeight,
       intervalMinutes
     )
-    if (scrollContainer) {
-      setTimeout(() => {
-        scrollContainer.scrollTop = scrollContainer.scrollTop + 10
-      }, 200)
-    }
+    // if (scrollContainer) {
+    //   setTimeout(() => {
+    //     scrollContainer.scrollTop = scrollContainer.scrollTop + 10
+    //   }, 200)
+    // }
     const time = toTime(timestamp)
 
     // 计算原本事件的时长
