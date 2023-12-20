@@ -4,13 +4,6 @@ import {
 import React from 'react'
 
 
-export function updateParentScroll(scrollContainer:HTMLDivElement, coordinate:ICoordinates) {
-  document.addEventListener('click', (e) => {
-    console.log('pageY:', e.pageY)
-    console.log('clientY:', e.clientY)
-  })
-}
-
 function addDocEventListener(type:string, fn:(arg:any)=>any) {
   document.addEventListener(type, fn)
   return () => {
@@ -24,6 +17,32 @@ export class Selector {
     this.handleInitialEvent = this.handleInitialEvent.bind(this)
     this.handleTerminatingEvent = this.handleTerminatingEvent.bind(this)
     this.listeners = Object.create(null)
+  }
+  updateParentScroll(scrollContainer:HTMLDivElement, coordinate:ICoordinates) {
+    const scrollRect = scrollContainer.getBoundingClientRect()
+    const scrollRectTop = scrollRect.top
+    const scrollRectBottom = scrollRect.bottom
+    const mousePointY = coordinate.clientY
+
+    const distanceTop = mousePointY - scrollRectTop
+    const distanceBottom = scrollRectBottom - mousePointY
+
+    const thresholdDistance = 20
+    if (distanceTop < thresholdDistance) {
+      scrollContainer.scrollTop = scrollContainer.scrollTop - 10
+    } else if (distanceBottom < thresholdDistance) {
+      scrollContainer.scrollTop = scrollContainer.scrollTop + 10
+    }
+
+
+    console.log(
+      distanceTop, distanceBottom, distanceBottom + distanceTop
+    )
+
+    // document.addEventListener('click', (e) => {
+    //   console.log('pageY:', e.pageY)
+    //   console.log('clientY:', e.clientY)
+    // })
   }
   removeEndListener() {
     return

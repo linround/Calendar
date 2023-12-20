@@ -119,6 +119,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       intervalHeight,
       intervalMinutes
     )
+    selector.updateParentScroll(scrollContainer, data)
     // if (scrollContainer) {
     //   setTimeout(() => {
     //     scrollContainer.scrollTop = scrollContainer.scrollTop + 10
