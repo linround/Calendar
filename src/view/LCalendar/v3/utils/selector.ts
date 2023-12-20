@@ -1,17 +1,15 @@
 import {
-  getEventCoordinates, IAny, IEventHandler
+  getEventCoordinates, IAny, ICoordinates, IEventHandler
 } from '../../v2/utils/selection'
 import React from 'react'
 
 
-export function updateParentScroll(scroll) {
+export function updateParentScroll(scrollContainer:HTMLDivElement, coordinate:ICoordinates) {
   document.addEventListener('click', (e) => {
     console.log('pageY:', e.pageY)
     console.log('clientY:', e.clientY)
   })
-
 }
-updateParentScroll()
 
 function addDocEventListener(type:string, fn:(arg:any)=>any) {
   document.addEventListener(type, fn)
@@ -67,9 +65,6 @@ export class Selector {
     }
   }
   handleMoveEvent(e:React.MouseEvent) {
-    console.log(
-      e.pageY, e.clientY, 'y'
-    )
     const selectingCoordinates = getEventCoordinates(e)
     this.emit('selecting', selectingCoordinates)
   }

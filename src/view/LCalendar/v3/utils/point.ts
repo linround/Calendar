@@ -140,8 +140,8 @@ export function getDayTimeFromPoint(
 //
 
 export function getTimeFromPoint(
-  scrollRect:DOMRect,
-  daysRect:DOMRect,
+  scrollRect:DOMRect, // 滚动容器的位置信息
+  daysRect:DOMRect, // 所有天数的容器位置信息 1-7天
   data:ICoordinates,
   days:CalendarTimestamp[],
   firstMinute:number,

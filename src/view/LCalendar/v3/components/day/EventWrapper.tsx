@@ -110,11 +110,14 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     return false
   })
   selector.on('selecting', (data:ICoordinates) => {
-    console.log(
-      'selecting', scrollContainer, daysContainer
-    )
     const timestamp = getTimeFromPoint(
-      scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
+      scrollRect,
+      daysRect,
+      data,
+      days,
+      firstMinute,
+      intervalHeight,
+      intervalMinutes
     )
     if (scrollContainer) {
       setTimeout(() => {

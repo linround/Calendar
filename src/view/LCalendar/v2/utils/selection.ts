@@ -62,13 +62,18 @@ export function addEventListener(
 interface ILastClickData {
   timestamp: number
 }
+
+/*
+ *
+ *
+ * */
 export function getEventCoordinates(event: React.MouseEvent):ICoordinates {
   const target = event
   return {
     clientX: target.clientX, // 相对视口左上角的坐标
     clientY: target.clientY, // 相对视口左上角的坐标
-    pageX: target.pageX,
-    pageY: target.pageY,
+    pageX: target.pageX, // 这是相对于 整个文档左上角的坐标
+    pageY: target.pageY, // 这是相对于 整个文档左上角的坐标
   }
 }
 export interface IBounds{
