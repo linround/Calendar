@@ -5,8 +5,13 @@ import React from 'react'
 
 
 export function updateParentScroll(scroll) {
+  document.addEventListener('click', (e) => {
+    console.log('pageY:', e.pageY)
+    console.log('clientY:', e.clientY)
+  })
 
 }
+updateParentScroll()
 
 function addDocEventListener(type:string, fn:(arg:any)=>any) {
   document.addEventListener(type, fn)

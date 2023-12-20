@@ -14,3 +14,8 @@ scrollHeight 的值等于该元素在不使用滚动条的情况下，为了适�
 - 如果一个元素不能滚动 `scrollTop` 被设置为 0
 - `scrollTop` 值小于0， `scrollTop`被设置为 0
 - 如果超出了这个容器可滚动的值，scrollTop会被设置为最大值
+
+## pageY
+> 场景如下：设置 body 溢出滚动；设置子元素高于body    
+
+这个时候 文档页发生滚动。pageY指的就是到文档顶部的距离。
