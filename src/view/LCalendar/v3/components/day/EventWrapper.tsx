@@ -78,10 +78,15 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
 
 
   const selector:Selector = new Selector(scrollContainer)
-  // 整个滚动区域的容器
-  const scrollRect = scrollContainer?.getBoundingClientRect()
-  // 日历所有天数的容器
-  const daysRect = daysContainer?.getBoundingClientRect()
+  function getRect() {
+    // 整个滚动区域的容器
+    const scrollRect = scrollContainer?.getBoundingClientRect()
+    // 日历所有天数的容器
+    const daysRect = daysContainer?.getBoundingClientRect()
+    return {
+      scrollRect, daysRect,
+    }
+  }
 
 
   let initTime:number
@@ -99,6 +104,8 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     // 需要清除创建事件相关的数据
     eventAction === NORMAL_ACTION && clearCreated()
 
+
+    const { scrollRect, daysRect, } = getRect()
     const timestamp = getTimeFromPoint(
       scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
     )
@@ -111,10 +118,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
   })
   selector.on('selecting', (data:ICoordinates) => {
 
-    // 整个滚动区域的容器
-    const scrollRect = scrollContainer?.getBoundingClientRect()
-    // 日历所有天数的容器
-    const daysRect = daysContainer?.getBoundingClientRect()
+    const { scrollRect, daysRect, } = getRect()
 
     const timestamp = getTimeFromPoint(
       scrollRect,

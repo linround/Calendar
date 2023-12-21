@@ -53,11 +53,18 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
   }
   const { group, } = useContext(CalendarContext)
   const { daysContainer, days, firstMinute, scrollContainer, } = props
-  const selector = new Selector()
-  // 整个滚动区域的容器
-  const scrollRect = scrollContainer?.getBoundingClientRect()
-  // 日历所有天数的容器
-  const daysRect = daysContainer?.getBoundingClientRect()
+  const selector = new Selector(scrollContainer)
+
+
+  function getRect() {
+    // 整个滚动区域的容器
+    const scrollRect = scrollContainer?.getBoundingClientRect()
+    // 日历所有天数的容器
+    const daysRect = daysContainer?.getBoundingClientRect()
+    return {
+      scrollRect, daysRect,
+    }
+  }
 
   let initTime:number
   selector.on('beforeSelect', (data:ICoordinates) => {
@@ -69,6 +76,7 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
       clearNormal()
       clearCreatedEvent()
     }
+    const { scrollRect, daysRect, } = getRect()
     const timestamp = getTimeFromPoint(
       scrollRect,
       daysRect,
@@ -85,6 +93,10 @@ export function V3DayColumnWrapperComponent(props:React.PropsWithChildren<IProps
   selector.on('selecting', (data:ICoordinates) => {
 
     const dayContainer = ref.current
+
+    const { scrollRect, daysRect, } = getRect()
+
+
     const dayRect = dayContainer?.getBoundingClientRect()
     // 在这里需要传入某天的坐标范围(dayRect)，
     // 防止跨天的时间计算

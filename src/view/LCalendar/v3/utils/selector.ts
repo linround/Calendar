@@ -13,10 +13,10 @@ function addDocEventListener(type:string, fn:(arg:any)=>any) {
 
 export class Selector {
   public listeners: IAny
-  public scrollContainer:HTMLDivElement
+  public scrollContainer?:HTMLDivElement
   public  coordinate:ICoordinates|null
   public timerID:NodeJS.Timeout|null
-  constructor(scrollContainer:HTMLDivElement) {
+  constructor(scrollContainer?:HTMLDivElement) {
     this.handleInitialEvent = this.handleInitialEvent.bind(this)
     this.handleTerminatingEvent = this.handleTerminatingEvent.bind(this)
     this.updateParentScroll = this.updateParentScroll.bind(this)
@@ -62,6 +62,7 @@ export class Selector {
         coordinate.clientY +=  scrollContainer.scrollTop - beforeScrollTop
       }
 
+      console.log('coordinate:', coordinate.clientY)
       this.emit('selecting', coordinate)
     })
 
