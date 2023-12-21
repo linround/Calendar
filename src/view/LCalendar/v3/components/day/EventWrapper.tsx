@@ -77,7 +77,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
   }
 
 
-  const selector:Selector = new Selector()
+  const selector:Selector = new Selector(scrollContainer)
   // 整个滚动区域的容器
   const scrollRect = scrollContainer?.getBoundingClientRect()
   // 日历所有天数的容器
@@ -110,6 +110,12 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     return false
   })
   selector.on('selecting', (data:ICoordinates) => {
+
+    // 整个滚动区域的容器
+    const scrollRect = scrollContainer?.getBoundingClientRect()
+    // 日历所有天数的容器
+    const daysRect = daysContainer?.getBoundingClientRect()
+
     const timestamp = getTimeFromPoint(
       scrollRect,
       daysRect,
@@ -119,7 +125,6 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       intervalHeight,
       intervalMinutes
     )
-    selector.updateParentScroll(scrollContainer, data)
     // if (scrollContainer) {
     //   setTimeout(() => {
     //     scrollContainer.scrollTop = scrollContainer.scrollTop + 10
