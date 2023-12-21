@@ -62,7 +62,6 @@ export class Selector {
         coordinate.clientY +=  scrollContainer.scrollTop - beforeScrollTop
       }
 
-      console.log('coordinate:', coordinate.clientY)
       this.emit('selecting', coordinate)
     })
 
