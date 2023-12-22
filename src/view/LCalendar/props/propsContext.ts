@@ -15,11 +15,11 @@ import { CalendarEvent } from '../utils/calendar'
 import { calendarGroup } from '../SideComponent/utils'
 
 export const DEFAULT_INTERVALS = {
-  intervalHeight: 48,
+  intervalHeight: 48, // 每一条刻度的高度
   intervalWidth: 60,
-  firstInterval: 0,
-  intervalCount: 24,
-  intervalMinutes: 60,
+  firstInterval: 0, //
+  intervalCount: 24, // 总共的刻度数目
+  intervalMinutes: 60, // 每一个单元刻度的分钟数
 }
 
 export const DEFAULT_WEEKS = {

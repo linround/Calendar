@@ -15,6 +15,17 @@ interface IProps {
 
 }
 export function EndAnchor(props:React.PropsWithChildren<IProps>) {
+  const { daysContainer, scrollContainer, } = props
+  function getRect() {
+    // 整个滚动区域的容器
+    const scrollRect = scrollContainer?.getBoundingClientRect()
+    // 日历所有天数的容器
+    const daysRect = daysContainer?.getBoundingClientRect()
+    return {
+      scrollRect, daysRect,
+    }
+  }
+
   const selector = new Selector()
   selector.on('beforeSelect', (coordinates:ICoordinates) => {
     console.log('beforeSelect')
