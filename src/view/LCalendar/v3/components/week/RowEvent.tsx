@@ -1,9 +1,9 @@
 import { CalendarEvent } from '../../../utils/calendar'
-import { NO_NAME_EVENT_VALUE } from '../../../utils/time'
 import style from './style/rowEvent.module.less'
 import { IMonth } from '../../../components/type'
 import { CommonRowEventWrapper } from '../common/CommonRowEventWrapper'
 import { getDayTimeFromPoint } from '../../utils/point'
+import { EVENT_DEFAULT_BG_TITLE } from '../../../utils/events'
 
 interface IProps {
   slots:number
@@ -36,7 +36,7 @@ export function RowEvent(props:IProps) {
           maxWidth: width,
           backgroundColor: bgColor,
         }}>
-        {event.eventName || NO_NAME_EVENT_VALUE}
+        {event.eventName || EVENT_DEFAULT_BG_TITLE}
       </div>
     </CommonRowEventWrapper>
   )

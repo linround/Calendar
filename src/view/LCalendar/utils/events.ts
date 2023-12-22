@@ -19,7 +19,7 @@ import { calendarGroup } from '../SideComponent/utils'
 
 
 const EVENT_DEFAULT_BG_COLOR = 'white'
-const EVENT_DEFAULT_BG_TITLE = '无标题'
+export const EVENT_DEFAULT_BG_TITLE = '无标题'
 const EVENT_MIN_HEIGHT = 20
 
 export function parseEvent(
