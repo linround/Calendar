@@ -35,6 +35,7 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     daysContainer,
     scrollContainer,
     eventAction,
+    children,
   } = props
   const [moving, setMoving] = useState<boolean>(false)
   const {
@@ -187,12 +188,12 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     mousedownController.clearState()
   })
   const className = classnames({
-    [(props.children as ReactElement)?.props.className]: true,
+    [(children as ReactElement)?.props.className]: true,
     [style.moving]: moving,
   })
   return (
     <>
-      {React.cloneElement(props.children as ReactElement, {
+      {React.cloneElement(children as ReactElement, {
         ref: eventAction === CREATED_ACTION ? ref : normalRef,
         className: className,
         onMouseDown(e:React.MouseEvent) {
