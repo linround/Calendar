@@ -3,8 +3,18 @@ import styles from './style/event.module.less'
 import React from 'react'
 import { Selector } from '../../utils/selector'
 import { ICoordinates } from '../../../v2/utils/selection'
+import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 
-export function EndAnchor() {
+
+interface IProps {
+  event:CalendarEvent
+  days:CalendarTimestamp[]
+  firstMinute:number
+  daysContainer:HTMLDivElement
+  scrollContainer: HTMLDivElement
+
+}
+export function EndAnchor(props:React.PropsWithChildren<IProps>) {
   const selector = new Selector()
   selector.on('beforeSelect', (coordinates:ICoordinates) => {
     console.log('beforeSelect')

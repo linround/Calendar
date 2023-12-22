@@ -21,12 +21,7 @@ interface IProps {
 export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
   const {
     visualsRect,
-    firstMinute,
-    days,
-    daysContainer,
-    scrollContainer,
     className = '',
-    eventAction,
   } = props
 
   return (
@@ -34,12 +29,8 @@ export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
       {visualsRect.map((rect, index) => (
         <EventWrapperComponent
           key={index}
-          days={days}
-          eventAction={eventAction}
+          {...props}
           event={rect.event}
-          firstMinute={firstMinute}
-          daysContainer={daysContainer}
-          scrollContainer={scrollContainer}
         >
           <div
             style={rect.style}
@@ -50,7 +41,7 @@ export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
             })}>
             <div>{rect.content.title || EVENT_DEFAULT_BG_TITLE}</div>
             <div>{rect.content.timeRange}</div>
-            <EndAnchor/>
+            <EndAnchor {...props} event={rect.event}/>
           </div>
         </EventWrapperComponent>
       ))}
