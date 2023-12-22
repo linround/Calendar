@@ -103,7 +103,9 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
 
     // 如果点击的是普通的事件，
     // 需要清除创建事件相关的数据
-    eventAction === NORMAL_ACTION && clearCreated()
+    if (eventAction === NORMAL_ACTION) {
+      clearCreated()
+    }
 
 
     const { scrollRect, daysRect, } = getRect()
@@ -191,6 +193,8 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
     [(children as ReactElement)?.props.className]: true,
     [style.moving]: moving,
   })
+  const newProps = {
+  }
   return (
     <>
       {React.cloneElement(children as ReactElement, {
@@ -199,6 +203,8 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
         onMouseDown(e:React.MouseEvent) {
           selector.handleInitialEvent(e)
         },
+        ...newProps,
+
       })}
     </>
   )

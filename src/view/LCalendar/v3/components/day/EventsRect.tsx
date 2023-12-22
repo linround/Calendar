@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { CalendarTimestamp } from '../../../utils/calendar'
 import { IEventAction } from '../../utils'
+import { EndAnchor } from './EndAnchor'
 
 
 interface IProps {
@@ -49,6 +50,7 @@ export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
             })}>
             <div>{rect.content.title || EVENT_DEFAULT_BG_TITLE}</div>
             <div>{rect.content.timeRange}</div>
+            <EndAnchor/>
           </div>
         </EventWrapperComponent>
       ))}

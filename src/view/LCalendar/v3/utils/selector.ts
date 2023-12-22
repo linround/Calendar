@@ -104,11 +104,13 @@ export class Selector {
   emit(type:IEventHandler, ...args:any[]) {
     let result:any
     const handlers = this.listeners[type]
-    handlers.forEach((fn:any) => {
-      if (result === undefined) {
-        result = fn(...args)
-      }
-    })
+    if (handlers) {
+      handlers.forEach((fn:any) => {
+        if (result === undefined) {
+          result = fn(...args)
+        }
+      })
+    }
     return result
   }
   handleInitialEvent(e:React.MouseEvent) {
