@@ -7,8 +7,8 @@ import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { mousedownController } from '../../utils/mouseDown'
 import { RESIZE_ACTION_END } from '../../utils'
 import { getTimeFromPoint } from '../../utils/point'
-import { IntervalsContext } from '../../../props/propsContext'
-import { toTime } from '../../../utils/timesStamp'
+import { EventContext, IntervalsContext } from '../../../props/propsContext'
+import { roundTime, toTime } from '../../../utils/timesStamp'
 
 
 interface IProps {
@@ -28,6 +28,9 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
     event,
 
   } = props
+
+  const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
+
   const {
     intervalHeight,
     intervalMinutes,
@@ -82,9 +85,15 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       intervalMinutes
     )
 
-    const time = toTime(timestamp)
-    const diffTime = time - initTime
-    const newEnd = initEnd
+    const time = toTime(timestamp) // 拖拽处的时间戳
+    const diffTime = time - initTime // 拖拽处的时间点 减 初始点击处的时间点 得到当前操作的时间 变化值
+    const newEnd = roundTime(initEnd + diffTime) // 初始的结束时间
+
+    draggedEvent = {
+      ...event,
+      end: newEnd < event.start ? event.start : newEnd,
+    }
+    setDraggedEvent(draggedEvent)
     console.log('selecting')
   })
   selector.on('select', (coordinates:ICoordinates) => {

@@ -14,7 +14,7 @@ export type IEventAction =
   typeof NORMAL_ACTION|
   typeof CREATED_ACTION|
   typeof DRAGGED_ACTION|
-  typeof CREATED_ACTION|
+  typeof CREATE_ACTION|
   typeof RESIZE_ACTION_END|
   typeof MORE_ACTION
 

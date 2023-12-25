@@ -1,5 +1,6 @@
 import { CalendarTimestamp, VTimestampInput } from '../calendar'
 import { WEEK_DAYS_TEXT } from '../time'
+
 export const OFFSET_YEAR = 10000
 export const OFFSET_MONTH = 100
 export const OFFSET_HOUR = 100
@@ -24,7 +25,7 @@ export const MONTH_MAX = 12
 export const MONTH_MIN = 1
 export const DAY_MIN = 1
 export const MINUTES_IN_HOUR = 60
-export const ROUND_TIME = 10
+export const ROUND_TIME = 10 // 最小移动时长（分钟）
 
 
 
@@ -154,7 +155,7 @@ export const toTime = (tms:CalendarTimestamp):number => new Date(
 
 // 处理拖拽事件时的时间边界问题
 export const roundTime = (time:number, down = true):number => {
-  const roundDownTime = ROUND_TIME * 60 * 1000
+  const roundDownTime = ROUND_TIME * 60 * 1000 // 最小移动间隔是10分钟
   return down ?
     time - (time % roundDownTime) :
     time + (roundDownTime - (time % roundDownTime))
@@ -162,7 +163,11 @@ export const roundTime = (time:number, down = true):number => {
 
 
 
-export function parseTimeStamp (input: VTimestampInput, required: true, now?: CalendarTimestamp): CalendarTimestamp
+export function parseTimeStamp (
+  input: VTimestampInput,
+  required: true,
+  now?: CalendarTimestamp
+): CalendarTimestamp
 export function parseTimeStamp(
   input:VTimestampInput, required = false, now?:CalendarTimestamp
 ):CalendarTimestamp | null {
