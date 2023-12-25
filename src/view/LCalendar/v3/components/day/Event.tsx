@@ -1,8 +1,6 @@
-import React, {
-  useContext, useEffect, createRef, useRef, useLayoutEffect
-} from 'react'
+import React, { useContext } from 'react'
 import { getVisualsRect } from '../../utils/eventsLayout'
-import { EventContext, MouseEventContext } from '../../../props/propsContext'
+import { EventContext } from '../../../props/propsContext'
 import { EventsRect } from './EventsRect'
 import {
   CalendarDayBodySlotScope, CalendarEventParsed, CalendarTimestamp
@@ -33,11 +31,15 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
     scrollContainer,
   } = props
   const eventVisualsRect = getVisualsRect(
-    day, events, getSlotScope
+    day,
+    events,
+    getSlotScope
   )
   const {
-    parsedDraggedEvent, parsedCreatedEvent,
+    parsedDraggedEvent,
+    parsedCreatedEvent,
   } = useContext(EventContext)
+
   const draggedVisualsRect = getVisualsRect(
     day, parsedDraggedEvent, getSlotScope
   )

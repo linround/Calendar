@@ -110,7 +110,13 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
 
     const { scrollRect, daysRect, } = getRect()
     const timestamp = getTimeFromPoint(
-      scrollRect, daysRect, data, days, firstMinute, intervalHeight, intervalMinutes
+      scrollRect,
+      daysRect,
+      data,
+      days,
+      firstMinute,
+      intervalHeight,
+      intervalMinutes
     )
     draggedEvent = {
       ...event,
@@ -132,11 +138,6 @@ export const  EventWrapperComponent = function(props:React.PropsWithChildren<IPr
       intervalHeight,
       intervalMinutes
     )
-    // if (scrollContainer) {
-    //   setTimeout(() => {
-    //     scrollContainer.scrollTop = scrollContainer.scrollTop + 10
-    //   }, 200)
-    // }
     const time = toTime(timestamp)
 
     // 计算原本事件的时长
