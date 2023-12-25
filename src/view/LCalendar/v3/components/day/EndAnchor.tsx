@@ -5,7 +5,9 @@ import { Selector } from '../../utils/selector'
 import { ICoordinates } from '../../../v2/utils/selection'
 import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
 import { mousedownController } from '../../utils/mouseDown'
-import { RESIZE_ACTION_END } from '../../utils'
+import {
+  CREATED_ACTION, IEventAction, NORMAL_ACTION, RESIZE_ACTION_END
+} from '../../utils'
 import { getTimeFromPoint } from '../../utils/point'
 import { EventContext, IntervalsContext } from '../../../props/propsContext'
 import { roundTime, toTime } from '../../../utils/timesStamp'
@@ -17,6 +19,7 @@ interface IProps {
   firstMinute:number
   daysContainer:HTMLDivElement
   scrollContainer: HTMLDivElement
+  eventAction:IEventAction
 
 }
 export function EndAnchor(props:React.PropsWithChildren<IProps>) {
@@ -26,6 +29,7 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
     days,
     firstMinute,
     event,
+    eventAction,
 
   } = props
 
@@ -49,7 +53,7 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
 
   let initTime:number
   let initEnd:number
-  let draggedEvent:CalendarEvent
+  let resizeEvent:CalendarEvent
   selector.on('beforeSelect', (coordinates:ICoordinates) => {
     mousedownController.setState(RESIZE_ACTION_END)
 
@@ -64,11 +68,11 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       intervalMinutes
     )
 
-    draggedEvent = {
+    resizeEvent = {
       ...event,
     }
 
-    initEnd = draggedEvent.end
+    initEnd = resizeEvent.end
     initTime = toTime(timestamp)
     console.log('beforeSelect')
     return false
@@ -89,11 +93,23 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
     const diffTime = time - initTime // 拖拽处的时间点 减 初始点击处的时间点 得到当前操作的时间 变化值
     const newEnd = roundTime(initEnd + diffTime) // 初始的结束时间
 
-    draggedEvent = {
+    resizeEvent = {
       ...event,
       end: newEnd < event.start ? event.start : newEnd,
     }
-    setDraggedEvent(draggedEvent)
+
+    console.log(eventAction)
+    switch (eventAction) {
+    case NORMAL_ACTION:{
+      setDraggedEvent(resizeEvent)
+      break
+    }
+    case CREATED_ACTION:{
+
+      setCreatedEvent(resizeEvent)
+      break
+    }
+    }
     console.log('selecting')
   })
   selector.on('select', (coordinates:ICoordinates) => {
