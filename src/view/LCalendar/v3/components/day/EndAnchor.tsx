@@ -9,8 +9,12 @@ import {
   CREATED_ACTION, IEventAction, NORMAL_ACTION, RESIZE_ACTION_END
 } from '../../utils'
 import { getTimeFromPoint } from '../../utils/point'
-import { EventContext, IntervalsContext } from '../../../props/propsContext'
+import {
+  EventContext, IntervalsContext, MouseEventContext
+} from '../../../props/propsContext'
 import { roundTime, toTime } from '../../../utils/timesStamp'
+import { updateEvent } from '../../../../../api'
+import { SUCCESS_CODE } from '../../../../../request'
 
 
 interface IProps {
@@ -32,6 +36,10 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
     eventAction,
 
   } = props
+
+  const {
+    updateEventList,
+  } = useContext(MouseEventContext)
 
   const { setDraggedEvent, setCreatedEvent, } = useContext(EventContext)
 
@@ -74,7 +82,6 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
 
     initEnd = resizeEvent.end
     initTime = toTime(timestamp)
-    console.log('beforeSelect')
     return false
   })
   selector.on('selecting', (coordinates:ICoordinates) => {
@@ -98,7 +105,6 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       end: newEnd < event.start ? event.start : newEnd,
     }
 
-    console.log(eventAction)
     switch (eventAction) {
     case NORMAL_ACTION:{
       setDraggedEvent(resizeEvent)
@@ -110,10 +116,19 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       break
     }
     }
-    console.log('selecting')
   })
-  selector.on('select', (coordinates:ICoordinates) => {
-    console.log('select')
+  selector.on('select', async (coordinates:ICoordinates) => {
+    switch (eventAction) {
+    case NORMAL_ACTION:{
+      const { code, } = await updateEvent(resizeEvent)
+      if (code === SUCCESS_CODE) {
+        setDraggedEvent(null)
+        updateEventList()
+      }
+      break
+    }
+    }
+    mousedownController.clearState()
   })
   const onMouseDown = (event:React.MouseEvent) => {
     event.stopPropagation()
