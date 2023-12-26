@@ -57,7 +57,7 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
     }
   }
 
-  const selector = new Selector()
+  const selector = new Selector(scrollContainer)
 
   let initTime:number
   let initEnd:number
