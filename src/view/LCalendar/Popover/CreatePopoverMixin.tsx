@@ -1,13 +1,17 @@
 import React from 'react'
 import {
-  Input, Button, TextField
+  Button, Input, TextField
 } from '@mui/material'
+import {
+  Checkbox, DatePicker, DatePickerProps
+} from 'antd'
 import classnames from 'classnames'
 import { IMixinPopoverBody } from './helpers'
 import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
-import TimePicker from './SingleComponent/TimePicker'
 import styles from './createEventPopover.module.less'
+import { MyTimePicker } from './SingleComponent/MyTimePicker'
+
 
 export const CreatePopoverMixin = {
   renderHeader(onClose:()=>void):JSX.Element {
@@ -26,6 +30,11 @@ export const CreatePopoverMixin = {
     const { event, setEventKeyValue, } = props
     const namePlaceholder = '输入标题'
     const locationPlaceholder = '输入地点'
+    const timePickerFormat = 'HH:mm'
+    const onDateChange:DatePickerProps['onChange'] = (date, dateString) => {
+      console.log(date, dateString)
+    }
+
     return (
       <div className={styles.createEventPopoverBody}>
         <div className={styles.createEventPopoverName}>
@@ -41,9 +50,12 @@ export const CreatePopoverMixin = {
           <div className={styles.createEventPopoverInputIcon}>
             <SvgIcon iconName='popover-clock' />
           </div>
-          <TimePicker time={event.start} />
+          <DatePicker onChange={onDateChange}  />
+          <MyTimePicker   />
           ~
-          <TimePicker  time={event.end} />
+          <MyTimePicker    />
+          <Checkbox>全天</Checkbox>
+
         </div>
         <div className={styles.createEventPopoverInputItem}>
           <div className={styles.createEventPopoverInputIcon}>
