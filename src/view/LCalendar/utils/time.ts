@@ -4,7 +4,7 @@ import moment from 'moment/moment'
 export const DAY_TYPE = 'day'
 export const WEEK_TYPE = 'week'
 export const MONTH_TYPE = 'month'
-export const DEFAULT_TYPE = DAY_TYPE
+export const DEFAULT_TYPE = WEEK_TYPE
 export const DEFAULT_MAX_DAYS = 7
 export const DEFAULT_VALUE = Date.now()
 export const DEFAULT_WEEK_DAYS = [0, 1, 2, 3, 4, 5, 6]

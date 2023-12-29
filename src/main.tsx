@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { store } from './store'
 import { router } from './routes'
 import { Provider } from 'react-redux'
-import {  RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
