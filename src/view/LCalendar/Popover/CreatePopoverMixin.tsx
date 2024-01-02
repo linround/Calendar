@@ -30,7 +30,6 @@ export const CreatePopoverMixin = {
     const { event, setEventKeyValue, } = props
     const namePlaceholder = '输入标题'
     const locationPlaceholder = '输入地点'
-    const timePickerFormat = 'HH:mm'
     const onDateChange:DatePickerProps['onChange'] = (date, dateString) => {
       console.log(date, dateString)
     }
@@ -51,9 +50,9 @@ export const CreatePopoverMixin = {
             <SvgIcon iconName='popover-clock' />
           </div>
           <DatePicker onChange={onDateChange}  />
-          <MyTimePicker   />
+          <MyTimePicker   showDiffLabel={false} />
           ~
-          <MyTimePicker    />
+          <MyTimePicker  showDiffLabel={true}  />
           <Checkbox>全天</Checkbox>
 
         </div>
