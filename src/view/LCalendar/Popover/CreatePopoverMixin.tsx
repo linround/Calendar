@@ -11,6 +11,7 @@ import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
 import styles from './createEventPopover.module.less'
 import { MyTimePicker } from './SingleComponent/MyTimePicker'
+import moment from 'moment/moment'
 
 
 export const CreatePopoverMixin = {
@@ -33,6 +34,17 @@ export const CreatePopoverMixin = {
     const onDateChange:DatePickerProps['onChange'] = (date, dateString) => {
       console.log(date, dateString)
     }
+    const onSelectStartTime = (timeStamp:number) => {
+      const label = moment(timeStamp)
+        .format('HH:mm')
+      console.log(label)
+    }
+    const onSelectEndTime = (timeStamp:number) => {
+
+      const label = moment(timeStamp)
+        .format('HH:mm')
+      console.log(label)
+    }
 
     return (
       <div className={styles.createEventPopoverBody}>
@@ -50,9 +62,15 @@ export const CreatePopoverMixin = {
             <SvgIcon iconName='popover-clock' />
           </div>
           <DatePicker onChange={onDateChange}  />
-          <MyTimePicker   showDiffLabel={false} />
+          <MyTimePicker
+            event={event}
+            showDiffLabel={false}
+            selectTime={onSelectStartTime} />
           ~
-          <MyTimePicker  showDiffLabel={true}  />
+          <MyTimePicker
+            event={event}
+            showDiffLabel={true}
+            selectTime={onSelectEndTime} />
           <Checkbox>全天</Checkbox>
 
         </div>

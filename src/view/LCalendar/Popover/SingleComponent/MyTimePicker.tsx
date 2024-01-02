@@ -3,6 +3,7 @@ import style from './myTimePicker.module.less'
 import scrollStyle from '../../commonStyle/scroll.module.less'
 import moment from 'moment'
 import classnames from 'classnames'
+import { CalendarEvent } from '../../utils/calendar'
 
 
 function getHours(minutes:number) {
@@ -41,9 +42,12 @@ function createTimeItems(start:number) {
 
 interface ContentProps {
   showDiffLabel:boolean
+  // eslint-disable-next-line no-unused-vars
+  selectTime:(...args:any[])=> void
+  event:CalendarEvent
 }
 function Content(props:ContentProps) {
-  const { showDiffLabel = false, } = props
+  const { showDiffLabel = false, selectTime, } = props
   const timeItems = createTimeItems(Date.now())
   return (
     <div className={classnames({
@@ -55,7 +59,7 @@ function Content(props:ContentProps) {
           <div className={style.optionsItem} key={item.value}>
             <div className={style.optionsItemTime}>{item.label}</div>
             {showDiffLabel &&
-              <div className={style.optionsItemDiffLable}>{item.diffLabel}</div>}
+              <div className={style.optionsItemDiffLable} onClick={() => selectTime(item.value)}>{item.diffLabel}</div>}
           </div>
         ))
       }
