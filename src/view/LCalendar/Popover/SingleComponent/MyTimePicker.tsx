@@ -6,7 +6,9 @@ import classnames from 'classnames'
 import { BaseFunc, CalendarEvent } from '../../utils/calendar'
 import { CheckOutlined } from '@ant-design/icons'
 import { ROUND_TIME } from '../../utils/timesStamp'
-import { createRef, useEffect } from 'react'
+import {
+  createRef, useEffect, useState
+} from 'react'
 
 
 function getFormattedTime(time:number) {
@@ -183,17 +185,24 @@ function Content(props:ContentProps) {
 
 type MyTimePickerProps = ContentProps
 export function MyTimePicker(props:MyTimePickerProps) {
-  const { time, } = props
+  const { time, selectTime, } = props
+  const [open, setOpen] = useState<boolean>(false)
   const onOpenChange = (open:boolean) => {
-    console.log('onOpenChange', open)
+    setOpen(open)
+  }
+  const onSelectTime = (time:number) => {
+    selectTime(time)
+    setOpen(false)
   }
 
+  const contentProps = { ...props, selectTime: onSelectTime, }
   return (
     <Popover
       destroyTooltipOnHide={true}
-      content={<Content {...props} />}
+      content={<Content {...contentProps} />}
       arrow={false}
       placement={'bottom'}
+      open={open}
       onOpenChange={onOpenChange}
       trigger={'click'}>
 
