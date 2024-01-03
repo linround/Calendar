@@ -11,6 +11,13 @@ import {
 } from 'react'
 
 
+function scrollIntoView(ele:HTMLElement) {
+  if (ele) {
+    ele.scrollIntoView({
+      block: 'center',
+    })
+  }
+}
 function getFormattedTime(time:number) {
   const format = 'HH:mm'
   return moment(time)
@@ -123,7 +130,7 @@ function ContentEnd(props:ContentProps) {
 
   useEffect(() => {
     if (checkRef.current) {
-      checkRef.current.scrollIntoView()
+      scrollIntoView(checkRef.current)
     }
   }, [checkRef])
   return (
@@ -155,7 +162,7 @@ function ContentStart(props:ContentProps) {
   const checkRef = createRef<HTMLElement>()
   useEffect(() => {
     if (checkRef.current) {
-      checkRef.current.scrollIntoView()
+      scrollIntoView(checkRef.current)
     }
   }, [checkRef])
   return (
