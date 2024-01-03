@@ -39,13 +39,10 @@ export interface IMorePosition{
 export function calcMoreContainer(eventElement:Element):IMorePosition {
   const eventRect = eventElement.getBoundingClientRect()
   const width = eventRect.right - eventRect.left
-  const { top, left, right, bottom, } = eventRect
-
-
+  const { top, left, bottom, } = eventRect
   return {
     top, left, width, bottom,
   }
-
 }
 
 

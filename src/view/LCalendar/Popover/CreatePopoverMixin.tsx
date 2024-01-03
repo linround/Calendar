@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Button, Input, TextField
 } from '@mui/material'
@@ -12,6 +12,7 @@ import { SvgIcon } from '../../../components'
 import styles from './createEventPopover.module.less'
 import { MyTimePicker } from './SingleComponent/MyTimePicker'
 import moment from 'moment/moment'
+import { EventContext } from '../props/propsContext'
 
 
 export const CreatePopoverMixin = {
@@ -29,6 +30,8 @@ export const CreatePopoverMixin = {
   },
   renderBody(props:IMixinPopoverBody):JSX.Element {
     const { event, setEventKeyValue, } = props
+    const {  setCreatedEvent, } = useContext(EventContext)
+
     const namePlaceholder = '输入标题'
     const locationPlaceholder = '输入地点'
     const onDateChange:DatePickerProps['onChange'] = (date, dateString) => {
@@ -38,12 +41,21 @@ export const CreatePopoverMixin = {
       const label = moment(timeStamp)
         .format('YYYY MM DD HH:mm')
       console.log(label)
+      setCreatedEvent({
+        ...event,
+        start: timeStamp,
+      })
     }
     const onSelectEndTime = (timeStamp:number) => {
 
       const label = moment(timeStamp)
         .format('YYYY MM DD HH:mm')
       console.log(label)
+
+      setCreatedEvent({
+        ...event,
+        end: timeStamp,
+      })
     }
 
     return (

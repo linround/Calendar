@@ -55,11 +55,12 @@ function getLabel(start:number, end:number) {
   const minutes = getDiffMinutes(start, end)
 
   if (minutes < 60) {
-
     return `（${minutes} 分钟）`
   }
+
   const hour = Number(minutes / 60)
     .toFixed(1)
+
   return `（${hour} 小时）`
 
 }
