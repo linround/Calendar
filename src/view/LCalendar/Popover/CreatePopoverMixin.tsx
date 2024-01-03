@@ -11,7 +11,6 @@ import mainStyles from '../style.module.less'
 import { SvgIcon } from '../../../components'
 import styles from './createEventPopover.module.less'
 import { MyTimePicker } from './SingleComponent/MyTimePicker'
-import moment from 'moment/moment'
 import { EventContext } from '../props/propsContext'
 
 
@@ -38,19 +37,14 @@ export const CreatePopoverMixin = {
       console.log(date, dateString)
     }
     const onSelectStartTime = (timeStamp:number) => {
-      const label = moment(timeStamp)
-        .format('YYYY MM DD HH:mm')
-      console.log(label)
+      const duration = event.end - event.start
       setCreatedEvent({
         ...event,
         start: timeStamp,
+        end: timeStamp + duration,
       })
     }
     const onSelectEndTime = (timeStamp:number) => {
-
-      const label = moment(timeStamp)
-        .format('YYYY MM DD HH:mm')
-      console.log(label)
 
       setCreatedEvent({
         ...event,
