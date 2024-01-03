@@ -8,18 +8,53 @@ import { CheckOutlined } from '@ant-design/icons'
 import { ROUND_TIME } from '../../utils/timesStamp'
 import { createRef, useEffect } from 'react'
 
-function getHours(minutes:number) {
-  return minutes / 60
-}
 
 function getFormattedTime(time:number) {
   const format = 'HH:mm'
   return moment(time)
     .format(format)
 }
+function createStartTimeItems(time:number) {
+  const dayStartTime = moment(time)
+    .startOf('day')
+    .valueOf()
+  const segment = 24 * 60 / ROUND_TIME
+  const segments = []
+  for (let i = 0;i < segment;i++) {
+    const interval = ROUND_TIME * i
+    const value = moment(dayStartTime)
+      .add(interval, 'm')
+      .valueOf()
 
-function createStartItems(time:number) {}
-function createTimeItems(start:number) {
+    const label = getFormattedTime(value)
+    segments.push({
+      label, value,
+    })
+  }
+}
+
+
+function getDiffMinutes(start:number, end:number) {
+  const startMoment = moment(start)
+  const endMoment = moment(end)
+  const minutes = endMoment.diff(startMoment, 'minutes')
+
+  return minutes
+}
+function getLabel(start:number, end:number) {
+  const minutes = getDiffMinutes(start, end)
+
+  if (minutes < 60) {
+
+    return `（${minutes} 分钟）`
+  }
+  const hour = Number(minutes / 60)
+    .toFixed(1)
+  return `（${hour} 小时）`
+
+}
+
+function createEndTimeItems(start:number) {
   const hourSegments = 60 / ROUND_TIME
   const segment = 50
   const segments = []
@@ -34,21 +69,19 @@ function createTimeItems(start:number) {
 
       const label = getFormattedTime(value)
       preDiff = interval
-      console.log(preDiff, interval)
       segments.push({
-        label, value, diff: preDiff, diffLabel: `（${interval}分钟）`,
+        label, value,
       })
     } else {
       // 一个小时后的时长间隔 30
-      const interval = preDiff + (30 * (i - 4))
+      const interval = preDiff + (30 * (i - hourSegments))
       const value = moment(start)
         .add(interval, 'm')
         .valueOf()
 
       const label = getFormattedTime(value)
-      const diff = preDiff + (interval * i)
       segments.push({
-        label, value, diff, diffLabel: `（${getHours(interval)}小时）`,
+        label, value,
       })
     }
   }
@@ -78,7 +111,7 @@ function Content(props:ContentProps) {
     time,
     event,
   } = props
-  const timeItems = createTimeItems(event.start)
+  const endTimeItems = createEndTimeItems(event.start)
 
 
   const checkRef = createRef<HTMLElement>()
@@ -90,12 +123,12 @@ function Content(props:ContentProps) {
       [style.optionsContainer]: true,
       [scrollStyle.scroll]: true,
     })}>
-      {timeItems.map((item) => (
+      {endTimeItems.map((item) => (
         <div className={style.optionsItem} key={item.value} onClick={() => selectTime(item.value)}>
           <div className={style.optionsItemTime}>{item.label}</div>
           {showDiffLabel &&
               <div className={style.optionsItemDiffLable} >
-                {item.diffLabel}
+                {getLabel(event.start, item.value)}
               </div>}
           {isSameMinute(time, item.value) && <CheckOutlined ref={checkRef} />}
         </div>
