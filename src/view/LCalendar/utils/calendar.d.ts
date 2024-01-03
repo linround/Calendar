@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+export type BaseFunc = (...args:any[])=>void
 export type IValue = string|number|Date
 
 export interface IHeaderEvent {

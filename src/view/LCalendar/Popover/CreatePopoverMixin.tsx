@@ -36,13 +36,13 @@ export const CreatePopoverMixin = {
     }
     const onSelectStartTime = (timeStamp:number) => {
       const label = moment(timeStamp)
-        .format('HH:mm')
+        .format('YYYY MM DD HH:mm')
       console.log(label)
     }
     const onSelectEndTime = (timeStamp:number) => {
 
       const label = moment(timeStamp)
-        .format('HH:mm')
+        .format('YYYY MM DD HH:mm')
       console.log(label)
     }
 
@@ -63,11 +63,13 @@ export const CreatePopoverMixin = {
           </div>
           <DatePicker onChange={onDateChange}  />
           <MyTimePicker
+            time={event.start}
             event={event}
             showDiffLabel={false}
             selectTime={onSelectStartTime} />
           ~
           <MyTimePicker
+            time={event.end}
             event={event}
             showDiffLabel={true}
             selectTime={onSelectEndTime} />
