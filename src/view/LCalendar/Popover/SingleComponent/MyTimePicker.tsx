@@ -120,7 +120,9 @@ function ContentEnd(props:ContentProps) {
   const checkRef = createRef<HTMLElement>()
 
   useEffect(() => {
-    console.log(checkRef)
+    if (checkRef.current) {
+      checkRef.current.scrollIntoView()
+    }
   }, [checkRef])
   return (
     <>
@@ -150,7 +152,9 @@ function ContentStart(props:ContentProps) {
 
   const checkRef = createRef<HTMLElement>()
   useEffect(() => {
-    console.log(checkRef)
+    if (checkRef.current) {
+      checkRef.current.scrollIntoView()
+    }
   }, [checkRef])
   return (
     <>
@@ -163,6 +167,7 @@ function ContentStart(props:ContentProps) {
     </>
   )
 }
+
 function Content(props:ContentProps) {
   const { isStart, } = props
 
@@ -179,12 +184,17 @@ function Content(props:ContentProps) {
 type MyTimePickerProps = ContentProps
 export function MyTimePicker(props:MyTimePickerProps) {
   const { time, } = props
+  const onOpenChange = (open:boolean) => {
+    console.log('onOpenChange', open)
+  }
 
   return (
     <Popover
+      destroyTooltipOnHide={true}
       content={<Content {...props} />}
       arrow={false}
       placement={'bottom'}
+      onOpenChange={onOpenChange}
       trigger={'click'}>
 
       <div>{getFormattedTime(time)}</div>
