@@ -63,12 +63,14 @@ export const CreatePopoverMixin = {
           </div>
           <DatePicker onChange={onDateChange}  />
           <MyTimePicker
+            isStart={true}
             time={event.start}
             event={event}
             showDiffLabel={false}
             selectTime={onSelectStartTime} />
           ~
           <MyTimePicker
+            isStart={false}
             time={event.end}
             event={event}
             showDiffLabel={true}

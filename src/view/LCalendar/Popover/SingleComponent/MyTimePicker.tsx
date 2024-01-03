@@ -31,6 +31,7 @@ function createStartTimeItems(time:number) {
       label, value,
     })
   }
+  return segments
 }
 
 
@@ -103,8 +104,10 @@ interface ContentProps {
   selectTime:BaseFunc
   time:number
   event:CalendarEvent
+  isStart:boolean
 }
-function Content(props:ContentProps) {
+
+function ContentEnd(props:ContentProps) {
   const {
     showDiffLabel = false,
     selectTime,
@@ -115,24 +118,60 @@ function Content(props:ContentProps) {
 
 
   const checkRef = createRef<HTMLElement>()
+
   useEffect(() => {
     console.log(checkRef)
   }, [checkRef])
+  return (
+    <>
+      {endTimeItems.map((item) => (
+        <div className={style.optionsItem} key={item.value} onClick={() => selectTime(item.value)}>
+          <div className={style.optionsItemTime}>{item.label}</div>
+          {showDiffLabel &&
+            <div className={style.optionsItemDiffLable}>
+              {getLabel(event.start, item.value)}
+            </div>}
+          {isSameMinute(time, item.value) && <CheckOutlined ref={checkRef}/>}
+        </div>
+      ))}
+    </>
+  )
+}
+
+function ContentStart(props:ContentProps) {
+
+  const {
+    selectTime,
+    time,
+    event,
+  } = props
+  const startTimeItems = createStartTimeItems(event.start)
+
+
+  const checkRef = createRef<HTMLElement>()
+  useEffect(() => {
+    console.log(checkRef)
+  }, [checkRef])
+  return (
+    <>
+      {startTimeItems.map((item) => (
+        <div className={style.optionsItem} key={item.value} onClick={() => selectTime(item.value)}>
+          <div className={style.optionsItemTime}>{item.label}</div>
+          {isSameMinute(time, item.value) && <CheckOutlined ref={checkRef}/>}
+        </div>
+      ))}
+    </>
+  )
+}
+function Content(props:ContentProps) {
+  const { isStart, } = props
+
   return (
     <div className={classnames({
       [style.optionsContainer]: true,
       [scrollStyle.scroll]: true,
     })}>
-      {endTimeItems.map((item) => (
-        <div className={style.optionsItem} key={item.value} onClick={() => selectTime(item.value)}>
-          <div className={style.optionsItemTime}>{item.label}</div>
-          {showDiffLabel &&
-              <div className={style.optionsItemDiffLable} >
-                {getLabel(event.start, item.value)}
-              </div>}
-          {isSameMinute(time, item.value) && <CheckOutlined ref={checkRef} />}
-        </div>
-      ))}
+      {isStart ? <ContentStart {...props}/> : <ContentEnd {...props}/> }
     </div>
   )
 }
