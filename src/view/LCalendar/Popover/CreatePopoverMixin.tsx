@@ -66,14 +66,12 @@ export const CreatePopoverMixin = {
             isStart={true}
             time={event.start}
             event={event}
-            showDiffLabel={false}
             selectTime={onSelectStartTime} />
           ~
           <MyTimePicker
             isStart={false}
             time={event.end}
             event={event}
-            showDiffLabel={true}
             selectTime={onSelectEndTime} />
           <Checkbox>全天</Checkbox>
 

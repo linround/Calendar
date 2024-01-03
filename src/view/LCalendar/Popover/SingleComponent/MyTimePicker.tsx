@@ -108,7 +108,6 @@ function isSameMinute(value:number, time:number):boolean {
   return getFormattedTime(value) === getFormattedTime(time)
 }
 interface ContentProps {
-  showDiffLabel:boolean
   // eslint-disable-next-line no-unused-vars
   selectTime:BaseFunc
   time:number
@@ -118,7 +117,6 @@ interface ContentProps {
 
 function ContentEnd(props:ContentProps) {
   const {
-    showDiffLabel = false,
     selectTime,
     time,
     event,
@@ -138,10 +136,9 @@ function ContentEnd(props:ContentProps) {
       {endTimeItems.map((item) => (
         <div className={style.optionsItem} key={item.value} onClick={() => selectTime(item.value)}>
           <div className={style.optionsItemTime}>{item.label}</div>
-          {showDiffLabel &&
-            <div className={style.optionsItemDiffLable}>
-              {getLabel(event.start, item.value)}
-            </div>}
+          <div className={style.optionsItemDiffLable}>
+            {getLabel(event.start, item.value)}
+          </div>
           {isSameMinute(time, item.value) && <CheckOutlined ref={checkRef}/>}
         </div>
       ))}
