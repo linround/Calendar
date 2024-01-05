@@ -7,5 +7,9 @@ function getTime(date: VTimestampInput) {
     .format('HH:mm')
 }
 
-
+export function getFormattedTime(time:number) {
+  const format = 'HH:mm'
+  return moment(time)
+    .format(format)
+}
 export default { getTime, }

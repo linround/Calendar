@@ -9,6 +9,8 @@ import { ROUND_TIME } from '../../utils/timesStamp'
 import {
   createRef, useEffect, useState
 } from 'react'
+import { getFormattedTime } from './helpers'
+import { TimeInput } from './TimeInput'
 
 
 function scrollIntoView(ele:HTMLElement) {
@@ -18,11 +20,7 @@ function scrollIntoView(ele:HTMLElement) {
     })
   }
 }
-function getFormattedTime(time:number) {
-  const format = 'HH:mm'
-  return moment(time)
-    .format(format)
-}
+
 function createStartTimeItems(time:number) {
   const dayStartTime = moment(time)
     .startOf('day')
@@ -200,7 +198,10 @@ export function MyTimePicker(props:MyTimePickerProps) {
     setOpen(false)
   }
 
+
+
   const contentProps = { ...props, selectTime: onSelectTime, }
+
   return (
     <Popover
       destroyTooltipOnHide={true}
@@ -210,8 +211,9 @@ export function MyTimePicker(props:MyTimePickerProps) {
       open={open}
       onOpenChange={onOpenChange}
       trigger={'click'}>
-
-      <div>{getFormattedTime(time)}</div>
+      <span>
+        <TimeInput time={time}/>
+      </span>
     </Popover>
   )
 }

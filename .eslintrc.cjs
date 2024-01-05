@@ -37,7 +37,7 @@ module.exports = {
     'generator-star-spacing': ['error', { 'before': false, 'after': true, }], // 使用生成器,去报正确间隔, * 应该在函数这边
     'dot-notation': 'error', // 使用属性时，使用点语法  访问带有变量的属性时使用括号表示法
     // 计算幂时使用幂运算符**
-    'prefer-const': 'error',
+    'prefer-const': 0,
 
 
     // var 一行申明多个变量 const 和 let 不要这样做 以这种方式添加新的变量声明更容易，而且您永远不必担心换出 ;
@@ -48,7 +48,8 @@ module.exports = {
     'no-plusplus': ['error', { 'allowForLoopAfterthoughts': true, }], // 避免使用一元增量或减量，在for循环中可用 不允许一元递增和递减语句还可以防止您无意中预递增/预递减值，这也可能导致程序中出现意外行为
     'operator-linebreak': ['error', 'after'], //避免在赋值之前或之后的换行符。如果您的分配违反了 max-len，请将值括在括号中
     'no-unused-vars': 'error', // 没有使用的声明报错
-    //ar 声明被提升到最接近的封闭函数范围的顶部，但它们的赋值不会。 const 和 let 声明拥有一个名为 Temporal Dead Zones (TDZ) 的新概念。重要的是要知道为什么 typeof 不再安全
+    //ar 声明被提升到最接近的封闭函数范围的顶部，但它们的赋值不会。
+    // const 和 let 声明拥有一个名为 Temporal Dead Zones (TDZ) 的新概念。重要的是要知道为什么 typeof 不再安全
     // 匿名函数表达式会提升它们的变量名，但不会提升函数赋值
     // 命名函数表达式提升变量名，而不是函数名或函数体
     // 函数声明提升它们的名称和函数体
