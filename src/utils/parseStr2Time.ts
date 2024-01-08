@@ -1,5 +1,10 @@
-function parseTime() {
-  const patterns = [
+type Pattern = [RegExp, string]
+type BooleanOrStringOrNumber = boolean |string | number
+
+
+export function createParseStr2Time(curTime:number) {
+
+  const patterns:Pattern[] = [
     // 1, 12, 123, 1234, 12345, 123456
     [/^(\d+)$/, '$1'],
     // :1, :2, :3, :4 ... :9
@@ -22,22 +27,27 @@ function parseTime() {
     [/^(\d{1,2}):(\d):(\d\d)/, '$10$2$3']
   ]
   let length = patterns.length
-  return function (input) {
+  return function parseStr2Time(input:string):any {
     let str = input
-    var time = new Date(),
-      am = false, pm = false, h = false, m = false, s = false
+    const time = new Date(curTime)
+    let am:BooleanOrStringOrNumber = false
+    let pm:BooleanOrStringOrNumber = false
+    let h:BooleanOrStringOrNumber = false
+    let m:BooleanOrStringOrNumber = false
+    let s:BooleanOrStringOrNumber = false
 
     if (typeof str === 'undefined' || !str.toLowerCase) {
       return null
     }
 
     str = str.toLowerCase()
+    // 检查是否是 输入了am
     am = /a/.test(str)
     pm = am ? false : /p/.test(str)
     str = str.replace(/[^0-9:]/g, '')
       .replace(/:+/g, ':')
 
-    for (var k = 0; k < length; k = k + 1) {
+    for (let k = 0; k < length; k = k + 1) {
       if (patterns[k][0].test(str)) {
         str = str.replace(patterns[k][0], patterns[k][1])
         break
@@ -71,8 +81,8 @@ function parseTime() {
     }
 
     h = parseInt(h, 10)
-    m = parseInt(m, 10)
-    s = parseInt(s, 10)
+    m = parseInt(m as string, 10)
+    s = parseInt(s as string, 10)
 
     if (am && h === 12) {
       h = 0
@@ -82,16 +92,15 @@ function parseTime() {
 
     if (h > 24) {
       if (str.length >= 6) {
-        return (str.substr(0, 5))
+        // return (str.substr(0, 5))
+        return  false
       }
-      return parseTime(str + '0' + (am ? 'a' : '') + (pm ? 'p' : ''))
+      return parseStr2Time(str + '0' + (am ? 'a' : '') + (pm ? 'p' : ''))
 
     }
     time.setHours(
       h, m, s
     )
-    return time
-
+    return time.valueOf()
   }
 }
-export default parseTime()
