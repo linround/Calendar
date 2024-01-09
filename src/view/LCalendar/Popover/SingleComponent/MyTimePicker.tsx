@@ -193,7 +193,14 @@ export function MyTimePicker(props:MyTimePickerProps) {
   const onOpenChange = (open:boolean) => {
     setOpen(open)
   }
+
+  // popover 选择了事件触发
   const onSelectTime = (time:number) => {
+    selectTime(time)
+    setOpen(false)
+  }
+
+  const onBlur = (time:number) => {
     selectTime(time)
     setOpen(false)
   }
@@ -212,7 +219,7 @@ export function MyTimePicker(props:MyTimePickerProps) {
       onOpenChange={onOpenChange}
       trigger={'click'}>
       <span>
-        <TimeInput time={time}/>
+        <TimeInput time={time} onBlur={onBlur}/>
       </span>
     </Popover>
   )
