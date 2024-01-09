@@ -2,9 +2,7 @@ import React, { useContext } from 'react'
 import {
   Button, Input, TextField
 } from '@mui/material'
-import {
-  Checkbox, DatePicker, DatePickerProps
-} from 'antd'
+import { Checkbox, DatePickerProps } from 'antd'
 import classnames from 'classnames'
 import { IMixinPopoverBody } from './helpers'
 import mainStyles from '../style.module.less'
@@ -12,6 +10,8 @@ import { SvgIcon } from '../../../components'
 import styles from './createEventPopover.module.less'
 import { MyTimePicker } from './SingleComponent/MyTimePicker'
 import { EventContext } from '../props/propsContext'
+import 'dayjs/locale/zh-cn.js'
+import { MyDatePicker } from './SingleComponent/MyDatePicker'
 
 
 export const CreatePopoverMixin = {
@@ -46,6 +46,8 @@ export const CreatePopoverMixin = {
     }
     const onSelectEndTime = (timeStamp:number) => {
 
+
+
       setCreatedEvent({
         ...event,
         end: timeStamp,
@@ -67,19 +69,27 @@ export const CreatePopoverMixin = {
           <div className={styles.createEventPopoverInputIcon}>
             <SvgIcon iconName='popover-clock' />
           </div>
-          <DatePicker onChange={onDateChange}  />
-          <MyTimePicker
-            isStart={true}
-            time={event.start}
-            event={event}
-            selectTime={onSelectStartTime} />
-          ~
-          <MyTimePicker
-            isStart={false}
-            time={event.end}
-            event={event}
-            selectTime={onSelectEndTime} />
-          <Checkbox>全天</Checkbox>
+          <div>
+            <div className={styles.createEventPopoverDatePicker}>
+              <MyDatePicker onChange={onDateChange}/>
+              <MyTimePicker
+                isStart={true}
+                time={event.start}
+                event={event}
+                selectTime={onSelectStartTime} />
+              ~
+              <MyDatePicker onChange={onDateChange}  />
+              <MyTimePicker
+                isStart={false}
+                time={event.end}
+                event={event}
+                selectTime={onSelectEndTime} />
+            </div>
+            <div>
+              <Checkbox>全天</Checkbox>
+            </div>
+          </div>
+
 
         </div>
         <div className={styles.createEventPopoverInputItem}>
