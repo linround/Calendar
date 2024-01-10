@@ -111,13 +111,14 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       break
     }
     case CREATED_ACTION:{
-
+      console.log(eventAction)
       setCreatedEvent(resizeEvent)
       break
     }
     }
   })
   selector.on('select', async (coordinates:ICoordinates) => {
+
     switch (eventAction) {
     case NORMAL_ACTION:{
       const { code, } = await updateEvent(resizeEvent)
@@ -125,6 +126,12 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
         setDraggedEvent(null)
         updateEventList()
       }
+      break
+    }
+
+    case CREATED_ACTION:{
+      console.log(eventAction)
+      setCreatedEvent(resizeEvent)
       break
     }
     }
