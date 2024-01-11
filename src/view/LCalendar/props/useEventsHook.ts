@@ -4,8 +4,11 @@ import { eventClassification, filterEvents } from '../v3/utils'
 import { CalendarEvent } from '../utils/calendar'
 
 
-// 渲染已经创建的事件
-export function useClassifiedEventsHook() {
+// 在周视图和日视图中需要渲染的事件分类
+// normalEvents, 渲染在 body 中
+// allDayEvents, 渲染在 header 中
+// crossDaysEvents,渲染在 header 中
+export function useClassifiedEventsInWeekAndDayHook() {
 
   const {
     events,

@@ -14,7 +14,7 @@ import {
   BaseContext, IntervalsContext, MouseEventContext
 } from '../props/propsContext'
 import classnames from 'classnames'
-import { useClassifiedEventsHook } from '../props/useEventsHook'
+import { useClassifiedEventsInWeekAndDayHook } from '../props/useEventsHook'
 
 export default function (props: IDayProps)  {
   const {
@@ -87,6 +87,7 @@ export default function (props: IDayProps)  {
     // 根据分钟数
     scope.minutesToPixels = minutesToPixels
     scope.week = days
+
     return scope
   }
 
@@ -109,7 +110,7 @@ export default function (props: IDayProps)  {
 
 
 
-  const { classifiedEvents, } = useClassifiedEventsHook()
+  const { classifiedEvents, } = useClassifiedEventsInWeekAndDayHook()
 
   // 此处分类已经创建的事件
   return (
@@ -119,6 +120,7 @@ export default function (props: IDayProps)  {
         days={days}
         intervalWidth={intervalWidth}
         events={[
+          ...classifiedEvents.crossDaysEvents,
           ...classifiedEvents.allDayEvents
         ]}
       />
@@ -145,7 +147,6 @@ export default function (props: IDayProps)  {
               intervalHeight={intervalHeight}
               days={days}
               events={[
-                ...classifiedEvents.crossDaysEvents,
                 ...classifiedEvents.normalEvents
               ]}
               getSlotScope={getSlotScope}
