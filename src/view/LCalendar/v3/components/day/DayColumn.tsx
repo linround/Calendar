@@ -46,8 +46,7 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
           key={idx}
           firstMinute={firstMinute}
           scrollContainer={scrollContainer}
-          daysContainer={daysContainer.current as HTMLDivElement}
-        >
+          daysContainer={daysContainer.current as HTMLDivElement}>
           <div
             className={classnames({
               [style.dayBody]: true,
