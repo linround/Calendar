@@ -1,20 +1,18 @@
 import React, { useRef } from 'react'
-import {
-  CalendarDayBodySlotScope, CalendarEvent, CalendarTimestamp
-} from '../../../utils/calendar'
+import { CalendarDayBodySlotScope, CalendarTimestamp } from '../../../utils/calendar'
 import classnames from 'classnames'
 import { EventComponent } from './Event'
 import style from './style/dayColumn.module.less'
 import { DEFAULT_EVENT } from '../../../props/propsContext'
 import { V3DayColumnWrapperComponent } from './DayColumnWrapper'
 import { parseEvent } from '../../../utils/events'
+import { useClassifiedEventsInWeekAndDayHook } from '../../../props/useEventsHook'
 
 interface IProps {
   intervals:CalendarTimestamp[][]
   intervalWidth:number
   intervalHeight:number
   days:CalendarTimestamp[]
-  events:CalendarEvent[]
   getSlotScope: (timestamp: CalendarTimestamp)=> CalendarDayBodySlotScope
   scrollContainer: HTMLDivElement
   firstMinute:number
@@ -24,12 +22,13 @@ export function V3DayColumnComponent(props:React.PropsWithChildren<IProps>) {
     intervals,
     intervalHeight,
     days,
-    events,
     firstMinute,
     getSlotScope,
     scrollContainer,
   } = props
-  const parsedEvents = events.map((input, index) => parseEvent(
+
+  const { classifiedEvents, } = useClassifiedEventsInWeekAndDayHook()
+  const parsedEvents = classifiedEvents.normalEvents.map((input, index) => parseEvent(
     input,
     index,
     DEFAULT_EVENT.eventStart,

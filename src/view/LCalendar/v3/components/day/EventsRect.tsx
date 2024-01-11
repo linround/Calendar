@@ -21,7 +21,7 @@ interface IProps {
 export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
   const {
     visualsRect,
-    className = '',
+    className = '', eventAction,
   } = props
 
   return (
@@ -30,8 +30,7 @@ export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
         <EventWrapperComponent
           key={index}
           {...props}
-          event={rect.event}
-        >
+          event={rect.event}>
           <div
             style={rect.style}
             className={classnames({
@@ -39,6 +38,7 @@ export const EventsRect = function(props:React.PropsWithChildren<IProps>) {
               [className]: true,
               [DEFAULT_EVENT.eventClass]: true,
             })}>
+            {eventAction}
             <div>{rect.content.title || EVENT_DEFAULT_BG_TITLE}</div>
             <div>{rect.content.timeRange}</div>
             <EndAnchor {...props} event={rect.event}/>

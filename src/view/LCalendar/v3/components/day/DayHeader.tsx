@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import style from './style/dayHeader.module.less'
-import { CalendarEvent, CalendarTimestamp } from '../../../utils/calendar'
+import { CalendarTimestamp } from '../../../utils/calendar'
 import { HeaderContent } from './HeaderContent'
 import { HeaderDate } from './HeaderDate'
+import { useClassifiedEventsInWeekAndDayHook } from '../../../props/useEventsHook'
 
 interface IProps {
   intervalWidth:number
   days: CalendarTimestamp[]
-  events:CalendarEvent[]
 }
 export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
   const {
     intervalWidth,
-    events,
     days,
   } = props
   const [
@@ -22,6 +21,8 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
   const onMore = () => {
     setFold(!fold)
   }
+
+  const { classifiedEvents, } = useClassifiedEventsInWeekAndDayHook()
   return (
     <>
       <div className={style.dayHeader} style={{ marginRight: 10, }}>
@@ -33,7 +34,10 @@ export function V3DayHeaderComponent(props:React.PropsWithChildren<IProps>) {
         onMore={onMore}
         maxHeight={100}
         days={days}
-        events={events}
+        events={[
+          ...classifiedEvents.crossDaysEvents,
+          ...classifiedEvents.allDayEvents
+        ]}
         maxRow={3}
         minRow={0}
         intervalWidth={intervalWidth} />
