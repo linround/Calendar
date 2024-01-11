@@ -37,6 +37,14 @@ export interface IEventClassification {
   normalEvents:CalendarEvent[] // 普通的事件
 }
 
+
+/*
+* 划分事件的种类
+* 普通的事件
+* 全天的事件
+* 跨天的事件（事件的开始时间和结束时间不再同一天）
+*
+* */
 export function eventClassification(events:CalendarEvent[]):IEventClassification {
   const crossDaysEvents:CalendarEvent[] = []
   const allDayEvents:CalendarEvent[] = []

@@ -124,7 +124,9 @@ export default function (props: IDayProps)  {
         days={days}
         intervalWidth={intervalWidth}
         events={[
-          ...classifiedEvents.allDayEvents]} />
+          ...classifiedEvents.allDayEvents
+        ]}
+      />
 
       <div className={dayStyle.dayBody}>
         <div
