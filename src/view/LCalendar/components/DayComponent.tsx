@@ -9,24 +9,17 @@ import {
 import React, {
   useContext, useEffect, useMemo, useRef
 } from 'react'
+import { CalendarDayBodySlotScope, CalendarTimestamp } from '../utils/calendar'
 import {
-  CalendarDayBodySlotScope, CalendarEvent, CalendarTimestamp
-} from '../utils/calendar'
-import {
-  BaseContext, EventContext, IntervalsContext, MouseEventContext
+  BaseContext, IntervalsContext, MouseEventContext
 } from '../props/propsContext'
 import classnames from 'classnames'
-import { eventClassification, filterEvents } from '../v3/utils'
+import { useClassifiedEventsHook } from '../props/useEventsHook'
 
 export default function (props: IDayProps)  {
   const {
     firstTime,
   } = props
-  const {
-    events,
-    createdEvent,
-    draggedEvent,
-  } = useContext(EventContext)
   const {
     times,
     days = [],
@@ -115,8 +108,10 @@ export default function (props: IDayProps)  {
   })
 
 
-  const classifiedEvents = useMemo(() => eventClassification(filterEvents([...events, createdEvent, draggedEvent] as CalendarEvent[])),
-    [events, createdEvent, draggedEvent])
+
+  const { classifiedEvents, } = useClassifiedEventsHook()
+
+  // 此处分类已经创建的事件
   return (
     <div className={dayStyle.dayContainer}>
 
