@@ -6,6 +6,8 @@ import { CalendarTimestamp } from '../../../utils/calendar'
 import dayStyle from '../../../components/day.module.less'
 import classnames from 'classnames'
 import style from './style/headerRow.module.less'
+import { HeaderEventRowEditing } from './HeaderEventRowEditing'
+import { useEditingEventsSegmentsInWeekAndDayHeaderHook } from '../../../props/useEventsHook'
 
 interface IProps {
   levels:ISegments[][]
@@ -29,7 +31,7 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
     [style.headerRows]: true,
     [dayStyle.scrollContainer]: true,
   })
-
+  const { levels: editingLevels, } = useEditingEventsSegmentsInWeekAndDayHeaderHook(days)
   return (
     <div
       style={{
@@ -38,6 +40,9 @@ export function HeaderRow(props:React.PropsWithChildren<IProps>) {
       }}
       className={className}>
       <div>
+        {editingLevels.map((segs, index) => (
+          <HeaderEventRowEditing key={index} slots={slots} segments={segs} container={container} days={days} />
+        ))}
         {levels.map((segs, index) => (
           <HeaderEventRow
             key={index}
