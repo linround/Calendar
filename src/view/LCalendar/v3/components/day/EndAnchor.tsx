@@ -111,7 +111,6 @@ export function EndAnchor(props:React.PropsWithChildren<IProps>) {
       break
     }
     case CREATED_ACTION:{
-      console.log(eventAction)
       setCreatedEvent(resizeEvent)
       break
     }
