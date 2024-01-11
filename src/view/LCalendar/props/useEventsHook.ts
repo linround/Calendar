@@ -3,6 +3,8 @@ import { EventContext } from './propsContext'
 import { eventClassification, filterEvents } from '../v3/utils'
 import { CalendarEvent } from '../utils/calendar'
 
+
+// 渲染已经创建的事件
 export function useClassifiedEventsHook() {
 
   const {
@@ -16,3 +18,7 @@ export function useClassifiedEventsHook() {
     classifiedEvents,
   }
 }
+
+
+
+
