@@ -51,7 +51,7 @@ export function EventComponent(props:React.PropsWithChildren<IProps>) {
     <>
       <EventsRect
         eventAction={CREATED_ACTION}
-        className={styles.eventDragged}
+        className={styles.eventCreated}
         visualsRect={createdVisualsRect}
         firstMinute={firstMinute}
         days={days}
