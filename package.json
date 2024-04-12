@@ -18,7 +18,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@linround/commonapi": "^1.0.0",
+    "@linround/commonapi": "^1.0.5",
     "@mui/material": "^5.11.11",
     "@reduxjs/toolkit": "^1.9.3",
     "antd": "^5.12.5",
